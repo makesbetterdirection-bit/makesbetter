@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,19 +21,25 @@
   --mono:"DM Mono",monospace;--sans:"Noto Sans KR",sans-serif;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--sans);height:100vh;overflow:hidden}
-.app{display:grid;grid-template-columns:310px 1fr 300px;grid-template-rows:58px 1fr;height:100vh}
+@supports (-webkit-touch-callout: none){
+  body{height:-webkit-fill-available;}
+  .app{height:-webkit-fill-available;}
+}
+.app{display:grid;grid-template-columns:310px 1fr;grid-template-rows:58px 1fr;height:100vh}
 
 .header{
   grid-column:1/-1;background:var(--bg1);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:12px;
+  overflow:hidden;
 }
-.logo{font-family:var(--mono);font-size:16px;letter-spacing:.18em;color:#c8c4bc;font-weight:400;text-transform:uppercase;white-space:nowrap}
-.tab-row{display:flex;align-items:center;gap:3px;background:var(--bg2);border-radius:10px;padding:4px}
-.tab-btn{padding:9px 22px;border:none;border-radius:7px;background:transparent;color:var(--text4);font-size:15px;font-family:var(--sans);font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
+.logo{font-family:var(--mono);font-size:15px;letter-spacing:.14em;color:#c8c4bc;font-weight:400;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.tab-row{display:flex;align-items:center;gap:2px;background:var(--bg2);border-radius:10px;padding:3px;flex-shrink:1;overflow-x:auto;scrollbar-width:none;}
+.tab-row::-webkit-scrollbar{display:none}
+.tab-btn{padding:8px 14px;border:none;border-radius:7px;background:transparent;color:var(--text4);font-size:13px;font-family:var(--sans);font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0}
 .tab-btn.t-krw.active{background:#152030;color:var(--krw-hi)}
 .tab-btn.t-fx.active{background:#001e20;color:var(--fx-hi)}
 .tab-btn.t-cmp.active{background:var(--bg1);color:var(--accent)}
-.header-note{font-family:var(--mono);font-size:11px;color:var(--text4);white-space:nowrap}
+.header-note{font-family:var(--mono);font-size:11px;color:var(--text4);white-space:nowrap;flex-shrink:0}
 
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-thumb{background:var(--border2)}
@@ -143,31 +150,30 @@ select{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;c
 .tab-btn.t-krw2.active{background:#1a2035;color:#a0c8ff}
 .tab-btn.t-rate.active{background:#1a1020;color:#d4a0ff}
 .chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 58px);overflow:hidden}
-.chat-messages{flex:1;overflow-y:auto;padding:10px 18px 6px;display:flex;flex-direction:column;gap:14px}
+.chat-messages{flex:1;overflow-y:auto;padding:10px 18px 20px;display:flex;flex-direction:column;gap:14px}
 .chat-messages::-webkit-scrollbar{width:3px}.chat-messages::-webkit-scrollbar-thumb{background:var(--border2)}
-.bubble{max-width:88%;padding:18px 22px;border-radius:16px;font-size:20px;line-height:1.5;font-family:var(--sans)}
+.bubble{max-width:88%;padding:16px 20px;border-radius:16px;font-size:16px;line-height:1.5;font-family:var(--sans)}
 .bubble.bot{align-self:flex-start;background:#1e1e1e;border:1px solid #2a2a2a;color:var(--text);border-bottom-left-radius:4px}
 .bubble.user{align-self:flex-end;background:#182a14;border:1px solid #2a4022;color:#c8f0c0;border-bottom-right-radius:4px;text-align:right}
-.bubble .bot-label{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:#ffcc66;text-transform:uppercase;margin-bottom:10px}
-.choice-row{display:flex;flex-wrap:wrap;gap:12px;padding:4px 20px 0}
-.choice-btn{padding:16px 32px;border:1px solid #2e2e2e;border-radius:12px;background:#1c1c1c;color:var(--text2);font-size:20px;font-family:var(--sans);cursor:pointer;transition:all .15s}
+.bubble .bot-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#ffcc66;text-transform:uppercase;margin-bottom:8px}
+.choice-row{display:flex;flex-wrap:wrap;gap:10px;padding:0;justify-content:center;align-self:center;width:100%;margin-top:4px}
+.choice-btn{padding:13px 24px;border:1px solid #2e2e2e;border-radius:12px;background:#1c1c1c;color:var(--text2);font-size:16px;font-family:var(--sans);cursor:pointer;transition:all .15s}
 .choice-btn:hover{border-color:#444;background:#252525;color:var(--text)}
 .choice-btn.selected{border-color:#ffcc66;background:#1a1a0e;color:#ffcc66}
 .choice-btn:disabled{opacity:.4;cursor:default}
-.inline-num{display:flex;align-items:center;gap:8px;padding:8px 20px}
-.inline-input{background:#1c1c1c;border:1px solid #2e2e2e;border-radius:10px;color:var(--text);font-family:var(--mono);font-size:20px;padding:13px 18px;width:240px;outline:none;transition:border-color .15s}
+.inline-num{display:flex;align-items:center;gap:8px;padding:0;justify-content:center;align-self:center;width:100%;margin-top:4px}
+.inline-input{background:#1c1c1c;border:1px solid #2e2e2e;border-radius:10px;color:var(--text);font-family:var(--mono);font-size:18px;padding:11px 16px;width:220px;outline:none;transition:border-color .15s}
 .inline-input:focus{border-color:#ffcc66}
-.inline-submit{padding:13px 24px;border:1px solid #ffcc6644;border-radius:10px;background:#1a1a0e;color:#ffcc66;font-size:18px;font-family:var(--sans);cursor:pointer}
-.int-done{margin:14px 18px 0;padding:18px 22px;background:rgba(0,253,255,.06);border:1px solid rgba(0,253,255,.2);border-radius:10px;font-family:var(--mono);font-size:18px;color:var(--fx);line-height:1.9}
+.inline-submit{padding:11px 22px;border:1px solid #ffcc6644;border-radius:10px;background:#1a1a0e;color:#ffcc66;font-size:16px;font-family:var(--sans);cursor:pointer}
+.int-done{padding:16px 20px;background:rgba(0,253,255,.06);border:1px solid rgba(0,253,255,.2);border-radius:10px;font-family:var(--mono);font-size:15px;color:var(--fx);line-height:1.9;align-self:flex-start;max-width:88%}
 .int-done b{color:#fff;font-weight:500}
-.int-reset{margin:12px 18px 20px;padding:13px 18px;border:1px solid #333;border-radius:8px;background:transparent;color:var(--text4);font-size:20px;font-family:var(--sans);cursor:pointer;width:calc(100% - 36px)}
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;display:none;align-items:center;justify-content:center;padding:24px}
-.lightbox.show{display:flex}
+.int-reset{padding:11px 18px;border:1px solid #333;border-radius:8px;background:transparent;color:var(--text4);font-size:16px;font-family:var(--sans);cursor:pointer;align-self:center;margin-top:4px}
 #inputs-int{display:none}
 
 
-.inflation-card{background:#1a1a10;border:1px solid #2e2a1a;border-radius:14px;padding:20px 22px;margin-top:4px;transition:border-color .3s}
+.inflation-card{background:#1a1a10;border:1px solid #2e2a1a;border-radius:14px;padding:20px 22px;margin-top:0;transition:border-color .3s}
 .inflation-card .chart-title{color:#ff9f43;margin-bottom:14px;font-size:14px}
+#infl-trigger:hover{border-color:#665500 !important;background:linear-gradient(135deg,#1c1a08 0%,#221e00 100%) !important}
 .infl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--border);margin-top:12px}
 .infl-item{padding:16px 0;border-bottom:1px solid var(--border)}
 .infl-label{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--text3);margin-bottom:8px}
@@ -176,8 +182,7 @@ select{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;c
 .infl-val.pos{color:#7bed9f}
 .infl-val-big{font-family:var(--mono);font-size:36px;font-weight:400;line-height:1.1}
 .infl-val.neutral{color:var(--text2)}
-.chart-click-hint{font-family:var(--mono);font-size:10px;color:var(--text4);cursor:pointer;transition:color .2s;white-space:nowrap}
-.chart-click-hint:hover,.chart-click-hint.active{color:#ff9f43}
+
 
 </style>
 </head>
@@ -187,12 +192,12 @@ select{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;c
 <header class="header">
   <div class="logo">MAKESBETTER · Financial Tools</div>
   <div class="tab-row">
-    <button class="tab-btn t-int" onclick="switchTab('int')">고객 인터뷰</button>
-    <button class="tab-btn t-krw active" onclick="switchTab('krw')">원화 적금.1</button>
+    <button class="tab-btn t-int active" onclick="switchTab('int')">고객 인터뷰</button>
+    <button class="tab-btn t-krw" onclick="switchTab('krw')">원화 적금.1</button>
     <button class="tab-btn t-krw2" onclick="switchTab('krw2')">원화 적금.2</button>
     <button class="tab-btn t-fx" onclick="switchTab('fx')">달러 적금</button>
-    <button class="tab-btn t-cmp" onclick="switchTab('cmp')">적금 비교</button>
     <button class="tab-btn t-rate" onclick="switchTab('rate')">금리 비교</button>
+    <button class="tab-btn t-cmp" onclick="switchTab('cmp')">적금 비교</button>
     <button class="tab-btn t-cmp" onclick="switchTab('attach')">첨부자료</button>
   </div>
   <div class="header-note">단리 기준 &nbsp;·&nbsp; 참고용 추정치</div>
@@ -227,19 +232,21 @@ select{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;c
       </div>
     </div>
     <div class="divider"></div>
-    <div class="sec-label" style="color:#ff9f43;margin-top:4px">물가상승률 반영</div>
-    <div class="iblock">
-      <span class="ilabel">생활물가 상승률</span>
-      <div class="ival-row"><span class="ival" id="krw-infl-disp">3.6</span><span class="iunit">%</span></div>
-      <input class="neu-range" type="range" id="krw-infl" min="0" max="10" step="0.1" value="3.6"
-        oninput="document.getElementById('krw-infl-disp').textContent=parseFloat(this.value).toFixed(1);updateKrw()">
-      <div style="display:flex;justify-content:space-between;margin-top:5px">
-        <span style="font-family:var(--mono);font-size:10px;color:var(--text4)">0%</span>
-        <span style="font-family:var(--mono);font-size:10px;color:var(--text4)">10%</span>
+    <div id="infl-sidebar" style="display:none;overflow:hidden;transition:max-height .4s ease,opacity .4s ease;max-height:0;opacity:0">
+      <div class="sec-label" style="color:#ff9f43;margin-top:4px">물가상승률 반영</div>
+      <div class="iblock">
+        <span class="ilabel">생활물가 상승률</span>
+        <div class="ival-row"><span class="ival" id="krw-infl-disp">3.6</span><span class="iunit">%</span></div>
+        <input class="neu-range" type="range" id="krw-infl" min="0" max="10" step="0.1" value="3.6"
+          oninput="document.getElementById('krw-infl-disp').textContent=parseFloat(this.value).toFixed(1);updateKrw()">
+        <div style="display:flex;justify-content:space-between;margin-top:5px">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--text4)">0%</span>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--text4)">10%</span>
+        </div>
       </div>
+      <div class="note" style="border-color:#3a2a1a;color:#a07040;margin-bottom:10px">차트에 반영 버튼으로 실질 구매력 전환</div>
+      <div class="divider"></div>
     </div>
-    <div class="note" style="border-color:#3a2a1a;color:#a07040;margin-bottom:10px">그래프 클릭 → 실질 구매력 전환</div>
-    <div class="divider"></div>
     <div class="note">매월 초 납입 기준.</div>
   </div>
   <div id="inputs-rate" style="display:none">
@@ -264,8 +271,16 @@ select{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;c
     </div>
     <div class="divider"></div>
     <div class="sec-label">비교 금리</div>
-    <div style="font-family:var(--mono);font-size:10px;color:var(--text4);margin-bottom:8px;line-height:1.7">각 탭 입력값 자동 반영 · 직접 수정 가능</div>
-    <div id="rate-inputs-wrap"></div>
+    <div class="iblock">
+      <span class="ilabel">고객 선택 금리</span>
+      <div class="ival-row"><span class="ival" id="rate-cust-disp">4.0</span><span class="iunit">%</span></div>
+      <input class="neu-range" type="range" id="rate-cust" min="0.1" max="15" step="0.1" value="4.0" oninput="syncR('rate-cust');document.getElementById('rate-cust-disp').textContent=parseFloat(this.value).toFixed(1);updateRate()">
+      <input class="num-input" type="number" id="rate-cust-ni" value="4.0" min="0.1" max="15" step="0.1" oninput="syncNI('rate-cust');document.getElementById('rate-cust-disp').textContent=parseFloat(this.value).toFixed(1);updateRate()">
+    </div>
+    <div class="note" style="line-height:1.9">
+      <span style="color:#a0c8ff">원화 7.1%</span> · <span style="color:#00fdff">달러 9.1%</span><br>
+      <span style="font-size:10px;color:var(--text4)">고정값 · 비과세(달러)</span>
+    </div>
   </div>
   <!-- KRW -->
   <div id="inputs-krw">
@@ -395,13 +410,13 @@ select{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;c
     </div>
   </div>
 
-<div id="inputs-attach" style="display:none"><div class="sec-label">첨부자료</div><div class="note">첨부자료 탭 준비 완료</div></div>
+<div id="inputs-attach" style="display:none"><div class="sec-label">첨부자료</div><div class="note" style="line-height:2">이미지를 클릭하면<br>라이트박스로 확대됩니다.<br><br>ESC 키 또는 외부 클릭으로 닫기</div></div>
 </aside>
 
 <main class="main">
 
   <div id="panel-int" style="display:none;flex-direction:column;height:calc(100vh - 58px)">
-    <div class="chat-wrap"><div class="chat-messages" id="chat-messages"></div><div id="chat-choices"></div></div>
+    <div class="chat-wrap"><div class="chat-messages" id="chat-messages"><div id="chat-choices"></div></div></div>
   </div>
   <div id="panel-krw2" style="display:none">
     <div class="result-hero krw-hero">
@@ -423,19 +438,15 @@ select{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;c
         <div class="leg"><div class="leg-dot" style="background:#00fdff"></div>세후 이자</div>
         <div class="leg"><div class="leg-dot" style="background:#ff2f92"></div>세금</div>
       </div>
-      <div style="position:relative;width:100%;height:480px"><canvas id="k2Chart"></canvas></div>
+      <div style="position:relative;width:100%;height:clamp(260px,36vh,480px)"><canvas id="k2Chart"></canvas></div>
     </div>
   </div>
   <div id="panel-rate" style="display:none">
-    <div id="rate-cards" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px"></div>
+    <div id="rate-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px"></div>
     <div class="chart-card">
-      <div class="chart-title">금리별 만기 수령액 비교</div>
-      <div style="position:relative;width:100%;height:360px"><canvas id="rateChart"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">금리별 누적 잔액 추이</div>
-      <div id="rate-legend" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px"></div>
-      <div style="position:relative;width:100%;height:320px"><canvas id="rateLineChart"></canvas></div>
+      <div class="chart-title">금리별 만기 이자 수령액 비교</div>
+      <div id="rate-legend" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px"></div>
+      <div style="position:relative;width:100%;height:clamp(320px,52vh,560px)"><canvas id="rateChart"></canvas></div>
     </div>
   </div>
   <!-- ── KRW: 결과 카드 + 차트만 ── -->
@@ -454,33 +465,57 @@ select{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;c
     </div>
     <div class="chart-card">
       <div class="chart-title">누적 잔액 추이</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="display:flex;align-items:center;margin-bottom:8px">
         <div class="legend" style="margin-bottom:0">
           <div class="leg" id="leg-nominal"><div class="leg-dot" style="background:#333;border:1px solid #555"></div>납입원금</div>
           <div class="leg" id="leg-interest"><div class="leg-dot" style="background:#00fdff"></div>세후 이자</div>
           <div class="leg" id="leg-tax"><div class="leg-dot" style="background:#ff2f92"></div>세금</div>
           <div class="leg" id="leg-real" style="display:none"><div class="leg-dot" style="background:#ff9f43"></div>실질 구매력</div>
         </div>
-        <div class="chart-click-hint" id="krw-hint" onclick="toggleKrwInfl()">클릭 → 물가 반영</div>
       </div>
-      <div style="position:relative;width:100%;height:340px">
-        <canvas id="krwChart" role="img" aria-label="원화 적금 누적 잔액 추이"
-          onclick="toggleKrwInfl()" style="cursor:pointer"></canvas>
+      <div style="position:relative;width:100%;height:clamp(240px,32vh,340px)">
+        <canvas id="krwChart" role="img" aria-label="원화 적금 누적 잔액 추이"></canvas>
       </div>
     </div>
 
-    <div class="inflation-card">
-      <div class="chart-title">물가상승률 반영 실질 수익률</div>
-      <div style="font-family:var(--mono);font-size:10px;color:var(--text4);margin-bottom:4px">
-        생활물가 <span id="infl-rate-show" style="color:#ff9f43">3.6</span>% 적용
+    <!-- 물가 트리거 -->
+    <div id="infl-trigger" onclick="revealInflation()" style="
+      cursor:pointer;border-radius:12px;padding:18px 22px;
+      background:linear-gradient(135deg,#161408 0%,#1c1800 100%);
+      border:1px solid #332a00;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      transition:border-color .25s;
+    ">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:#665500;text-transform:uppercase;margin-bottom:6px">REALITY CHECK</div>
+        <div style="font-size:15px;font-weight:500;color:var(--text);line-height:1.5">정말로 이 숫자가 실제 자산일까요?</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text4);margin-top:5px">물가상승률을 반영하면 이야기가 달라집니다 →</div>
       </div>
-      <div class="infl-grid">
-        <div class="infl-item"><div class="infl-label">명목 수익률</div><div class="infl-val neutral" id="infl-nom-yield">—</div></div>
-        <div class="infl-item"><div class="infl-label">물가 차감</div><div class="infl-val neg" id="infl-rate-neg">-3.6%</div></div>
-        <div class="infl-item"><div class="infl-label">실질 수익률</div><div class="infl-val" id="infl-real-yield">—</div></div>
-        <div class="infl-item"><div class="infl-label">명목 만기 수령액</div><div class="infl-val-big" id="infl-nom-mat" style="color:var(--krw-hi)">—</div></div>
-        <div class="infl-item"><div class="infl-label">실질 구매력</div><div class="infl-val-big" id="infl-real-mat" style="color:#ff6b6b">—</div></div>
-        <div class="infl-item"><div class="infl-label">구매력 손익</div><div class="infl-val-big" id="infl-real-diff" style="color:#ff6b6b">—</div></div>
+      <div id="infl-trigger-arrow" style="font-size:22px;color:#ff9f43;flex-shrink:0;transition:transform .35s">↓</div>
+    </div>
+
+    <!-- 슬라이드 컨테이너 -->
+    <div id="infl-slide" style="max-height:0;overflow:hidden;transition:max-height .55s cubic-bezier(.4,0,.2,1),opacity .45s ease;opacity:0">
+      <div class="inflation-card" style="margin-top:0">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <div class="chart-title" style="margin-bottom:0;color:#ff9f43">물가상승률 반영 실질 수익률</div>
+          <div id="krw-hint" onclick="toggleKrwInfl()" style="
+            font-family:var(--mono);font-size:11px;color:var(--text4);cursor:pointer;
+            padding:5px 10px;border:1px solid var(--border2);border-radius:6px;
+            white-space:nowrap;transition:color .2s,border-color .2s
+          ">차트에 반영 →</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text4);margin-bottom:4px">
+          생활물가 <span id="infl-rate-show" style="color:#ff9f43">3.6</span>% 적용
+        </div>
+        <div class="infl-grid">
+          <div class="infl-item"><div class="infl-label">명목 수익률</div><div class="infl-val neutral" id="infl-nom-yield">—</div></div>
+          <div class="infl-item"><div class="infl-label">물가 차감</div><div class="infl-val neg" id="infl-rate-neg">-3.6%</div></div>
+          <div class="infl-item"><div class="infl-label">실질 수익률</div><div class="infl-val" id="infl-real-yield">—</div></div>
+          <div class="infl-item"><div class="infl-label">명목 만기 수령액</div><div class="infl-val-big" id="infl-nom-mat" style="color:var(--krw-hi)">—</div></div>
+          <div class="infl-item"><div class="infl-label">실질 구매력</div><div class="infl-val-big" id="infl-real-mat" style="color:#ff6b6b">—</div></div>
+          <div class="infl-item"><div class="infl-label">구매력 손익</div><div class="infl-val-big" id="infl-real-diff" style="color:#ff6b6b">—</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -507,7 +542,7 @@ select{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;c
         <div class="leg"><div class="leg-dot" style="background:#00fdff"></div>세후 이자</div>
         <div class="leg"><div class="leg-dot" style="background:#fffb00"></div>환율 보너스</div>
       </div>
-      <div style="position:relative;width:100%;height:340px">
+      <div style="position:relative;width:100%;height:clamp(240px,32vh,340px)">
         <canvas id="fxChart" role="img" aria-label="달러 적금 누적 잔액 추이"></canvas>
       </div>
     </div>
@@ -572,19 +607,14 @@ select{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;c
       </div>
     </div>
     <div class="chart-card">
-      <div class="chart-title">달러 적금 만기 후 자산 성장 (연 4% 복리)</div>
-      <div class="legend">
-        <div class="leg"><div class="leg-dot" style="background:#2a2a2a;border:1px solid #555"></div>납입원금</div>
-        <div class="leg"><div class="leg-dot" style="background:#ff2f92"></div>세금</div>
-        <div class="leg"><div class="leg-dot" style="background:#00fdff"></div>세후 이자</div>
-        <div class="leg"><div class="leg-dot" style="background:#fffb00"></div>환율 보너스</div>
-        <div class="leg"><div class="leg-dot" style="background:#2a2a2a;border:1px solid #555"></div>납입원금</div>
-        <div class="leg"><div class="leg-dot" style="background:#00fdff"></div>세후 이자</div>
-        <div class="leg"><div class="leg-dot" style="background:#fffb00"></div>환율 보너스</div>
-        <div class="leg"><div class="leg-dot" style="background:rgba(180,200,60,0.75)"></div>만기 후 4% 성장</div>
+      <div class="chart-title">달러 적금 만기 후 이자 성장 (+10년 ~ +20년 · 연 4% 복리)</div>
+      <div class="legend" style="margin-bottom:12px">
+        <div class="leg"><div class="leg-dot" style="background:rgba(180,200,60,0.75)"></div>달러 거치 이자 (4% 복리)</div>
+        <div class="leg" style="color:var(--text4);font-size:11px">바 클릭 시 강조 · 1$ = 1,800원 기준 표시</div>
       </div>
-      <div style="position:relative;width:100%;height:420px">
-        <canvas id="cmpChart" role="img" aria-label="원화 적금 vs 달러 적금 누적 비교"></canvas>
+      <div id="cmp-fx-rate-label-bar" style="display:none;margin-bottom:10px;padding:12px 18px;background:rgba(255,159,67,0.08);border:1px solid rgba(255,159,67,0.3);border-radius:8px;font-family:var(--mono);font-size:15px;white-space:nowrap;overflow-x:auto"></div>
+      <div style="position:relative;width:100%;height:clamp(280px,38vh,420px)">
+        <canvas id="cmpChart" role="img" aria-label="달러 적금 만기 후 이자 성장"></canvas>
       </div>
       <div style="margin-top:14px;display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(0,253,255,0.06);border:1px solid rgba(0,253,255,0.2);border-radius:8px">
         <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">만기 기준 격차</span>
@@ -676,58 +706,6 @@ select{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;c
 
 </main>
 
-<aside class="rpanel">
-  <div class="panel-title">첨부 자료</div>
-  <div class="attach-item" onclick="openLightbox('FRED_CHART')">
-    <img class="attach-img" src="" data-key="FRED_CHART" alt="한국 원화 대비 미국 달러 현물 환율" loading="lazy">
-    <div class="attach-label"><span class="attach-tag">FRED</span>
-      <div class="attach-title">한국 원화 대비 미국 달러 현물 환율</div>
-      <div class="attach-sub">2026년 기준 1,470원 · 10년 연평균 +2.46%</div>
-    </div>
-  </div>
-  <div class="attach-item" onclick="openLightbox('NEWS_GANGNAM')">
-    <img class="attach-img" src="" data-key="NEWS_GANGNAM" alt="강남 부자들 달러 베팅" loading="lazy">
-    <div class="attach-label"><span class="attach-tag">NEWS</span>
-      <div class="attach-title">"넣어만 둬도 돈 번다" 강남 부자들 달러 베팅</div>
-      <div class="attach-sub">이지효의 슈퍼리치 레시피 · 2024.06.05</div>
-    </div>
-  </div>
-  <div class="attach-item" onclick="openLightbox('NEWS_SUPERRICH')">
-    <img class="attach-img" src="" data-key="NEWS_SUPERRICH" alt="슈퍼리치 달러자산 40%" loading="lazy">
-    <div class="attach-label"><span class="attach-tag">NEWS</span>
-      <div class="attach-title">"슈퍼리치, 올 달러자산 비중 40% 넘길것"</div>
-      <div class="attach-sub">"1400원대 환율이 뉴노멀" · 2025.01~02</div>
-    </div>
-  </div>
-  <div class="attach-item" onclick="openLightbox('NEWS_RATE1500')">
-    <img class="attach-img" src="" data-key="NEWS_RATE1500" alt="환율 1500원 갈 수도" loading="lazy">
-    <div class="attach-label"><span class="attach-tag">NEWS</span>
-      <div class="attach-title">"환율 1500원 갈 수도"</div>
-      <div class="attach-sub">작은 충격엔 급등, 하락 요인엔 무반응</div>
-    </div>
-  </div>
-  <div class="attach-item" onclick="openLightbox('NEWS_PRODUCT')">
-    <img class="attach-img" src="" data-key="NEWS_PRODUCT" alt="메트라이프생명 월납 달러연금 출시" loading="lazy">
-    <div class="attach-label"><span class="attach-tag">PRODUCT</span>
-      <div class="attach-title">메트라이프생명 월납 달러연금 출시</div>
-      <div class="attach-sub">공시이율 4.66% · 비과세 · 남녀노소 가입</div>
-    </div>
-  </div>
-  <div class="attach-item" onclick="openLightbox('TAX_FREE_DOLLAR')">
-    <img class="attach-img" src="" data-key="TAX_FREE_DOLLAR" alt="비과세 달러 자산" loading="lazy">
-    <div class="attach-label"><span class="attach-tag">NOTE</span>
-      <div class="attach-title">비과세 달러 자산</div>
-      <div class="attach-sub">빠른 원화가치 하락, 통화 분산 필수 시대</div>
-    </div>
-  </div>
-  <div class="attach-item" onclick="openLightbox('BIGMAC')">
-    <img class="attach-img" src="" data-key="BIGMAC" alt="빅맥 지수 - 글로벌 구매력 비교" loading="lazy">
-    <div class="attach-label"><span class="attach-tag">DATA</span>
-      <div class="attach-title">Big Mac Index</div>
-      <div class="attach-sub">원화 구매력 하락 · The Economist 2024.01</div>
-    </div>
-  </div>
-</aside>
 </div>
 
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
@@ -821,12 +799,24 @@ function updateKrw(){
     options:{...TOPTS,scales:{x:{...TOPTS.scales.x,stacked:true},y:{...TOPTS.scales.y,stacked:true}}}
   });
 
-  // ── 물가 반영 계산 ──
+  // ── 물가 반영 계산 (회차별 시점 반영) ──
+  // 각 납입금은 납입 시점부터 만기까지 남은 기간만큼 물가 차감
+  // 이자도 발생 시점 기준으로 물가 차감 → 실질 구매력 합산
   const inflRate = +(document.getElementById('krw-infl') ? document.getElementById('krw-infl').value : 3.6) / 100;
-  const inflFactor = Math.pow(1 + inflRate/12, mo);
-  const realMat = Math.round(R.mat / inflFactor);
+  const inflMonthly = Math.pow(1 + inflRate, 1/12) - 1; // 월 환산 물가상승률
+  let realMat = 0;
+  R.rows.forEach((row, i) => {
+    const remainMonths = mo - i; // 납입 후 만기까지 남은 개월
+    // 해당 회차 원금의 실질가치 (물가 차감)
+    const realPrincipal = m / Math.pow(1 + inflMonthly, remainMonths);
+    // 해당 회차 세후 이자의 실질가치
+    const realInterest = row.a / Math.pow(1 + inflMonthly, remainMonths);
+    realMat += realPrincipal + realInterest;
+  });
+  realMat = Math.round(realMat);
+  const nomYield = R.tA / R.pr;
   const realYield = realMat / R.pr - 1;
-  const realDiff = realMat - R.pr;
+  const realDiff = realMat - R.mat;
 
   const _g = id => document.getElementById(id);
   if(_g('infl-rate-show')) _g('infl-rate-show').textContent = (inflRate*100).toFixed(1);
@@ -869,7 +859,11 @@ function updateFx(){
   document.getElementById('fx-fxrate-disp').textContent=fr.toFixed(2);
   document.getElementById('fx-months-disp').textContent=mo;
   const R=calcF(m,br,fr,mo,tr);
-  const kR=calcK(m,br,mo,tr>0?tr:0.154);
+  window._fxResult = R; // 금리비교 탭에서 참조용
+  // 원화 적금 비교: krw-tax 실제 세율 참조 (탭 간 연동)
+  const _krwTaxEl=document.getElementById('krw-tax');
+  const _krwTaxVal=_krwTaxEl ? +_krwTaxEl.value/100 : 0.154;
+  const kR=calcK(m,br,mo,_krwTaxVal);
   document.getElementById('fx-maturity').innerHTML=fmt(R.mat)+' 원 <span class="fx-badge">+환율 효과</span>';
   document.getElementById('fx-combined').textContent=R.c.toFixed(2)+'%';
   document.getElementById('fx-principal').textContent=fmt(R.pr);
@@ -1007,46 +1001,158 @@ function updateCmp(){
   const post10El=document.getElementById('cmp-post10');
   if(post10El) post10El.textContent=fmt(Math.round(matFxC*Math.pow(1.04,10)));
 
-  cmpChart=new Chart(document.getElementById('cmpChart'),{
+  // ── 그래프: 원리금 전체 4% 복리 거치, 표시는 이자만 ──
+  // 만기 수령액 전체 (원금 + 이자)
+  const matTotal = fR.mat; // 달러 만기 원리금
+  const cL2 = ['+10년']; // 거치 시작점
+  // +10년: 거치 0년 → 이자 = matTotal - pr
+  interestArr_local: {
+    window._cmpInterestArr = [Math.round(matTotal - fR.pr)];
+    for(let yr=1; yr<=10; yr++){
+      cL2.push('+'+(10+yr)+'년');
+      const grown = Math.round(matTotal * Math.pow(1.04, yr));
+      window._cmpInterestArr.push(grown - fR.pr);
+    }
+  }
+  const interestArr = window._cmpInterestArr;
+
+  // 클릭 상태 저장
+  window._cmpClickedIdx = window._cmpClickedIdx ?? null;
+
+  const borderColors = cL2.map((_,i) => i===window._cmpClickedIdx ? '#ff9f43' : 'transparent');
+  const borderWidths = cL2.map((_,i) => i===window._cmpClickedIdx ? 3 : 0);
+
+  if(cmpChart){cmpChart.destroy();cmpChart=null;}
+
+  cmpChart = new Chart(document.getElementById('cmpChart'),{
     type:'bar',
-    data:{labels:cL,datasets:[
-      {label:'납입원금',data:dPrinc,backgroundColor:'#2a2a2a',borderWidth:0,borderRadius:4,stack:'a'},
-      {label:'세금',data:dTax,backgroundColor:'#ff2f92',borderWidth:0,borderRadius:4,stack:'a'},
-      {label:'세후 이자',data:dBase,backgroundColor:'#00fdff',borderWidth:0,borderRadius:4,stack:'a'},
-      {label:'환율 보너스',data:dBonus,backgroundColor:'#fffb00',borderWidth:0,borderRadius:4,stack:'a'},
-      {label:'만기 후 4% 성장',data:gArr,backgroundColor:'rgba(180,200,60,0.75)',borderColor:'#c8d840',borderWidth:1,borderRadius:4,stack:'a'}
-    ]},
+    data:{
+      labels:cL2,
+      datasets:[{
+        label:'달러 거치 이자 (4% 복리)',
+        data:interestArr,
+        backgroundColor:'rgba(180,200,60,0.75)',
+        borderColor: borderColors,
+        borderWidth: borderWidths,
+        borderRadius:6,
+        borderSkipped:false
+      }]
+    },
     options:{
-      responsive:true,maintainAspectRatio:false,
+      responsive:true, maintainAspectRatio:false,
+      onClick:(evt, elements)=>{
+        if(!elements.length) return;
+        const idx = elements[0].index;
+        if(window._cmpClickedIdx === idx){
+          window._cmpClickedIdx = null; // 토글 해제
+        } else {
+          window._cmpClickedIdx = idx;
+        }
+        // 바 강조 업데이트
+        const bc = cmpChart.data.datasets[0].borderColor;
+        const bw = cmpChart.data.datasets[0].borderWidth;
+        cL2.forEach((_,i)=>{
+          bc[i] = i===window._cmpClickedIdx ? '#ff9f43' : 'transparent';
+          bw[i] = i===window._cmpClickedIdx ? 3 : 0;
+        });
+        cmpChart.update('none');
+        // 레이블 업데이트
+        const lbl = document.getElementById('cmp-fx-rate-label-bar');
+        if(lbl){
+          if(window._cmpClickedIdx !== null){
+            const yr = 10 + window._cmpClickedIdx;
+            const interest = interestArr[window._cmpClickedIdx];
+            const principal = fR.pr; // 납입원금
+            const interest1800 = Math.round(interest * (1800 / 1500));
+            const extra = interest1800 - interest;
+            const isBase = window._cmpClickedIdx === 0;
+            const growthNote = isBase
+              ? `<span style="color:#aaa;margin:0 8px">·</span><span style="color:#c8d840">거치 시작점</span>`
+              : `<span style="color:#aaa;margin:0 8px">·</span><span style="color:#c8d840">4% 복리 ${window._cmpClickedIdx}년 성장</span>`;
+            lbl.innerHTML =
+              `<span style="color:#ff9f43">+${yr}년 선택</span>`+
+              `<span style="color:#fff;margin:0 10px">|</span>`+
+              `<span style="color:#fff">원금 ${fmt(principal)}원</span>`+
+              `<span style="color:#fff;margin:0 8px">·</span>`+
+              `<span style="color:#fff">이자 ${fmt(interest)}원</span>`+
+              growthNote+
+              `<span style="color:#fff;margin:0 8px">·</span>`+
+              `<span style="color:#fff">환율 1,500→1,800원 가정</span>`+
+              `<span style="color:#fffb00;margin:0 8px">→</span>`+
+              `<span style="color:#fff">이자 ${fmt(interest1800)}원</span>`+
+              `<span style="color:#fff;margin:0 8px">·</span>`+
+              `<span style="color:#ff9f43">추가 가능 +${fmt(extra)}원</span>`;
+            lbl.style.display='block';
+          } else {
+            lbl.style.display='none';
+          }
+        }
+      },
       plugins:{
         legend:{display:false},
         tooltip:{
-          backgroundColor:'#111',titleColor:'#fff',bodyColor:'#eee',borderColor:'#333',borderWidth:1,
+          backgroundColor:'#111',titleColor:'#fff',bodyColor:'#eee',
+          borderColor:'#333',borderWidth:1,
           callbacks:{
-            label:ctx=>ctx.raw===0?null:' '+ctx.dataset.label+': '+fmt(ctx.raw)+' 원',
+            label:ctx=>' 누적 이자: '+fmt(ctx.raw)+' 원',
             afterBody:items=>{
-              const i=items[0]&&items[0].dataIndex;
-              if(!i)return[];
-              const yr=i;
-              const total=Math.round(matFxC*Math.pow(1.04,yr));
-              return['','  총 자산: '+fmt(total)+' 원'];
+              const idx = items[0].dataIndex;
+              const total = fR.pr + interestArr[idx];
+              return['  총 자산 (원금 포함): '+fmt(total)+' 원'];
             }
           }
         }
       },
       scales:{
-        x:{stacked:true,ticks:{color:'#fff',font:{family:'DM Mono',size:13}},grid:{color:'#1e1e1e'}},
-        y:{stacked:true,ticks:{color:'#fff',font:{family:'DM Mono',size:13},callback:v=>(v/1000000).toFixed(0)+'M'},grid:{color:'#1e1e1e'}}
+        x:{ticks:{color:'#fff',font:{family:'DM Mono',size:13}},grid:{color:'#1e1e1e'}},
+        y:{ticks:{color:'#fff',font:{family:'DM Mono',size:13},callback:v=>(v/1000000).toFixed(0)+'M'},grid:{color:'#1e1e1e'}}
       }
     }
   });
 }
 
 
-/* ── 물가 반영 토글 ── */
+/* ── 물가 카드 reveal (트리거 버튼 클릭) ── */
+window._inflRevealed = false;
+function revealInflation(){
+  if(window._inflRevealed) return; // 한 번만 열림
+  window._inflRevealed = true;
+
+  // 트리거 버튼 페이드아웃
+  const trigger = document.getElementById('infl-trigger');
+  const arrow   = document.getElementById('infl-trigger-arrow');
+  if(arrow) arrow.style.transform = 'rotate(180deg)';
+  if(trigger){
+    trigger.style.transition = 'opacity .3s';
+    trigger.style.opacity = '0';
+    setTimeout(()=>{ trigger.style.display='none'; }, 320);
+  }
+
+  // 사이드바 물가 슬라이더 노출
+  const sb = document.getElementById('infl-sidebar');
+  if(sb){
+    sb.style.display = 'block';
+    requestAnimationFrame(()=>{
+      sb.style.maxHeight = '300px';
+      sb.style.opacity   = '1';
+    });
+  }
+
+  // 카드 슬라이드 다운
+  const slide = document.getElementById('infl-slide');
+  if(slide){
+    slide.style.maxHeight = '600px';
+    slide.style.opacity   = '1';
+    setTimeout(()=>{
+      slide.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }, 400);
+  }
+}
+
+/* ── 물가 차트 반영 토글 (카드 내 버튼) ── */
 function toggleKrwInfl(){
   window._krwInflMode = !window._krwInflMode;
-  const hint = document.getElementById('krw-hint');
+  const hint   = document.getElementById('krw-hint');
   const legReal = document.getElementById('leg-real');
   const legInt  = document.getElementById('leg-interest');
   const legTax  = document.getElementById('leg-tax');
@@ -1054,7 +1160,7 @@ function toggleKrwInfl(){
   const inflCard = document.querySelector('.inflation-card');
   if(!window._krwNom || !window._krwReal){ window._krwInflMode=false; return; }
   if(window._krwInflMode){
-    if(hint){ hint.textContent='클릭 → 명목 금액'; hint.classList.add('active'); }
+    if(hint){ hint.textContent='명목으로 복원 ←'; hint.style.color='#ff9f43'; hint.style.borderColor='#ff9f43'; }
     if(legReal) legReal.style.display='flex';
     if(legInt)  legInt.style.display='none';
     if(legTax)  legTax.style.display='none';
@@ -1069,7 +1175,7 @@ function toggleKrwInfl(){
       krwChart.update();
     }
   } else {
-    if(hint){ hint.textContent='클릭 → 물가 반영'; hint.classList.remove('active'); }
+    if(hint){ hint.textContent='차트에 반영 →'; hint.style.color=''; hint.style.borderColor=''; }
     if(legReal) legReal.style.display='none';
     if(legInt)  legInt.style.display='flex';
     if(legTax)  legTax.style.display='flex';
@@ -1085,28 +1191,24 @@ function toggleKrwInfl(){
       krwChart.update();
     }
   }
-  // 물가카드로 스크롤 + 하이라이트
+  // 카드 하이라이트
   if(inflCard){
-    setTimeout(()=>{
-      inflCard.scrollIntoView({behavior:'smooth', block:'nearest'});
-      inflCard.style.transition='border-color .3s';
-      inflCard.style.borderColor = window._krwInflMode ? '#ff9f43' : '#2e2a1a';
-    }, 200);
+    inflCard.style.borderColor = window._krwInflMode ? '#ff9f43' : '#2e2a1a';
   }
 }
 
 function switchTab(id){
-  ['int','krw','krw2','fx','cmp','rate','attach'].forEach((t,i)=>{
+  ['int','krw','krw2','fx','rate','cmp','attach'].forEach((t,i)=>{
     document.querySelectorAll('.tab-btn')[i].classList.toggle('active',t===id);
     document.getElementById('inputs-'+t).style.display=t===id?'block':'none';
     const p=document.getElementById('panel-'+t);
     if(p) p.style.display=t===id?(t==='int'?'flex':'block'):'none';
   });
   if(id==='fx')  setTimeout(updateFx,50);
-  if(id==='cmp') setTimeout(updateCmp,50);
+  if(id==='cmp'){window._cmpClickedIdx=null;setTimeout(updateCmp,50);}
   if(id==='krw') setTimeout(updateKrw,50);
   if(id==='krw2')setTimeout(updateKrw2,150);
-  if(id==='rate'){if(typeof syncRateFromSources==='function')syncRateFromSources();setTimeout(updateRate,50);}
+  if(id==='rate'){setTimeout(updateRate,50);}
   if(id==='int') initInterview();
 }
 
@@ -1164,8 +1266,8 @@ const INT={step:0,answers:{},done:false};
 const QUESTIONS=[
   {key:'saving',bot:'안녕하세요? 메이크스베러입니다. 😊<br><br>현재 저축을 하고 계신가요?',type:'choice',choices:['예','아니오']},
   {key:'purpose',bot:'저축 목적은 무엇인가요?',type:'choice',choices:['단순 저축','노후 자금','주택 자금','대출 상환','기타']},
-  {key:'monthly',bot:'월 납입금은 얼마인가요?',type:'number',unit:'원',placeholder:'1000000',min:10000,max:50000000},
-  {key:'rate',bot:'현재 적금 금리는 몇 %인가요?',type:'number',unit:'%',placeholder:'5.00',min:0.1,max:20,step:0.01},
+  {key:'monthly',bot:'월 납입금은 얼마인가요?',type:'number',unit:'원',placeholder:'1000000',min:100000,max:50000000},
+  {key:'rate',bot:'현재 적금 금리는 몇 %인가요?',type:'number',unit:'%',placeholder:'3.00',min:0.1,max:20,step:0.01},
   {key:'tax',bot:'세금 혜택은 어떻게 되시나요?',type:'choice',choices:['일반과세 15.4%','세금 우대 9.9%','비과세 0%']},
   {key:'final_offer',bot:'만약 대한민국에서 <b style="color:#00fdff">9% 금리</b>를 준다면 선택하시겠습니까? 💰',type:'choice',choices:['예, 선택하겠습니다!','아니오']}
 ];
@@ -1177,7 +1279,9 @@ function initInterview(){
 }
 function chatAdd(html,cls){
   const el=document.createElement('div');el.className='bubble '+cls;el.innerHTML=html;
-  document.getElementById('chat-messages').appendChild(el);
+  const cc=document.getElementById('chat-choices');
+  const msgs=document.getElementById('chat-messages');
+  msgs.insertBefore(el,cc); // choices 항상 맨 아래 유지
   el.scrollIntoView({behavior:'smooth',block:'nearest'});
   return el;
 }
@@ -1188,11 +1292,12 @@ function renderStep(idx){
   setTimeout(()=>{
     const b=document.createElement('div');b.className='bubble bot';
     b.innerHTML='<div class="bot-label">MAKESBETTER</div>'+q.bot;
-    document.getElementById('chat-messages').appendChild(b);
+    const cc=document.getElementById('chat-choices');
+    const msgs=document.getElementById('chat-messages');
+    msgs.insertBefore(b,cc); // choices 위에 삽입
     b.scrollIntoView({behavior:'smooth',block:'nearest'});
     setTimeout(()=>{
       clearChoices();
-      const cc=document.getElementById('chat-choices');
       if(q.type==='choice'){
         const row=document.createElement('div');row.className='choice-row';
         q.choices.forEach(c=>{
@@ -1205,17 +1310,23 @@ function renderStep(idx){
         const inp=document.createElement('input');inp.type='number';inp.className='inline-input';
         inp.placeholder=q.placeholder;inp.min=q.min;inp.max=q.max;if(q.step)inp.step=q.step;
         const unit=document.createElement('span');unit.textContent=q.unit;
-        unit.style.cssText='font-family:var(--mono);font-size:26px;color:var(--text3)';
+        unit.style.cssText='font-family:var(--mono);font-size:18px;color:var(--text3)';
         const btn=document.createElement('button');btn.className='inline-submit';btn.textContent='확인 →';
         btn.onclick=()=>{
-          const v=parseFloat(inp.value);
-          if(isNaN(v)||v<q.min||v>q.max){inp.style.borderColor='#e08878';setTimeout(()=>inp.style.borderColor='',600);return;}
+          let v=parseFloat(inp.value);
+          // 빈칸이면 기본값 적용 (월납입금: 100만원, 금리: 3%)
+          if(isNaN(v)){
+            v = q.key==='monthly' ? 1000000 : q.key==='rate' ? 3.0 : q.min;
+            inp.value = v;
+          }
+          if(v<q.min||v>q.max){inp.style.borderColor='#e08878';setTimeout(()=>inp.style.borderColor='',600);return;}
           selectNumber(idx,v,q.unit);
         };
         inp.addEventListener('keydown',e=>{if(e.key==='Enter')btn.click();});
         row.appendChild(inp);row.appendChild(unit);row.appendChild(btn);cc.appendChild(row);
         setTimeout(()=>inp.focus(),100);
       }
+      cc.scrollIntoView({behavior:'smooth',block:'nearest'});
     },200);
   },idx===0?0:300);
 }
@@ -1233,19 +1344,47 @@ function finishInterview(){
   INT.done=true;clearChoices();
   const a=INT.answers;
   const taxVal=TAX_MAP[a.tax]||15.4;
+  const taxFrac=taxVal/100;
   const emo={'단순 저축':'💰','노후 자금':'🌅','주택 자금':'🏠','대출 상환':'💳','기타':'📋'}[a.purpose]||'📋';
   const msg=a.final_offer==='예, 선택하겠습니다!'
     ?`감사합니다! ${emo}<br><b style="color:#00fdff">9% 이상 효과</b>를 분석했습니다.<br>원화 적금.1과 달러 적금 탭을 확인하세요! 💰`
-    :`분석을 시작합니다! ${emo}<br>원화 적금.1 탭에서 결과를 확인하세요 →`;
+    :`분석을 시작합니다! ${emo}<br>모든 탭에 자동 입력됐습니다 →`;
   chatAdd('<div class="bot-label">MAKESBETTER</div>'+msg,'bot');
   setTimeout(()=>{
     const g=id=>document.getElementById(id);
-    if(g('krw-monthly')){g('krw-monthly').value=a.monthly;if(g('krw-monthly-ni'))g('krw-monthly-ni').value=a.monthly;}
-    if(g('krw-rate')){g('krw-rate').value=a.rate;if(g('krw-rate-ni'))g('krw-rate-ni').value=a.rate;}
-    if(g('krw-tax'))g('krw-tax').value=taxVal;
+    const setVal=(id,val)=>{const el=g(id);if(el)el.value=val;};
+
+    // ── 원화 적금.1 ──
+    setVal('krw-monthly',a.monthly); setVal('krw-monthly-ni',a.monthly);
+    setVal('krw-rate',a.rate);       setVal('krw-rate-ni',a.rate);
+    setVal('krw-tax',taxVal);
     updateKrw();
+
+    // ── 원화 적금.2 (금리 7.1% 고정, 월 납입금만 인터뷰 값 반영) ──
+    setVal('k2-monthly',a.monthly);  setVal('k2-monthly-ni',a.monthly);
+    // k2-rate는 7.1% 고정 — 인터뷰 금리 연동 안 함
+    setVal('k2-tax',taxVal);
+    updateKrw2();
+
+    // ── 달러 적금 (월 납입금만 반영, 금리는 달러 전용이므로 유지) ──
+    setVal('fx-monthly',a.monthly);  setVal('fx-monthly-ni',a.monthly);
+    updateFx();
+
+    // ── 적금 비교 ──
+    setVal('cmp-monthly',a.monthly); setVal('cmp-monthly-ni',a.monthly);
+    setVal('cmp-krw-rate',a.rate);   setVal('cmp-krw-rate-ni',a.rate);
+    setVal('cmp-krw-tax',taxVal);
+    updateCmp();
+
+    // ── 금리 비교 ──
+    setVal('rate-monthly',a.monthly); setVal('rate-monthly-ni',a.monthly);
+    setVal('rate-tax',taxVal);
+    setVal('rate-cust',a.rate); setVal('rate-cust-ni',a.rate);
+    const custDisp=g('rate-cust-disp');if(custDisp)custDisp.textContent=parseFloat(a.rate).toFixed(1);
+    updateRate();
+
     const done=document.createElement('div');done.className='int-done';
-    done.innerHTML=`<b>✓ 원화 적금.1 자동 입력 완료</b><br>목적: ${a.purpose} ${emo}<br>월 납입금: ${Math.round(a.monthly).toLocaleString('ko-KR')} 원<br>금리: ${a.rate}%<br>세율: ${taxVal}%`;
+    done.innerHTML=`<b>✓ 전체 탭 자동 입력 완료</b><br>목적: ${a.purpose} ${emo}<br>월 납입금: ${Math.round(a.monthly).toLocaleString('ko-KR')} 원<br>금리: ${a.rate}% (원화 기준)<br>세율: ${taxVal}%`;
     document.getElementById('chat-choices').appendChild(done);
     const rb=document.createElement('button');rb.className='int-reset';rb.textContent='↺ 다시 입력하기';
     rb.onclick=resetInterview;document.getElementById('chat-choices').appendChild(rb);
@@ -1254,108 +1393,131 @@ function finishInterview(){
 }
 function resetInterview(){
   INT.step=0;INT.answers={};INT.done=false;
-  document.getElementById('chat-messages').innerHTML='';
-  document.getElementById('chat-choices').innerHTML='';
+  const msgs=document.getElementById('chat-messages');
+  const cc=document.getElementById('chat-choices');
+  // chat-choices 제외하고 모든 버블 삭제
+  Array.from(msgs.children).forEach(el=>{if(el!==cc)el.remove();});
+  cc.innerHTML='';
   renderStep(0);
 }
 
 /* ══ 금리비교 ══ */
-const RATE_PRESETS=[7.05,7.1,7.1];
 const RATE_COLORS=['#82b8f0','#a0c8ff','#00fdff'];
-let rateChart=null,rateLineChart=null;
-const RATE_LABELS=['원화 적금.1','원화 적금.2','달러 적금'];
-function syncRateFromSources(){
-  const rv0=document.getElementById('rate-val-0');
-  const rv1=document.getElementById('rate-val-1');
-  const rv2=document.getElementById('rate-val-2');
-  const krwR=document.getElementById('krw-rate');
-  const k2R=document.getElementById('k2-rate');
-  const fxR=document.getElementById('fx-rate');
-  if(krwR&&rv0&&rv0.dataset.userSet!=='1') rv0.value=krwR.value;
-  if(k2R&&rv1&&rv1.dataset.userSet!=='1') rv1.value=k2R.value;
-  if(fxR&&rv2&&rv2.dataset.userSet!=='1') rv2.value=fxR.value;
-}
-function initRateInputs(){
-  const w=document.getElementById('rate-inputs-wrap');
-  if(!w||w.children.length>0)return;
-  RATE_PRESETS.forEach((p,i)=>{
-    const d=document.createElement('div');d.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:12px';
-    d.innerHTML=`<div style="font-family:var(--mono);font-size:10px;color:${RATE_COLORS[i]};letter-spacing:.08em;margin-bottom:4px">${RATE_LABELS[i]}</div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <div style="width:10px;height:10px;border-radius:2px;background:${RATE_COLORS[i]};flex-shrink:0"></div>
-        <input class="num-input" type="number" id="rate-val-${i}" value="${p}" min="0.1" max="20" step="0.05" style="margin-bottom:0;flex:1" oninput="this.dataset.userSet='1';updateRate()">
-        <span style="font-family:var(--mono);font-size:13px;color:var(--text3)">%</span>
-      </div>`;
-    w.appendChild(d);
-  });
-}
+const RATE_LABELS=['고객 선택 금리','원화 7.1%','달러 9.1% (비과세)'];
+const FIXED_KRW2 = 7.1;   // 원화 고정
+const FIXED_FX   = 9.1;   // 달러 고정
+let rateChart=null;
+
 function updateRate(){
-  initRateInputs();
-  syncRateFromSources();
-  const m=+document.getElementById('rate-monthly').value;
-  const mo=+document.getElementById('rate-months').value;
-  const tax=+document.getElementById('rate-tax').value/100;
-  document.getElementById('rate-monthly-disp').textContent=fmt(m);
-  document.getElementById('rate-months-disp').textContent=mo;
-  document.getElementById('rate-tax-disp').textContent=(tax*100).toFixed(1);
-  const rates=RATE_PRESETS.map((_,i)=>{const el=document.getElementById('rate-val-'+i);return el?parseFloat(el.value)||0:0;});
-  // 달러적금(인덱스2): calcF 사용 (환율 반영, 비과세 0%)
-  const fxFxrate=+document.getElementById('fx-fxrate').value;
-  const results=rates.map((r,i)=>{
-    if(i===2) return calcF(m,r,fxFxrate,mo,0); // 달러: 기본금리+환율, 비과세
-    return calcK(m,r,mo,tax);
-  });
-  const cardsEl=document.getElementById('rate-cards');cardsEl.innerHTML='';
-  results.forEach((res,i)=>{
-    const yld=(res.tA/res.pr*100).toFixed(2);
-    const d=document.createElement('div');
-    d.style.cssText=`background:#1c1c1c;border:1px solid ${RATE_COLORS[i]}44;border-radius:12px;padding:16px 18px`;
-    const rateLabel=i===2?`${rates[i].toFixed(1)}% + 환율 ${fxFxrate.toFixed(2)}% · 비과세`:`금리 ${rates[i].toFixed(1)}%`;
-    d.innerHTML=`<div style="font-family:var(--mono);font-size:10px;color:${RATE_COLORS[i]};text-transform:uppercase;margin-bottom:8px">${rateLabel}</div>
-      <div style="font-family:var(--mono);font-size:13px;color:var(--text3);margin-bottom:4px">만기 수령액</div>
-      <div style="font-family:var(--mono);font-size:18px;color:${RATE_COLORS[i]};margin-bottom:12px">${fmt(res.mat)}</div>
+  const m   = +document.getElementById('rate-monthly').value;
+  const mo  = +document.getElementById('rate-months').value;
+  const tax = +document.getElementById('rate-tax').value / 100;
+  const cust= parseFloat(document.getElementById('rate-cust')?.value) || 4.0;
+
+  document.getElementById('rate-monthly-disp').textContent = fmt(m);
+  document.getElementById('rate-months-disp').textContent  = mo;
+  document.getElementById('rate-tax-disp').textContent     = (tax*100).toFixed(1);
+
+  // 3개 계산: 고객금리(과세), 원화7.1%(과세), 달러(달러 탭 결과 직접 참조)
+  const fxRes = window._fxResult || calcF(m, FIXED_KRW2, +document.getElementById('fx-fxrate').value, mo, 0);
+  const results = [
+    calcK(m, cust,       mo, tax),
+    calcK(m, FIXED_KRW2, mo, tax),
+    fxRes
+  ];
+  const fxRate = document.getElementById('fx-rate') ? +document.getElementById('fx-rate').value : FIXED_KRW2;
+  const fxFxrate = +document.getElementById('fx-fxrate').value;
+  const rates = [cust, FIXED_KRW2, fxRate + fxFxrate];
+
+  // ── 카드 ──
+  const cardsEl = document.getElementById('rate-cards');
+  cardsEl.innerHTML = '';
+  const cardLabels = [
+    `고객 선택 · ${cust.toFixed(1)}%`,
+    `원화 고정 · ${FIXED_KRW2}%`,
+    `달러 · ${fxRate.toFixed(1)}% + 환율 ${fxFxrate.toFixed(2)}% · 비과세`
+  ];
+  results.forEach((res, i) => {
+    const yld = (res.tA / res.pr * 100).toFixed(2);
+    const d = document.createElement('div');
+    d.style.cssText = `background:#1c1c1c;border:1px solid ${RATE_COLORS[i]}44;border-radius:12px;padding:16px 18px`;
+    d.innerHTML = `
+      <div style="font-family:var(--mono);font-size:10px;color:${RATE_COLORS[i]};text-transform:uppercase;margin-bottom:8px;letter-spacing:.08em">${cardLabels[i]}</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text4);margin-bottom:2px">세후 이자</div>
+      <div style="font-family:var(--mono);font-size:22px;color:${RATE_COLORS[i]};margin-bottom:12px;line-height:1.1">${fmt(res.tA)}<span style="font-size:13px"> 원</span></div>
       <div style="border-top:1px solid #2a2a2a;padding-top:10px">
-        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-family:var(--mono);font-size:10px;color:var(--text4)">납입원금</span><span style="font-family:var(--mono);font-size:11px;color:var(--text3)">${fmt(res.pr)}</span></div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-family:var(--mono);font-size:10px;color:var(--text4)">세후이자</span><span style="font-family:var(--mono);font-size:11px;color:${RATE_COLORS[i]}">${fmt(res.tA)}</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="font-family:var(--mono);font-size:10px;color:var(--text4)">수익률</span><span style="font-family:var(--mono);font-size:13px;font-weight:700;color:${RATE_COLORS[i]}">${yld}%</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--text4)">납입원금</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">${fmt(res.pr)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--text4)">수익률</span>
+          <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:${RATE_COLORS[i]}">${yld}%</span>
+        </div>
       </div>`;
     cardsEl.appendChild(d);
   });
-  const step=Math.max(1,Math.floor(mo/12));
-  const lineLabs=[],lineDS=[];
-  results[0].rows.forEach((r,i)=>{const last=(i===results[0].rows.length-1);if(i%step===0||last){if(!(last&&lineLabs.length&&lineLabs[lineLabs.length-1]===r.i+'회'))lineLabs.push(r.i+'회');}});
-  results.forEach((res,ri)=>{
-    const data=[];let cum=0;
-    res.rows.forEach((r,i)=>{cum+=r.a;const last=(i===res.rows.length-1);if(i%step===0||last){
-      if(last&&data.length&&lineLabs[data.length-1]===r.i+'회')data[data.length-1]=(i+1)*m+cum;
-      else data.push((i+1)*m+cum);
-    }});
-    lineDS.push({label:rates[ri].toFixed(1)+'%',data,borderColor:ri===2?'#00fdff':RATE_COLORS[ri],borderWidth:2.5,pointRadius:0,fill:false,tension:0.2});
-  });
-  const legEl=document.getElementById('rate-legend');legEl.innerHTML='';
-  rates.forEach((r,i)=>{legEl.innerHTML+=`<div class="leg"><div class="leg-dot" style="background:${RATE_COLORS[i]}"></div>${r.toFixed(1)}%</div>`;});
+
+  // ── 레전드 ──
+  const legEl = document.getElementById('rate-legend');
+  legEl.innerHTML = RATE_LABELS.map((l,i)=>
+    `<div class="leg"><div class="leg-dot" style="background:${RATE_COLORS[i]}"></div>${l}</div>`
+  ).join('');
+
+  // ── 바 차트: 이자만 단독 ──
+  const xLabels = [
+    `${cust.toFixed(1)}%`,
+    `${FIXED_KRW2}%`,
+    `${fxRate.toFixed(1)}%+환율`
+  ];
   if(rateChart){rateChart.destroy();rateChart=null;}
-  rateChart=new Chart(document.getElementById('rateChart'),{
+  rateChart = new Chart(document.getElementById('rateChart'),{
     type:'bar',
-    data:{labels:rates.map(r=>r.toFixed(1)+'%'),datasets:[
-      {label:'납입원금',data:results.map(r=>r.pr),backgroundColor:'#2a2a2a',borderWidth:0,borderRadius:4,stack:'a'},
-      {label:'세금',data:results.map(r=>r.tT),backgroundColor:'rgba(255,47,146,0.7)',borderWidth:0,borderRadius:4,stack:'a'},
-      {label:'세후이자',data:results.map((r,i)=>r.tA),backgroundColor:results.map((_,i)=>i===2?'#00fdff':RATE_COLORS[i]),borderWidth:0,borderRadius:4,stack:'a'}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#111',titleColor:'#fff',bodyColor:'#eee',borderColor:'#333',borderWidth:1,callbacks:{label:ctx=>ctx.raw===0?null:' '+ctx.dataset.label+': '+fmt(ctx.raw)+' 원'}}},scales:{x:{stacked:true,ticks:{color:'#fff',font:{family:'DM Mono',size:14}},grid:{color:'#1e1e1e'}},y:{stacked:true,ticks:{color:'#fff',font:{family:'DM Mono',size:13},callback:v=>(v/1000000).toFixed(0)+'M'},grid:{color:'#1e1e1e'}}}}
-  });
-  if(rateLineChart){rateLineChart.destroy();rateLineChart=null;}
-  rateLineChart=new Chart(document.getElementById('rateLineChart'),{
-    type:'line',data:{labels:lineLabs,datasets:lineDS},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#111',titleColor:'#fff',bodyColor:'#eee',borderColor:'#333',borderWidth:1,callbacks:{label:ctx=>' '+ctx.dataset.label+': '+fmt(ctx.raw)+' 원'}}},scales:{x:{ticks:{color:'#fff',font:{family:'DM Mono',size:12},maxTicksLimit:14,autoSkip:true},grid:{color:'#1e1e1e'}},y:{ticks:{color:'#fff',font:{family:'DM Mono',size:13},callback:v=>(v/1000000).toFixed(0)+'M'},grid:{color:'#1e1e1e'}}}}
+    data:{
+      labels: xLabels,
+      datasets:[{
+        label:'세후 이자',
+        data: results.map(r=>r.tA),
+        backgroundColor: RATE_COLORS,
+        borderWidth: 0,
+        borderRadius: 6,
+        borderSkipped: false
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'#111',titleColor:'#fff',bodyColor:'#eee',
+          borderColor:'#333',borderWidth:1,
+          callbacks:{label:ctx=>' 세후 이자: '+fmt(ctx.raw)+' 원'}
+        }
+      },
+      scales:{
+        x:{
+          ticks:{color:'#fff',font:{family:'DM Mono',size:15}},
+          grid:{color:'#1e1e1e'}
+        },
+        y:{
+          ticks:{color:'#fff',font:{family:'DM Mono',size:13},callback:v=>(v/1000000).toFixed(0)+'M'},
+          grid:{color:'#1e1e1e'}
+        }
+      }
+    }
   });
 }
 
 
 
 
-function openLightbox(k){document.getElementById('lb-img').src=IMGS[k];document.getElementById('lightbox').classList.add('show');}
+function openLightbox(k){
+  if(!IMGS[k]){console.warn('IMGS key not found:',k);return;}
+  document.getElementById('lb-img').src=IMGS[k];
+  document.getElementById('lightbox').classList.add('show');
+}
 function closeLightbox(){document.getElementById('lightbox').classList.remove('show');}
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)closeLightbox();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
 
 
@@ -1369,6 +1531,7 @@ updateKrw();
 setTimeout(updateKrw2,300);
 setTimeout(updateFx,80);
 setTimeout(updateCmp,120);
+switchTab('int');
 
 </script>
 </body>
