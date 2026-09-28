@@ -2853,38 +2853,97 @@ setTimeout(updateCmp,120);
 .expire-sub{font-family:'Pretendard Variable',monospace;font-size:13px;
   color:#a09894;margin-bottom:32px;line-height:1.8}
 .expire-contact{background:#16181b;border:1px solid #2a2a2a;
-  border-radius:12px;padding:20px 32px;}
+  border-radius:12px;padding:20px 32px;margin-bottom:28px}
 .expire-contact .label{font-family:'Pretendard Variable',monospace;font-size:13px;
   color:#605856;letter-spacing:.1em;margin-bottom:8px}
 .expire-contact .val{font-size:16px;color:#d4b67c;font-weight:500}
+.expire-renew{width:100%;max-width:300px}
+.expire-renew input{width:100%;padding:13px 14px;border-radius:10px;border:1px solid #2a2a2a;
+  background:#16181b;color:#f2ecea;font-family:'DM Mono',monospace;font-size:15px;
+  text-align:center;letter-spacing:.08em;margin-bottom:10px;text-transform:uppercase}
+.expire-renew input:focus{outline:none;border-color:#d4b67c}
+.expire-renew button{width:100%;padding:13px;border:none;border-radius:10px;
+  background:rgba(217,190,134,.16);color:#d4b67c;font-family:'Noto Sans KR',sans-serif;
+  font-size:15px;font-weight:600;cursor:pointer;transition:all .15s}
+.expire-renew button:hover{background:rgba(217,190,134,.28)}
+.expire-err{color:#ff8a8a;font-size:13px;margin-top:10px;min-height:16px;font-family:'DM Mono',monospace}
+#expire-overlay.shake .expire-renew{animation:mbshake .3s}
+@keyframes mbshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 </style>
 
 <div id="expire-overlay">
   <div class="expire-logo">MAKESBETTER</div>
-  <div class="expire-title">이용 기간이 만료되었습니다.</div>
-  <div class="expire-sub">
-    이 자료의 사용 기간(2026-12-20)이 종료되었습니다.<br>
-    계속 사용하시려면 아래로 문의해 주세요.
+  <div class="expire-title">사용 기간이 만료되었습니다.</div>
+  <div class="expire-sub" id="expire-sub">
+    이 계산기는 3개월마다 재승인이 필요합니다.<br>
+    메이크스베러 담당자에게 문의하세요.
   </div>
   <div class="expire-contact">
     <div class="label">CONTACT</div>
     <div class="val">MAKESBETTER · 오수현 팀장</div>
   </div>
+  <div class="expire-renew">
+    <input type="text" id="expire-code" placeholder="재등록 코드 입력" onkeydown="if(event.key==='Enter')mbRenewTry()">
+    <button onclick="mbRenewTry()">재등록</button>
+    <div class="expire-err" id="expire-err"></div>
+  </div>
 </div>
 
 <script>
 (function(){
-  var expire = new Date('2026-12-20');
-  expire.setHours(23,59,59,999);
-  if(new Date() > expire){
-    document.addEventListener('DOMContentLoaded', function(){
-      var el = document.getElementById('expire-overlay');
-      if(el) el.classList.add('show');
-      // 모든 클릭/키보드 이벤트 차단
-      document.body.style.pointerEvents='none';
-      el.style.pointerEvents='auto';
-    });
+  // ── 3개월(90일)마다 재승인 필요 ──
+  var EPOCH = new Date('2026-09-28T00:00:00+09:00'); // 기준일(이 버전 배포일)
+  var PERIOD_DAYS = 90;
+  function periodIndex(d){
+    return Math.floor((d - EPOCH) / (PERIOD_DAYS*24*60*60*1000));
   }
+  function mbHash(str){
+    var h = 5381;
+    for(var i=0;i<str.length;i++){ h = ((h<<5)+h) + str.charCodeAt(i); h = h & h; }
+    return Math.abs(h);
+  }
+  function periodCode(p){
+    var raw = mbHash('MB-B7-'+p+'-9214').toString(36).toUpperCase();
+    while(raw.length<6) raw = '0'+raw;
+    return raw.slice(0,6);
+  }
+  var CUR_PERIOD = periodIndex(new Date());
+  function isApproved(){
+    try{
+      var saved = JSON.parse(localStorage.getItem('mb_approve')||'null');
+      return !!(saved && saved.period === CUR_PERIOD && saved.ok);
+    }catch(e){ return false; }
+  }
+  function showGate(){
+    var el = document.getElementById('expire-overlay');
+    if(!el) return;
+    el.classList.add('show');
+    document.body.style.pointerEvents='none';
+    el.style.pointerEvents='auto';
+  }
+  function hideGate(){
+    var el = document.getElementById('expire-overlay');
+    if(!el) return;
+    el.classList.remove('show');
+    document.body.style.pointerEvents='';
+  }
+  window.mbRenewTry = function(){
+    var input = document.getElementById('expire-code');
+    var val = (input.value||'').trim().toUpperCase();
+    var err = document.getElementById('expire-err');
+    if(val === periodCode(CUR_PERIOD)){
+      try{ localStorage.setItem('mb_approve', JSON.stringify({period:CUR_PERIOD, ok:true})); }catch(e){}
+      err.textContent='';
+      hideGate();
+    } else {
+      err.textContent = '코드가 올바르지 않습니다.';
+      var overlay = document.getElementById('expire-overlay');
+      overlay.classList.remove('shake'); void overlay.offsetWidth; overlay.classList.add('shake');
+    }
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    if(!isApproved()) showGate();
+  });
 })();
 </script>
 
