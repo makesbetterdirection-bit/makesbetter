@@ -919,13 +919,13 @@ select{font-size:15px}
   <div class="sec-label">Better.7</div>
   <div class="iblock"><span class="ilabel">원화 총액</span>
     <div class="ival-row"><span class="ival" id="b7-krw-disp">70,000,000</span><span class="iunit">원</span></div>
-    <input class="num-input" type="number" id="b7-krw-ni" value="70000000" min="0" max="1000000000" step="1000000" oninput="syncNI('b7-krw');updateBetter7()">
-    <input class="krw-range" type="range" id="b7-krw" min="0" max="500000000" step="1000000" value="70000000" oninput="syncR('b7-krw');updateBetter7()">
+    <input class="num-input" type="number" id="b7-krw-ni" value="70000000" min="0" step="1000000" oninput="syncNI('b7-krw');updateBetter7()">
+    <input class="krw-range" type="range" id="b7-krw" min="0" max="10000000000" step="1000000" value="70000000" oninput="syncR('b7-krw');updateBetter7()">
   </div>
   <div class="iblock"><span class="ilabel">달러 환전 원화</span>
     <div class="ival-row"><span class="ival" id="b7-usdkrw-disp">50,000,000</span><span class="iunit">원</span></div>
-    <input class="num-input" type="number" id="b7-usdkrw-ni" value="50000000" min="0" max="1000000000" step="1000000" oninput="syncNI('b7-usdkrw');updateBetter7()">
-    <input class="krw-range" type="range" id="b7-usdkrw" min="0" max="500000000" step="1000000" value="50000000" oninput="syncR('b7-usdkrw');updateBetter7()">
+    <input class="num-input" type="number" id="b7-usdkrw-ni" value="50000000" min="0" step="1000000" oninput="syncNI('b7-usdkrw');updateBetter7()">
+    <input class="krw-range" type="range" id="b7-usdkrw" min="0" max="10000000000" step="1000000" value="50000000" oninput="syncR('b7-usdkrw');updateBetter7()">
   </div>
   <div class="iblock">
     <span class="ilabel">환전된 달러 · 실시간 환율</span>
@@ -1754,6 +1754,7 @@ function b7Coupon(usd){
   }
   return 0;
 }
+/* ── v11.6 : Better.7 원화 총액 · 달러 환전 원화 입력 상한 제거(무제한 입력, 슬라이더는 100억까지) ── */
 /* ── v11.5 : better7_prices.json 자동 로드(같은 폴더) · 가격/분배율/기준일 외부 파일화 ── */
 /* ── v11.4 : STEP 4 원화 환산을 쿠폰만으로 변경(원금 제외) ── */
 /* ── v11.3 : STEP 5 월배당 ETF 재투자 시나리오(0% · −5% · +5%) ── */
@@ -1851,7 +1852,7 @@ function b7RenderReinvest(vk,monthDist,monthlyUsd,fxUp){
   b7ApplyReinvVisibility();
 }
 function updateBetter7(){
-  const vk=+document.getElementById('b7-krw').value;
+  const vk=+document.getElementById('b7-krw-ni').value||0;
   document.getElementById('b7-krw-disp').textContent=fmt(vk);
   const prices=b7Prices;
   const distRates=b7Dist; // 월 분배율(%) · 0은 미기재(합산 제외)
@@ -1881,7 +1882,7 @@ function updateBetter7(){
   setT('b7-5y-dist',fmt(monthDist*60));
   setT('b7-month-rate',vk>0?(monthDist/vk*100).toFixed(2)+'%':'—');
   // 달러 환전
-  const vUsdKrw=+document.getElementById('b7-usdkrw').value;
+  const vUsdKrw=+document.getElementById('b7-usdkrw-ni').value||0;
   setT('b7-usdkrw-disp',fmt(vUsdKrw));
   const fxUpEl=document.getElementById('b7-fxup');
   const fxUp=fxUpEl?(parseFloat(fxUpEl.value)||0):0;
