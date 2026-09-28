@@ -1,0 +1,51 @@
+name: Better.7 ETF prices auto-update
+
+# 평일 하루 3회 (KST 07:50 / 12:50 / 15:50). GitHub cron 은 UTC 기준이며 수 분~수십 분 지연될 수 있음.
+on:
+  schedule:
+    - cron: "50 22 * * 0-4"   # 07:50 KST (Mon–Fri) — 직전 거래일 종가
+    - cron: "50 3 * * 1-5"    # 12:50 KST (Mon–Fri) — 당일 장중 현재가
+    - cron: "50 6 * * 1-5"    # 15:50 KST (Mon–Fri) — 당일 종가
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: better7-prices
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch prices and rebuild better7_prices.json
+        id: upd
+        run: |
+          set -o pipefail
+          python3 scripts/update_better7_prices.py | tee -a "$GITHUB_OUTPUT"
+
+      - name: Commit and push if changed
+        if: steps.upd.outputs.changed == 'true'
+        run: |
+          git config user.name "better7-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add better7_prices.json
+          MODE="${{ steps.upd.outputs.mode }}"
+          if [ "$MODE" = "intraday" ]; then LABEL="intraday"; else LABEL="closing price"; fi
+          PENDING="${{ steps.upd.outputs.pending }}"
+          MSG="Update Better.7 ETF prices — ${{ steps.upd.outputs.date }} ${LABEL}"
+          if [ "$PENDING" != "none" ]; then MSG="$MSG (pending: $PENDING)"; fi
+          git commit -m "$MSG"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Summary
+        run: |
+          echo "changed=${{ steps.upd.outputs.changed }} mode=${{ steps.upd.outputs.mode }} date=${{ steps.upd.outputs.date }} pending=${{ steps.upd.outputs.pending }}" >> "$GITHUB_STEP_SUMMARY"
+          cat better7_prices.json >> "$GITHUB_STEP_SUMMARY"
