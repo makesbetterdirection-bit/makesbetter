@@ -1,11 +1,16 @@
 name: Better.7 ETF prices auto-update
 
-# 평일 하루 3회 (KST 07:50 / 12:50 / 15:50). GitHub cron 은 UTC 기준이며 수 분~수십 분 지연될 수 있음.
+# 평일 정기 3회 (KST 07:50 / 12:50 / 15:50) + 보조 3회 (08:20 / 13:20 / 16:20).
+# GitHub cron 은 UTC 기준이며 지연되거나 건너뛰어질 수 있어 보조 실행을 둔다.
+# 값이 직전과 같으면 파일을 건드리지 않으므로 중복 실행은 안전하다.
 on:
   schedule:
     - cron: "50 22 * * 0-4"   # 07:50 KST (Mon–Fri) — 직전 거래일 종가
+    - cron: "20 23 * * 0-4"   # 08:20 KST (Mon–Fri) — 보조: 직전 거래일 종가
     - cron: "50 3 * * 1-5"    # 12:50 KST (Mon–Fri) — 당일 장중 현재가
+    - cron: "20 4 * * 1-5"    # 13:20 KST (Mon–Fri) — 보조: 당일 장중 현재가
     - cron: "50 6 * * 1-5"    # 15:50 KST (Mon–Fri) — 당일 종가
+    - cron: "20 7 * * 1-5"    # 16:20 KST (Mon–Fri) — 보조: 당일 종가
   workflow_dispatch: {}
 
 permissions:
