@@ -10,7 +10,10 @@ Better.7 ETF 시세 자동 갱신 스크립트 (GitHub Actions에서 평일 하�
 가격 소스: 1순위 야후파이낸스(종목코드.KS), 실패 시 구글파이낸스(종목코드:KRX). 둘 다 실패한 종목은
 추정하지 않고 직전 값 유지 + pending 에 기록.
 dist = 최근(배당락 기준) 월 분배금 / 가격 * 100 (%, 소수 2자리). 최근 100일 내 배당이 2회 미만인
-종목(분기·연 1회 분배)은 0. 배당 정보를 못 가져오면 직전 dist 유지.
+종목(분기·연 1회 분배)은 0. 최근 월 분배금(원)은 div 에 함께 저장해 두고, 배당 정보를 못 가져온 날은
+저장된 div / 당일 가격으로 dist 를 다시 계산한다(div 가 없던 예전 파일이면 직전 dist 유지).
+
+야후는 축약형 User-Agent 를 HTTP 429 로 차단하므로 실제 브라우저 UA 여러 개를 순서대로 시도한다.
 
 stdlib 만 사용.
 """
@@ -30,19 +33,26 @@ CODES = [
 DEFAULT_PRICES = [9585, 8995, 21070, 22440, 22890, 20070, 7755, 12765, 122515, 13270, 105642]
 DEFAULT_DIST = [2.03, 1.75, 1.47, 0, 0, 0, 0.8, 0.34, 0.30, 0.26, 0]
 OUT = os.environ.get("BETTER7_OUT", "better7_prices.json")
-UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/128 Safari/537.36",
-      "Accept": "application/json,text/html,*/*"}
+# 야후는 "Chrome/128 Safari/537.36" 같은 축약형 UA 를 429 로 막는다(2026-10-07 러너에서 확인). 완전한 브라우저 UA 사용.
+UAS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15",
+    "Mozilla/5.0 (X11; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0",
+]
+HDRS = {"Accept": "*/*", "Accept-Language": "en-US,en;q=0.9,ko;q=0.8"}
+# 구글파이낸스 보조 조회는 기존에 검증된 UA 를 그대로 쓴다(응답 형식이 UA 에 따라 달라질 수 있음).
+GOOGLE_UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/128 Safari/537.36"
 
 
 def log(*a):
     print(*a, file=sys.stderr, flush=True)
 
 
-def http_get(url, tries=2, timeout=30):
+def http_get(url, tries=2, timeout=30, ua=None):
     last = None
     for i in range(tries):
         try:
-            req = urllib.request.Request(url, headers=UA)
+            req = urllib.request.Request(url, headers=dict(HDRS, **{"User-Agent": ua or UAS[0]}))
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 return r.read().decode("utf-8", "ignore")
         except Exception as e:  # noqa: BLE001
@@ -53,11 +63,12 @@ def http_get(url, tries=2, timeout=30):
 
 def from_yahoo(code):
     last = None
-    for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
+    combos = [(ua, host) for ua in UAS for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com")]
+    for ua, host in combos:
         try:
             url = (f"https://{host}/v8/finance/chart/{code}.KS"
                    f"?range=6mo&interval=1d&events=div&includePrePost=false")
-            res = json.loads(http_get(url))["chart"]["result"][0]
+            res = json.loads(http_get(url, tries=1, ua=ua))["chart"]["result"][0]
             bars = [(datetime.fromtimestamp(t, KST).date(), float(c))
                     for t, c in zip(res["timestamp"], res["indicators"]["quote"][0]["close"]) if c is not None]
             if not bars:
@@ -75,7 +86,7 @@ def from_yahoo(code):
 
 
 def from_google(code):
-    h = http_get(f"https://www.google.com/finance/quote/{code}:KRX")
+    h = http_get(f"https://www.google.com/finance/quote/{code}:KRX", ua=GOOGLE_UA)
     # AF_initDataCallback 데이터: [["480030","KRX"],"이름",5,"KRW",[9595,-50,-0.518,...],null,9645,...,[1790580830],"Asia/Seoul"
     m = re.search(r'\["%s","KRX"\],"[^"]*",\d+,"KRW",\[([\d.]+),[-\d.]+,[-\d.]+[^\]]*\],null,([\d.]+|null).{0,200}?\[(\d{10})\]' % re.escape(code), h)
     if not m:
@@ -106,11 +117,17 @@ def load_prev():
     return {"date": "", "prices": DEFAULT_PRICES[:], "dist": DEFAULT_DIST[:], "source": "", "pending": []}
 
 
-def monthly_dist(divs, price, ref_date):
+def monthly_amount(divs, ref_date):
+    """최근 월 분배금(원/주). 최근 100일 내 배당이 2회 미만이면 월배당이 아니므로 0."""
     recent = [d for d in divs if 0 <= (ref_date - d[0]).days <= 100]
-    if len(recent) < 2 or not price:
+    if len(recent) < 2:
         return 0
-    return round(recent[-1][1] / price * 100, 2)
+    amt = recent[-1][1]
+    return int(amt) if float(amt).is_integer() else round(amt, 2)
+
+
+def dist_pct(amount, price):
+    return round(amount / price * 100, 2) if amount and price else 0
 
 
 def main():
@@ -137,7 +154,8 @@ def main():
     in_session = ref_date == today and (9, 0) <= (now.hour, now.minute) < (15, 35)
     mode = "intraday" if in_session else "close"
 
-    prices, dist, pending, ptimes, google_used = [], [], [], [], []
+    prev_div = prev.get("div") if isinstance(prev.get("div"), list) and len(prev.get("div")) == 11 else None
+    prices, dist, div, pending, ptimes, google_used, div_stale = [], [], [], [], [], [], []
     for i, c in enumerate(CODES):
         d = data[c]
         price = None
@@ -161,11 +179,24 @@ def main():
             log(f"[pending] {c}: keep previous {prev['prices'][i]}")
             prices.append(int(prev["prices"][i]))
             dist.append(prev["dist"][i])
+            div.append(prev_div[i] if prev_div else None)
             pending.append(c)
             continue
         p = int(round(price))
         prices.append(p)
-        dist.append(monthly_dist(d["divs"], p, ref_date) if d["divs"] is not None else prev["dist"][i])
+        if d["divs"] is not None:
+            amt = monthly_amount(d["divs"], ref_date)
+            div.append(amt)
+            dist.append(dist_pct(amt, p))
+        elif prev_div and prev_div[i] is not None:
+            # 배당 정보 없음(구글 보조) → 저장해 둔 최근 분배금으로 당일 가격 기준 재계산
+            div.append(prev_div[i])
+            dist.append(dist_pct(prev_div[i], p))
+            div_stale.append(c)
+        else:
+            div.append(None)
+            dist.append(prev["dist"][i])
+            div_stale.append(c)
         if d["src"] == "google":
             google_used.append(c)
 
@@ -179,14 +210,17 @@ def main():
         "date": ref_date.isoformat(),
         "prices": prices,
         "dist": dist,
+        "div": div,
         "source": f"{label} · {now:%Y-%m-%d %H:%M} KST 조회",
         "pending": pending,
     }
+    if div_stale:
+        log(f"[warn] dividend data unavailable (kept last known amount): {','.join(div_stale)}")
     assert len(out["prices"]) == 11 and all(isinstance(x, int) and x > 0 for x in out["prices"])
     assert len(out["dist"]) == 11
 
     if (out["date"] == prev.get("date") and out["prices"] == prev.get("prices")
-            and out["dist"] == prev.get("dist")):
+            and out["dist"] == prev.get("dist") and out["div"] == prev.get("div")):
         log(f"[skip] same date/prices/dist as previous ({out['date']}) — file untouched")
         print("changed=false")
         return 0
