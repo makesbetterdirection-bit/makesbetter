@@ -219,6 +219,19 @@ def main():
     assert len(out["prices"]) == 11 and all(isinstance(x, int) and x > 0 for x in out["prices"])
     assert len(out["dist"]) == 11
 
+    # 역행 방지: GitHub cron 이 몇 시간씩 늦게 실행되거나 야후가 오래된 봉을 돌려줄 때
+    # 이미 반영된 더 최신 데이터를 옛 날짜 값으로 덮어쓰지 않는다.
+    prev_date = prev.get("date") or ""
+    if prev_date and out["date"] < prev_date:
+        log(f"[skip] stale data: fetched {out['date']} is older than current {prev_date} — file untouched")
+        print("changed=false")
+        return 0
+    if (prev_date == out["date"] and mode == "intraday"
+            and str(prev.get("source", "")).startswith("야후파이낸스 종가")):
+        log(f"[skip] {out['date']} close already recorded — intraday value not applied")
+        print("changed=false")
+        return 0
+
     if (out["date"] == prev.get("date") and out["prices"] == prev.get("prices")
             and out["dist"] == prev.get("dist") and out["div"] == prev.get("div")):
         log(f"[skip] same date/prices/dist as previous ({out['date']}) — file untouched")
