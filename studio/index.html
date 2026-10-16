@@ -93,7 +93,8 @@ h1,h2,h3,p{margin:0;font-weight:400}
 /* card = 실제 화면 */
 .card{background:var(--card);border-radius:20px;padding:20px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
 .card + .card{margin-top:12px}
-.card-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.card-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 12px;margin-bottom:16px}
+.card-h > *{white-space:nowrap}
 .card-h .mono{color:var(--sub)}
 .pill{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:12px;font-size:12px;font-weight:600;letter-spacing:-.01em;background:#F2F2F2;color:#444;white-space:nowrap}
 .pill.up{background:var(--accent-soft);color:#C2410C}
@@ -106,7 +107,7 @@ h1,h2,h3,p{margin:0;font-weight:400}
 .pay{margin-top:20px;border-top:1px solid var(--rule)}
 .pay li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid var(--rule)}
 .pay li:last-child{border-bottom:0;padding-bottom:0}
-.pay li span:last-child{font-family:var(--display);font-size:18px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.pay li span:last-child{white-space:nowrap;font-family:var(--display);font-size:18px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .pay li span.sm:last-child{font-family:var(--text);font-size:14px;color:var(--sub);letter-spacing:-.02em}
 ul{list-style:none;margin:0;padding:0}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);text-align:center}
@@ -132,7 +133,7 @@ ul{list-style:none;margin:0;padding:0}
 .day{margin-top:12px;min-height:72px;padding:14px 16px;border-radius:14px;background:#F7F7F7;font-size:14px;line-height:22px}
 .day .t{display:flex;justify-content:space-between;color:var(--sub);margin-bottom:6px}
 .day li{display:flex;justify-content:space-between;gap:12px}
-.day li span:last-child{font-family:var(--display);font-variant-numeric:tabular-nums}
+.day li span:last-child{white-space:nowrap;font-family:var(--display);font-variant-numeric:tabular-nums}
 .note{margin-top:16px;font-size:13px;line-height:20px;color:var(--faint)}
 
 /* 3 signal */
@@ -332,15 +333,17 @@ footer .fine{margin-top:64px;display:grid;row-gap:8px;color:var(--dark-sub);font
 .ig b{display:block;font-size:22px;line-height:30px;font-weight:500;letter-spacing:-.045em}
 .ig .arw{width:40px;height:40px;border-radius:20px;box-shadow:inset 0 0 0 1px var(--rule2);display:grid;place-items:center;font-family:var(--display);font-weight:300;transition:background .25s,color .25s}
 .ig:hover .arw,.ig:active .arw{background:var(--ink);color:#fff;box-shadow:none}
-.trk-h{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:8px;color:var(--faint);padding-bottom:8px;border-bottom:1px solid var(--rule)}
-.trk-h span:not(:first-child),.trk li > b,.trk li > span.v{text-align:right}
-.trk li{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:8px;align-items:center;padding:14px 0;border-bottom:1px solid var(--rule)}
-.trk li:last-child{border-bottom:0;padding-bottom:0}
-.trk .m{font-size:16px;line-height:22px;letter-spacing:-.03em}
-.trk .m small{display:block;font-size:12px;line-height:16px;color:var(--sub);margin-top:2px;font-variant-numeric:tabular-nums}
-.trk .v{font-family:var(--display);font-size:17px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.trk b{font-family:var(--display);font-weight:500;font-size:17px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.trk b.up{color:var(--accent)}
+.trk li{padding:16px 0;border-top:1px solid var(--rule)}
+.trk li:first-child{border-top:0;padding-top:0}
+.trk li:last-child{padding-bottom:0}
+.trk .m{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.trk .m b{font-size:18px;line-height:24px;font-weight:500;letter-spacing:-.03em}
+.trk .m small{font-size:12px;line-height:16px;color:var(--sub);font-variant-numeric:tabular-nums;white-space:nowrap}
+.trk .g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.trk .g div{background:#F7F7F7;border-radius:12px;padding:10px;min-width:0}
+.trk .g i{display:block;font-style:normal;font-size:12px;line-height:16px;color:var(--sub);white-space:nowrap}
+.trk .g span{display:block;font-family:var(--display);font-size:clamp(15px,4.6vw,18px);line-height:24px;letter-spacing:-.03em;font-variant-numeric:tabular-nums;white-space:nowrap;margin-top:2px}
+.trk .g span.up{color:var(--accent)}
 .note.lot{margin:12px 4px 0}
 body.lock{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.roll ul,.view,.et .det{transition:none}}
@@ -417,7 +420,6 @@ body.lock{overflow:hidden}
       <div class="sec-body">
         <div class="card rv">
           <div class="card-h"><span class="mono">100만원 기준</span><span class="pill">vs ver.2 비중</span></div>
-          <div class="trk-h mono"><span>월</span><span>베러 추천</span><span>ver.2</span><span>차이</span></div>
           <ul class="trk" id="trk"></ul>
         </div>
         <p class="note" id="trkNote">신호일 종가 매수 → 다음 신호일 종가 기준, 기간 중 분배금 포함(세전), 수수료·세금 제외. 과거 성과는 미래 수익을 보장하지 않습니다.</p>
@@ -831,7 +833,7 @@ render();
   function draw(t){if(!t||!t.rows||!t.rows.length)return;
     document.getElementById('trk').innerHTML=t.rows.slice().reverse().map(function(r){
       var st=r.final?'확정':(r.intraday?'장중 · 진행 중':'진행 중');
-      return '<li><span class="m">'+r.label+'<small>'+md(r.start)+' → '+md(r.end)+' · '+st+'</small></span><span class="v">'+pct(r.rec)+'</span><span class="v">'+pct(r.bench)+'</span><b class="'+(r.diff>0?'up':'')+'">'+pct(r.diff,'%p')+'</b></li>'}).join('');}
+      return '<li><div class="m"><b>'+r.label+'</b><small>'+md(r.start)+' → '+md(r.end)+' · '+st+'</small></div><div class="g"><div><i>베러 추천</i><span>'+pct(r.rec)+'</span></div><div><i>ver.2 비중</i><span>'+pct(r.bench)+'</span></div><div><i>차이</i><span class="'+(r.diff>0?'up':'')+'">'+pct(r.diff,'%p')+'</span></div></div></li>'}).join('');}
   draw(FALLBACK);
   if(window.fetch&&location.protocol!=='file:')fetch('track.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(draw).catch(function(){});
 })();
