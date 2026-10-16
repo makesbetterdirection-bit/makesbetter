@@ -362,6 +362,23 @@ footer .fine{margin-top:64px;display:grid;row-gap:8px;color:var(--dark-sub);font
 .hC .r b{display:block;margin-top:6px;font-family:var(--display);font-weight:500;font-size:32px;line-height:32px;letter-spacing:-.04em;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
 .hC .r b small{font-size:13px;letter-spacing:-.01em;margin-left:1px;color:rgba(255,90,31,.8)}
 .hC .r b.tx{font-family:var(--text);font-size:18px;line-height:32px;font-weight:600;letter-spacing:-.03em}
+/* M = Split + Progress */
+.card.ins > .card-h.hM{display:grid;align-items:stretch;grid-template-columns:minmax(0,1fr) 88px;gap:4px;padding:0;background:none;box-shadow:none}
+.hM .l,.hM .r{background:linear-gradient(180deg,#1B1B1B,#0A0A0A);box-shadow:inset 0 1px 0 rgba(255,255,255,.09)}
+.hM .l{border-radius:16px 6px 6px 16px;padding:14px 16px 12px;min-width:0}
+.hM .l b{display:block;margin-top:9px;font-size:16px;line-height:22px;font-weight:600;letter-spacing:-.03em;color:#fff}
+.hM .br{display:flex;gap:2px;height:2px;margin:12px 0 6px;border-radius:1px;background:rgba(255,255,255,.14);overflow:hidden}
+.hM .br span{display:block;height:100%}
+.hM .br .f{background:linear-gradient(90deg,rgba(255,90,31,.4),var(--accent))}
+.hM .sb{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:10px;line-height:14px;letter-spacing:.04em;color:rgba(255,255,255,.46);white-space:nowrap}
+.hM .r{position:relative;overflow:hidden;border-radius:6px 16px 16px 6px;padding:12px 8px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  background:radial-gradient(90% 70% at 50% 100%,rgba(255,90,31,.22),rgba(255,90,31,0) 70%),linear-gradient(180deg,#1B1B1B,#0A0A0A)}
+.hM .r i{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);white-space:nowrap}
+.hM .r b{display:block;margin-top:4px;font-family:var(--display);font-weight:500;font-size:40px;line-height:40px;letter-spacing:-.05em;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+.hM .r b small{font-size:13px;letter-spacing:0;margin-left:1px;color:rgba(255,138,92,.9)}
+.hM .r b.tx{font-family:var(--text);font-size:17px;line-height:40px;font-weight:600;letter-spacing:-.03em}
+.hM .r b.sm{font-size:28px}
+.hM .r em{font-style:normal;margin-top:4px;font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:rgba(255,255,255,.4);white-space:nowrap}
 
 body.lock{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.roll ul,.view,.et .det{transition:none}}
@@ -923,6 +940,15 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&view.classL
   };
   function head(c,i){
     var ix='<em class="ix">'+p2(i)+'</em>';
+    if(V==='M'){
+      var big=c.tile[1].length>3?' sm':'';
+      var tv=c.keepId?'<b id="'+c.keepId+'">'+c.tile[1]+(c.tile[3]||'')+'</b>':'<b class="'+(c.tile[2]?'tx':big)+'">'+c.tile[1]+(c.tile[3]?'<small>'+c.tile[3]+'</small>':'')+'</b>';
+      var L='<span class="lb">'+ix+c.lb+'</span><b>'+c.t+'</b>';
+      if(c.bar)L+='<div class="br"><span class="f" style="width:'+c.bar[0].toFixed(1)+'%"></span></div>';
+      if(c.seg)L+='<div class="br"><span style="width:'+(c.seg[0]*100).toFixed(1)+'%;background:rgba(255,255,255,.85)"></span><span style="width:'+(c.seg[1]*100).toFixed(1)+'%;background:rgba(255,255,255,.3)"></span><span class="f" style="width:'+(c.seg[2]*100).toFixed(1)+'%"></span></div>';
+      if(c.sb&&(c.bar||c.seg))L+='<div class="sb">'+c.sb.map(function(x){return '<span>'+x+'</span>'}).join('')+'</div>';
+      return '<div class="l">'+L+'</div><div class="r"><i>'+c.tile[0]+'</i>'+tv+(c.unitNote?'<em>'+c.unitNote+'</em>':'')+'</div>';
+    }
     if(V==='C'){
       var tv=c.keepId?'<b id="'+c.keepId+'">'+c.tile[1]+(c.tile[3]||'')+'</b>':'<b class="'+(c.tile[2]?'tx':'')+'">'+c.tile[1]+(c.tile[3]?'<small>'+c.tile[3]+'</small>':'')+'</b>';
       return '<div class="l"><span class="lb">'+ix+c.lb+'</span><b>'+c.t+'</b></div><div class="r"><i>'+c.tile[0]+'</i>'+tv+'</div>';
