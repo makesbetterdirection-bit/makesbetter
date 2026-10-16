@@ -403,6 +403,13 @@ footer .fine{margin-top:64px;display:grid;row-gap:8px;color:var(--dark-sub);font
 .hM .r.rg svg{display:block;width:60px;height:60px}
 .hM .r.rg .rw b{position:absolute;inset:0;display:grid;place-items:center;margin:0;font-family:var(--display);font-weight:500;font-size:26px;line-height:1;letter-spacing:-.04em;color:var(--accent)}
 
+/* overflow guards (enlarged in-app text) */
+.hM .l .lb{display:block;overflow:hidden;text-overflow:ellipsis}
+.hM .sb.one span{overflow:hidden;text-overflow:ellipsis}
+.card.ins > .card-h.hM{grid-template-columns:minmax(0,1fr) minmax(88px,auto)}
+.hM .r b.sm{font-size:24px;line-height:40px;letter-spacing:-.04em}
+.hM .r b.sm small{font-size:11px}
+
 body.lock{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.roll ul,.view,.et .det{transition:none}}
 </style>
@@ -951,16 +958,17 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&view.classL
 (function(){
   var V0='R',V=V0==='R'?'M':V0,TILE={nextCard:1,buyCard:1,trkCard:1},M=window.__MB||{},td=M.td||0,EV=M.EV||{};
   var p2=function(n){return String(n).padStart(2,'0')};
+  var DW=['일','월','화','수','목','금','토'],dw=function(d){return DW[new Date(2026,9,d).getDay()]};
   var pc=function(a,b,c){return b>a?Math.max(3,Math.min(100,(c-a)/(b-a)*100)):0};
   var recBefore=function(d){var ks=Object.keys(EV).map(Number).filter(function(k){return EV[k].type==='rec'&&k<d});return ks.length?Math.max.apply(null,ks):1};
   var cnt={neg:0,neu:0,pos:0};INDICATORS.forEach(function(i){var v=i.state;cnt[v>=0.5?'pos':v<=-0.5?'neg':'neu']++});
   var CFG={
-    nextCard:function(){if(!M.np)return null;var s=recBefore(M.np);return {lb:'Next payment',t:'10월 '+(M.np<25?'중간배당':'월말배당')+' 지급',tile:['D-day',String(M.np-td)],pill:['D−'+(M.np-td),1],bar:[pc(s,M.np,td)],sb:['10.'+p2(s)+' 기준일','10.'+p2(M.np)+' 지급']}},
-    buyCard:function(){if(!M.bd)return null;var s=recBefore(M.bd);return {lb:'Buy by',t:(M.bd===28?'월말배당':'중간배당')+' 매수 마감',tile:['D-day',String(M.bd-td)],pill:['D−'+(M.bd-td),1],bar:[pc(s,M.bd,td)],sb:['10.'+p2(s)+' 기준일 이후','10.'+p2(M.bd)+' 장 마감']}},
+    nextCard:function(){if(!M.np)return null;var s=recBefore(M.np);return {lb:'Next payment',t:'10월 '+(M.np<25?'중간배당':'월말배당')+' 지급',tile:['D-day',String(M.np-td)],pill:['D−'+(M.np-td),1],bar:[pc(s,M.np,td)],sb:['10.'+p2(M.np)+' ('+dw(M.np)+') 지급']}},
+    buyCard:function(){if(!M.bd)return null;var s=recBefore(M.bd);return {lb:'Buy by',t:(M.bd===28?'월말배당':'중간배당')+' 매수 마감',tile:['D-day',String(M.bd-td)],pill:['D−'+(M.bd-td),1],bar:[pc(s,M.bd,td)],sb:['10.'+p2(M.bd)+' ('+dw(M.bd)+') 장 마감']}},
     calCard:function(){return {lb:'October 2026',t:'분배 일정 · 1주당 세전',tile:['Today',String(td||'—')],pill:['1주당 세전',0],bar:[pc(0,31,td)],sb:['10.01','10.'+p2(td||1)+' 오늘','10.31']}},
     rollCard:function(){var n=cnt.neg+cnt.neu+cnt.pos;return {lb:INDICATORS.length+' Indicators',t:'비우호 '+cnt.neg+' · 중립 '+cnt.neu+' · 우호 '+cnt.pos,tile:['Indicators',String(INDICATORS.length)],pill:['10.15 장마감',0],seg:[cnt.neg/n,cnt.neu/n,cnt.pos/n],sb:['비우호 '+cnt.neg,'중립 '+cnt.neu,'우호 '+cnt.pos]}},
     resCard:function(){return {lb:'11 ETF · 100만원 기준',t:'위험회피 국면의 배분',tile:['Regime','위험회피',1],pill:['위험회피',0]}},
-    trkCard:function(){var r=window.__TRK,d=r?((r.diff>0?'+':r.diff<0?'−':'')+Math.abs(r.diff*100).toFixed(2)):'—';return {lb:'Track record · 100만원',t:'베러 추천 vs ver.2 비중',tile:['차이',d,0,'%p'],pill:['vs ver.2 비중',0]}},
+    trkCard:function(){var r=window.__TRK,d=r?((r.diff>0?'+':r.diff<0?'−':'')+Math.abs(r.diff*100).toFixed(2)):'—';return {lb:'Track record',t:'베러 추천 vs ver.2 비중',tile:['차이',d,0,'%p'],pill:['vs ver.2 비중',0]}},
     olist:function(){return {lb:'주문 목록',t:'복사해서 증권사 앱에 그대로',tile:['종목','11',0,'종'],pill:['11종',0],keepId:'oCount'}}
   };
   function head(c,i){
