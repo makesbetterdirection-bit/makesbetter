@@ -28,10 +28,10 @@ from datetime import datetime, timedelta, timezone
 KST = timezone(timedelta(hours=9))
 CODES = [
     "480030", "494300", "498400", "497570", "485690", "0036R0",
-    "473330", "0022T0", "332610", "182480", "488770",
+    "473330", "0022T0", "332610", "441640", "488770",
 ]
-DEFAULT_PRICES = [9585, 8995, 21070, 22440, 22890, 20070, 7755, 12765, 122515, 13270, 105642]
-DEFAULT_DIST = [2.03, 1.75, 1.47, 0, 0, 0, 0.8, 0.34, 0.30, 0.26, 0]
+DEFAULT_PRICES = [9585, 8995, 21070, 22440, 22890, 20070, 7755, 12765, 122515, 12155, 105642]
+DEFAULT_DIST = [2.03, 1.75, 1.47, 0, 0, 0, 0.8, 0.34, 0.30, 0.77, 0]
 OUT = os.environ.get("BETTER7_OUT", "better7_prices.json")
 # 야후는 "Chrome/128 Safari/537.36" 같은 축약형 UA 를 429 로 막는다(2026-10-07 러너에서 확인). 완전한 브라우저 UA 사용.
 UAS = [
@@ -213,6 +213,7 @@ def main():
         "div": div,
         "source": f"{label} · {now:%Y-%m-%d %H:%M} KST 조회",
         "pending": pending,
+        "codes": CODES,
     }
     if div_stale:
         log(f"[warn] dividend data unavailable (kept last known amount): {','.join(div_stale)}")

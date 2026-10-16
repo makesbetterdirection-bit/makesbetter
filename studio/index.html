@@ -770,7 +770,7 @@ function render(){
 render();
 // better7_prices.json(같은 저장소) 시세 반영 — 순서는 재무계산기 Better.7 탭과 동일
 (function(){
-  var ORDER=['480030','494300','498400','497570','485690','0036R0','473330','0022T0','332610','182480','488770'];
+  var ORDER=['480030','494300','498400','497570','485690','0036R0','473330','0022T0','332610','441640','488770'];
   if(!window.fetch||location.protocol==='file:')return;
   fetch('../better7_prices.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
     if(!j||!Array.isArray(j.prices)||j.prices.length!==11||!j.date||j.date<'2026-10-15')return;
