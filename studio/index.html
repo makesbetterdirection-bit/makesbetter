@@ -348,6 +348,57 @@ footer .fine{margin-top:64px;display:grid;row-gap:8px;color:var(--dark-sub);font
 .trk .g span.up{color:var(--accent)}
 .note.lot{margin:12px 4px 0}
 
+/* ===== 지표 전체 창 ===== */
+.roll-card{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.roll-more{display:flex;justify-content:flex-end;align-items:center;gap:6px;margin-top:6px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--sub)}
+.roll-more b{font-family:var(--display);font-weight:300;font-size:14px;color:var(--ink)}
+.roll-card:active .roll-more,.roll-card:active .roll-more b{color:var(--accent)}
+.iview{position:fixed;inset:0;z-index:80;background:#0A0A0A;color:#EDEDED;visibility:hidden;
+  clip-path:inset(40% 5% 40% 5% round 22px);-webkit-clip-path:inset(40% 5% 40% 5% round 22px);
+  transition:clip-path .55s cubic-bezier(.2,.75,.15,1),-webkit-clip-path .55s cubic-bezier(.2,.75,.15,1),visibility 0s linear .55s}
+.iview.open{visibility:visible;clip-path:inset(0 0 0 0 round 0);-webkit-clip-path:inset(0 0 0 0 round 0);
+  transition:clip-path .55s cubic-bezier(.2,.75,.15,1),-webkit-clip-path .55s cubic-bezier(.2,.75,.15,1),visibility 0s}
+.iview:focus{outline:none}
+.iv-in{height:100%;display:flex;flex-direction:column;max-width:560px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top,0px)) var(--gr) calc(16px + env(safe-area-inset-bottom,0px)) var(--g);opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .4s cubic-bezier(.2,.7,.2,1)}
+.iview.open .iv-in{opacity:1;transform:none;transition-delay:.18s}
+.iv-top{height:52px;display:flex;align-items:center;justify-content:space-between}
+.iv-top .mono{color:rgba(255,255,255,.5)}
+.iv-x{width:44px;height:44px;margin-right:-6px;border-radius:22px;border:0;background:rgba(255,255,255,.08);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.iv-x svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.iv-x:active{background:var(--accent);box-shadow:none}
+.iv-head{padding:12px 0 18px}
+.iv-head h2{font-size:30px;line-height:38px;font-weight:500;letter-spacing:-.045em;color:#fff}
+.iv-head h2 b{font-family:var(--display);font-weight:500;color:var(--accent);margin-right:2px}
+.iv-cnt{margin-top:10px;color:rgba(255,255,255,.55)}
+.iv-cnt b{color:#fff;font-weight:500}
+.iv-seg{display:flex;gap:2px;height:3px;margin-top:12px;border-radius:2px;overflow:hidden}
+.iv-seg span{display:block;height:100%}
+.iv-roll{position:relative;flex:1;min-height:0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(transparent 0,#000 22%,#000 78%,transparent 100%);mask-image:linear-gradient(transparent 0,#000 22%,#000 78%,transparent 100%)}
+.iv-roll::before{content:"";position:absolute;left:83px;top:0;bottom:0;width:1px;background:rgba(255,255,255,.12)}
+.iv-roll ul{position:relative;list-style:none;margin:0;padding:0;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.iv-roll li{height:68px;display:grid;grid-template-columns:76px 16px minmax(0,1fr);align-items:center;opacity:.3;transition:opacity .5s;cursor:pointer}
+.iv-roll li.on{opacity:1}
+.iv-roll .tg{font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iv-roll li.on .tg{color:#fff;font-weight:500}
+.iv-roll .dt{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);justify-self:center;margin-left:-1px;transition:background .4s,box-shadow .4s}
+.iv-roll li.on .dt{background:var(--accent);box-shadow:0 0 0 5px rgba(255,90,31,.22)}
+.iv-roll .tx{min-width:0;padding-left:10px}
+.iv-roll .tx p{display:flex;align-items:center;gap:8px;font-size:17px;line-height:24px;letter-spacing:-.03em;color:#fff}
+.iv-roll .tx p span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iv-roll .tx small{display:block;margin-top:2px;font-size:13px;line-height:18px;color:rgba(255,255,255,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.iv-roll .st{font-style:normal;flex:none;display:inline-flex;align-items:center;height:20px;padding:0 8px;border-radius:10px;font-size:11px;font-weight:600;letter-spacing:-.01em}
+.iv-roll .st.neg{box-shadow:inset 0 0 0 1px rgba(255,255,255,.7);color:#fff}
+.iv-roll .st.neu{background:rgba(255,255,255,.12);color:rgba(255,255,255,.75)}
+.iv-roll .st.pos{background:rgba(255,90,31,.18);color:#FF8A5C}
+.iv-detail{margin-top:10px;background:#161616;border-radius:18px;padding:16px 18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.07);min-height:118px}
+.iv-detail .ax{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.iv-detail .ax b{font-weight:500;color:var(--accent)}
+.iv-detail .rl{margin-top:10px;font-size:15px;line-height:23px;color:#fff;letter-spacing:-.02em}
+.iv-detail .mt{margin-top:6px;font-size:12.5px;line-height:19px;color:rgba(255,255,255,.5)}
+@media (prefers-reduced-motion:reduce){.iview,.iview.open,.iv-in,.iv-roll ul{transition:none}}
+
+
 /* ===== inset card head (5-A / 5-C) ===== */
 .card.ins{border-radius:22px}
 .card.ins > .card-h{display:block;margin:-14px -14px 20px;padding:14px 16px;border-radius:16px;color:#fff;
@@ -466,6 +517,7 @@ body.lock{overflow:hidden}
         <div class="card roll-card rv" id="rollCard">
           <div class="card-h"><span class="mono"><b class="num" id="indN">24</b> Indicators</span><span class="mono roll-cnt" id="rollCnt"></span></div>
           <div class="roll" id="roll" aria-label="지표 판정 목록"><ul id="rollList"></ul></div>
+          <div class="roll-more">전체 보기 <b>↗</b></div>
         </div>
         <div class="card rv" id="resCard">
           <div class="card-h"><span class="mono">11 ETF · 100만원 기준</span><span class="pill dk" id="regime">위험회피</span></div>
@@ -592,6 +644,22 @@ body.lock{overflow:hidden}
       </details>
       <p class="note">2026.10.15 장마감 기준. 잠정 표시 지표는 확정치 발표 후 다시 반영합니다. 분배 기준일 직전 매수는 피하고, 일반 계좌는 배당소득세 15.4%를 뗀 입금액으로 계산하세요. 투자 판단의 참고 자료이며 특정 상품의 투자 권유가 아닙니다.</p>
     </div>
+  </div>
+</div>
+
+<div class="iview" id="iview" role="dialog" aria-modal="true" aria-labelledby="ivTitle" aria-hidden="true" tabindex="-1">
+  <div class="iv-in">
+    <div class="iv-top">
+      <span class="mono">Signal · <span id="ivAsof">10.15 장마감</span></span>
+      <button type="button" class="iv-x" id="ivClose" aria-label="지표 창 닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="iv-head">
+      <h2 id="ivTitle"><b id="ivN">24</b>개 지표</h2>
+      <div class="iv-cnt mono" id="ivCnt"></div>
+      <div class="iv-seg" id="ivSeg" aria-hidden="true"></div>
+    </div>
+    <div class="iv-roll" id="ivRoll"><ul id="ivList"></ul></div>
+    <div class="iv-detail" id="ivDetail" aria-live="polite"></div>
   </div>
 </div>
 
@@ -824,7 +892,7 @@ function rollItem(i){var s=stOf(i.state);
   return '<li><span class="tg">'+i.tag+'</span><span class="dt"></span><div class="tx"><p><span>'+i.name+'</span><em class="stt '+s[0]+'">'+s[1]+'</em></p><small>'+i.value+' · '+i.chg+' ('+i.date+(i.conf==='잠정'?' · 잠정':'')+')</small></div></li>'}
 var rl=$('#rollList');rl.innerHTML=INDICATORS.concat(INDICATORS.slice(0,3)).map(rollItem).join('');
 var lis=rl.children,ri=0,RH=52;
-function rollTo(k,anim){rl.style.transition=anim?'':'none';rl.style.transform='translateY('+(-(k-1)*RH)+'px)';
+function rollTo(k,anim){window.__rollIdx=k;rl.style.transition=anim?'':'none';rl.style.transform='translateY('+(-(k-1)*RH)+'px)';
   for(var j=0;j<lis.length;j++)lis[j].classList.toggle('on',j===k);}
 rollTo(1,false);ri=1;
 var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,rollT=null;
@@ -832,7 +900,7 @@ function step(){ri++;rollTo(ri,true);if(ri===N+1){setTimeout(function(){ri=1;rol
 var rollVis=false;
 if(!reduce){var rio='IntersectionObserver' in window?new IntersectionObserver(function(es){rollVis=es[0].isIntersecting},{threshold:.3}):null;
   if(rio)rio.observe($('#roll'));else rollVis=true;
-  rollT=setInterval(function(){if(rollVis&&!document.hidden&&!view.classList.contains('open'))step()},2400);}
+  rollT=setInterval(function(){if(rollVis&&!document.hidden&&!view.classList.contains('open')&&location.hash!=='#indicators')step()},2400);}
 
 // ---------- 홈 결과 카드 (100만원)
 function homeBar(){var H=allocate(sig,1000000,false),hs={'강':0,'중립':0,'보류':0},hsp=1000000-H.left;
@@ -950,6 +1018,61 @@ function route(){var on=location.hash==='#picks';
   else if(!on&&view.classList.contains('open')){view.classList.remove('open');view.setAttribute('aria-hidden','true');document.body.classList.remove('lock')}}
 window.addEventListener('hashchange',route);route();
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&view.classList.contains('open'))location.hash='signal'});
+})();
+</script>
+<script>
+
+// ---------- 지표 전체 창 (#indicators)
+(function(){
+  var iv=document.getElementById('iview'),list=document.getElementById('ivList'),roll=document.getElementById('ivRoll'),det=document.getElementById('ivDetail');
+  var card=document.querySelector('.roll-card');if(!iv||!card)return;
+  var N=INDICATORS.length,RH=68,k=N,tm=null,fromCard=false,rect=null,pauseUntil=0;
+  var st=function(v){return v>=0.5?['pos','우호']:v<=-0.5?['neg','비우호']:['neu','중립']};
+  var cnt={neg:0,neu:0,pos:0};INDICATORS.forEach(function(i){cnt[st(i.state)[0]]++});
+  document.getElementById('ivN').textContent=N;
+  document.getElementById('ivAsof').textContent=ASOF.replace('2026.','')+'';
+  document.getElementById('ivCnt').innerHTML='비우호 <b>'+cnt.neg+'</b> · 중립 <b>'+cnt.neu+'</b> · 우호 <b>'+cnt.pos+'</b>';
+  document.getElementById('ivSeg').innerHTML='<span style="width:'+(cnt.neg/N*100)+'%;background:rgba(255,255,255,.85)"></span><span style="width:'+(cnt.neu/N*100)+'%;background:rgba(255,255,255,.3)"></span><span style="width:'+(cnt.pos/N*100)+'%;background:var(--accent)"></span>';
+  var item=function(i,j){var s=st(i.state);return '<li data-i="'+j+'"><span class="tg">'+i.tag+'</span><span class="dt"></span><div class="tx"><p><span>'+i.name+'</span><em class="st '+s[0]+'">'+s[1]+'</em></p><small>'+i.value+' · '+i.chg+'</small></div></li>'};
+  var all=INDICATORS.concat(INDICATORS,INDICATORS);
+  list.innerHTML=all.map(function(i,j){return item(i,j)}).join('');
+  var lis=list.children;
+  function detail(n){var i=INDICATORS[n],s=st(i.state);
+    det.innerHTML='<div class="ax"><span>'+AXES[i.axis].name+' · '+(n+1)+' / '+N+'</span><b>'+s[1]+'</b></div><p class="rl">'+i.rule+'</p><p class="mt">'+i.date+' · '+i.conf+(i.note?' · '+i.note:'')+'</p>';}
+  function go(n,anim){k=n;var off=roll.clientHeight/2-RH/2;list.style.transition=anim?'':'none';list.style.transform='translateY('+(off-k*RH)+'px)';
+    for(var j=0;j<lis.length;j++)lis[j].classList.toggle('on',j===k);detail(k%N);
+    if(k>=2*N){setTimeout(function(){go(k-N,false)},720)}else if(k<N){setTimeout(function(){go(k+N,false)},720)}}
+  function tick(){if(Date.now()<pauseUntil)return;go(k+1,true)}
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  list.addEventListener('click',function(e){var li=e.target.closest('li');if(!li)return;var j=+li.dataset.i;pauseUntil=Date.now()+6000;go(j,true)});
+  // 위아래로 쓸어 넘기기
+  var y0=null;roll.addEventListener('touchstart',function(e){y0=e.touches[0].clientY},{passive:true});
+  roll.addEventListener('touchend',function(e){if(y0===null)return;var dy=e.changedTouches[0].clientY-y0;y0=null;if(Math.abs(dy)>30){pauseUntil=Date.now()+6000;go(k+(dy<0?1:-1),true)}},{passive:true});
+  function clipFor(r){return 'inset('+Math.max(0,r.top)+'px '+Math.max(0,innerWidth-r.right)+'px '+Math.max(0,innerHeight-r.bottom)+'px '+Math.max(0,r.left)+'px round 22px)'}
+  function open(){
+    rect=card.getBoundingClientRect();
+    if(rect.bottom>0&&rect.top<innerHeight){iv.style.transition='none';iv.style.clipPath=iv.style.webkitClipPath=clipFor(rect);void iv.offsetWidth;iv.style.transition=''}
+    iv.classList.add('open');iv.setAttribute('aria-hidden','false');document.body.classList.add('lock');
+    iv.style.clipPath=iv.style.webkitClipPath='';
+    requestAnimationFrame(function(){go(N+((window.__rollIdx||0)%N),false)});
+    clearInterval(tm);if(!reduce)tm=setInterval(tick,2400);
+    setTimeout(function(){iv.focus({preventScroll:true})},500);
+  }
+  function close(){
+    clearInterval(tm);
+    if(rect){var r=card.getBoundingClientRect();iv.style.clipPath=iv.style.webkitClipPath=clipFor(r)}
+    iv.classList.remove('open');iv.setAttribute('aria-hidden','true');
+    setTimeout(function(){iv.style.clipPath=iv.style.webkitClipPath='';if(!document.querySelector('.view.open'))document.body.classList.remove('lock')},560);
+  }
+  function route(){var on=location.hash==='#indicators';if(on&&!iv.classList.contains('open'))open();else if(!on&&iv.classList.contains('open'))close()}
+  card.setAttribute('role','button');card.setAttribute('tabindex','0');card.setAttribute('aria-label','24개 지표 전체 보기');
+  function openFromCard(){fromCard=true;location.hash='indicators'}
+  card.addEventListener('click',openFromCard);
+  card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openFromCard()}});
+  document.getElementById('ivClose').addEventListener('click',function(){if(fromCard){fromCard=false;history.back()}else location.hash='signal'});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&iv.classList.contains('open'))document.getElementById('ivClose').click()});
+  window.addEventListener('resize',function(){if(iv.classList.contains('open'))go(k,false)});
+  window.addEventListener('hashchange',route);route();
 })();
 </script>
 <script>
