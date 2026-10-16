@@ -1,0 +1,265 @@
+{
+ "month": "2026-10",
+ "asof": "2026.10.15 장마감",
+ "engine": "Signal v2 · 10.15 발표 당시 지표값",
+ "axes": {
+  "R": -0.61,
+  "SK": -1,
+  "SU": 0.33,
+  "A": -1,
+  "VK": 1,
+  "VU": 0,
+  "G": -1,
+  "C": 0,
+  "F": 0.29,
+  "Q": 1
+ },
+ "indicators": [
+  {
+   "tag": "US2Y",
+   "axis": "R",
+   "state": -0.2
+  },
+  {
+   "tag": "US10Y",
+   "axis": "R",
+   "state": -0.45
+  },
+  {
+   "tag": "US30Y",
+   "axis": "R",
+   "state": -0.425
+  },
+  {
+   "tag": "CPI",
+   "axis": "R",
+   "state": -1
+  },
+  {
+   "tag": "FOMC",
+   "axis": "R",
+   "state": -1
+  },
+  {
+   "tag": "KOSPI",
+   "axis": "SK",
+   "state": -1
+  },
+  {
+   "tag": "VKOSPI",
+   "axis": "SK",
+   "state": -1
+  },
+  {
+   "tag": "FOREIGN",
+   "axis": "SK",
+   "state": -1
+  },
+  {
+   "tag": "BREADTH",
+   "axis": "SK",
+   "state": -1
+  },
+  {
+   "tag": "S&P500",
+   "axis": "SU",
+   "state": 0
+  },
+  {
+   "tag": "NASDAQ",
+   "axis": "SU",
+   "state": 0
+  },
+  {
+   "tag": "VIX",
+   "axis": "SU",
+   "state": 1
+  },
+  {
+   "tag": "SOX",
+   "axis": "A",
+   "state": -1
+  },
+  {
+   "tag": "SOX",
+   "axis": "A",
+   "state": -1
+  },
+  {
+   "tag": "VKOSPI",
+   "axis": "VK",
+   "state": 1
+  },
+  {
+   "tag": "VIX",
+   "axis": "VU",
+   "state": 0
+  },
+  {
+   "tag": "GOLD",
+   "axis": "G",
+   "state": -1
+  },
+  {
+   "tag": "IG OAS",
+   "axis": "C",
+   "state": 0
+  },
+  {
+   "tag": "USD/KRW",
+   "axis": "F",
+   "state": 1
+  },
+  {
+   "tag": "TRADE",
+   "axis": "F",
+   "state": -1
+  },
+  {
+   "tag": "FOREIGN",
+   "axis": "F",
+   "state": 1
+  },
+  {
+   "tag": "KR-US",
+   "axis": "F",
+   "state": 0
+  },
+  {
+   "tag": "USD/KRW",
+   "axis": "F",
+   "state": 0
+  },
+  {
+   "tag": "DXY",
+   "axis": "F",
+   "state": 0
+  }
+ ],
+ "etfs": {
+  "332610": {
+   "score": 0.34,
+   "parts": {
+    "R": -0.3,
+    "Q": 0.5,
+    "F": 0.14
+   },
+   "wind": "중립",
+   "stage": "해당 없음",
+   "sig": "중립"
+  },
+  "441640": {
+   "score": 0.01,
+   "parts": {
+    "SU": 0.17,
+    "R": -0.3,
+    "F": 0.14
+   },
+   "wind": "중립",
+   "stage": "보통",
+   "sig": "중립"
+  },
+  "473330": {
+   "score": 0.23,
+   "parts": {
+    "R": -0.91,
+    "Q": 1,
+    "F": 0.14
+   },
+   "wind": "중립",
+   "stage": "해당 없음",
+   "sig": "중립"
+  },
+  "480030": {
+   "score": 0.17,
+   "parts": {
+    "SU": 0.33,
+    "R": -0.3,
+    "F": 0.14
+   },
+   "wind": "중립",
+   "stage": "보통",
+   "sig": "중립"
+  },
+  "485690": {
+   "score": -1.33,
+   "parts": {
+    "A": -1.5,
+    "SU": 0.33,
+    "R": -0.3,
+    "F": 0.14
+   },
+   "wind": "불리",
+   "stage": "보통",
+   "sig": "보류"
+  },
+  "488770": {
+   "score": 1,
+   "parts": {
+    "Q": 1
+   },
+   "wind": "유리",
+   "stage": "해당 없음",
+   "sig": "강"
+  },
+  "494300": {
+   "score": -0.83,
+   "parts": {
+    "SU": 0.33,
+    "A": -1,
+    "R": -0.3,
+    "F": 0.14
+   },
+   "wind": "중립",
+   "stage": "보통",
+   "sig": "중립"
+  },
+  "497570": {
+   "score": -1.33,
+   "parts": {
+    "A": -1.5,
+    "SU": 0.33,
+    "R": -0.3,
+    "F": 0.14
+   },
+   "wind": "불리",
+   "stage": "보통",
+   "sig": "보류"
+  },
+  "498400": {
+   "score": -1.25,
+   "parts": {
+    "SK": -1,
+    "A": -0.5,
+    "VK": 0.25
+   },
+   "wind": "불리",
+   "stage": "바닥권",
+   "sig": "중립"
+  },
+  "0022T0": {
+   "score": -1.16,
+   "parts": {
+    "G": -1,
+    "R": -0.3,
+    "F": 0.14
+   },
+   "wind": "불리",
+   "stage": "바닥권",
+   "sig": "중립"
+  },
+  "0036R0": {
+   "score": -0.83,
+   "parts": {
+    "A": -1,
+    "SU": 0.33,
+    "R": -0.3,
+    "F": 0.14
+   },
+   "wind": "중립",
+   "stage": "보통",
+   "sig": "중립"
+  }
+ },
+ "note": "신호 발표 시점의 판단 근거. 사후 수정하지 않는다."
+}
