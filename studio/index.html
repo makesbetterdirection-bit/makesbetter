@@ -888,6 +888,9 @@ document.querySelectorAll('.rv,#footH').forEach(function(el){io?io.observe(el):e
 })();
 </script>
 <script>
+var GHRAW='https://raw.githubusercontent.com/makesbetterdirection-bit/makesbetter/main/';
+function getJ(path,local){var q='?t='+Date.now(),f=function(u){return fetch(u+q,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()})};return f(GHRAW+path).catch(function(){return f(local)})}
+
 (function(){
 var $=function(s){return document.querySelector(s)};
 var fmt=function(n){return Math.round(n).toLocaleString('ko-KR')};
@@ -986,14 +989,14 @@ render();
       var st=r.final?'확정':(r.intraday?'장중 · 진행 중':'진행 중');
       return '<li><div class="m"><b>'+r.label+'</b><small>'+md(r.start)+' → '+md(r.end)+' · '+st+'</small></div><div class="g"><div><i>베러 추천</i><span>'+pct(r.rec)+'</span></div><div><i>ver.2 비중</i><span>'+pct(r.bench)+'</span></div><div><i>차이</i><span class="'+(r.diff>0?'up':'')+'">'+pct(r.diff,'%p')+'</span></div></div></li>'}).join('');}
   draw(FALLBACK);
-  if(window.fetch&&location.protocol!=='file:')fetch('track.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(draw).catch(function(){});
+  if(window.fetch&&location.protocol!=='file:')getJ('studio/track.json','track.json').then(draw).catch(function(){});
 })();
 
 // better7_prices.json(같은 저장소) 시세 반영 — 순서는 재무계산기 Better.7 탭과 동일
 (function(){
   var ORDER=['480030','494300','498400','497570','485690','0036R0','473330','0022T0','332610','441640','488770'];
   if(!window.fetch||location.protocol==='file:')return;
-  fetch('../better7_prices.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
+  getJ('better7_prices.json','../better7_prices.json').then(function(j){
     if(!j||!Array.isArray(j.prices)||j.prices.length!==11||!j.date||j.date<'2026-10-15')return;
     var codes=Array.isArray(j.codes)&&j.codes.length===11?j.codes.map(String):ORDER,n=0,miss=[];
     ETFS.forEach(function(e){var i=codes.indexOf(e.code),v=i>=0?+j.prices[i]:0,old=PX[e.code].close;

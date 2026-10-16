@@ -1772,7 +1772,9 @@ let b7Prices=B7_PRICE_SNAPSHOT.slice(), b7Dist=B7_DIST_SNAPSHOT.slice(), b7Price
 async function loadB7Prices(){
   if(b7PriceLoaded)return; b7PriceLoaded=true;
   try{
-    const res=await fetch('better7_prices.json',{cache:'no-store'});
+    let res=null;
+    try{res=await fetch('https://raw.githubusercontent.com/makesbetterdirection-bit/makesbetter/main/better7_prices.json?t='+Date.now(),{cache:'no-store'});if(!res.ok)res=null}catch(e){res=null}
+    if(!res)res=await fetch('better7_prices.json',{cache:'no-store'});
     if(!res.ok)throw new Error('HTTP '+res.status);
     const j=await res.json();
     if(!j||!Array.isArray(j.prices)||j.prices.length!==11||j.prices.some(v=>!(+v>0)))throw new Error('prices 형식 오류');

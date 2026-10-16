@@ -1,0 +1,5 @@
+# 시세 봇 커밋(better7_prices.json · studio/track.json만 바뀐 경우)은 Netlify 배포를 건너뜀.
+# 페이지는 시세를 GitHub(raw)에서 직접 읽으므로 배포 없이도 최신 값이 반영된다.
+# exit 0 = 배포 건너뜀, exit 1 = 배포 진행
+[build]
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)better7_prices.json' ':(exclude)studio/track.json'"
