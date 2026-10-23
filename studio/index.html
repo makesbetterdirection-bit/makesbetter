@@ -167,7 +167,7 @@ ul{list-style:none;margin:0;padding:0}
 .prog h3{margin-top:4px;font-size:22px;line-height:30px;letter-spacing:-.045em;font-weight:500}
 .prog p{margin-top:4px;color:var(--sub);font-size:14.5px;line-height:22px}
 .prog .arw{font-family:var(--display);font-weight:300;font-size:20px;line-height:20px;padding-top:26px;color:var(--ink);transition:color .2s,transform .2s}
-.prog a:hover .n,.prog a:active .n,.prog a:focus-visible .n,.prog a:hover .arw,.prog a:active .arw,.prog a:focus-visible .arw{color:var(--accent)}
+.prog a[href]:hover .n,.prog a:active .n,.prog a:focus-visible .n,.prog a:hover .arw,.prog a:active .arw,.prog a:focus-visible .arw{color:var(--accent)}
 .prog a:active .arw{transform:translateX(3px)}
 
 /* 6 contact */
@@ -904,9 +904,9 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
       <span class="eyebrow mono">Programs</span>
       <h2 class="h2 rv">필요한 것부터<br>시작하세요</h2>
       <div class="sec-body prog">
-        <a class="rv" href="#contact" data-kakao="etf"><span class="n">01</span><div><span class="mono">Better.7</span><h3>월배당 ETF</h3><p>11개 ETF로 한 달에 두 번 배당을 받습니다.</p></div><span class="arw">→</span></a>
-        <a class="rv" href="#contact" data-kakao="pension"><span class="n">02</span><div><span class="mono">DC, IRP</span><h3>퇴직연금 관리</h3><p>편입 상품을 진단하고 리밸런싱 방향을 드립니다.</p></div><span class="arw">→</span></a>
-        <a class="rv" href="#contact" data-kakao="salary"><span class="n">03</span><div><span class="mono">제2급여</span><h3>제2급여 설계</h3><p>원화와 달러로 월급 외 두 번째 급여를 만듭니다.</p></div><span class="arw">→</span></a>
+        <a class="rv"><span class="n">01</span><div><span class="mono">Better.7</span><h3>월배당 ETF</h3><p>11개 ETF로 한 달에 두 번 배당을 받습니다.</p></div></a>
+        <a class="rv"><span class="n">02</span><div><span class="mono">DC, IRP</span><h3>퇴직연금 관리</h3><p>편입 상품을 진단하고 리밸런싱 방향을 드립니다.</p></div></a>
+        <a class="rv"><span class="n">03</span><div><span class="mono">제2급여</span><h3>제2급여 설계</h3><p>원화와 달러로 월급 외 두 번째 급여를 만듭니다.</p></div></a>
         <a class="rv" href="https://mbkr.my/monthly1" target="_blank" rel="noopener"><span class="n">04</span><div><span class="mono">계산기</span><h3>중간배당 계산기</h3><p>중간배당 ETF의 분배금을 계산합니다.</p></div><span class="arw">↗</span></a>
         <a class="rv" href="https://mbkr.my/monthly2" target="_blank" rel="noopener"><span class="n">05</span><div><span class="mono">계산기</span><h3>월말배당 계산기</h3><p>월말배당 ETF의 분배금을 계산합니다.</p></div><span class="arw">↗</span></a>
       </div>
@@ -928,9 +928,8 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
   <div class="wrap">
     <span class="eyebrow mono">Contact</span>
     <h2 class="lines" id="footH"><span><i>Let’s make</i></span><span><i>money work.</i></span></h2>
-    <div class="who rv"><div><b>MAKESBETTER</b><span>기존 고객은 담당 채널로, 처음이시면 카카오톡으로 연락 주세요.</span></div><span class="mono">Seoul</span></div>
-    <a class="btn rv" href="#contact" id="kakao">카카오톡으로 상담하기</a>
-    <a class="btn ghost rv" href="#picks">이번 달 베러 추천 ETF</a>
+    <div class="who rv"><div><b>MAKESBETTER</b><span>기존 고객은 담당 채널로 연락 주세요.</span></div><span class="mono">Seoul</span></div>
+    <a class="btn rv" href="#picks">이번 달 베러 추천 ETF</a>
     <div class="fine">
       <span>© 2026 MAKESBETTER DIRECTION</span>
       <span>금융 정보 제공 및 상담 안내 목적이며 특정 상품의 투자 권유가 아닙니다. 투자 상품은 원금 손실이 발생할 수 있습니다. 분배금은 1주당 세전 금액이며 운용사 공시 기준입니다.</span>
@@ -1166,14 +1165,7 @@ function allocate(rows,amount,fractional){
 <script>
 (function(){
 document.documentElement.classList.add('js');
-// 카카오톡 채널 1:1 채팅 — 이전 페이지 주소를 넘기지 않아(no-referrer) 카카오의 '이전 페이지' 자동 안내가 뜨지 않게 한다.
-var KAKAO_CHAT='https://pf.kakao.com/_eETXxj/chat';
-var KAKAO_LINKS={main:'',etf:'etf',pension:'pension',salary:'salary'};
-var KAKAO=KAKAO_CHAT;
-function kakaoLink(a){a.href=KAKAO_CHAT;a.removeAttribute('target');a.setAttribute('referrerpolicy','no-referrer');a.setAttribute('rel','noreferrer')}
-[].forEach.call(document.querySelectorAll('[data-kakao]'),function(a){var t=KAKAO_LINKS[a.dataset.kakao];if(t!==undefined)kakaoLink(a)});
 var INSTA='https://www.instagram.com/makesbetter.one/'; // 메이크스베러 인스타그램 주소 확정 시 입력
-if(KAKAO){kakaoLink(document.getElementById('kakao'))}
 var IG_HANDLE='@makesbetter.one'; // 예: @makesbetter
 if(INSTA){var ig=document.getElementById('insta');ig.href=INSTA;ig.target='_blank';ig.rel='noopener'}
 if(IG_HANDLE)document.getElementById('igHandle').textContent=IG_HANDLE;
