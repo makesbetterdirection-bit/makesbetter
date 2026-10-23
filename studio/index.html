@@ -1166,23 +1166,14 @@ function allocate(rows,amount,fractional){
 <script>
 (function(){
 document.documentElement.classList.add('js');
-// 카카오톡 채널 1:1 채팅 — 카카오는 채팅방에 '이전 페이지' 주소와 그 미리보기 카드를 자동으로 띄운다.
-// 아이폰에서는 사용자가 직접 누른 링크일 때만 이전 페이지가 전달되므로 채팅 주소로 바로 연결하고,
-// 누르는 순간 주소창 경로를 /help/(HELP DESK 카드)로 바꿔 미리보기 카드가 HELP DESK로 보이게 한다.
+// 카카오톡 채널 1:1 채팅 — 이전 페이지 주소를 넘기지 않아(no-referrer) 카카오의 '이전 페이지' 자동 안내가 뜨지 않게 한다.
 var KAKAO_CHAT='https://pf.kakao.com/_eETXxj/chat';
-var STUDIO_PATH=location.pathname+location.search;
 var KAKAO_LINKS={main:'',etf:'etf',pension:'pension',salary:'salary'};
 var KAKAO=KAKAO_CHAT;
-function kakaoLink(a,topic){
-  a.href=KAKAO_CHAT;a.removeAttribute('target');a.setAttribute('referrerpolicy','unsafe-url');
-  a.addEventListener('click',function(){try{history.replaceState(history.state,'','/help/'+(topic?'?t='+topic:''))}catch(e){}setTimeout(restoreStudioPath,1500)});
-}
-function restoreStudioPath(){if(location.pathname.indexOf('/help/')===0){try{history.replaceState(history.state,'',STUDIO_PATH)}catch(e){}}}
-window.addEventListener('pageshow',restoreStudioPath);
-document.addEventListener('visibilitychange',function(){if(!document.hidden)restoreStudioPath()});
-[].forEach.call(document.querySelectorAll('[data-kakao]'),function(a){var t=KAKAO_LINKS[a.dataset.kakao];if(t!==undefined)kakaoLink(a,t)});
+function kakaoLink(a){a.href=KAKAO_CHAT;a.removeAttribute('target');a.setAttribute('referrerpolicy','no-referrer');a.setAttribute('rel','noreferrer')}
+[].forEach.call(document.querySelectorAll('[data-kakao]'),function(a){var t=KAKAO_LINKS[a.dataset.kakao];if(t!==undefined)kakaoLink(a)});
 var INSTA='https://www.instagram.com/makesbetter.one/'; // 메이크스베러 인스타그램 주소 확정 시 입력
-if(KAKAO){kakaoLink(document.getElementById('kakao'),'')}
+if(KAKAO){kakaoLink(document.getElementById('kakao'))}
 var IG_HANDLE='@makesbetter.one'; // 예: @makesbetter
 if(INSTA){var ig=document.getElementById('insta');ig.href=INSTA;ig.target='_blank';ig.rel='noopener'}
 if(IG_HANDLE)document.getElementById('igHandle').textContent=IG_HANDLE;
