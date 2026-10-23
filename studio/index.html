@@ -1166,14 +1166,15 @@ function allocate(rows,amount,fractional){
 <script>
 (function(){
 document.documentElement.classList.add('js');
-// 카카오톡 채널 1:1 채팅 — 버튼별 첫 문구 링크를 만들면 각 항목만 교체
-var KAKAO_BASE='https://pf.kakao.com/_eETXxj/chat';
-function kakaoChat(msg){return KAKAO_BASE+'?mode=chat&input='+encodeURIComponent(msg)}
+// 카카오톡 채널 1:1 채팅 — /help/(HELP DESK 경유 페이지)를 거쳐 채팅방으로 연결.
+// 카카오는 채팅방에 '이전 페이지' 주소를 자동으로 띄우므로, 그 미리보기 카드가 HELP DESK 이미지로 보이게 한다.
+var KAKAO_BASE='/help/';
+function kakaoChat(topic){return KAKAO_BASE+(topic?'?t='+topic:'')}
 var KAKAO_LINKS={
-  main:kakaoChat('메이크스베러 홈페이지 보고 상담 신청합니다.'),
-  etf:kakaoChat('Better.7 월배당 ETF 상담 받고 싶어요.'),
-  pension:kakaoChat('퇴직연금(DC·IRP) 관리 상담 받고 싶어요.'),
-  salary:kakaoChat('제2급여 설계 상담 받고 싶어요.')
+  main:kakaoChat(''),
+  etf:kakaoChat('etf'),
+  pension:kakaoChat('pension'),
+  salary:kakaoChat('salary')
 };
 var KAKAO=KAKAO_LINKS.main;
 [].forEach.call(document.querySelectorAll('[data-kakao]'),function(a){var u=KAKAO_LINKS[a.dataset.kakao];if(u){a.href=u;a.removeAttribute('target')}});
