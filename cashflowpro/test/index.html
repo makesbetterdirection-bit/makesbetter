@@ -806,6 +806,14 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
     <div class="wrap">
       <h1 class="lines in" aria-label="Money 4 Square Pro"><span aria-hidden="true"><i>Money 4</i></span><span aria-hidden="true"><i>Square</i></span><span aria-hidden="true"><i>Pro</i></span></h1>
       <p class="tagl">재정 메타인지 정밀 진단</p>
+      <div class="op-set" id="opSet" role="group" aria-label="글씨 크기">
+        <p class="op-q">어떤 글씨 크기가 편하신가요?</p>
+        <div class="op-circ">
+          <button type="button" class="op-c" data-mode="normal" aria-pressed="false"><b style="font-size:20px">가</b><span>보통</span></button>
+          <button type="button" class="op-c" data-mode="big" aria-pressed="false"><b style="font-size:30px">가</b><span>크게</span></button>
+        </div>
+        <p class="op-warn" id="opWarn" hidden>글씨 크기를 먼저 골라 주세요.</p>
+      </div>
     </div>
     <p class="nomagic" lang="en">No magic, just common sense.</p>
   </section>
@@ -1059,7 +1067,7 @@ body.s1 .sec-body{margin-top:24px}
 }
 </style>
 <style>/* M4S PRO opening: Studio 오프닝 그대로 + 하단 시작 버튼 */
-.op-pill{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 12px;border-radius:999px;background:var(--ink);color:#fff;font-family:var(--text);font-size:13px;font-weight:700;letter-spacing:0}
+.op-pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:13px;background:var(--ink);color:#fff;font-family:var(--text);font-size:12px;font-weight:700;letter-spacing:0;white-space:nowrap}
 .op-pill i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
 .hero .nomagic{bottom:calc(112px + env(safe-area-inset-bottom,0px))}
 .op-go{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:12px 0 calc(16px + env(safe-area-inset-bottom,0px))}
@@ -1069,11 +1077,35 @@ body.s1 .sec-body{margin-top:24px}
 .js .op-go{opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
 .js .op-go.on{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js .op-go{opacity:1;transform:none;transition:none}}
+
+.hero .nomagic{display:none!important}
+.op-set{margin-top:28px;padding:16px 16px 14px;border-radius:20px;background:rgba(255,255,255,.72);border:1px solid rgba(0,0,0,.08);max-width:360px}
+.op-q{margin:0 0 12px;font-family:var(--text);font-size:15px;font-weight:600;letter-spacing:-.02em;color:#0A0A0A;white-space:nowrap}
+.op-circ{display:flex;gap:14px}
+.op-c{width:76px;height:76px;border-radius:50%;border:1.5px solid #D4D4D4;background:#fff;color:#0A0A0A;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;cursor:pointer;font-family:var(--text);padding:0;-webkit-tap-highlight-color:transparent}
+.op-c b{font-weight:700;line-height:1}
+.op-c span{font-size:11px;color:#666;margin-top:3px}
+.op-c[aria-pressed=true]{background:#0A0A0A;border-color:#0A0A0A;color:#fff}
+.op-c[aria-pressed=true] span{color:#fff}
+.op-warn{margin:10px 0 0;font-size:13px;color:#C2410C;font-family:var(--text)}
+.op-set.shake{animation:opsh .35s}
+@keyframes opsh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.js .op-set{opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.js .op-set.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .op-set{opacity:1;transform:none;transition:none}}
 </style>
 <script>/* 시작 버튼: 디렉터 링크(?d=) 그대로 넘김, 오프닝이 끝나면(No magic 문구가 뜨면) 나타남 */
 (function(){var a=document.getElementById('opGo'),g=document.querySelector('.op-go'),nm=document.querySelector('.hero .nomagic');
  a.href='form.html'+location.search;
- var show=function(){g.classList.add('on')};
+ var KEY='m4s-pro-draft-v5',set=document.getElementById('opSet'),warn=document.getElementById('opWarn'),mode='';
+ var rd=function(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}};
+ var d0=rd(); if(d0&&d0.data&&d0.data.mode){mode=d0.data.mode}
+ var paint=function(){[].forEach.call(set.querySelectorAll('.op-c'),function(b){b.setAttribute('aria-pressed',String(b.dataset.mode===mode))})};
+ paint();
+ set.addEventListener('click',function(e){var b=e.target.closest('.op-c');if(!b)return;mode=b.dataset.mode;warn.hidden=true;paint();
+  try{var d=rd()||{data:{},cur:'mode'};d.data=d.data||{};d.data.mode=mode;localStorage.setItem(KEY,JSON.stringify(d))}catch(x){}});
+ a.addEventListener('click',function(e){if(!mode){e.preventDefault();warn.hidden=false;set.classList.remove('shake');void set.offsetWidth;set.classList.add('shake')}});
+ var show=function(){g.classList.add('on');set.classList.add('on')};
  if(matchMedia('(prefers-reduced-motion: reduce)').matches){show();return}
  if(nm){new MutationObserver(function(){if(nm.classList.contains('on'))show()}).observe(nm,{attributes:true,attributeFilter:['class']})}
  setTimeout(show,4500);

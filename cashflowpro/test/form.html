@@ -357,6 +357,8 @@ const DIRQ=(()=>{try{return (new URLSearchParams(location.search).get('d')||'').
 try{const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(d&&d.data){S=Object.assign(blank(),d.data); cur=d.cur||'mode';}}catch(e){}
 if(DIRQ){ S.profile.planner=DIRQ; cur='mode'; } // 디렉터 링크로 열면 항상 오프닝부터 (입력값은 유지)
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({data:S,cur}))}catch(e){}};
+// 오프닝에서 글씨 크기를 이미 골랐으면 설정 화면은 건너뜀
+if(cur==='mode' && S.mode){ cur='intro'; }
 
 const INCOME=[['work','근로소득','회사 급여'],['spouse','배우자 근로소득','배우자 회사 급여'],['biz','사업소득','자영업·프리랜서'],
   ['rent','임대소득','월세·임대 수입'],['int','이자·배당소득','예금 이자·주식 배당'],['pen','연금소득','국민연금·개인연금 등'],['etc1','기타소득','부업·강연료 등']];
