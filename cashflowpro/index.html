@@ -348,7 +348,7 @@ let S=blank(), cur='mode', error='', ret=null, ack={};
 // 디렉터가 보낸 링크(?d=이름)면 담당 디렉터를 미리 채움
 const DIRQ=(()=>{try{return (new URLSearchParams(location.search).get('d')||'').trim().slice(0,30);}catch(e){return '';}})();
 try{const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(d&&d.data){S=Object.assign(blank(),d.data); cur=d.cur||'mode';}}catch(e){}
-if(DIRQ){ S.profile.planner=DIRQ; }
+if(DIRQ){ S.profile.planner=DIRQ; cur='mode'; } // 디렉터 링크로 열면 항상 오프닝부터 (입력값은 유지)
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({data:S,cur}))}catch(e){}};
 
 const INCOME=[['work','근로소득','회사 급여'],['spouse','배우자 근로소득','배우자 회사 급여'],['biz','사업소득','자영업·프리랜서'],
