@@ -650,13 +650,24 @@ function render(){
     <button type="button" class="agree" data-agree aria-pressed="${S.consent}"><span class="box" aria-hidden="true">✓</span><span><b>네, 동의합니다</b><small>(필수) 개인정보 수집·이용 동의</small></span></button>`;
   } else if(pg.id==='basicRef'){
     const B=S.basic||{};
+    if((!S.basicLookup||(S.basicLookup==='loading'&&!BL)) && ENDPOINT && S.profile.name){ S.basicLookup='loading'; basicLookup(); }
+    const manR2=v=>{const m=Math.round((v||0)/10000); return m>=10000?`${(m/10000).toFixed(1).replace(/\.0$/,'')}억 원`:`${m.toLocaleString('ko-KR')}만&nbsp;원`;};
+    if(S.basicLookup==='loading'){
+      h=`${head('네 칸 · 베이직 값','베이직 접수 내용을<br>불러오는 중입니다','잠시만 기다려 주세요. 베이직에서 적으신 금액을 다시 적지 않으셔도 됩니다.')}`;
+    } else if(S.basicLookup==='found'){
+      h=`${head('네 칸 · 베이직 값','베이직에서 적으신<br>네 칸을 불러왔습니다','베이직 과정에서 접수하신 한 달 금액입니다. 이제부터 서류로 정확히 다시 채우고, 끝나면 <b>체감과 실제의 차이</b>를 보여드립니다.')}
+      <section class="card"><div class="card-h"><span class="mono">베이직 접수 내용</span><span class="pill">불러옴</span></div>
+      <ul class="flow"><li><span>소득</span><span>${manR2(B.income)}</span></li><li><span>고정지출</span><span>${manR2(B.fixed)}</span></li><li><span>변동지출</span><span>${manR2(B.variable)}</span></li><li><span>저축</span><span>${manR2(B.saving)}</span></li></ul></section>
+      <div class="editrow"><button type="button" class="edit" data-basicedit>금액이 다르면 직접 수정</button></div>`;
+    } else {
     h=`${head('네 칸 · 베이직 값','베이직에서 적었던<br>네 칸을 먼저 적어주세요','베이직 과정에서 적었던 한 달 금액입니다. 결과지를 보고 적거나, 기억나는 대로 적어주세요. 이제부터 서류로 정확히 다시 채우고, 끝나면 <b>체감과 실제의 차이</b>를 보여드립니다.')}
     <section class="card stack">
-      ${moneyField('basic-income',(B.incomeSet&&!B.income)?'0':B.income,'소득 <small>베이직에서 적은 한 달 소득</small>','',[10,50,100])}
-      ${moneyField('basic-fixed',(B.fixedSet&&!B.fixed)?'0':B.fixed,'고정지출 <small>베이직에서 적은 한 달 고정지출</small>','',[10,50,100])}
-      ${moneyField('basic-variable',(B.variableSet&&!B.variable)?'0':B.variable,'변동지출 <small>베이직에서 적은 한 달 변동지출</small>','',[10,50,100])}
-      ${moneyField('basic-saving',(B.savingSet&&!B.saving)?'0':B.saving,'저축 <small>베이직에서 적은 한 달 저축</small>','',[10,50,100])}</section>
+      ${moneyField('basic-income',(B.incomeSet&&!B.income)?'0':B.income,'소득 <small>베이직에서 적은 한 달 소득</small>','')}
+      ${moneyField('basic-fixed',(B.fixedSet&&!B.fixed)?'0':B.fixed,'고정지출 <small>베이직에서 적은 한 달 고정지출</small>','')}
+      ${moneyField('basic-variable',(B.variableSet&&!B.variable)?'0':B.variable,'변동지출 <small>베이직에서 적은 한 달 변동지출</small>','')}
+      ${moneyField('basic-saving',(B.savingSet&&!B.saving)?'0':B.saving,'저축 <small>베이직에서 적은 한 달 저축</small>','')}</section>
     <div class="note"><span>베이직 결과를 못 찾겠으면 <b>지금 느끼는 금액</b>을 적어주세요. 체감 금액과 실제 금액의 차이를 보는 것이 재정 메타인지의 시작입니다.</span></div>`;
+    }
   } else if(pg.kind==='pick'){
     const isI=pg.list==='income', items=isI?INCOME:FIXED, selA=isI?S.incomeSel:S.fixedSel;
     const married=S.profile.family==='기혼';
@@ -810,6 +821,7 @@ let toastT; function toast(msg,undo){ let el=document.getElementById('toast'); i
 document.addEventListener('mousedown',ev=>{ if(ev.target.closest('[data-quick]')) ev.preventDefault(); });
 document.addEventListener('click',ev=>{
   const t=ev.target.closest('button'); if(!t) return;
+  if(t.hasAttribute('data-basicedit')){ S.basicLookup='edit'; save(); const y=scrollY; render(); scrollTo(0,y); return; }
   if(t.dataset.quick){ const inp=document.getElementById(t.dataset.quick); const w=toWon(inp.value)+(+t.dataset.add)*10000;
     inp.value=toMan(w); inp.dispatchEvent(new Event('input',{bubbles:true})); inp.focus(); return; }
   if(t.dataset.mode){ S.mode=t.dataset.mode; error=''; save(); applyMode();
@@ -881,7 +893,7 @@ function validate(pg){
   if(pg.id==='notice' && !S.ready) return '[네, 확인했고 자료도 준비했습니다]를 눌러주세요.';
   if(pg.id==='consent' && !S.consent) return '[네, 동의합니다]를 눌러주세요.';
   if(pg.id==='incomePick' && !S.incomeSel.length) return '소득을 한 가지 이상 골라주세요.';
-  if(pg.id==='basicRef'){ const B=S.basic||{}; if(!B.income) return '베이직에서 적었던 소득을 적어주세요. 기억이 안 나면 지금 느끼는 한 달 소득이면 됩니다.';
+  if(pg.id==='basicRef'){ if(S.basicLookup==='loading') return '베이직 접수 내용을 불러오는 중입니다. 잠시만 기다려 주세요.'; const B=S.basic||{}; if(!B.income) return '베이직에서 적었던 소득을 적어주세요. 기억이 안 나면 지금 느끼는 한 달 소득이면 됩니다.';
     const ms=[['fixed','고정지출'],['variable','변동지출'],['saving','저축']].find(([k])=>!(B[k+'Set']||B[k]>0)); if(ms) return `베이직에서 적었던 ${ms[1]}을 적어주세요. 기억이 안 나면 지금 느끼는 금액, 없으면 0을 적어주세요.`; }
   if(pg.kind==='income'){ const o=S.income[pg.k]||{}, dc=INC_DOC[pg.k];
     if(!o.gross) return `${dc[1]}을 적어주세요. 이 소득이 없으면 [이전]으로 돌아가 선택을 빼주세요.`;
@@ -946,6 +958,14 @@ function payload(){
 }
 // 제출: 구글 앱스 스크립트 웹앱으로 전송 (M4S_ENDPOINT가 비어 있으면 시안 모드 = 복사 안내만)
 const ENDPOINT=(window.M4S_ENDPOINT||'').trim();
+let BL=false;
+function basicLookup(){ BL=true;
+  const u=ENDPOINT+(ENDPOINT.indexOf('?')<0?'?':'&')+'action=basic&name='+encodeURIComponent(S.profile.name||'')+'&phone='+encodeURIComponent(S.profile.phone||'');
+  fetch(u).then(r=>r.json()).then(j=>{
+    if(j&&j.ok&&j.found&&j.income>0){ S.basic={income:j.income,fixed:j.fixed||0,variable:j.variable||0,saving:j.saving||0,incomeSet:true,fixedSet:true,variableSet:true,savingSet:true}; S.basicLookup='found'; }
+    else S.basicLookup='none';
+  }).catch(()=>{ S.basicLookup='none'; }).finally(()=>{ BL=false; save(); if(cur==='basicRef'){ const y=scrollY; render(); scrollTo(0,y); } });
+}
 let SENT={state:ENDPOINT?'sending':'proto',msg:''};
 function submit(){ const pl=payload(); window.__m4sLastPayload=pl; if(!ENDPOINT){SENT={state:'proto',msg:''};return;}
   SENT={state:'sending',msg:''};
