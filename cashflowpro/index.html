@@ -323,6 +323,9 @@ html.big .hint{color:#333}
 .ratena .opt{min-height:44px;padding:0 16px}
 input:disabled{opacity:.5}
 @media (prefers-reduced-motion:no-preference){main{animation:in .3s ease-out}@keyframes in{from{transform:translateY(8px)}to{transform:none}}}
+.dirfixed{display:flex;align-items:baseline;gap:8px;padding:14px 16px;border-radius:14px;background:var(--field)}
+.dirfixed b{font-size:18px;font-weight:600}
+.dirfixed small{color:var(--sub);font-size:14px}
 </style>
 
 <div class="proto" role="note"><div class="wrap"><span>검토용 시안 · 실제 전송 안 됨</span><button type="button" id="demo">예시로 채워보기</button></div></div>
@@ -630,7 +633,7 @@ function render(){
       <div class="field"><label for="p-age">나이 (만)</label><div class="money"><input id="p-age" type="text" inputmode="numeric" placeholder="0" value="${esc(S.profile.age)}"><span>세</span></div></div>
       ${chips('p-family','가족 형태',['미혼','기혼'],S.profile.family,'c2')}
       <div data-kidsrow ${S.profile.family==='기혼'?'':'hidden'}>${chips('p-kids','자녀 수',KIDS,S.profile.kids)}</div>
-      ${chips('p-planner','담당 디렉터',DIRECTORS,S.profile.planner,'','이 링크를 보내주신 디렉터를 눌러주세요. 모르시면 [모름]을 눌러주세요')}
+      ${DIRQ?`<div class="field"><span class="lbl">담당 디렉터</span><div class="dirfixed"><b>${esc(S.profile.planner)}</b><small>디렉터</small></div></div>`:chips('p-planner','담당 디렉터',DIRECTORS,S.profile.planner,'','이 링크를 보내주신 디렉터를 눌러주세요. 모르시면 [모름]을 눌러주세요')}
     </section>`;
   } else if(pg.id==='consent'){
     h=`${head('개인정보','개인정보 수집·이용에<br>동의해주세요','동의하셔야 진단을 시작할 수 있습니다.')}
