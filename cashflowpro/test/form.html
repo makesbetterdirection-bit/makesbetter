@@ -462,8 +462,7 @@ function moneyField(id,won,label,hint,quick){
   quick=quick||[10,50,100];
   return `<div class="field mwrap">${label?`<label for="${id}">${label}</label>`:''}${hint?`<span class="hint">${hint}</span>`:''}
    <div class="money"><input id="${id}" data-money inputmode="decimal" type="text" autocomplete="off" enterkeyhint="next" placeholder="0" value="${toMan(won)}"><span>만원</span></div>
-   <div class="echo num" data-echo="${id}">${echoHtml(id,+won||0)}</div>
-   <div class="quick">${quick.map(q=>`<button type="button" tabindex="-1" data-quick="${id}" data-add="${q}">+${q>=10000?(q/10000)+'억':q.toLocaleString('ko-KR')+'만'}</button>`).join('')}</div></div>`;
+   <div class="echo num" data-echo="${id}">${echoHtml(id,+won||0)}</div></div>`;
 }
 const chips=(id,label,opts,v,cls,hint)=>`<div class="field"><span class="lbl">${label}</span>${hint?`<span class="hint">${hint}</span>`:''}
   <div class="opts ${cls||''}" role="group" aria-label="${label}">${opts.map(o=>`<button type="button" class="opt" data-chip="${id}" data-v="${esc(o)}" aria-pressed="${v===o}">${o}</button>`).join('')}</div></div>`;
