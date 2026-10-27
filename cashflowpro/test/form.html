@@ -1,0 +1,975 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#F2F2F2">
+<meta name="robots" content="noindex,nofollow">
+<title>MONEY 4 SQUARE PRO</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* MAKESBETTER Studio 문법: 회색 종이 바탕(#F2F2F2) + 흰 카드 = 실제로 쓰는 화면, 왼쪽 정렬, 간격 8의 배수.
+   Type: Pretendard 하나(숫자는 고정폭 숫자), 라벨은 한글. 주황 #FF5A1F는 채움에만, 주황 글자는 #B83A0B. v1.0 */
+:root{
+  --paper:#F2F2F2; --card:#FFFFFF; --ink:#0A0A0A; --sub:#5E5E5E; --faint:#6E6E6E; --rule:#E2E2E2; --rule2:#BDBDBD; --field:#F4F4F4;
+  --dark:#0A0A0A; --on-dark:#EDEDED; --dark-sub:#8E8E8E; --dark-rule:#262626;
+  --accent:#FF5A1F; --accent-soft:#FFEDE5; --accent-ink:#B83A0B;
+  --ok:#1F7A45; --ok-soft:#E6F2EA; --warn:#B45309; --warn-soft:#FDF1DC; --bad:#B42318; --bad-soft:#FDE4E1;
+  --display:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --text:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:ui-monospace,Menlo,monospace;
+  --g:max(20px,env(safe-area-inset-left,0px)); --gr:max(20px,env(safe-area-inset-right,0px));
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .075 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;text-rendering:optimizeLegibility;background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--text);font-size:17px;line-height:1.6;letter-spacing:-.01em;font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
+h1,h2,h3,p{margin:0;font-weight:400}
+ul{list-style:none;margin:0;padding:0}
+.wrap{padding-left:var(--g);padding-right:var(--gr);max-width:560px;margin:0 auto}
+.mono{font-family:var(--text);font-size:13px;line-height:18px;font-weight:600;letter-spacing:0}
+.num{font-variant-numeric:tabular-nums}
+.nowrap{white-space:nowrap}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.eyebrow{display:block;color:var(--sub)}
+.h2,h1{font-family:var(--text);font-size:30px;line-height:38px;letter-spacing:-.025em;font-weight:700;text-wrap:balance}
+.lede{color:var(--sub);font-size:16px;line-height:26px}
+.card{background:var(--card);border-radius:20px;padding:20px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.card-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 12px;margin-bottom:16px}
+.card-h > *{white-space:nowrap}
+.card-h .mono{color:var(--sub)}
+.pill{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:12px;font-size:12px;font-weight:600;letter-spacing:-.01em;background:#F2F2F2;color:#444;white-space:nowrap}
+.pill.dk{background:var(--ink);color:#fff}
+.pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)} .pill.crit{background:var(--bad);color:#fff}
+.list li{display:flex;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--rule)}
+.list li:first-child{padding-top:0}
+.list li:last-child{border-bottom:0;padding-bottom:0}
+.list li > .mono{color:var(--faint);flex:none}
+.list small{display:block;color:var(--sub);font-size:14px;line-height:20px}
+.note{background:var(--card);border-radius:16px;padding:16px 20px;font-size:15px;line-height:24px;color:#262626;display:flex;gap:12px}
+.note::before{content:"";flex:none;width:2px;border-radius:1px;background:var(--accent)}
+.badge{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:13px;background:var(--ink);color:#fff;font-family:var(--text);font-size:12px;font-weight:700;letter-spacing:0;white-space:nowrap}
+.badge i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.markname{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:-.01em}
+
+/* 핵심 단어 강조: 형광펜이 왼쪽→오른쪽으로 칠해진 뒤 잠시 유지, 반복 */
+.lede b{color:var(--ink);font-weight:700}
+.doc-hl{color:var(--accent-ink)!important;font-weight:700;border-radius:2px;
+  background:linear-gradient(transparent 58%,rgba(255,90,31,.28) 58%) no-repeat 0 0/0% 100%;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;animation:docHl 1.2s cubic-bezier(.4,0,.2,1) .3s 1 forwards}
+@keyframes docHl{from{background-size:0% 100%}to{background-size:100% 100%}}
+/* 월 평균 실소득 깜박임 */
+.avg.blink [data-inet]{border-radius:6px;padding:0 4px;margin-right:-4px}.avg.blink [data-inet].pulse{animation:avgPulse .8s ease-out 1}
+.avg.blink [data-inet]{color:var(--accent-ink)}
+@keyframes avgPulse{from{background:var(--accent-soft)}to{background:transparent}}
+@media (prefers-reduced-motion:reduce){.doc-hl{animation:none;background-size:100% 100%}.avg.blink .lbl,.avg.blink [data-inet]{animation:none}}
+
+/* 시작 전 안내 페이지 */
+.fee2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:14px;overflow:hidden}
+.fee2 div{background:var(--card);padding:16px;display:flex;flex-direction:column;gap:4px}
+.fee2 .mono{color:var(--faint)}
+.fee2 b{font-weight:500;font-size:28px;line-height:1.25;letter-spacing:-.03em;color:var(--ink)}
+.fee2 div:first-child b{color:var(--accent-ink)}
+.fee2 small{color:var(--sub);font-size:14px}
+.nw{white-space:nowrap}
+.ready-q{margin:0 0 14px;font-size:19px;font-weight:500;letter-spacing:-.02em;color:var(--ink)}
+.phead h1 .doc-hl{font-weight:inherit}
+.ready-s{margin:-8px 0 14px;color:var(--sub);font-size:15px}
+.ready-s b{color:var(--accent-ink);font-weight:600;white-space:nowrap}
+.cklist{list-style:none;margin:0;padding:0}
+.cklist li{border-bottom:1px solid var(--rule);opacity:0;transform:translateY(10px);animation:ckIn .45s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.25s + var(--d) * .22s)}
+.cklist li:last-child{border-bottom:0}
+@keyframes ckIn{to{opacity:1;transform:none}}
+.ck{display:flex;gap:16px;align-items:center;width:100%;text-align:left;padding:16px 0;border:0;background:none;cursor:pointer;font:inherit;color:var(--ink);font-size:17px;line-height:1.4}
+.cklist li:first-child .ck{padding-top:4px}
+.ck > .mono{flex:none;color:var(--faint);align-self:flex-start;padding-top:2px}
+.ck-t{flex:1;min-width:0}
+.ck small{display:block;color:var(--sub);font-size:14px}
+.ck .box{flex:none;width:28px;height:28px;border-radius:8px;border:1.5px solid var(--rule2);display:grid;place-items:center;color:transparent;background:var(--card);transition:background .18s,border-color .18s,transform .18s}
+.ck .box svg path{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .25s ease .05s}
+.ck[aria-pressed=true] .box{background:var(--ink);border-color:var(--ink);color:var(--accent);transform:scale(1.06)}
+.ck[aria-pressed=true] .box svg path{stroke-dashoffset:0}
+.ck[aria-pressed=true] .ck-t{color:var(--ink)}
+.ck[aria-pressed=false] .ck-t{color:#262626}
+@media (prefers-reduced-motion:reduce){.cklist li{animation:none;opacity:1;transform:none}}
+.tip{display:flex;gap:12px;margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--field);font-size:15px;line-height:1.6;color:#262626}
+.tip .mono{flex:none;font-family:var(--text);font-size:13px;font-weight:700;letter-spacing:0;color:var(--accent-ink);padding-top:2px}
+[data-readywrap]{margin-top:16px}
+/* 원천징수영수증 위치 안내 */
+.hint .where{display:inline-flex;align-items:center;gap:8px;margin:2px 0 4px;padding:4px 10px 4px 4px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);font-size:14px;line-height:20px}
+.hint .where-no{display:inline-block;padding:1px 8px;border-radius:999px;background:var(--accent-ink);color:#fff;font-family:var(--text);font-size:12px;font-weight:700;letter-spacing:0;white-space:nowrap}
+.hint .where b{font-weight:700;color:var(--accent-ink)}
+.hint .where-d{display:block;color:var(--sub);margin-bottom:2px}
+.hint [data-insref]{display:block;margin-top:4px}
+/* 이자·배당 자동 계산 */
+.int-auto{display:flex;flex-direction:column;gap:0;border:1px solid var(--rule);border-radius:14px;overflow:hidden}
+.int-auto > div{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;background:var(--field)}
+.int-auto > div + div{border-top:1px solid var(--rule)}
+.int-auto span{font-size:16px;font-weight:600;color:var(--ink)}
+.int-auto small{display:block;font-weight:400;font-size:13px;color:var(--sub)}
+.int-auto b{font-weight:500;font-size:18px;white-space:nowrap}
+.int-w{display:block;padding:14px 16px;background:var(--accent-soft);color:#5a2a12;font-size:14px!important;font-weight:400!important;line-height:1.6;border-top:1px solid var(--rule)}
+.int-w b{display:block;color:var(--accent-ink);font-size:15px;font-weight:700;margin-bottom:2px;white-space:normal}
+/* 고정지출 선택: 대출 안내 */
+.loanbox{display:flex;gap:14px;margin-top:16px;padding:16px 18px;border-radius:16px;background:var(--card);border:1.5px dashed var(--rule2)}
+.loanbox .mono{flex:none;font-family:var(--text);font-size:13px;font-weight:700;letter-spacing:0;color:var(--accent-ink);padding-top:2px}
+.loanbox div{display:flex;flex-direction:column;gap:4px;font-size:15px;line-height:1.6;color:var(--sub)}
+.loanbox div > b{font-size:16px;color:var(--ink);font-weight:700}
+.loanbox span b{color:var(--ink);font-weight:600}
+
+/* 누락 항목 깜박임 */
+.miss{position:relative;border-radius:16px;animation:missBlink .55s ease-in-out 0s 6 alternate}
+.miss::after{content:"";position:absolute;inset:-6px;border-radius:18px;border:2px solid var(--accent);pointer-events:none;animation:missRing .55s ease-in-out 0s 6 alternate;opacity:.9}
+@keyframes missBlink{from{background-color:transparent}to{background-color:var(--accent-soft)}}
+@keyframes missRing{from{opacity:1}to{opacity:.15}}
+.miss.ck,.miss.agree{background-color:var(--accent-soft)}
+@media (prefers-reduced-motion:reduce){.miss,.miss::after{animation:none}.miss{background-color:var(--accent-soft)}}
+/* 통장·카드 아이콘 */
+label .ico{display:inline-flex;vertical-align:-7px;margin-right:10px}
+label .ico svg{display:block}
+/* BASIC 결과: 채워진 머니4스퀘어 */
+.sq.filled div{min-height:118px;gap:4px}
+.sq.filled .val{font-size:21px;font-weight:500;letter-spacing:-.03em;color:var(--ink);margin-top:2px;white-space:nowrap}
+.sq.filled small{color:var(--sub);font-size:12px;line-height:1.3}
+.sq.filled .c1 .val{color:var(--accent-ink)}
+.m4s-res .avg{margin-top:14px}
+.m4s-res .avg.sub2{margin-top:0;padding-top:0;border-top:0}
+.m4s-res .neg{color:var(--accent-ink)}
+.editrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.editrow .edit{min-height:44px;padding:0 14px;border-radius:22px;border:1px solid var(--rule2);background:var(--card);font-size:14px;cursor:pointer}
+.next-pro .card-h .partchip{margin:0;font-size:11px;padding:3px 10px}
+.sq.filled .cmp{color:var(--sub);display:flex;flex-direction:column;gap:1px}
+.sq.filled .cmp b{font-size:14px;font-weight:700}
+.sq.filled .cmp b.up{color:var(--accent-ink)}
+.sq.filled .cmp b.dn{color:#1D4FBF}
+.sq.filled div{min-height:132px}
+
+/* ===== form ===== */
+.proto{background:var(--accent-soft);color:var(--accent-ink)}
+.proto .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:8px;font-size:14px}
+.proto button{border:1px solid currentColor;background:transparent;border-radius:999px;height:32px;padding:0 14px;font-size:14px;cursor:pointer;white-space:nowrap}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:50;background:var(--paper)}
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(242,242,242,.86);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--rule)}
+.hdr .bar1{height:56px;display:flex;align-items:center;justify-content:space-between}
+body.is-hero .hdr{background:transparent;border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+.hright{display:flex;gap:8px;align-items:center}
+.fontsw{height:40px;padding:0 14px;border-radius:20px;border:1px solid var(--rule2);background:var(--card);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.prog{padding-bottom:14px}
+.bars{display:flex;gap:14px;align-items:flex-start}
+.bars .pg{display:flex;flex-direction:column;gap:6px}
+.bars .pg.goal{flex:1}.bars .pg.basic{flex:4}.bars .pg.pro{flex:4}
+.bars .pbars{display:flex;gap:5px}
+.bars i{flex:1;height:3px;border-radius:2px;background:var(--rule2)}
+.bars i.pd{background:var(--ink)}
+.bars i.pn{background:var(--accent)}
+.bars .pg > .mono{font-size:12px;letter-spacing:0;color:var(--faint)}
+.bars .pg.on > .mono{color:var(--ink);font-weight:600}
+.bars .pg.done > .mono{color:var(--sub)}
+.mright{display:flex;align-items:center;gap:10px}
+.partchip{display:inline-block;padding:1px 8px;border-radius:999px;font-family:var(--text);font-size:12px;letter-spacing:0;line-height:18px;vertical-align:1px;margin-right:4px;border:1px solid var(--ink);color:var(--ink);background:transparent;font-weight:600}
+.partchip.basic{background:var(--ink);color:#fff}
+.partchip.pro{background:var(--ink);color:var(--accent);border-color:var(--ink)}
+.m4s-mini{display:grid;grid-template-columns:8px 8px;gap:2px}
+.m4s-mini i{width:8px;height:8px;border-radius:1.5px;background:var(--rule2)}
+.m4s-mini i.on{background:var(--accent)}
+.hdr[data-part="pro"] .bar1 .pill-pro{background:var(--ink)}
+.prog .meta{display:flex;justify-content:space-between;gap:12px;margin-top:10px;color:var(--sub)}
+.hdr.cover-mode .prog{display:none}
+
+main{padding-block:32px 152px;display:flex;flex-direction:column;gap:20px}
+.phead{display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.phead .eyebrow{margin-bottom:4px}
+
+/* 첫 화면 = Studio 히어로 */
+body.is-hero{background:var(--paper)}
+body.is-hero::after{content:"";position:fixed;inset:0;background-image:var(--grain);background-size:180px 180px;pointer-events:none;z-index:0;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+body.is-hero main{padding-top:0;position:relative;z-index:1}
+.hero{padding-top:min(14svh,120px);padding-bottom:24px}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(52px,13.6vw,96px);line-height:.94;letter-spacing:-.045em}
+.hero h1 span{display:block;overflow:hidden;padding-bottom:.12em;margin-bottom:-.12em}
+.hero h1 span:first-child{font-weight:700;letter-spacing:-.035em}
+.hero h1 i{display:block;font-style:normal}
+.hero h1 .pro{color:var(--faint);font-weight:300}
+.tagl{margin-top:22px;display:flex;align-items:center;gap:12px;font-family:var(--display);font-size:16px;line-height:22px;color:#000}
+.tagl::before{content:"";width:28px;height:1px;background:#000;flex:none}
+@media (prefers-reduced-motion:no-preference){
+  .lines i{transform:translateY(105%);transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+  .lines.in i{transform:none}
+  .lines span:nth-child(2) i{transition-delay:.07s}.lines span:nth-child(3) i{transition-delay:.14s}
+}
+.sec0{display:flex;flex-direction:column;gap:16px;padding-top:32px}
+.sec0 .h2{margin-bottom:8px}
+.modes{display:flex;flex-direction:column;gap:12px}
+.modebtn{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;padding:20px;border-radius:20px;border:1.5px solid transparent;background:var(--card);cursor:pointer;position:relative;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.modebtn .mono{color:var(--sub)}
+.modebtn .sample{color:var(--sub)}
+.modebtn small{font-size:15px;color:var(--sub)}
+.modebtn[aria-pressed=true]{border-color:var(--ink)}
+.modebtn::after{content:"";position:absolute;top:18px;right:18px;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--rule2)}
+.modebtn[aria-pressed=true]::after{content:"✓";display:grid;place-items:center;background:var(--ink);border-color:var(--ink);color:var(--accent);font-size:13px;font-weight:700}
+
+/* 소개 4칸 (밝은 카드) */
+.sq{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:14px;overflow:hidden}
+.sq div{background:var(--card);padding:16px;display:flex;flex-direction:column;gap:6px;min-height:88px}
+.sq div .mono{color:var(--faint)}
+.sq div b{font-weight:500;font-size:19px}
+.sq .c2{order:2}.sq .c3{order:4}.sq .c4{order:3}
+
+/* 입력 */
+.stack{display:flex;flex-direction:column;gap:22px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field > label,.lbl{font-weight:600;font-size:16px}
+.hint{font-size:14px;line-height:21px;color:var(--sub)}
+input[type=text],input[type=tel]{width:100%;min-height:56px;border:1.5px solid transparent;border-radius:14px;background:var(--field);padding:12px 16px;font-size:17px;appearance:none;-webkit-appearance:none}
+input:focus{outline:none;border-color:var(--ink);background-color:var(--card)}
+input::placeholder{color:var(--faint)}
+.money{display:flex;align-items:baseline;gap:8px;border:1.5px solid transparent;border-radius:14px;background:var(--field);min-height:62px;padding:0 18px}
+.money:focus-within{border-color:var(--ink);background:var(--card)}
+.money input{border:0!important;background:transparent!important;flex:1;min-width:0;min-height:58px;padding:0;text-align:right;font-family:var(--display);font-size:28px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.money span{white-space:nowrap;color:var(--sub);font-size:15px}
+.echo{min-height:20px;text-align:right;font-size:14px;color:var(--ink);font-weight:500}
+.echo .warn{color:var(--bad);font-weight:700}
+.quick{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.quick button{height:44px;padding:0 16px;border-radius:22px;border:1px solid var(--rule2);background:var(--card);font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.opts.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opt{min-height:50px;border-radius:25px;border:1px solid var(--rule2);background:var(--card);font-size:15px;font-weight:500;cursor:pointer;padding:6px 8px;line-height:1.25;word-break:keep-all}
+.opt[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.opts.rt .opt{white-space:nowrap;font-family:var(--display);letter-spacing:-.03em}
+.chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.chip{position:relative;min-height:76px;border-radius:18px;border:1px solid transparent;background:var(--card);text-align:left;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;gap:2px;cursor:pointer;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.chip b{font-size:16px;font-weight:600;padding-right:22px}
+.chip small{font-size:13px;line-height:18px;color:var(--sub)}
+.chip[aria-pressed=true]{background:var(--ink);color:#fff}
+.chip[aria-pressed=true] small{color:var(--dark-sub)}
+.chip[aria-pressed=true]::after{content:"✓";position:absolute;top:12px;right:14px;color:var(--accent);font-weight:700}
+
+.entry{display:flex;flex-direction:column;gap:20px}
+.del{border:0;background:transparent;color:var(--sub);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:15px;min-height:44px;padding:0 4px 0 16px}
+.add{min-height:60px;width:100%;border:1px dashed var(--rule2);border-radius:20px;background:transparent;font-size:16px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
+.add::before{content:"+";font-family:var(--display);font-weight:300;font-size:24px;line-height:1}
+.add[data-copy]::before{content:none}
+.none{color:var(--sub);font-size:15px}
+.group{display:flex;flex-direction:column;gap:12px}
+.avg{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--rule);padding-top:16px}
+.avg b{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.grid3 .money{padding:0 10px;min-height:58px;justify-content:center}
+.grid3 .money input{font-size:20px;text-align:center}
+.grid3 .mono{color:var(--sub);text-align:center;margin-top:6px;font-family:var(--text);text-transform:none;letter-spacing:-.01em;font-size:13px}
+@media (max-width:360px){.grid3{grid-template-columns:1fr}}
+
+.terms{display:grid;grid-template-columns:auto 1fr;gap:10px 16px;margin:0;font-size:15px;line-height:23px}
+.terms dt{color:var(--sub)}.terms dd{margin:0}
+.agree{display:flex;gap:16px;align-items:center;text-align:left;width:100%;padding:20px;border-radius:20px;border:1.5px solid transparent;background:var(--card);cursor:pointer}
+.agree .box{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--rule2);display:grid;place-items:center;color:transparent;font-weight:700;font-size:14px}
+.agree b{display:block;font-size:18px;font-weight:600}.agree small{color:var(--sub);font-size:14px}
+.agree[aria-pressed=true]{border-color:var(--ink)}
+.agree[aria-pressed=true] .box{background:var(--ink);border-color:var(--ink);color:var(--accent)}
+
+.sum li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.sum li:first-child{padding-top:0}
+.sum li:last-child{border-bottom:0;padding-bottom:0}
+.sum li > div:first-child{min-width:0;flex:1}
+.sum li b{white-space:nowrap;font-weight:600}
+.sum small{display:block;color:var(--sub);font-size:13px;line-height:19px;margin-top:2px}
+.sum .r{display:flex;align-items:center;gap:12px;flex:none}
+.sum .amt{font-family:var(--display);font-size:18px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
+.edit{height:44px;padding:0 16px;border-radius:22px;border:1px solid var(--rule2);background:var(--card);cursor:pointer;font-size:14px;white-space:nowrap}
+
+.donebox{display:flex;flex-direction:column;gap:14px;padding-top:24px}
+.donebox .ok{width:56px;height:56px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--accent);font-size:24px;font-weight:700;margin-bottom:8px}
+.payload{width:100%;height:96px;margin-top:12px;border:1px solid var(--rule);border-radius:12px;background:var(--field);font-family:var(--mono);font-size:11px;padding:10px;resize:vertical}
+
+.err{background:var(--accent-soft);color:var(--accent-ink);border-radius:16px;padding:14px 18px;font-size:15px;font-weight:500}
+
+.bottom{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(242,242,242,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--rule);
+  padding-top:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+.bottom .in{display:grid;grid-template-columns:1fr 2.2fr;gap:8px}
+.bottom button{min-height:58px;border-radius:18px;font-size:17px;font-weight:600;cursor:pointer}
+#prev{border:1px solid var(--rule2);background:var(--card)}
+#next{border:0;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;gap:10px}
+#next::after{content:"→";font-family:var(--display);font-weight:300;font-size:22px;color:var(--accent)}
+.solo .in{grid-template-columns:1fr}.solo #prev{display:none}
+
+/* 글씨 크기 */
+html.big #app,html.big .bottom .in{zoom:1.18}
+html.big .opts{grid-template-columns:repeat(2,minmax(0,1fr))}
+html.big .chips{grid-template-columns:1fr}
+/* 큰 글씨 = 고대비: 회색 면 대신 진한 선 */
+html.big{--sub:#333333;--faint:#555555;--rule2:#555555;--field:#FFFFFF}
+html.big body{letter-spacing:0}
+html.big .money,html.big .field > input[type=text],html.big .field > input[type=tel]{border:2px solid #222}
+html.big .money:focus-within,html.big .field > input:focus{border-color:var(--accent-ink);box-shadow:0 0 0 1px var(--accent-ink)}
+html.big .opt,html.big .chip{border:2px solid #555}
+html.big .opt[aria-pressed=true],html.big .chip[aria-pressed=true]{border-color:var(--ink)}
+html.big .card{box-shadow:0 0 0 1px #BDBDBD}
+html.big .hint{color:#333}
+.ckrow{display:flex;align-items:center;gap:8px}
+.ckrow .ck{flex:1;min-width:0}
+.na{flex:none;min-height:40px;padding:0 12px;border-radius:20px;border:1px solid var(--rule2);background:var(--card);font-size:13px;font-weight:600;color:var(--sub);cursor:pointer;white-space:nowrap}
+.na[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.ckrow:has(.na[aria-pressed=true]) .ck-t{color:var(--sub);text-decoration:line-through}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(112px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:16px;padding:8px 8px 8px 18px;border-radius:16px;background:var(--ink);color:#fff;font-size:15px;box-shadow:0 8px 24px rgba(0,0,0,.2);max-width:calc(100% - 40px);white-space:nowrap}
+.toast button{min-height:40px;padding:0 14px;border-radius:12px;border:0;background:#fff;color:var(--ink);font-weight:700;cursor:pointer}
+.saved{grid-column:1/-1;margin:-2px 0 2px;text-align:center;font-size:12px;line-height:16px;color:var(--sub)}
+.flow li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:15px}
+.flow li:first-child{padding-top:0}
+.flow li span:last-child{white-space:nowrap}
+.flow li:last-child{border-bottom:0;padding:14px 0 0;font-weight:700;font-size:18px}
+.flow .neg{color:var(--accent-ink)}
+.ratena{display:flex;margin-top:4px}
+.ratena .opt{min-height:44px;padding:0 16px}
+input:disabled{opacity:.5}
+@media (prefers-reduced-motion:no-preference){main{animation:in .3s ease-out}@keyframes in{from{transform:translateY(8px)}to{transform:none}}}
+.dirfixed{display:flex;align-items:baseline;gap:8px;padding:14px 16px;border-radius:14px;background:var(--field)}
+.dirfixed b{font-size:18px;font-weight:600}
+.dirfixed small{color:var(--sub);font-size:14px}
+</style>
+
+<div class="proto" role="note"><div class="wrap"><span>검토용 시안 · 실제 전송 안 됨</span><button type="button" id="demo">예시로 채워보기</button></div></div>
+<header class="hdr" id="hdr">
+  <div class="wrap bar1"><span class="markname">MAKESBETTER</span><span class="hright"><button type="button" class="fontsw" data-fontsw hidden>가 크게</button><span class="badge"><i></i>M4S PRO</span></span></div>
+  <div class="wrap prog"><div class="bars" id="bars"></div><div class="meta"><span class="mono" id="stepno"></span><span class="mright"><span class="m4s-mini" id="mini" hidden aria-hidden="true"><i data-q="c1"></i><i data-q="c2"></i><i data-q="c4"></i><i data-q="c3"></i></span><span class="mono" id="stepname"></span></span></div></div>
+</header>
+<main class="wrap" id="app"></main>
+<nav class="bottom" id="bottom"><div class="wrap in"><p class="saved" id="saved" hidden>자동 저장 중 · 나중에 이어서 쓸 수 있어요</p><button type="button" id="prev">이전</button><button type="button" id="next">다음</button></div></nav>
+<script>window.M4S_ENDPOINT="";</script>
+<script>
+(function(){
+const KEY='m4s-pro-draft-v5';
+// 담당 디렉터 목록 (접수 시트 '디렉터' 탭과 같은 이름이어야 메일이 그 디렉터에게 감)
+const DIRECTORS=['이종호','오수현','변보라','홍민아','강소리','김다희','김상윤','모름'];
+const READY=[['근로소득 원천징수영수증','홈택스 또는 회사에서 발급'],['카드 앱의 최근 3개월 결제(청구) 내역','이번 달은 빼고 지난 3개월'],['통장 자동이체 목록',''],['대출 잔액·월 상환액','은행 앱에서 확인'],['적금·예금 금리, 증권 앱 잔액','']];
+const blank=()=>({mode:'',profile:{name:'',phone:'',age:'',planner:'',family:'',kids:''},consent:false,ready:false,checks:[],basic:{income:0,fixed:0,variable:0,saving:0},incomeSel:[],fixedSel:[],
+  income:{},fixed:{},cards:[],cuts:{},savings:[],cash:[],invest:[],estate:[],deposit:[],loans:[],retire:{age:'',living:'',pension:''},goals:[]});
+let S=blank(), cur='mode', error='', ret=null, ack={};
+// 디렉터가 보낸 링크(?d=이름)면 담당 디렉터를 미리 채움
+const DIRQ=(()=>{try{return (new URLSearchParams(location.search).get('d')||'').trim().slice(0,30);}catch(e){return '';}})();
+try{const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(d&&d.data){S=Object.assign(blank(),d.data); cur=d.cur||'mode';}}catch(e){}
+if(DIRQ){ S.profile.planner=DIRQ; cur='mode'; } // 디렉터 링크로 열면 항상 오프닝부터 (입력값은 유지)
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({data:S,cur}))}catch(e){}};
+
+const INCOME=[['work','근로소득','회사 급여'],['spouse','배우자 근로소득','배우자 회사 급여'],['biz','사업소득','자영업·프리랜서'],
+  ['rent','임대소득','월세·임대 수입'],['int','이자·배당소득','예금 이자·주식 배당'],['pen','연금소득','국민연금·개인연금 등'],['etc1','기타소득','부업·강연료 등']];
+/* 소득별 서류와 입력 칸 (모두 1년 기준) */
+const INC_DOC={work:['근로소득 원천징수영수증','1년 세전 총급여','1년 결정세액 (소득세 + 지방소득세)','1년 4대보험료 (국민연금 + 건강 + 장기요양 + 고용)'],
+  spouse:['배우자 근로소득 원천징수영수증','1년 세전 총급여','1년 결정세액 (소득세 + 지방소득세)','1년 4대보험료 (국민연금 + 건강 + 장기요양 + 고용)'],
+  biz:['종합소득세 신고서 (홈택스)','1년 소득금액 (수입 − 필요경비)','1년 결정세액 (소득세 + 지방소득세)','1년 국민연금·건강보험료 (지역가입)'],
+  rent:['종합소득세 신고서 (홈택스)','1년 임대 소득금액 (수입 − 필요경비)','1년 결정세액 (소득세 + 지방소득세)','1년 국민연금·건강보험료 (지역가입)'],
+  int:['금융사 이자·배당 지급 내역','1년 세전 이자·배당','1년 원천징수 세금','1년 4대보험료 (해당 없으면 0)'],
+  pen:['연금 지급 내역 (국민연금공단·금융사)','1년 세전 연금 수령액','1년 원천징수 세금','1년 건강보험료 (피부양자면 0)'],
+  etc1:['지급명세서·원천징수 내역','1년 세전 금액','1년 원천징수 세금','1년 4대보험료 (해당 없으면 0)']};
+/* 2026년 근로자 부담 4대보험 요율 — 입력값 참고용: 국민연금 4.75%(기준소득월액 41만~659만), 건강 3.595%, 장기요양 건강보험료의 13.14%, 고용 0.9% */
+const insRef=g=>{const m=g/12;return Math.round(Math.min(Math.max(m,410000),6590000)*.0475*12+g*.03595*1.1314+g*.009);};
+// 이자·배당: 원천징수 15.4%(소득세 14% + 지방소득세 1.4%) 고정, 4대보험은 떼지 않음 → 세전 금액만 받고 자동 계산
+const INT_TAX=0.154, intAuto=o=>{o.tax=Math.round((o.gross||0)*INT_TAX); o.ins=0; o.taxSet=o.insSet=true; return o;};
+const intCalc=o=>{const g=o.gross||0; let w='';
+  if(g>20000000) w=`<span class="int-w"><b>연 2,000만 원 초과 · 금융소득종합과세 대상</b>초과분은 다음 해 5월 다른 소득과 합산해 6~45% 세율로 정산합니다. 실제 세금은 담당 디렉터가 상담에서 확인합니다.</span>`;
+  else if(g>10000000) w=`<span class="int-w"><b>연 1,000만 원 초과 · 건강보험 확인</b>건강보험 피부양자라면 이 금액 전액이 소득으로 잡힙니다. 다른 소득과 합쳐 연 2,000만 원을 넘으면 피부양자에서 빠집니다.</span>`;
+  return `<div class="int-auto"><div><span>원천징수 세금 <small>15.4% · 소득세 14% + 지방소득세 1.4%</small></span><b class="num">${g?kor(Math.round(g*INT_TAX)):'—'}</b></div><div><span>4대보험 <small>이자·배당에서는 떼지 않습니다</small></span><b class="num">0 원</b></div>${w}</div>`;};
+const incNet=o=>o?Math.max(0,(o.gross||0)-(o.tax||0)-(o.ins||0))/12:0;
+const FIXED=[['house','주거비','월세 등'],['util','관리비·공과금','전기·가스·수도 포함'],['ins','보험료','실손·종신·자동차 등'],
+  ['tel','통신·구독','휴대폰·인터넷·OTT·멤버십'],['trans','교통비','대중교통·택시'],['car','자동차 운영비','주유·정비 등'],
+  ['food','식비','장보기 등 고정 지출'],['edu','교육비','학원·교재'],['allow','용돈','부모님·자녀 용돈'],['club','모임·동호회','회비·정기 모임'],['etc1','기타 1','그 밖의 고정지출'],['etc2','기타 2','그 밖의 고정지출']];
+const CARDCO=['신한','삼성','현대','KB국민','롯데','우리','하나','BC','NH농협','카카오뱅크','토스뱅크','기타'];
+const CARDKIND=['신용카드','체크카드'];
+const SAVE_T=['적금','연금','청약','청년 상품','펀드','적립식 ETF·주식','기타'];
+const RATE_SAVE=['적금','청약','청년 상품'];
+const ACCT_SAVE=['일반과세','절세','비과세','기타','모름'];
+const ACCT_INV=['일반 계좌','ISA','연금저축','IRP','모름'];
+const RET_T=['손실 중','0~2%','2~4%','4~6%','6~8%','8~10%','10% 이상','모름'];
+// 누적 수익률(앱 첫 화면 숫자) + 가입 기간 → 리포트에서 연 수익률로 환산
+const CUM_T=['손실 중','0~10%','10~20%','20~40%','40~70%','70~100%','100% 이상','모름'];
+const HELD_T=['1년 미만','1~3년','3~5년','5~10년','10년 이상'];
+const cumOf=e=>(+e.cost>0&&+e.value>0)?(e.value/e.cost-1)*100:null;
+const pctTxt=v=>v==null?'—':(v>=0?'+':'−')+Math.abs(v).toFixed(1)+'%';
+const CASH_T=['입출금통장','파킹통장','예금','CMA','외화예금','기타'];
+const INV_T=['국내주식','해외주식','ETF','펀드','채권','가상화폐','기타'];
+const ESTATE_T=['아파트','빌라','일반주택','전원주택','토지','상가','지식산업센터'];
+const DEPOSIT_T=['전세 보증금','월세 보증금'];
+const LOAN_T=['주택담보대출','전세대출','신용대출','학자금대출','약관대출','회사대출','카드론','기타'];
+const RATES=['1.5% 미만'];
+for(let r=1.5;r<7;r+=.5) RATES.push(`${r.toFixed(1)}~${(r+.5).toFixed(1)}%`);
+RATES.push('7% 이상','모름');
+// 예적금·저축 금리는 6.0% 이상까지만 (대출 금리는 위 RATES 사용)
+const SRATES=['1.5% 미만'];
+for(let r=1.5;r<6;r+=.5) SRATES.push(`${r.toFixed(1)}~${(r+.5).toFixed(1)}%`);
+SRATES.push('6.0% 이상','모름');
+// 현금자산(입출금·파킹·예금) 금리는 4.0% 이상까지만
+const CRATES=['1.5% 미만'];
+for(let r=1.5;r<4;r+=.5) CRATES.push(`${r.toFixed(1)}~${(r+.5).toFixed(1)}%`);
+CRATES.push('4.0% 이상','모름');
+const MAT_SAVE=['1년 이내','1~3년','3~5년','5년 이상','만기 없음','모름'];
+const LOAN_TERM=['5년 이내','5~10년','10~20년','20~30년','30년 이상','모름'];
+const RATE_KIND=['고정금리','변동금리','혼합형','모름'];
+const PAY_KIND=['원리금균등','원금균등','만기일시','모름'];
+const REGION=['서울','경기','인천','광역시','그 외 지역'];
+const GOAL_T=['내 집 마련','노후 자금','자녀 교육','자녀 결혼','결혼 자금','종잣돈','차량 구입','대출 상환','비상금','창업','기타'];
+const PRIORITY=['1순위','2순위','3순위','4순위 이하'];
+const YEARS=['1년','2년','3년','5년','7년','10년','15년','20년','25년','30년'];
+const KIDS=['없음','1명','2명','3명','4명 이상'];
+const R_AGE=['55세','60세','65세','70세'];
+const R_LIVING=['150만 원','200만 원','250만 원','300만 원','350만 원','400만 원 이상'];
+const R_PENSION=['없음','100만 원 미만','100~150만 원','150~200만 원','200만 원 이상','모름'];
+const TOTAL=9;
+const SEC=['','재무목표','소득','고정지출','변동지출','저축','줄일 지출','자산','대출','노후'];
+// 3부 구성: GOAL(1) → BASIC 머니4스퀘어 네 칸(2~5) → PRO(6~9)
+const PART=s=>s===1?'goal':s>=2&&s<=5?'basic':s>=6?'pro':'';
+const PART_L={goal:['목표','재무목표'],basic:['네 칸','머니4스퀘어'],pro:['심층','심층 진단']};
+const QUAD={2:'c1',3:'c2',4:'c3',5:'c4'};
+const SEC_EN=['','Goals','Income','Fixed','Variable','Saving','Cut','Assets','Loans','Retire'];
+const SEC_FIRST={0:'client',1:'goals',2:'incomePick',3:'fixedPick',4:'cards',5:'savings',6:'cuts',7:'cash',8:'loans',9:'retire'};
+
+const toWon=v=>{const n=parseFloat(String(v).replace(/,/g,''));return isFinite(n)&&n>0?Math.round(n*10000):0};
+const comma=v=>{const [a,b]=String(v).split('.');return a.replace(/\B(?=(\d{3})+(?!\d))/g,',')+(b!==undefined?'.'+b:'');};
+const toMan=w=>w?comma(String(+(w/10000).toFixed(1))):'';
+function kor(w){
+  w=+w||0; if(!w) return '';
+  const eok=Math.floor(w/1e8), man=Math.floor((w%1e8)/1e4), won=w%1e4;
+  const p=[]; if(eok)p.push(eok.toLocaleString('ko-KR')+'억'); if(man)p.push(man.toLocaleString('ko-KR')+'만'); if(won)p.push(won.toLocaleString('ko-KR'));
+  return p.join(' ')+' 원';
+}
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const fxSum=o=>(o&&((o.bank||0)+(o.card||0)))||0;
+const fxTotal=()=>S.fixedSel.reduce((a,k)=>a+fxSum(S.fixed[k]),0);
+const fmtPhone=v=>{const d=v.replace(/\D/g,'').slice(0,11); if(d.length<4) return d; if(d.length<8) return d.slice(0,3)+'-'+d.slice(3);
+  return d.length===10?`${d.slice(0,3)}-${d.slice(3,6)}-${d.slice(6)}`:`${d.slice(0,3)}-${d.slice(3,7)}-${d.slice(7)}`;};
+// 3개월 모두 받아 ÷3 (안 쓴 달은 0)
+function cardAvg(e){return Math.round(((+e.m1||0)+(+e.m2||0)+(+e.m3||0))/3)}
+const mSet=(e,m)=>!!(e[m+'Set']||e[m]>0);
+const monthLbl=k=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-(k+1));return (d.getMonth()+1)+'월';};
+// 변동지출 = 카드 3개월 평균 − 카드로 낸 고정지출. 결과·줄일 지출·확인·전송 모두 이 값 하나만 사용
+const varSpend=()=>{const C=S.cards.reduce((a,c)=>a+cardAvg(c),0), cf=S.fixedSel.reduce((a,k)=>a+((S.fixed[k]||{}).card||0),0);return {C,cf,V:Math.max(0,C-cf)};};
+const loanMonthly=()=>S.loans.reduce((a,l)=>a+(+l.monthly||0),0);
+const rateBucket=v=>{v=+v; if(!(v>0)) return ''; if(v<1.5) return '1.5% 미만'; if(v>=7) return '7% 이상'; const lo=Math.floor(v*2)/2; return `${lo.toFixed(1)}~${(lo+.5).toFixed(1)}%`;};
+// 만원 칸에 원 단위로 적는 실수 감지: 월 금액 1억 원 이상, 그 밖 100억 원 이상
+const echoHtml=(id,won)=>{if(!won) return ''; const monthly=/^(fixed|cards|cut|basic)-|-(monthly|inst)$/.test(id); return won>=(monthly?1e8:1e10)?`<span class="warn">${kor(won)} · 만원 단위가 맞나요?</span>`:kor(won);};
+
+const WH=(no,name,desc)=>`<span class="where"><span class="where-no">영수증 ${no}번</span><b>${name}</b></span><span class="where-d">${desc}</span>`;
+function moneyField(id,won,label,hint,quick){
+  quick=quick||[10,50,100];
+  return `<div class="field mwrap">${label?`<label for="${id}">${label}</label>`:''}${hint?`<span class="hint">${hint}</span>`:''}
+   <div class="money"><input id="${id}" data-money inputmode="decimal" type="text" autocomplete="off" enterkeyhint="next" placeholder="0" value="${toMan(won)}"><span>만원</span></div>
+   <div class="echo num" data-echo="${id}">${echoHtml(id,+won||0)}</div>
+   <div class="quick">${quick.map(q=>`<button type="button" tabindex="-1" data-quick="${id}" data-add="${q}">+${q>=10000?(q/10000)+'억':q.toLocaleString('ko-KR')+'만'}</button>`).join('')}</div></div>`;
+}
+const chips=(id,label,opts,v,cls,hint)=>`<div class="field"><span class="lbl">${label}</span>${hint?`<span class="hint">${hint}</span>`:''}
+  <div class="opts ${cls||''}" role="group" aria-label="${label}">${opts.map(o=>`<button type="button" class="opt" data-chip="${id}" data-v="${esc(o)}" aria-pressed="${v===o}">${o}</button>`).join('')}</div></div>`;
+const ICO_WON='<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="11" fill="#0A0A0A"/><path d="M6.6 7.5l2.3 9 3.1-8.2 3.1 8.2 2.3-9M5.6 11h12.8M5.6 13.6h12.8" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+const ICO_CARD='<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26"><rect x="1" y="4" width="22" height="16" rx="3.5" fill="#0A0A0A"/><rect x="1" y="8" width="22" height="3" fill="#fff"/><rect x="4" y="14.5" width="6" height="2" rx="1" fill="#fff"/></svg></span>';
+const lossField=(id,v)=>`<div class="field"><label for="${id}">손실률은 몇 %인가요?</label><span class="hint">앱에 '−12.5%'로 보이면 12.5를 적어주세요</span><div class="money"><input id="${id}" data-pct inputmode="decimal" type="text" autocomplete="off" placeholder="0" value="${v||''}"><span>% 손실</span></div></div>`;
+const rateField=(id,v,list)=>chips(id,'금리 (연)',list||RATES,v,'rt','가장 가까운 구간을 눌러주세요');
+// 대출 금리는 앱에 나온 숫자 그대로 (구간 값 rate는 리포트 호환용으로 자동 저장)
+const loanRate=(e,i)=>{const na=e.rate==='모름'; return `<div class="field"><label for="loans-${i}-rateNum">금리 (연)</label><span class="hint">은행 앱 대출 상세의 숫자 그대로 적어주세요. 예: 3.85</span><div class="money"><input id="loans-${i}-rateNum" data-pct inputmode="decimal" type="text" autocomplete="off" enterkeyhint="next" placeholder="${na?'모름':'0.00'}" value="${na?'':esc(e.rateNum||'')}" ${na?'disabled':''}><span>%</span></div><div class="ratena"><button type="button" class="opt" data-chip="loans-${i}-rate" data-v="모름" aria-pressed="${na}">금리를 몰라요</button></div></div>`;};
+
+const GROUPS={
+ cards:{tag:'카드',addLabel:'카드 추가',none:'사용하는 카드가 없으면 다음으로 넘어가세요.',
+   title:'최근 3개월 카드 결제액을 적어주세요',lead:'<b>신용카드와 체크카드 모두</b> 카드마다 하나씩 추가해주세요. 카드 앱에서 달마다 결제(청구) 금액을 보고 적으시면 평균은 자동으로 계산됩니다.',
+   blank:()=>({kind:'',co:'',m1:0,m2:0,m3:0,inst:0}),
+   body:(e,i)=>`${chips(`cards-${i}-kind`,'카드 종류',CARDKIND,e.kind,'c2','체크카드는 통장에서 바로 빠지는 결제입니다. 자동이체와 겹치지 않게 카드 결제만 적어주세요')}
+    ${chips(`cards-${i}-co`,'카드사',CARDCO,e.co)}
+    <div class="field"><span class="lbl">달마다 결제한 금액</span><span class="hint">이번 달은 빼고 적어주세요. 안 쓴 달은 0을 적어주세요</span>
+     <div class="grid3">${['m1','m2','m3'].map((m,k)=>`<div class="mwrap"><div class="money"><input id="cards-${i}-${m}" data-money inputmode="decimal" type="text" placeholder="0" enterkeyhint="next" value="${mSet(e,m)&&!e[m]?'0':toMan(e[m])}" aria-label="${monthLbl(k)} 결제액 (만원)"></div><div class="mono">${monthLbl(k)} · 만원</div></div>`).join('')}</div></div>
+    <div class="avg"><span class="lbl">3개월 평균</span><b class="num" data-avg="${i}">${kor(cardAvg(e))||'—'}</b></div>
+    ${e.kind==='체크카드'?'':moneyField(`cards-${i}-inst`,e.inst,'이 중 매달 나가는 할부금','없으면 비워두세요')}`},
+ savings:{tag:'저축',addLabel:'적립식 추가',none:'매달 넣는 저축·투자가 없으면 다음으로 넘어가세요.',
+   title:'매달 넣는 돈<br>(적립식)을 적어주세요',lead:'네 번째 칸, 저축입니다. 적금, 연금, 청약, 적립식 ETF처럼 <b>매달 넣는 것만</b> 하나씩 추가해주세요. 목돈으로 넣어둔 돈은 심층 진단의 자산 단계에서 따로 받습니다.',
+   blank:()=>({type:'',monthly:0,value:0,rate:'',mat:''}),
+   body:(e,i)=>`${chips(`savings-${i}-type`,'종류',SAVE_T,e.type)}
+    ${moneyField(`savings-${i}-monthly`,e.monthly,'매달 넣는 금액')}
+    ${moneyField(`savings-${i}-value`,(e.valueSet&&!e.value)?'0':e.value,'지금까지 모인 금액 (현재 평가금)','새로 가입해 아직 없으면 0을 적어주세요',[100,500,1000])}
+    ${e.type&&e.type!=='청약'?chips(`savings-${i}-acct`,'세금은 어떻게 되나요?',ACCT_SAVE,e.acct,'c2','일반과세 15.4% · 절세: 세액공제·세금우대 · 비과세: 청년도약·비과세 보험 등'):''}
+    ${RATE_SAVE.includes(e.type)?rateField(`savings-${i}-rate`,e.rate,SRATES):e.type?`${chips(`savings-${i}-cum`,'앱에 나오는 누적 수익률',CUM_T,e.cum,'','증권·보험 앱 첫 화면의 총(누적) 수익률입니다. 가장 가까운 구간을 눌러주세요')}${e.cum==='손실 중'?lossField(`savings-${i}-lossPct`,e.lossPct):''}${chips(`savings-${i}-held`,'가입한 지 얼마나 됐나요?',HELD_T,e.held,'','누적 수익률을 1년 수익률로 바꿔 계산합니다')}`:''}
+    ${chips(`savings-${i}-mat`,'만기까지 남은 기간',MAT_SAVE,e.mat)}`},
+ cash:{tag:'현금자산',addLabel:'현금자산 추가',none:'통장·예금·파킹통장 등이 없으면 비워두세요.',
+   title:'현금자산을 적어주세요',lead:'입출금통장, 파킹통장, 예금처럼 바로 꺼내 쓸 수 있는 돈입니다.',
+   blank:()=>({type:'',value:0,rate:''}),
+   body:(e,i)=>`${chips(`cash-${i}-type`,'종류',CASH_T,e.type)}
+    ${moneyField(`cash-${i}-value`,e.value,'지금 잔액','',[100,500,1000])}
+    ${rateField(`cash-${i}-rate`,e.rate,CRATES)}`},
+ invest:{tag:'투자자산',addLabel:'투자자산 추가',none:'주식·ETF·펀드 등이 없으면 비워두세요.',
+   title:'목돈으로 넣어둔<br>투자를 적어주세요',lead:'주식·ETF·펀드에 <b>한 번에 넣어둔(거치식)</b> 돈입니다. 앞에서 적은 적립식 계좌는 다시 적지 마세요. 두 번 계산됩니다.',
+   blank:()=>({type:'',cost:0,value:0,acct:'',held:''}),
+   body:(e,i)=>`${chips(`invest-${i}-type`,'종류',INV_T,e.type)}
+    ${chips(`invest-${i}-acct`,'어느 계좌에 있나요?',ACCT_INV,e.acct,'c2','ISA·연금계좌에 있으면 세금이 달라집니다')}
+    ${moneyField(`invest-${i}-cost`,e.cost,'넣은 돈 (투자 원금)','',[100,500,1000])}
+    ${moneyField(`invest-${i}-value`,e.value,'지금 평가금','',[100,500,1000])}
+    <div class="avg"><span class="lbl">누적 수익률 <small>원금과 평가금으로 자동 계산</small></span><b class="num" data-icum="${i}">${pctTxt(cumOf(e))}</b></div>
+    ${chips(`invest-${i}-held`,'투자한 지 얼마나 됐나요?',HELD_T,e.held,'','누적 수익률을 1년 수익률로 바꿔 계산합니다')}`},
+ estate:{tag:'부동산',addLabel:'부동산자산 추가',none:'부동산이 없으면 비워두세요.',
+   title:'부동산자산을 적어주세요',lead:'집, 토지, 상가처럼 가지고 있는 부동산을 적어주세요. 전·월세 보증금은 다음 화면에서 따로 받습니다.',
+   blank:()=>({type:'',cost:0,value:0,region:''}),
+   body:(e,i)=>`${chips(`estate-${i}-type`,'종류',ESTATE_T,e.type)}
+    ${chips(`estate-${i}-region`,'지역',REGION,e.region)}
+    ${moneyField(`estate-${i}-cost`,e.cost,'산 가격 (투자 원금)','상속·증여 등으로 모르면 비워두세요',[1000,5000,10000])}
+    ${moneyField(`estate-${i}-value`,e.value,'지금 시세 (평가금)','',[1000,5000,10000])}`},
+ deposit:{tag:'보증금',addLabel:'보증금 추가',none:'전세·월세로 살고 있지 않으면 비워두세요.',
+   title:'전세·월세 보증금이 있나요?',lead:'돌려받을 보증금도 자산입니다. 전세대출이 있으면 대출 단계에서 따로 적어주세요.',
+   blank:()=>({type:'',value:0}),
+   body:(e,i)=>`${chips(`deposit-${i}-type`,'종류',DEPOSIT_T,e.type,'c2')}
+    ${moneyField(`deposit-${i}-value`,e.value,'보증금 금액','',[1000,5000,10000])}`},
+ loans:{tag:'대출',addLabel:'대출 추가',none:'대출이 없으면 바로 다음으로 넘어가세요.',
+   title:'남아 있는 대출을 모두 적어주세요',lead:'대출마다 하나씩 추가해주세요. 정확할수록 상담이 정확해집니다.',
+   blank:()=>({type:'',principal:0,balance:0,monthly:0,rate:'',rateKind:'',payKind:'',term:''}),
+   body:(e,i)=>`${chips(`loans-${i}-type`,'종류',LOAN_T,e.type,'c2')}
+    ${moneyField(`loans-${i}-principal`,e.principal,'처음 빌린 금액 (대출 원금)','모르시면 비워두세요',[1000,5000,10000])}
+    ${moneyField(`loans-${i}-balance`,e.balance,'남은 금액 (대출 잔액)','',[1000,5000,10000])}
+    ${moneyField(`loans-${i}-monthly`,e.monthly,'매달 갚는 금액 (원금+이자)','은행 앱 대출 상세의 월 납입액입니다. 만기일시 상환이면 매달 내는 이자를 적어주세요',[10,50,100])}
+    ${loanRate(e,i)}
+    ${chips(`loans-${i}-rateKind`,'금리 방식',RATE_KIND,e.rateKind,'c2')}
+    ${chips(`loans-${i}-payKind`,'갚는 방식',PAY_KIND,e.payKind,'c2','원리금균등: 매달 같은 금액 / 만기일시: 이자만 내다가 끝에 한 번에')}
+    ${chips(`loans-${i}-term`,'만기까지 남은 기간',LOAN_TERM,e.term)}`},
+ goals:{tag:'목표',addLabel:'목표 추가',none:'[목표 추가]를 눌러 이루고 싶은 목표를 하나 이상 적어주세요.',
+   title:'가장 이루고 싶은<br>재무목표부터 적어주세요',lead:'목표가 분명할수록 어느 지출을 줄여야 할지 정확해집니다. 노후 자금은 총액 대신 한 달 생활비로 고르시면 됩니다.',
+   blank:()=>({name:'',amount:0,years:'',saved:0,priority:''}),
+   body:(e,i)=>`${chips(`goals-${i}-name`,'목표',GOAL_T,e.name,'c2')}
+    ${chips(`goals-${i}-priority`,'우선순위',PRIORITY,e.priority,'c2','가장 먼저 이루고 싶은 목표가 1순위입니다')}
+    ${e.name==='노후 자금'?`<div class="note"><span>노후 자금은 총액을 가늠하기 어려워 <b>은퇴 후 한 달 생활비</b>로 받습니다. 필요한 총액은 예상 연금을 빼고 리포트에서 계산해드립니다.</span></div>
+    ${chips('r-age','몇 살에 은퇴하고 싶으세요?',R_AGE,S.retire.age,'c2')}
+    ${chips('r-living',S.profile.family==='기혼'?'은퇴 후 부부 한 달 생활비 (지금 돈 가치로)':'은퇴 후 한 달 생활비 (지금 돈 가치로)',R_LIVING,S.retire.living,'c2')}
+    ${moneyField(`goals-${i}-saved`,e.saved,'노후용으로 이미 모아둔 돈','연금저축·IRP·노후용 적금 등. 없으면 비워두세요',[100,500,1000])}`:
+    `${moneyField(`goals-${i}-amount`,e.amount,'필요한 금액 (지금 돈 가치로)','',[1000,5000,10000])}
+    ${chips(`goals-${i}-years`,'언제까지 필요하세요?',YEARS,e.years,'','지금부터 몇 년 후인지 골라주세요')}
+    ${moneyField(`goals-${i}-saved`,e.saved,'이 목표로 이미 모아둔 돈','없으면 비워두세요',[100,500,1000])}`}`}
+};
+
+/* 한 페이지 = 한 가지 질문 */
+function pages(){
+  const P=[{id:'mode',sec:0},{id:'intro',sec:0},{id:'notice',sec:0},{id:'client',sec:0},{id:'consent',sec:0}];
+  P.push({id:'goals',sec:1,kind:'group',g:'goals'});
+  P.push({id:'basicRef',sec:2},{id:'incomePick',sec:2,kind:'pick',list:'income'});
+  const inc=INCOME.filter(([k])=>S.incomeSel.includes(k));
+  inc.forEach(([k,l,h],i)=>P.push({id:'income:'+k,sec:2,kind:'income',k,l,h,n:i+1,of:inc.length}));
+  P.push({id:'fixedPick',sec:3,kind:'pick',list:'fixed'});
+  const fx=FIXED.filter(([k])=>S.fixedSel.includes(k));
+  fx.forEach(([k,l,h],i)=>P.push({id:'fixed:'+k,sec:3,kind:'fixed',k,l,h,n:i+1,of:fx.length}));
+  P.push({id:'cards',sec:4,kind:'group',g:'cards'});
+  P.push({id:'savings',sec:5,kind:'group',g:'savings'},{id:'m4sSum',sec:5});
+  P.push({id:'cuts',sec:6});
+  ['cash','invest','estate','deposit'].forEach((g,i)=>P.push({id:g,sec:7,kind:'group',g,n:i+1,of:4}));
+  P.push({id:'loans',sec:8,kind:'group',g:'loans'});
+  P.push({id:'retire',sec:9});
+  P.push({id:'review',sec:10},{id:'done',sec:10});
+  return P;
+}
+const page=()=>{const P=pages(); return P.find(p=>p.id===cur)||P[0];};
+// 확인·결과 화면에서 [수정]으로 들어오면 그 단계만 고치고 바로 돌아감
+const IMMEDIATE=['client','basicRef','cuts','retire'];
+const retNow=pg=>{ if(!ret) return false; if(ret.immediate) return true; const P=pages(), n=P[P.findIndex(p=>p.id===pg.id)+1]; return !n||(n.sec!==ret.sec&&n.id!==ret.to); };
+
+function group(key){
+  const g=GROUPS[key], list=S[key];
+  return `<section class="group" aria-label="${g.tag}">
+   ${list.length?list.map((e,i)=>`<div class="card entry"><div class="card-h"><span class="mono">${g.tag} ${i+1}</span><button type="button" class="del" data-del="${key}" data-i="${i}">삭제</button></div>${g.body(e,i)}</div>`).join(''):`<p class="none">${g.none}</p>`}
+   <button type="button" class="add" data-addrow="${key}">${g.addLabel}</button></section>`;
+}
+const head=(eb,title,lede)=>`<header class="phead">${eb?`<span class="mono eyebrow">${eb}</span>`:''}<h1>${title}</h1>${lede?`<p class="lede">${lede}</p>`:''}</header>`;
+
+function applyMode(){ const r=document.documentElement; r.classList.toggle('big',S.mode==='big'); r.classList.toggle('normal',S.mode!=='big');
+  const b=document.querySelector('[data-fontsw]'); if(b){ b.hidden=!S.mode; b.textContent=S.mode==='big'?'가 보통':'가 크게'; b.setAttribute('aria-label',S.mode==='big'?'보통 글씨로 보기':'큰 글씨로 보기'); } }
+
+function render(){
+  const pg=page(); cur=pg.id; applyMode();
+  const app=document.getElementById('app'), bars=document.getElementById('bars');
+  const part=PART(pg.sec), groups=[['goal',[1]],['basic',[2,3,4,5]],['pro',[6,7,8,9]]];
+  bars.innerHTML=groups.map(([k,ss])=>`<div class="pg ${k} ${part===k?'on':pg.sec>ss[ss.length-1]?'done':''}"><div class="pbars">${ss.map(i=>`<i class="${pg.sec>i?'pd':pg.sec===i?'pn':''}"></i>`).join('')}</div><span class="mono">${PART_L[k][0]}</span></div>`).join('');
+  document.getElementById('hdr').dataset.part=part;
+  const mini=document.getElementById('mini'); if(mini){ mini.hidden=part!=='basic'; mini.querySelectorAll('i').forEach(c=>c.classList.toggle('on',c.dataset.q===QUAD[pg.sec])); }
+  document.getElementById('hdr').classList.toggle('cover-mode',pg.sec===0||pg.id==='done');
+  document.body.classList.toggle('is-hero',pg.id==='mode');
+  const inStep=pg.sec>=1&&pg.sec<=TOTAL;
+  document.getElementById('stepno').innerHTML=inStep?`<b class="partchip ${part}">${PART_L[part][1]}</b> ${pg.sec} / ${TOTAL}단계`:'최종 확인';
+  document.getElementById('stepname').textContent=inStep?SEC[pg.sec]:'제출 전 마지막 단계';
+  document.getElementById('bottom').classList.toggle('solo',pg.id==='mode'||pg.id==='done');
+  document.getElementById('saved').hidden=!(pg.sec>=1&&pg.id!=='done');
+  document.getElementById('next').textContent=pg.id==='mode'?'시작하기':pg.id==='intro'?'다음':pg.id==='notice'?'확인하고 시작하기':pg.id==='consent'?'동의하고 시작하기':pg.id==='review'?'PRO 진단 신청하기':pg.id==='done'?'처음 화면으로':'다음';
+  if(retNow(pg)) document.getElementById('next').textContent='수정 완료 · 돌아가기';
+  const sub=pg.of?`${SEC[pg.sec]} ${pg.n} / ${pg.of}`:'';
+  let h='';
+  if(pg.id==='mode'){
+    h=`<section class="sec0">
+      <span class="mono eyebrow">화면 설정</span>
+      <h2 class="h2">어떤 글씨 크기가<br>편하신가요?</h2>
+      <div class="modes" role="group" aria-label="글씨 크기">
+        <button type="button" class="modebtn" data-mode="normal" aria-pressed="${S.mode==='normal'}"><b style="font-size:18px">보통 글씨</b><span class="sample" style="font-size:15px">매달 들어오는 소득 350만&nbsp;원</span></button>
+        <button type="button" class="modebtn" data-mode="big" aria-pressed="${S.mode==='big'}"><b style="font-size:26px">큰 글씨</b><span class="sample" style="font-size:21px">매달 들어오는 소득 350만&nbsp;원</span><small>노안이 있거나 큰 글씨가 편하신 분</small></button>
+      </div>
+      <p class="hint">오른쪽 위 [가] 버튼으로 언제든 바꿀 수 있습니다.</p>
+    </section>`;
+  } else if(pg.id==='intro'){
+    h=`${head('이렇게 진행돼요','내 돈의 흐름을<br>네 칸으로 정리합니다','소득, 고정지출, 변동지출, 저축을 시계 방향으로 채우면 현금흐름이 한눈에 보입니다.')}
+    <section class="card"><div class="card-h"><span class="mono">머니4스퀘어</span><span class="pill">시계 방향</span></div>
+      <div class="sq" aria-label="머니4스퀘어 네 칸, 시계 방향">
+        <div class="c1"><span class="mono">01</span><b>소득</b></div>
+        <div class="c2"><span class="mono">02</span><b>고정지출</b></div>
+        <div class="c3"><span class="mono">03</span><b>변동지출</b></div>
+        <div class="c4"><span class="mono">04</span><b>저축</b></div>
+      </div></section>
+    <section class="card"><div class="card-h"><span class="mono">진행 순서</span></div>
+      <ul class="list"><li><span class="mono">01</span><span>자료 작성 <small>지금 이 화면, 15분 안팎</small></span></li><li><span class="mono">02</span><span>베러 AI 분석 <small>현금흐름·대출 위험·노후 준비</small></span></li><li><span class="mono">03</span><span>디렉터 검수 <small>검수 후 담당 디렉터가 직접 연락</small></span></li></ul></section>`;
+  } else if(pg.id==='notice'){
+    h=`${head('시작 전에','PRO 진단 무료 지원은<br><span class="doc-hl">단 1회</span>뿐입니다','다시 받을 수 없으니 서류를 옆에 두고 <b>실제 금액 그대로</b> 입력해주세요. 입력이 정확할수록 리포트가 정확해집니다.')}
+    <section class="card"><div class="card-h"><span class="mono">비용</span></div>
+      <div class="fee2"><div><span class="mono">첫 진단</span><b>무료</b><small>담당 디렉터 지원</small></div><div><span class="mono">다시 받을 때</span><b class="num"><span class="nw">5만 원</span></b><small>추가 진단 회당</small></div></div></section>
+    <div class="note"><span><b>재정 메타인지</b>는 자산관리의 시작입니다. 내 돈이 어디서 들어와 어디로 나가는지 정확히 알아야 <b>현실적인 계획</b>을 세울 수 있습니다.<br><br>오늘 입력하신 자료는 <b>6개월마다 진행하는 피드백의 기초 데이터</b>가 됩니다. 다음 점검 때 이 숫자와 비교해 얼마나 나아졌는지 확인합니다.</span></div>
+    <section class="card"><div class="card-h"><span class="mono">준비 자료</span></div>
+      <p class="ready-q">아래 자료가 준비되었나요?</p><p class="ready-s">준비된 자료를 눌러 체크하고, 나에게 없는 자료는 [해당 없음]을 눌러주세요. <b data-ckcnt>${READY.filter((_,i)=>S.checks[i]).length} / ${READY.length}</b></p>
+      <ul class="cklist">${READY.map(([t,sm],i)=>`<li style="--d:${i}"><div class="ckrow"><button type="button" class="ck" data-ck="${i}" aria-pressed="${S.checks[i]===true}"><span class="mono">0${i+1}</span><span class="ck-t">${t}${sm?`<small>${sm}</small>`:''}</span><span class="box" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button><button type="button" class="na" data-na="${i}" aria-pressed="${S.checks[i]==='na'}">해당 없음</button></div></li>`).join('')}</ul>
+      <div class="tip"><span class="mono">팁</span><span><b>토스·뱅크샐러드</b> 앱에서 내 계좌·카드·대출을 연결하면 여러 금융사 내역을 한 화면에서 모아볼 수 있어 훨씬 빠르게 준비됩니다.</span></div></section>
+    <div data-readywrap ${READY.every((_,i)=>S.checks[i])?'':'hidden'}>
+    <button type="button" class="agree" data-ready aria-pressed="${!!S.ready}"><span class="box" aria-hidden="true">✓</span><span><b>네, 확인했고 자료도 준비했습니다</b><small>(필수) 무료 1회 · 추가 회당 5만 원 안내 확인</small></span></button></div>`;
+  } else if(pg.id==='client'){
+    h=`${head('','기본 정보를 알려주세요','담당 디렉터가 연락드리고 노후 준비를 계산할 때 사용합니다.')}
+    <section class="card stack">
+      <div class="field"><label for="p-name">이름</label><input type="text" id="p-name" autocomplete="name" value="${esc(S.profile.name)}" placeholder="홍길동"></div>
+      <div class="field"><label for="p-phone">휴대폰 번호</label><span class="hint">담당 디렉터가 연락드릴 번호입니다</span><input type="tel" id="p-phone" inputmode="numeric" autocomplete="tel" value="${esc(S.profile.phone)}" placeholder="010-0000-0000"></div>
+      <div class="field"><label for="p-age">나이 (만)</label><div class="money"><input id="p-age" type="text" inputmode="numeric" placeholder="0" value="${esc(S.profile.age)}"><span>세</span></div></div>
+      ${chips('p-family','가족 형태',['미혼','기혼'],S.profile.family,'c2')}
+      <div data-kidsrow ${S.profile.family==='기혼'?'':'hidden'}>${chips('p-kids','자녀 수',KIDS,S.profile.kids)}</div>
+      ${DIRQ?`<div class="field"><span class="lbl">담당 디렉터</span><div class="dirfixed"><b>${esc(S.profile.planner)}</b><small>디렉터</small></div></div>`:chips('p-planner','담당 디렉터',DIRECTORS,S.profile.planner,'','이 링크를 보내주신 디렉터를 눌러주세요. 모르시면 [모름]을 눌러주세요')}
+    </section>`;
+  } else if(pg.id==='consent'){
+    h=`${head('개인정보','개인정보 수집·이용에<br>동의해주세요','동의하셔야 진단을 시작할 수 있습니다.')}
+    <section class="card"><dl class="terms">
+        <dt>수집 항목</dt><dd>이름, 휴대폰 번호, 나이, 가족 형태, 소득·지출·자산·대출·노후·재무목표 정보</dd>
+        <dt>이용 목적</dt><dd>머니4스퀘어 재무 분석 및 담당 디렉터 상담</dd>
+        <dt>보유 기간</dt><dd>[운영 정책 확정 후 기재]</dd>
+        <dt>동의 거부</dt><dd>동의하지 않으실 수 있으며, 이 경우 진단을 받으실 수 없습니다.</dd></dl></section>
+    <button type="button" class="agree" data-agree aria-pressed="${S.consent}"><span class="box" aria-hidden="true">✓</span><span><b>네, 동의합니다</b><small>(필수) 개인정보 수집·이용 동의</small></span></button>`;
+  } else if(pg.id==='basicRef'){
+    const B=S.basic||{};
+    h=`${head('네 칸 · 베이직 값','베이직에서 적었던<br>네 칸을 먼저 적어주세요','베이직 과정에서 적었던 한 달 금액입니다. 결과지를 보고 적거나, 기억나는 대로 적어주세요. 이제부터 서류로 정확히 다시 채우고, 끝나면 <b>체감과 실제의 차이</b>를 보여드립니다.')}
+    <section class="card stack">
+      ${moneyField('basic-income',(B.incomeSet&&!B.income)?'0':B.income,'소득 <small>베이직에서 적은 한 달 소득</small>','',[10,50,100])}
+      ${moneyField('basic-fixed',(B.fixedSet&&!B.fixed)?'0':B.fixed,'고정지출 <small>베이직에서 적은 한 달 고정지출</small>','',[10,50,100])}
+      ${moneyField('basic-variable',(B.variableSet&&!B.variable)?'0':B.variable,'변동지출 <small>베이직에서 적은 한 달 변동지출</small>','',[10,50,100])}
+      ${moneyField('basic-saving',(B.savingSet&&!B.saving)?'0':B.saving,'저축 <small>베이직에서 적은 한 달 저축</small>','',[10,50,100])}</section>
+    <div class="note"><span>베이직 결과를 못 찾겠으면 <b>지금 느끼는 금액</b>을 적어주세요. 체감 금액과 실제 금액의 차이를 보는 것이 재정 메타인지의 시작입니다.</span></div>`;
+  } else if(pg.kind==='pick'){
+    const isI=pg.list==='income', items=isI?INCOME:FIXED, selA=isI?S.incomeSel:S.fixedSel;
+    const married=S.profile.family==='기혼';
+    h=`${head(isI?'소득':'고정지출',isI?'매달 들어오는 소득을<br>모두 골라주세요':'매달 꼭 나가는 돈을<br>모두 골라주세요',
+      isI?(married?'부부 소득을 모두 골라주세요. 다음 화면부터 하나씩 금액을 여쭤봅니다.':'해당되는 것을 누르세요. 다음 화면부터 하나씩 금액을 여쭤봅니다.')
+         :'해당되는 것을 누르세요. 다음 화면부터 하나씩 금액을 여쭤봅니다.')}
+    <div class="chips" role="group">${items.filter(([k])=>!(k==='spouse'&&!married)).map(([k,l,hint])=>`<button type="button" class="chip" data-pick="${pg.list}" data-k="${k}" aria-pressed="${selA.includes(k)}"><b>${l}</b><small>${hint}</small></button>`).join('')}</div>
+    ${isI?'':`<div class="loanbox"><span class="mono">대출</span><div><b>대출 원금·이자는 여기서 고르지 않습니다</b><span>주택담보·전세·신용·자동차 할부 등 <b>매달 갚는 원금+이자</b>는 대출 단계에서 대출별로 따로 받아 계산합니다. 여기서 또 고르면 두 번 계산됩니다.</span></div></div>`}
+    <p class="hint" data-pickcount>${selA.length?`${selA.length}개 선택됨`:'아직 고른 항목이 없습니다'}</p>`;
+  } else if(pg.kind==='income'){
+    const o=S.income[pg.k]||{}, dc=INC_DOC[pg.k], q=[100,500,1000];
+    const isW=pg.k==='work'||pg.k==='spouse';
+    h=`${head(sub,pg.l,`${pg.h}. <b class="doc-hl">${dc[0]}</b>을 보고 1년 금액을 적어주세요.`)}
+    <div class="note"><span>${pg.k==='int'?'<b>세금 떼기 전</b> 1년 이자·배당 합계만 적어주세요. 세금은 15.4%로 자동 계산하고, 4대보험은 이 소득에서 떼지 않아 입력하지 않습니다.':'통장에 들어오는 금액이 아니라 <b>1년 확정 금액</b>으로 계산합니다. 상여·성과급·연말정산까지 반영돼 더 정확합니다. 해당 없는 칸은 <b>0</b>을 적어주세요.'}</span></div>
+    <section class="card stack">
+      ${moneyField(`income-${pg.k}-gross`,o.gross,dc[1],pg.k==='int'?'<span class="where-d">예금·적금 이자 + 주식·ETF·펀드 분배금을 모두 더한 금액. 금융사 앱의 이자·배당 지급 내역에서 세전 금액을 보세요</span>':isW?WH('21','총급여','위쪽 근무처별 16번 \'계\'가 아니라 정산명세의 21번 총급여입니다 (비과세 제외 금액)'):'',q)}
+      ${pg.k==='int'?`<div data-intcalc>${intCalc(intAuto(o))}</div>`:`${moneyField(`income-${pg.k}-tax`,(o.taxSet&&!o.tax)?'0':o.tax,dc[2],isW?WH('72','결정세액','소득세 칸 + 지방소득세 칸을 더해 적어주세요. 맨 아래 차감징수세액(환급·추가납부)이 아닙니다'):'',[10,50,100])}
+      ${moneyField(`income-${pg.k}-ins`,(o.insSet&&!o.ins)?'0':o.ins,dc[3],isW?WH('31·33','4대보험','31번 국민연금보험료 + 33번 건강보험료(장기요양 포함) + 고용보험료, 세 금액을 더해 적어주세요')+`<span data-insref>${o.gross?`2026년 근로자 부담 요율로 계산하면 1년 ${kor(insRef(o.gross))}입니다`:'세전 총급여를 적으면 요율 계산값을 보여드립니다'}</span>`:'',[10,50,100])}`}
+      <div class="avg blink"><span class="lbl">월 평균 실소득 <small>(세전 − 세금 − 4대보험) ÷ 12</small></span><b class="num" data-inet>${kor(Math.round(incNet(o)))||'—'}</b></div></section>`;
+  } else if(pg.kind==='fixed'){
+    const o=S.fixed[pg.k]||{};
+    h=`${head(sub,pg.l,`<b class="doc-hl">${pg.h}</b>. <b>한 달</b>에 얼마가 나가나요?`)}
+    <div class="note"><span>통장과 카드로 나눠서 나가면 <b>두 칸 모두</b> 적어주세요. 한쪽으로만 나가면 그 칸만 적으시면 됩니다.</span></div>
+    <section class="card stack">
+      ${moneyField(`fixed-${pg.k}-bank`,o.bank,ICO_WON+'통장 자동이체로 나가는 금액','없으면 비워두세요')}
+      ${moneyField(`fixed-${pg.k}-card`,o.card,ICO_CARD+'카드로 나가는 금액','없으면 비워두세요. 다음 단계 카드 결제액에서 자동으로 빼고 계산합니다')}
+      <div class="avg"><span class="lbl">${pg.l} 합계</span><b class="num" data-ftot>${kor(fxSum(o))||'0 원'}</b></div></section>`;
+  } else if(pg.id==='cuts'){
+    const items=FIXED.filter(([k])=>S.fixedSel.includes(k)&&fxSum(S.fixed[k])>0);
+    const cardT=varSpend().V;
+    h=`${head('심층 1 · 줄일 지출','네 칸에서<br>줄일 수 있는 지출은?','방금 채운 머니4스퀘어의 고정지출·변동지출 중에서 줄일 수 있다고 생각하는 항목에 한 달 금액을 적어주세요. 없으면 비워두세요. 상담 때 디렉터와 함께 확정합니다.')}
+    <section class="card stack">
+      ${items.map(([k,l])=>moneyField(`cut-${k}`,S.cuts[k],`${l} <small>지금 월 ${kor(fxSum(S.fixed[k]))}</small>`,'없으면 비워두세요',[1,5,10])).join('')}
+      ${cardT?moneyField('cut-var',S.cuts.var,`카드로 쓰는 생활비 <small>지금 월 ${kor(cardT)}</small>`,'외식·쇼핑·배달처럼 그때그때 쓰는 돈. 없으면 비워두세요',[5,10,30]):''}
+      <div class="avg"><span class="lbl">한 달에 줄일 수 있는 돈</span><b class="num" data-cuttot>${kor(Object.values(S.cuts).reduce((a,b)=>a+(b||0),0))||'0 원'}</b></div></section>`;
+  } else if(pg.id==='m4sSum'){
+    // BASIC 결과: 네 칸을 숫자로 채운 머니4스퀘어 (리포트 04장과 같은 계산)
+    const I=Math.round(S.incomeSel.reduce((a,k)=>a+incNet(S.income[k]),0)), F=fxTotal();
+    const {V}=varSpend();
+    const L=S.savings.filter(e=>e.type), Sv=L.reduce((a,e)=>a+(+e.monthly||0),0), left=I-F-V-Sv;
+    const target=S.profile.family==='기혼'?40:60, rate=I?Math.round(Sv/I*100):0;
+    const manR=v=>{const m=Math.round(v/10000); return m>=10000?`${(m/10000).toFixed(1).replace(/\.0$/,'')}억 원`:`${m.toLocaleString('ko-KR')}만 원`;};
+    const B=S.basic||{}, hasB=k=>!!(B[k+'Set']||B[k]>0), diff=(a,k)=>hasB(k)?a-(B[k]||0):null, dTxt=d=>d==null?'':`${d>=0?'+':'−'}${manR(Math.abs(d))}`;
+    const gaps=[['income',I],['fixed',F],['variable',V],['saving',Sv]].map(([k,v])=>diff(v,k)).filter(d=>d!=null), gapSum=gaps.reduce((a,d)=>a+Math.abs(d),0);
+    const cell=(k,no,en,ko,v,bk)=>{const d=diff(v,bk); return `<div class="${k}"><span class="mono">${no}</span><b>${ko}</b><span class="val num">${manR(v)}</span>${d!=null?`<small class="cmp">베이직 ${manR(B[bk])} <b class="${d>=0?'up':'dn'}">${dTxt(d)}</b></small>`:'<small>베이직 값 없음</small>'}</div>`;};
+    h=`${head('머니4스퀘어 결과',gaps.length?`체감과 실제가<br>${manR(gapSum)} 달랐습니다`:'내 머니4스퀘어가<br>채워졌습니다',gaps.length?'베이직에서 적은 금액(체감)과 서류로 확인한 금액(실제)의 차이입니다. 이 차이를 아는 것이 재정 메타인지입니다. 리포트 04장에서 이 네 칸을 그대로 분석합니다.':'네 칸이 완성됐습니다. 리포트 04장에서 이 네 칸을 그대로 분석합니다.')}
+    <section class="card m4s-res"><div class="card-h"><span class="mono">머니4스퀘어</span><span class="pill dk">네 칸 완료</span></div>
+      <div class="sq filled" aria-label="머니4스퀘어 결과">
+        ${cell('c1','01','Income','소득',I,'income')}${cell('c2','02','Fixed','고정지출',F,'fixed')}
+        ${cell('c3','03','Variable','변동지출',V,'variable')}${cell('c4','04','Saving','저축',Sv,'saving')}
+      </div>
+      <div class="avg"><span class="lbl">남는 돈 <small>소득 − 고정 − 변동 − 저축 · 대출 상환 전</small></span><b class="num ${left<0?'neg':''}">${left<0?'−':''}${kor(Math.abs(left))||'0 원'}</b></div>
+      <div class="avg sub2"><span class="lbl">저축률 <small>${S.profile.family==='기혼'?'기혼':'미혼'} 기준 ${target}%</small></span><b class="num">${rate}%</b></div>
+      <p class="hint" style="margin-top:12px">대출 상환액은 심층 진단의 대출 단계에서 받아, 최종 확인 화면에서 빼고 다시 계산해드립니다.</p>
+      <div class="editrow"><button type="button" class="edit" data-go="basicRef">베이직 값 수정</button><button type="button" class="edit" data-go="incomePick">소득 수정</button><button type="button" class="edit" data-go="fixedPick">고정지출 수정</button><button type="button" class="edit" data-go="cards">카드 수정</button><button type="button" class="edit" data-go="savings">저축 수정</button></div></section>
+    ${L.length?`<section class="card"><div class="card-h"><span class="mono">저축 상세</span><span class="mono">${L.length}건</span></div>
+      <ul class="sum">${L.map(e=>`<li><div><b>${esc(e.type)}</b><small>${esc([e.acct,e.rate||e.cum].filter(Boolean).join(' · '))}</small></div><div class="r"><span class="amt num">월 <span class="nw">${kor(+e.monthly||0)||'0 원'}</span></span><small class="num">모인 돈 ${kor(+e.value||0)||'0 원'}</small></div></li>`).join('')}</ul></section>`:''}
+    <section class="card next-pro"><div class="card-h"><span class="mono">다음 단계</span><span class="partchip pro">심층 진단</span></div>
+      <p class="ready-q">이제 심층 진단으로 넘어갑니다</p>
+      <ul class="list"><li><span class="mono">01</span><span>줄일 지출 <small>방금 채운 네 칸에서 줄일 수 있는 항목 고르기</small></span></li><li><span class="mono">02</span><span>자산 <small>현금·목돈 투자·부동산·보증금 (한 번에 넣어둔 돈)</small></span></li><li><span class="mono">03</span><span>대출 <small>대출별 잔액·금리·월 상환액</small></span></li><li><span class="mono">04</span><span>노후 <small>은퇴 나이·생활비·예상 연금</small></span></li></ul>
+      <div class="tip"><span class="mono">확인</span><span>자산 단계에서는 위에 적은 <b>적립식 계좌를 다시 적지 마세요.</b> 한 번에 넣어둔 목돈만 적습니다.</span></div></section>`;
+  } else if(pg.id==='retire'){
+    const R=S.retire;
+    h=`${head('노후','노후는 어떻게<br>준비하고 계세요?','지금 물가 기준으로 골라주세요. 노후 준비가 충분한지 함께 분석합니다.')}
+    ${S.goals.some(g=>g.name==='노후 자금')?`<div class="note"><span>재무목표에서 고르신 <b>은퇴 나이·생활비</b>가 미리 선택돼 있습니다. 바꾸시면 목표에도 함께 반영됩니다.</span></div>`:''}
+    <section class="card stack">
+      ${chips('r-age','몇 살에 은퇴하고 싶으세요?',R_AGE,R.age,'c2')}
+      ${chips('r-living',S.profile.family==='기혼'?'은퇴 후 부부 한 달 생활비':'은퇴 후 한 달 생활비',R_LIVING,R.living,'c2')}
+      ${chips('r-pension','국민연금 등 예상 월 수령액',R_PENSION,R.pension,'c2','국민연금공단 "내 연금 알아보기"에서 확인할 수 있습니다')}
+    </section>`;
+  } else if(pg.kind==='group'){
+    const g=GROUPS[pg.g];
+    h=`${head(sub||SEC[pg.sec],g.title,g.lead)}${group(pg.g)}`;
+  } else if(pg.id==='review'){
+    const sumI=Math.round(S.incomeSel.reduce((a,k)=>a+incNet(S.income[k]),0)), sumF=fxTotal(), sumCut=Object.values(S.cuts).reduce((a,b)=>a+(b||0),0);
+    const sumC=varSpend().V, sumS=S.savings.reduce((a,c)=>a+(c.monthly||0),0);
+    const sumL=S.loans.reduce((a,l)=>a+(l.balance||0),0), sumLM=loanMonthly(), flowLeft=sumI-sumF-sumC-sumS-sumLM;
+    const cnt=a=>a.length?`${a.length}건`:'없음';
+    const rows=[
+      [0,'기본 정보',`${S.profile.name} · ${S.profile.phone} · 만 ${S.profile.age}세`,''],
+      [1,'재무목표',`${cnt(S.goals)} · ${S.goals.map(g=>g.name).filter(Boolean).slice(0,2).join(', ')}`,''],
+      [2,'소득',`월 평균 실소득 · ${S.incomeSel.length}개 항목`,kor(sumI)||'0 원'],
+      [3,'고정지출',`월 합계 · ${S.fixedSel.length}개 항목`,kor(sumF)||'0 원'],
+      [4,'변동지출 (카드)',`카드 평균 − 카드로 낸 고정지출 · 카드 ${cnt(S.cards)}`,kor(sumC)||'0 원'],
+      [5,'저축 (적립식)',`월 합계 · ${cnt(S.savings)}`,kor(sumS)||'0 원'],
+      [6,'줄일 수 있는 지출','한 달 합계',kor(sumCut)||'없음'],
+      [7,'자산',`현금 ${cnt(S.cash)} · 투자 ${cnt(S.invest)} · 부동산 ${cnt(S.estate)} · 보증금 ${cnt(S.deposit)}`,''],
+      [8,'대출',`잔액 합계 · ${cnt(S.loans)}`,S.loans.length?kor(sumL):''],
+      [9,'노후',`${S.retire.age||'-'} 은퇴 희망`,'']];
+    h=`${head('최종 확인','적으신 내용을<br>확인해주세요','틀린 곳이 있으면 [수정]을 눌러 고칠 수 있습니다.')}
+    <section class="card"><div class="card-h"><span class="mono">한 달 현금흐름</span><span class="pill">대출 상환 반영</span></div>
+     <ul class="flow"><li><span>소득 (실수령)</span><span class="num">${kor(sumI)||'0 원'}</span></li><li><span>고정지출</span><span class="num">−${kor(sumF)||'0 원'}</span></li><li><span>변동지출</span><span class="num">−${kor(sumC)||'0 원'}</span></li><li><span>저축</span><span class="num">−${kor(sumS)||'0 원'}</span></li><li><span>대출 상환</span><span class="num">−${kor(sumLM)||'0 원'}</span></li><li><span>매달 남는 돈</span><span class="num ${flowLeft<0?'neg':''}">${flowLeft<0?'−':''}${kor(Math.abs(flowLeft))||'0 원'}</span></li></ul></section>
+    <section class="card"><div class="card-h"><span class="mono">입력 요약</span><span class="mono">${esc(S.profile.name)}</span></div>
+     <ul class="sum">${rows.map(([s,l,sb,val])=>`<li><div><b>${l}</b><small>${esc(sb)}</small></div><div class="r">${val?`<span class="amt num">${val}</span>`:''}<button type="button" class="edit" data-go="${SEC_FIRST[s]}">수정</button></div></li>`).join('')}</ul></section>
+    <section class="card"><div class="card-h"><span class="mono">신청 후</span></div>
+     <ul class="list"><li><span class="mono">01</span><span>베러 AI 분석 <small>현금흐름, 대출 위험(DSR), 노후 준비를 분석합니다</small></span></li>
+     <li><span class="mono">02</span><span>디렉터 검수 <small>MAKESBETTER 디렉터가 결과를 직접 확인합니다</small></span></li>
+     <li><span class="mono">03</span><span>담당 디렉터 상담 <small>적어주신 번호로 직접 연락드립니다</small></span></li></ul></section>`;
+  } else if(pg.id==='done'){
+    h=`<section class="donebox"><div class="ok" aria-hidden="true">✓</div><span class="mono eyebrow">접수 완료</span>
+     <h1>진단 신청이<br>접수되었습니다</h1>
+     <p class="lede">${esc(S.profile.name)}님의 자료를 받았습니다. 분석 결과는 담당 디렉터에게 전달되며, 검토가 끝나면 디렉터가 적어주신 번호로 직접 연락드립니다.</p></section>
+     <div class="note"><span>연락을 기다리는 동안 카드 이용내역을 한 번 더 살펴보세요. 상담 때 변동지출을 함께 짚어드립니다.</span></div>
+     ${SENT.state==='sending'?`<div class="note"><span>자료를 전송하고 있습니다…</span></div>`:''}
+     ${SENT.state==='fail'?`<section class="card"><div class="card-h"><span class="mono">전송 실패</span></div>
+      <p class="hint">네트워크 문제로 자동 전송이 되지 않았습니다. 아래 버튼으로 복사해서 담당 디렉터에게 카카오톡으로 보내주세요.</p>
+      <button type="button" class="add" data-copy style="margin-top:12px">제출 데이터 복사</button>
+      <textarea id="payloadOut" readonly class="payload">${esc(JSON.stringify(window.__m4sLastPayload||{}))}</textarea></section>`:''}
+     ${SENT.state==='proto'?`<section class="card proto-only"><div class="card-h"><span class="mono">시안 테스트용</span></div>
+      <p class="hint">실제 배포에서는 이 데이터가 저장되고 A4 리포트가 담당 디렉터 이메일로 자동 발송됩니다. 지금은 복사해서 PRO 리포트 생성기에 붙여넣으면 리포트를 볼 수 있습니다.</p>
+      <button type="button" class="add" data-copy style="margin-top:12px">제출 데이터 복사</button>
+      <textarea id="payloadOut" readonly class="payload">${esc(JSON.stringify(window.__m4sLastPayload||{}))}</textarea></section>`:''}`;
+  }
+  if(error) h=`<div class="err" role="alert">${error}</div>`+h;
+  app.innerHTML=h; app.style.animation='none'; void app.offsetWidth; app.style.animation='';
+}
+
+function setByInput(el){
+  const id=el.id; if(!id) return;
+  const p=id.split('-');
+  if(p[0]==='p'){ if(p[1]==='phone'){ el.value=fmtPhone(el.value); } if(p[1]==='age'){ el.value=el.value.replace(/\D/g,'').slice(0,3); } S.profile[p[1]]=el.value; return; }
+  if(p[0]==='income'){ const o=S.income[p[1]]||(S.income[p[1]]={}); o[p[2]]=toWon(el.value); o[p[2]+'Set']=el.value.trim()!=='';
+    if(p[1]==='int'&&p[2]==='gross'){ intAuto(o); const c=document.querySelector('[data-intcalc]'); if(c) c.innerHTML=intCalc(o); }
+    const n=document.querySelector('[data-inet]'); if(n){ n.textContent=kor(Math.round(incNet(o)))||'—'; n.classList.remove('pulse'); void n.offsetWidth; n.classList.add('pulse'); }
+    const r=document.querySelector('[data-insref]'); if(r&&p[2]==='gross') r.textContent=o.gross?`2026년 근로자 부담 요율로 계산하면 1년 ${kor(insRef(o.gross))}입니다`:'세전 총급여를 적으면 요율 계산값을 보여드립니다'; return; }
+  if(p[0]==='basic'){ S.basic=S.basic||{}; S.basic[p[1]]=toWon(el.value); S.basic[p[1]+'Set']=el.value.trim()!==''; return; }
+  if(p[0]==='cut'){ S.cuts[p[1]]=toWon(el.value); const t=document.querySelector('[data-cuttot]'); if(t) t.textContent=kor(Object.values(S.cuts).reduce((a,b)=>a+(b||0),0))||'0 원'; return; }
+  if(p[0]==='fixed'){ const o=S.fixed[p[1]]||(S.fixed[p[1]]={bank:0,card:0}); o[p[2]]=toWon(el.value);
+    const t=document.querySelector('[data-ftot]'); if(t) t.textContent=kor(fxSum(o))||'0 원'; return; }
+  if(GROUPS[p[0]]){ const e=S[p[0]][+p[1]]; if(!e) return; const f=p[2];
+    e[f]=el.hasAttribute('data-money')?toWon(el.value):el.value; if(el.hasAttribute('data-money')) e[f+'Set']=el.value.trim()!==''; if(p[0]==='loans'&&f==='rateNum') e.rate=rateBucket(el.value);
+    if(p[0]==='cards'){const a=document.querySelector(`[data-avg="${p[1]}"]`); if(a) a.textContent=kor(cardAvg(e))||'—';}
+    if(p[0]==='invest'){const a=document.querySelector(`[data-icum="${p[1]}"]`); if(a) a.textContent=pctTxt(cumOf(e));} }
+}
+document.addEventListener('input',ev=>{
+  const el=ev.target;
+  if(el.hasAttribute('data-pct')){ el.value=el.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1').replace(/(\.\d\d).+/,'$1'); if(+el.value>100) el.value='100'; }
+  if(el.hasAttribute('data-money')){ el.value=el.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1').replace(/(\.\d).+/,'$1');
+    el.value=comma(el.value); const echo=document.querySelector(`[data-echo="${el.id}"]`); if(echo) echo.innerHTML=echoHtml(el.id,toWon(el.value)); }
+  setByInput(el); save();
+});
+document.addEventListener('change',ev=>{ setByInput(ev.target); save(); });
+// 키보드 [다음]/Enter → 다음 칸으로
+document.addEventListener('keydown',ev=>{ const el=ev.target; if(ev.key!=='Enter'||el.tagName!=='INPUT'||!el.closest('#app')) return; ev.preventDefault();
+  const ins=[...document.querySelectorAll('#app input:not([disabled])')].filter(i=>i.offsetParent); const n=ins[ins.indexOf(el)+1]; if(n) n.focus(); else el.blur(); });
+let toastT; function toast(msg,undo){ let el=document.getElementById('toast'); if(!el){ el=document.createElement('div'); el.id='toast'; el.className='toast'; el.setAttribute('role','status'); document.body.appendChild(el); }
+  el.innerHTML=`<span>${msg}</span><button type="button">되돌리기</button>`; el.hidden=false;
+  el.querySelector('button').onclick=()=>{ el.hidden=true; clearTimeout(toastT); undo(); };
+  clearTimeout(toastT); toastT=setTimeout(()=>{ el.hidden=true; },6000); }
+document.addEventListener('mousedown',ev=>{ if(ev.target.closest('[data-quick]')) ev.preventDefault(); });
+document.addEventListener('click',ev=>{
+  const t=ev.target.closest('button'); if(!t) return;
+  if(t.dataset.quick){ const inp=document.getElementById(t.dataset.quick); const w=toWon(inp.value)+(+t.dataset.add)*10000;
+    inp.value=toMan(w); inp.dispatchEvent(new Event('input',{bubbles:true})); inp.focus(); return; }
+  if(t.dataset.mode){ S.mode=t.dataset.mode; error=''; save(); applyMode();
+    document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',b===t)); return; }
+  if(t.hasAttribute('data-fontsw')){ S.mode=S.mode==='big'?'normal':'big'; save(); const y=scrollY; render(); scrollTo(0,y); return; }
+  if(t.dataset.ck!==undefined||t.dataset.na!==undefined){ if(!Array.isArray(S.checks)) S.checks=[]; const isNa=t.dataset.na!==undefined, i=+(isNa?t.dataset.na:t.dataset.ck);
+    S.checks[i]=isNa?(S.checks[i]==='na'?false:'na'):(S.checks[i]===true?false:true);
+    const row=t.closest('.ckrow'); row.querySelector('.ck').setAttribute('aria-pressed',S.checks[i]===true); row.querySelector('.na').setAttribute('aria-pressed',S.checks[i]==='na'); row.classList.remove('miss');
+    const n=READY.filter((_,k)=>S.checks[k]).length, all=n===READY.length; document.querySelector('[data-ckcnt]').textContent=n+' / '+READY.length;
+    const w=document.querySelector('[data-readywrap]'); if(w){ w.hidden=!all; if(!all){S.ready=false; const b=w.querySelector('[data-ready]'); b&&b.setAttribute('aria-pressed',false);} else { const y=w.getBoundingClientRect().top+scrollY-240; scrollTo({top:Math.max(0,y),behavior:'smooth'}); } }
+    error=''; save(); return; }
+  if(t.hasAttribute('data-ready')){ S.ready=!S.ready; t.setAttribute('aria-pressed',S.ready); error=''; save(); return; }
+  if(t.hasAttribute('data-agree')){ S.consent=!S.consent; t.setAttribute('aria-pressed',S.consent); error=''; save(); return; }
+  if(t.hasAttribute('data-copy')){ const ta=document.getElementById('payloadOut');
+    const ok=()=>{t.textContent='복사되었습니다';}; const fb=()=>{ta.focus(); ta.select(); t.textContent='선택되었습니다. 길게 눌러 복사하세요';};
+    try{ navigator.clipboard.writeText(ta.value).then(ok,fb);}catch(e){fb();} return; }
+  if(t.dataset.chip){ const p=t.dataset.chip.split('-'), v=t.dataset.v;
+    if(p[0]==='p'){ S.profile[p[1]]=v; if(p[1]==='family'){ const k=document.querySelector('[data-kidsrow]'); if(k) k.hidden=v!=='기혼';
+        if(v!=='기혼'){ S.profile.kids=''; const i=S.incomeSel.indexOf('spouse'); if(i>=0){S.incomeSel.splice(i,1); delete S.income.spouse;} } } }
+    else if(p[0]==='r'){ S.retire[p[1]]=v; }
+    else { const e=S[p[0]][+p[1]]; if(!e) return;
+      if(p[0]==='loans'&&p[2]==='rate'){ e.rate=e.rate==='모름'?rateBucket(e.rateNum):'모름'; if(e.rate==='모름') e.rateNum=''; const y=scrollY; save(); render(); scrollTo(0,y); return; }
+      e[p[2]]=v;
+      if((p[0]==='savings'&&p[2]==='cum')||(p[0]==='cards'&&p[2]==='kind')||(p[0]==='savings'&&p[2]==='type')||(p[0]==='goals'&&p[2]==='name')){ const y=scrollY; save(); render(); scrollTo(0,y); return; } }
+    t.parentElement.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b===t)); error=''; save(); return; }
+  if(t.dataset.pick){ const arr=t.dataset.pick==='income'?S.incomeSel:S.fixedSel, k=t.dataset.k, i=arr.indexOf(k);
+    if(i>=0){ arr.splice(i,1); delete S[t.dataset.pick][k]; } else arr.push(k);
+    t.setAttribute('aria-pressed',i<0); const c=document.querySelector('[data-pickcount]'); if(c) c.textContent=arr.length?`${arr.length}개 선택됨`:'아직 고른 항목이 없습니다';
+    error=''; save(); return; }
+  if(t.dataset.addrow){ const k=t.dataset.addrow; S[k].push(GROUPS[k].blank()); save(); render();
+    const n=S[k].length-1; const f=document.querySelectorAll('.entry')[n]; if(f) scrollTo(0,Math.max(0,f.getBoundingClientRect().top+scrollY-120)); return; }
+  if(t.dataset.del){ const k=t.dataset.del, i=+t.dataset.i, item=S[k].splice(i,1)[0]; save(); render(); toast(`${GROUPS[k].tag} ${i+1} 삭제됨`,()=>{ S[k].splice(i,0,item); save(); render(); }); return; }
+  if(t.dataset.go){ const from=page().id; if(from==='review'||from==='m4sSum'){ const tp=pages().find(p=>p.id===t.dataset.go); ret={to:from,sec:tp?tp.sec:-1,immediate:IMMEDIATE.includes(t.dataset.go)||!!(tp&&tp.sec===0)}; }
+    cur=t.dataset.go; error=''; save(); render(); scrollTo(0,0); return; }
+});
+
+// 다음으로 못 넘어갈 때 비어 있는 필수 항목을 찾아 깜박임 표시 (선택 항목: '(선택)' 또는 '비워두세요' 안내가 있는 칸은 제외)
+function flagMissing(){
+  const root=document.getElementById('app')||document.body, out=[];
+  const vis=el=>!!(el.offsetParent||el.getClientRects().length)&&!el.closest('[hidden]');
+  const optional=f=>/\(선택\)|비워두세요/.test((f.querySelector('label,.lbl')||{}).textContent+' '+((f.querySelector('.hint')||{}).textContent||''));
+  root.querySelectorAll('.opts').forEach(g=>{ if(!vis(g)) return; if(!g.querySelector('[aria-pressed="true"]')){ const f=g.closest('.field')||g; if(!optional(f)) out.push(f);} });
+  root.querySelectorAll('.chips').forEach(g=>{ if(vis(g)&&!g.querySelector('[aria-pressed="true"]')) out.push(g); });
+  root.querySelectorAll('.field.mwrap').forEach(f=>{ if(!vis(f)||optional(f)) return; const i=f.querySelector('input'); if(i&&i.value.trim()==='') out.push(f); });
+  root.querySelectorAll('.grid3').forEach(g=>{ if(vis(g)&&[...g.querySelectorAll('input')].some(i=>i.value.trim()==='')) out.push(g.closest('.field')||g); });
+  root.querySelectorAll('.field input[type=text],.field input[type=tel]').forEach(i=>{ const f=i.closest('.field'); if(vis(i)&&!i.disabled&&!f.classList.contains('mwrap')&&!i.closest('.grid3')&&!optional(f)&&i.value.trim()==='') out.push(f); });
+  root.querySelectorAll('.ck[aria-pressed="false"],.agree[aria-pressed="false"]').forEach(b=>{ const row=b.closest('.ckrow'); if(vis(b)&&!(row&&row.querySelector('.na[aria-pressed="true"]'))) out.push(row||b); });
+  const uniq=[...new Set(out)]; uniq.forEach(el=>{ el.classList.remove('miss'); void el.offsetWidth; el.classList.add('miss');
+    const off=()=>{ el.classList.remove('miss'); el.removeEventListener('click',off); el.removeEventListener('input',off); }; el.addEventListener('click',off); el.addEventListener('input',off); });
+  uniq.sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top); return uniq[0]||null;
+}
+// 막지는 않고 한 번 확인받는 경고 ([다음]을 한 번 더 누르면 통과)
+function softWarn(pg){
+  if(document.querySelector('#app .echo .warn')) return '금액이 아주 큽니다. 만원 단위로 적었는지 확인해주세요. 맞으면 [다음]을 한 번 더 눌러주세요.';
+  if(pg.id==='cards'){ const {C,cf}=varSpend(); if(cf>0&&cf>C) return `고정지출 중 카드로 나가는 돈이 월 ${kor(cf)}인데, 카드 결제 평균은 ${kor(C)||'0 원'}입니다. 고정지출을 낸 카드도 모두 추가해주세요. 맞으면 [다음]을 한 번 더 눌러주세요.`; }
+  return '';
+}
+function validate(pg){
+  if(pg.id==='mode' && !S.mode) return '보통 글씨와 큰 글씨 중 하나를 눌러주세요.';
+  if(pg.id==='client'){
+    if(!S.profile.name.trim()) return '이름을 적어주세요.';
+    if(S.profile.phone.replace(/\D/g,'').length<10) return '휴대폰 번호를 끝까지 적어주세요. 예: 010-1234-5678';
+    const a=+S.profile.age; if(!(a>=19&&a<=100)) return '나이를 숫자로 적어주세요. 예: 45';
+    if(!S.profile.family) return '가족 형태(미혼/기혼)를 골라주세요.';
+    if(!S.profile.planner) return '담당 디렉터를 골라주세요. 모르시면 [모름]을 눌러주세요.';
+    if(S.profile.family==='기혼'&&!S.profile.kids) return '자녀 수를 골라주세요. 자녀가 없으면 [없음]을 눌러주세요.';
+  }
+  if(pg.id==='notice' && !READY.every((_,i)=>(S.checks||[])[i])) return '준비 자료를 하나씩 모두 체크해주세요.';
+  if(pg.id==='notice' && !S.ready) return '[네, 확인했고 자료도 준비했습니다]를 눌러주세요.';
+  if(pg.id==='consent' && !S.consent) return '[네, 동의합니다]를 눌러주세요.';
+  if(pg.id==='incomePick' && !S.incomeSel.length) return '소득을 한 가지 이상 골라주세요.';
+  if(pg.id==='basicRef'){ const B=S.basic||{}; if(!B.income) return '베이직에서 적었던 소득을 적어주세요. 기억이 안 나면 지금 느끼는 한 달 소득이면 됩니다.';
+    const ms=[['fixed','고정지출'],['variable','변동지출'],['saving','저축']].find(([k])=>!(B[k+'Set']||B[k]>0)); if(ms) return `베이직에서 적었던 ${ms[1]}을 적어주세요. 기억이 안 나면 지금 느끼는 금액, 없으면 0을 적어주세요.`; }
+  if(pg.kind==='income'){ const o=S.income[pg.k]||{}, dc=INC_DOC[pg.k];
+    if(!o.gross) return `${dc[1]}을 적어주세요. 이 소득이 없으면 [이전]으로 돌아가 선택을 빼주세요.`;
+    if(pg.k==='int') intAuto(o);
+    if(!o.taxSet) return `${dc[2].split(' (')[0]}을 적어주세요. ${dc[0]}에 있습니다. 없으면 0을 적어주세요.`;
+    if(!o.insSet) return `${dc[3].split(' (')[0]}를 적어주세요. 해당 없으면 0을 적어주세요.`;
+    if((o.tax||0)+(o.ins||0)>=o.gross) return '세금과 4대보험 합계가 세전 금액보다 큽니다. 다시 확인해주세요.'; }
+  if(pg.id==='cuts'){ const bad=FIXED.find(([k])=>S.fixedSel.includes(k)&&(S.cuts[k]||0)>fxSum(S.fixed[k])); if(bad) return `${bad[1]}: 줄일 금액이 지금 지출보다 큽니다.`;
+    const cardT=varSpend().V; if((S.cuts.var||0)>cardT) return '카드 생활비: 줄일 금액이 지금 카드 생활비보다 큽니다.'; }
+  if(pg.id==='deposit'){ const i=S.deposit.findIndex(s=>!s.type||!s.value); if(i>=0) return `보증금 ${i+1}: 종류와 금액을 적어주세요.`; }
+  if(pg.kind==='fixed' && !fxSum(S.fixed[pg.k])) return `${pg.l} 금액을 적어주세요. 이 지출이 없으면 [이전]으로 돌아가 선택을 빼주세요.`;
+  if(pg.id==='cards'){ S.cards.forEach(c=>{if(c.kind==='체크카드') c.inst=0;}); const i=S.cards.findIndex(c=>!c.kind||!c.co||!['m1','m2','m3'].every(m=>mSet(c,m))); if(i>=0) return `카드 ${i+1}: 카드 종류, 카드사, 3개월 결제액을 모두 적어주세요. 안 쓴 달은 0을 적어주세요.`; }
+  if(pg.id==='savings'){ let i=S.savings.findIndex(s=>!s.type||!s.monthly); if(i>=0) return `저축 ${i+1}: 종류와 매달 넣는 금액을 적어주세요.`;
+    i=S.savings.findIndex(s=>!(s.valueSet||s.value>0)); if(i>=0) return `저축 ${i+1}: 지금까지 모인 금액을 적어주세요. 새로 가입해 없으면 0을 적어주세요.`;
+    i=S.savings.findIndex(s=>RATE_SAVE.includes(s.type)&&!s.rate); if(i>=0) return `저축 ${i+1}: 금리 구간을 골라주세요. 모르시면 [모름]을 눌러주세요.`;
+    i=S.savings.findIndex(s=>s.type!=='청약'&&!s.acct); if(i>=0) return `저축 ${i+1}: 어느 계좌로 넣는지 골라주세요. 모르시면 [모름]을 눌러주세요.`;
+    i=S.savings.findIndex(s=>!RATE_SAVE.includes(s.type)&&(!s.cum||!s.held)); if(i>=0) return `저축 ${i+1}: 누적 수익률과 가입 기간을 골라주세요. 모르시면 [모름]을 눌러주세요.`;
+    i=S.savings.findIndex(s=>s.cum==='손실 중'&&!(+s.lossPct>0)); if(i>=0) return `저축 ${i+1}: 손실률(%)을 적어주세요.`;
+    i=S.savings.findIndex(s=>!s.mat); if(i>=0) return `저축 ${i+1}: 만기까지 남은 기간을 골라주세요. 모르시면 [모름]을 눌러주세요.`; }
+  if(pg.id==='invest'){ const i=S.invest.findIndex(s=>!s.acct||!s.held||!(+s.cost>0)||!(+s.value>0)); if(i>=0) return `투자자산 ${i+1}: 계좌, 원금, 평가금, 투자 기간을 모두 채워주세요.`; }
+  if(pg.id==='cash'){ const i=S.cash.findIndex(s=>!s.type||!s.value||!s.rate); if(i>=0) return `현금자산 ${i+1}: 종류, 잔액, 금리를 모두 골라주세요. 금리를 모르시면 [모름]을 눌러주세요.`; }
+  for(const g of ['invest','estate']) if(pg.id===g){ const i=S[g].findIndex(s=>!s.type||!s.value); if(i>=0) return `${GROUPS[g].addLabel.replace(' 추가','')} ${i+1}: 종류와 지금 평가금(시세)을 적어주세요.`; }
+  if(pg.id==='estate'){ const i=S.estate.findIndex(s=>!s.region); if(i>=0) return `부동산 ${i+1}: 지역을 골라주세요.`; }
+  if(pg.id==='loans'){ let i=S.loans.findIndex(l=>!l.type||!l.balance); if(i>=0) return `대출 ${i+1}: 종류와 남은 금액을 적어주세요.`;
+    i=S.loans.findIndex(l=>l.principal&&l.balance>l.principal); if(i>=0) return `대출 ${i+1}: 남은 금액이 처음 빌린 금액보다 큽니다. 다시 확인해주세요.`;
+    i=S.loans.findIndex(l=>!(+l.monthly>0)); if(i>=0) return `대출 ${i+1}: 매달 갚는 금액을 적어주세요. 은행 앱 대출 상세의 월 납입액입니다.`;
+    i=S.loans.findIndex(l=>!l.rate||!l.rateKind||!l.payKind||!l.term); if(i>=0) return `대출 ${i+1}: 금리를 적고 금리 방식, 갚는 방식, 남은 기간을 골라주세요. 모르는 항목은 [모름]을 눌러주세요.`; }
+  if(pg.id==='retire'){ const R=S.retire; if(!R.age||!R.living||!R.pension) return '은퇴 나이, 생활비, 예상 연금을 모두 골라주세요.'; }
+  if(pg.id==='goals'){ if(!S.goals.length) return '재무목표를 하나 이상 적어주세요. 목표가 분명할수록 개선 방향이 정확해집니다.';
+    if(S.goals.filter(g=>g.name==='노후 자금').length>1) return '노후 자금 목표는 하나만 적어주세요.';
+    const r=S.goals.findIndex(g=>g.name==='노후 자금'&&(!g.priority||!S.retire.age||!S.retire.living)); if(r>=0) return `목표 ${r+1}: 우선순위, 은퇴 나이, 한 달 생활비를 모두 골라주세요.`;
+    const i=S.goals.findIndex(g=>g.name!=='노후 자금'&&(!g.name||!g.amount||!g.years||!g.priority)); if(i>=0) return `목표 ${i+1}: 목표, 우선순위, 금액, 기간을 모두 채워주세요.`;
+    const j=S.goals.findIndex(g=>g.name!=='노후 자금'&&g.saved&&g.saved>g.amount); if(j>=0) return `목표 ${j+1}: 모아둔 돈이 필요한 금액보다 큽니다. 다시 확인해주세요.`; }
+  return '';
+}
+document.getElementById('next').addEventListener('click',()=>{
+  const pg=page();
+  if(pg.id==='done'){ const m=S.mode; S=blank(); S.mode=m; cur='mode'; error=''; ret=null; ack={}; save(); render(); scrollTo(0,0); return; }
+  // 아무것도 고르거나 적지 않은 빈 카드는 '없음'으로 보고 지운 뒤 넘어감 (투자자산이 없는데 카드만 열어둔 경우 등)
+  if(pg.kind==='group'&&Array.isArray(S[pg.g])){ const n0=S[pg.g].length; S[pg.g]=S[pg.g].filter(e=>Object.values(e).some(v=>v!==''&&v!==0&&v!=null&&v!==false&&!(Array.isArray(v)&&!v.length))); if(S[pg.g].length!==n0) save(); }
+  error=validate(pg); let soft=false;
+  if(!error){ const w=softWarn(pg); if(w&&!ack[pg.id]){ ack[pg.id]=true; error=w; soft=true; } }
+  // 오류 문구를 빈 칸 바로 아래에 보여줌 (맨 위 문구는 스크롤하면 안 보이므로)
+  if(error){ render(); const m=soft?document.querySelector('#app .echo .warn'):flagMissing(); const tgt=m&&(m.closest('.field,.ckrow,.agree')||m);
+    if(tgt){ const top=document.querySelector('#app > .err'); if(top) top.remove(); tgt.insertAdjacentHTML('afterend',`<div class="err" role="alert">${error}</div>`); const y=tgt.getBoundingClientRect().top+scrollY-160; scrollTo({top:Math.max(0,y),behavior:'smooth'}); } else scrollTo(0,0); return; }
+  if(pg.id==='review') submit();
+  const P=pages(); if(retNow(pg)){ cur=ret.to; ret=null; } else { cur=P[P.findIndex(p=>p.id===pg.id)+1].id; if(ret&&cur===ret.to) ret=null; }
+  ack={}; save(); render(); scrollTo(0,0);
+});
+document.getElementById('prev').addEventListener('click',()=>{
+  const P=pages(), i=P.findIndex(p=>p.id===cur); if(i>0){ cur=P[i-1].id; error=''; save(); render(); scrollTo(0,0); } });
+
+/* 실제 배포 시: Apps Script 웹앱으로 전송. 시안에서는 전송하지 않음 */
+function payload(){
+  const income=Object.fromEntries(S.incomeSel.map(k=>{const o=S.income[k]||{};return [k,{gross:o.gross||0,tax:o.tax||0,ins:o.ins||0}];}));
+  const cuts=Object.fromEntries(Object.entries(S.cuts).filter(([k,v])=>v>0&&(k==='var'||S.fixedSel.includes(k))));
+  const fixed=Object.fromEntries(S.fixedSel.map(k=>{const v=S.fixed[k]||{};return [k,{bank:v.bank||0,card:v.card||0,total:fxSum(v)}]}));
+  return {submittedAt:new Date().toISOString(),version:'m4s-pro-web-1.0',mode:S.mode,profile:Object.assign({},S.profile,{planner:S.profile.planner==='모름'?'':S.profile.planner}),consent:S.consent,noticeAck:!!S.ready,basic:S.basic||{},cashflow:{varMonthly:varSpend().V,cardFixed:varSpend().cf,loanMonthly:loanMonthly()},
+    income,fixed,cards:S.cards.map(c=>Object.assign({avg3m:cardAvg(c)},c)),cuts,
+    savings:S.savings,cash:S.cash,invest:S.invest,estate:S.estate,deposit:S.deposit,loans:S.loans,retire:S.retire,
+    goals:S.goals.map(g=>g.name==='노후 자금'?Object.assign({},g,{basis:'monthly',amount:0,years:'',yearsNum:0,living:S.retire.living,retireAge:S.retire.age}):Object.assign({yearsNum:parseInt(g.years)||0},g))};
+}
+// 제출: 구글 앱스 스크립트 웹앱으로 전송 (M4S_ENDPOINT가 비어 있으면 시안 모드 = 복사 안내만)
+const ENDPOINT=(window.M4S_ENDPOINT||'').trim();
+let SENT={state:ENDPOINT?'sending':'proto',msg:''};
+function submit(){ const pl=payload(); window.__m4sLastPayload=pl; if(!ENDPOINT){SENT={state:'proto',msg:''};return;}
+  SENT={state:'sending',msg:''};
+  fetch(ENDPOINT,{method:'POST',body:JSON.stringify(pl)}).then(r=>r.json()).then(j=>{SENT=j&&j.ok?{state:'ok',msg:j.to||''}:{state:'fail',msg:(j&&j.error)||'응답 오류'};}).catch(e=>{SENT={state:'fail',msg:String(e&&e.message||e)};}).finally(()=>{ if(cur==='done'){const y=scrollY;render();scrollTo(0,y);} });
+}
+window.__m4sPayload=payload;
+window.__m4sDemo=function(){
+  S={mode:S.mode||'big',profile:{name:'예시 고객',phone:'010-1234-5678',age:'45',planner:'',family:'기혼',kids:'2명'},consent:true,ready:true,checks:[true,true,true,true,true],basic:{income:5500000,fixed:1000000,variable:1500000,saving:500000},
+    incomeSel:['work','spouse'],income:{work:{gross:54000000,tax:2900000,ins:5250000,taxSet:true,insSet:true},spouse:{gross:32000000,tax:750000,ins:3110000,taxSet:true,insSet:true}},
+    fixedSel:['house','util','ins','tel','edu'],
+    fixed:{house:{bank:0,card:0},util:{bank:230000,card:0},ins:{bank:180000,card:130000},tel:{bank:0,card:116000},edu:{bank:600000,card:0}},
+    cards:[{kind:'신용카드',co:'신한',m1:1420000,m2:1280000,m3:1350000,inst:150000}],cuts:{ins:50000,tel:50000,var:100000},deposit:[],
+    savings:[{type:'적금',monthly:500000,value:6000000,rate:'3.0~3.5%',mat:'1~3년',acct:'일반과세'},{type:'연금',monthly:300000,value:18000000,rate:'',mat:'만기 없음',acct:'절세',cum:'20~40%',held:'5~10년'}],
+    cash:[{type:'파킹통장',value:12000000,rate:'2.0~2.5%'}],
+    invest:[{type:'국내주식',cost:45000000,value:73000000,acct:'일반 계좌',held:'3~5년'}],
+    estate:[{type:'아파트',cost:600000000,value:750000000,region:'경기'}],
+    loans:[{type:'주택담보대출',principal:300000000,balance:212000000,monthly:1350000,rateNum:'3.85',rate:'3.5~4.0%',rateKind:'혼합형',payKind:'원리금균등',term:'20~30년'},
+           {type:'신용대출',principal:30000000,balance:22000000,monthly:100000,rateNum:'5.75',rate:'5.5~6.0%',rateKind:'변동금리',payKind:'만기일시',term:'5년 이내'}],
+    retire:{age:'60세',living:'300만 원',pension:'100~150만 원'},
+    goals:[{name:'자녀 교육',priority:'1순위',amount:80000000,years:'10년',saved:6000000},{name:'차량 구입',priority:'2순위',amount:30000000,years:'3년',saved:0}]};
+  S.fixedSel=S.fixedSel.filter(k=>fxSum(S.fixed[k])); delete S.fixed.house;
+  if(DIRQ) S.profile.planner=DIRQ;
+};
+// 실제 전송 주소가 있으면 시안 띠·예시 버튼 숨김 (테스트: 주소 끝 &demo=1)
+if(ENDPOINT && !/[?&]demo=1/.test(location.search)){ const pb=document.querySelector('.proto'); if(pb) pb.style.display='none'; }
+document.getElementById('demo').addEventListener('click',()=>{ window.__m4sDemo(); error=''; cur='client'; save(); render(); scrollTo(0,0); });
+render();
+})();
+
+</script>
