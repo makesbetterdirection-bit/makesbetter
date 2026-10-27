@@ -336,6 +336,8 @@ input:disabled{opacity:.5}
 <script>
 (function(){
 const KEY='m4s-pro-draft-v5';
+// 담당 디렉터 목록 (접수 시트 '디렉터' 탭과 같은 이름이어야 메일이 그 디렉터에게 감)
+const DIRECTORS=['이종호','오수현','변보라','홍민아','강소리','김다희','김상윤','모름'];
 const READY=[['근로소득 원천징수영수증','홈택스 또는 회사에서 발급'],['카드 앱의 최근 3개월 결제(청구) 내역','이번 달은 빼고 지난 3개월'],['통장 자동이체 목록',''],['대출 잔액·월 상환액','은행 앱에서 확인'],['적금·예금 금리, 증권 앱 잔액','']];
 const blank=()=>({mode:'',profile:{name:'',phone:'',age:'',planner:'',family:'',kids:''},consent:false,ready:false,checks:[],basic:{income:0,fixed:0,variable:0,saving:0},incomeSel:[],fixedSel:[],
   income:{},fixed:{},cards:[],cuts:{},savings:[],cash:[],invest:[],estate:[],deposit:[],loans:[],retire:{age:'',living:'',pension:''},goals:[]});
@@ -628,7 +630,7 @@ function render(){
       <div class="field"><label for="p-age">나이 (만)</label><div class="money"><input id="p-age" type="text" inputmode="numeric" placeholder="0" value="${esc(S.profile.age)}"><span>세</span></div></div>
       ${chips('p-family','가족 형태',['미혼','기혼'],S.profile.family,'c2')}
       <div data-kidsrow ${S.profile.family==='기혼'?'':'hidden'}>${chips('p-kids','자녀 수',KIDS,S.profile.kids)}</div>
-      <div class="field"><label for="p-planner">담당 디렉터 (선택)</label><input type="text" id="p-planner" value="${esc(S.profile.planner)}" placeholder="모르시면 비워두세요. 배정해드립니다"></div>
+      ${chips('p-planner','담당 디렉터',DIRECTORS,S.profile.planner,'','이 링크를 보내주신 디렉터를 눌러주세요. 모르시면 [모름]을 눌러주세요')}
     </section>`;
   } else if(pg.id==='consent'){
     h=`${head('개인정보','개인정보 수집·이용에<br>동의해주세요','동의하셔야 진단을 시작할 수 있습니다.')}
@@ -864,6 +866,7 @@ function validate(pg){
     if(S.profile.phone.replace(/\D/g,'').length<10) return '휴대폰 번호를 끝까지 적어주세요. 예: 010-1234-5678';
     const a=+S.profile.age; if(!(a>=19&&a<=100)) return '나이를 숫자로 적어주세요. 예: 45';
     if(!S.profile.family) return '가족 형태(미혼/기혼)를 골라주세요.';
+    if(!S.profile.planner) return '담당 디렉터를 골라주세요. 모르시면 [모름]을 눌러주세요.';
     if(S.profile.family==='기혼'&&!S.profile.kids) return '자녀 수를 골라주세요. 자녀가 없으면 [없음]을 눌러주세요.';
   }
   if(pg.id==='notice' && !READY.every((_,i)=>(S.checks||[])[i])) return '준비 자료를 하나씩 모두 체크해주세요.';
@@ -928,7 +931,7 @@ function payload(){
   const income=Object.fromEntries(S.incomeSel.map(k=>{const o=S.income[k]||{};return [k,{gross:o.gross||0,tax:o.tax||0,ins:o.ins||0}];}));
   const cuts=Object.fromEntries(Object.entries(S.cuts).filter(([k,v])=>v>0&&(k==='var'||S.fixedSel.includes(k))));
   const fixed=Object.fromEntries(S.fixedSel.map(k=>{const v=S.fixed[k]||{};return [k,{bank:v.bank||0,card:v.card||0,total:fxSum(v)}]}));
-  return {submittedAt:new Date().toISOString(),version:'m4s-pro-web-1.0',mode:S.mode,profile:S.profile,consent:S.consent,noticeAck:!!S.ready,basic:S.basic||{},cashflow:{varMonthly:varSpend().V,cardFixed:varSpend().cf,loanMonthly:loanMonthly()},
+  return {submittedAt:new Date().toISOString(),version:'m4s-pro-web-1.0',mode:S.mode,profile:Object.assign({},S.profile,{planner:S.profile.planner==='모름'?'':S.profile.planner}),consent:S.consent,noticeAck:!!S.ready,basic:S.basic||{},cashflow:{varMonthly:varSpend().V,cardFixed:varSpend().cf,loanMonthly:loanMonthly()},
     income,fixed,cards:S.cards.map(c=>Object.assign({avg3m:cardAvg(c)},c)),cuts,
     savings:S.savings,cash:S.cash,invest:S.invest,estate:S.estate,deposit:S.deposit,loans:S.loans,retire:S.retire,
     goals:S.goals.map(g=>g.name==='노후 자금'?Object.assign({},g,{basis:'monthly',amount:0,years:'',yearsNum:0,living:S.retire.living,retireAge:S.retire.age}):Object.assign({yearsNum:parseInt(g.years)||0},g))};
