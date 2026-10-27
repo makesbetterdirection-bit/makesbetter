@@ -956,6 +956,7 @@ window.__m4sDemo=function(){
     retire:{age:'60세',living:'300만 원',pension:'100~150만 원'},
     goals:[{name:'자녀 교육',priority:'1순위',amount:80000000,years:'10년',saved:6000000},{name:'차량 구입',priority:'2순위',amount:30000000,years:'3년',saved:0}]};
   S.fixedSel=S.fixedSel.filter(k=>fxSum(S.fixed[k])); delete S.fixed.house;
+  if(DIRQ) S.profile.planner=DIRQ;
 };
 document.getElementById('demo').addEventListener('click',()=>{ window.__m4sDemo(); error=''; cur='client'; save(); render(); scrollTo(0,0); });
 render();
