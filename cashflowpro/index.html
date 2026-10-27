@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#F2F2F2">
 <title>MONEY 4 SQUARE PRO</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -598,8 +604,8 @@ function render(){
       <span class="mono eyebrow">화면 설정</span>
       <h2 class="h2">어떤 글씨 크기가<br>편하신가요?</h2>
       <div class="modes" role="group" aria-label="글씨 크기">
-        <button type="button" class="modebtn" data-mode="normal" aria-pressed="${S.mode==='normal'}"><b style="font-size:18px">보통 글씨</b><span class="sample" style="font-size:15px">매달 들어오는 소득 350만 원</span></button>
-        <button type="button" class="modebtn" data-mode="big" aria-pressed="${S.mode==='big'}"><b style="font-size:26px">큰 글씨</b><span class="sample" style="font-size:21px">매달 들어오는 소득 350만 원</span><small>노안이 있거나 큰 글씨가 편하신 분</small></button>
+        <button type="button" class="modebtn" data-mode="normal" aria-pressed="${S.mode==='normal'}"><b style="font-size:18px">보통 글씨</b><span class="sample" style="font-size:15px">매달 들어오는 소득 350만&nbsp;원</span></button>
+        <button type="button" class="modebtn" data-mode="big" aria-pressed="${S.mode==='big'}"><b style="font-size:26px">큰 글씨</b><span class="sample" style="font-size:21px">매달 들어오는 소득 350만&nbsp;원</span><small>노안이 있거나 큰 글씨가 편하신 분</small></button>
       </div>
       <p class="hint">오른쪽 위 [가] 버튼으로 언제든 바꿀 수 있습니다.</p>
     </section>`;
@@ -964,6 +970,8 @@ window.__m4sDemo=function(){
   S.fixedSel=S.fixedSel.filter(k=>fxSum(S.fixed[k])); delete S.fixed.house;
   if(DIRQ) S.profile.planner=DIRQ;
 };
+// 실제 전송 주소가 있으면 시안 띠·예시 버튼 숨김 (테스트: 주소 끝 &demo=1)
+if(ENDPOINT && !/[?&]demo=1/.test(location.search)){ const pb=document.querySelector('.proto'); if(pb) pb.style.display='none'; }
 document.getElementById('demo').addEventListener('click',()=>{ window.__m4sDemo(); error=''; cur='client'; save(); render(); scrollTo(0,0); });
 render();
 })();
