@@ -824,7 +824,7 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
   var fired=false,fire=function(){if(fired)return;fired=true;if(window.__heroStart)window.__heroStart(go);else setTimeout(go,120)};if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fire);setTimeout(fire,450);
 })();
 </script>
-<script>(function(){var h=document.querySelector('.hero h1');if(!h)return;var add=function(){var l=h.querySelector(':scope > span:last-child i');if(l&&!l.querySelector('.em'))l.insertAdjacentHTML('beforeend','<span class="em" role="img" aria-label="만년필">🖋️</span>')};add();setTimeout(add,50)})();</script>
+
 <script>/* golden */
 (function(){var w=document.querySelector('.hero .wrap'),h=document.querySelector('.hero h1'),tl=document.querySelector('.hero .tagl');if(!w||!h)return;
  function fit(){w.style.paddingTop='0px';var hdr=56,av=innerHeight-hdr,a=h.getBoundingClientRect(),b=(tl||h).getBoundingClientRect(),wr=w.getBoundingClientRect();
