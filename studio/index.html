@@ -804,6 +804,16 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
 .hero{min-height:100vh;min-height:100svh}
 @media (pointer:fine){html{scrollbar-gutter:stable}}
 @media (forced-colors:active){.hero svg.eng{display:none}.js .hero h1.engd .ch{color:CanvasText!important}}
+</style><style>/* 인스타 카드: 화면에 보이는 동안 은은한 네온 */
+@keyframes igOn{0%{opacity:.3}7%{opacity:1}11%{opacity:.4}18%{opacity:1}24%{opacity:.75}32%,100%{opacity:1}}
+@keyframes igBreath{0%,100%{box-shadow:0 0 0 1px rgba(255,255,255,.5),0 0 14px rgba(255,255,255,.08),inset 0 0 14px rgba(255,255,255,.03)}50%{box-shadow:0 0 0 1px rgba(255,255,255,.9),0 0 26px rgba(255,255,255,.2),0 0 64px rgba(255,255,255,.06),inset 0 0 22px rgba(255,255,255,.07)}}
+@keyframes igText{0%,100%{text-shadow:0 0 4px rgba(255,255,255,.35),0 0 12px rgba(255,255,255,.1)}50%{text-shadow:0 0 6px rgba(255,255,255,.75),0 0 20px rgba(255,255,255,.3),0 0 44px rgba(255,255,255,.12)}}
+@keyframes igDot{0%,100%{box-shadow:0 0 4px 1px rgba(255,90,31,.7),0 0 12px 2px rgba(255,90,31,.28)}50%{box-shadow:0 0 8px 2px rgba(255,90,31,.95),0 0 26px 7px rgba(255,90,31,.42)}}
+.learn .ig{transition:border-color .6s ease}
+.learn .ig.lit{border-color:rgba(255,255,255,.85);animation:igBreath 4.2s ease-in-out infinite}
+.learn .ig.lit .mono{animation:igText 4.2s ease-in-out infinite,igOn 1.1s linear 1}
+.learn .ig.lit::before{animation:igDot 4.2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.learn .ig.lit,.learn .ig.lit .mono,.learn .ig.lit::before{animation:none}.learn .ig.lit{box-shadow:0 0 0 1px rgba(255,255,255,.8),0 0 22px rgba(255,255,255,.14)}.learn .ig.lit .mono{text-shadow:0 0 6px rgba(255,255,255,.6),0 0 18px rgba(255,255,255,.2)}.learn .ig.lit::before{box-shadow:0 0 8px 2px rgba(255,90,31,.85),0 0 20px 5px rgba(255,90,31,.35)}}
 </style></head>
 <body>
 <header class="hdr" id="hdr">
@@ -2112,5 +2122,8 @@ if(s==='2'){var g=document.createElement('span');g.className='g';a.forEach(funct
   var lw=innerWidth;addEventListener('resize',function(){if(innerWidth!==lw){lw=innerWidth;if(sv0)setTimeout(function(){run(true)},200)}});
   watch();
 })();
-</script></body>
+</script><script>/* 인스타 카드 네온: 보일 때 켜고, 벗어나면 끈다(다시 보이면 점등부터) */
+(function(){var c=document.getElementById('insta');if(!c)return;if(!('IntersectionObserver' in window)){c.classList.add('lit');return}
+new IntersectionObserver(function(es){es.forEach(function(e){c.classList.toggle('lit',e.isIntersecting)})},{threshold:.4}).observe(c)})();</script>
+</body>
 </html>
