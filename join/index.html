@@ -527,7 +527,7 @@ body.send .share{display:block;min-height:calc(100vh - 56px);min-height:calc(100
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   var q=new URLSearchParams(location.search), by=(q.get('by')||'').trim().slice(0,10);
   // 추천인: 주소의 ?by= → 없으면 이 기기에 저장된 추천인 → 없으면 기본 문구
-  try{ if(by) localStorage.setItem('mb_by',by); else by=(localStorage.getItem('mb_by')||'').slice(0,10); }catch(e){}
+  try{ if(by) localStorage.setItem('mb_by',by); else localStorage.removeItem('mb_by'); }catch(e){}
   if(by){ [].forEach.call(document.querySelectorAll('.rn'),function(el){el.textContent=by+' 님'}); }
 
   // 오프닝 커버: 보내는 사람 모드가 아니면 보여주고, 화살표를 누르면 위로 걷힘
