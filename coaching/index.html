@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MAKESBETTER · 전문가 1:1 코칭 신청</title>
+<meta name="description" content="채널 친구 전용 쿠폰으로 신청하는 전문가 1:1 코칭 2시간(FREE).">
+<meta property="og:type" content="website">
+<meta property="og:title" content="전문가 1:1 코칭 2시간(FREE) · MAKESBETTER">
+<meta property="og:description" content="현금흐름 점검, 보유자산 평가, 돈 모으는 툴까지. 채널 친구 전용 쿠폰으로 신청하세요.">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/coaching/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="icon" href="/studio/icon-32.png">
+<link rel="apple-touch-icon" href="/studio/icon-180.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
+<style>
+:root{--paper:#F2F2F2;--card:#fff;--ink:#0A0A0A;--sub:#5F5F5F;--faint:#9A9A9A;--rule:#E2E2E2;--accent:#FF5A1F;--accent-soft:#FFEDE5;--gold:#D4AF6E;--g:max(22px,env(safe-area-inset-left,0px))}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;font-size:17px;line-height:1.6;letter-spacing:-.02em;word-break:keep-all;-webkit-font-smoothing:antialiased}
+.nw{white-space:nowrap}
+.wrap{max-width:480px;margin:0 auto;padding:0 var(--g)}
+h1,h2,h3,p{margin:0}
+
+/* 상단 쿠폰 */
+.head{padding:24px 0 8px}
+.ticket{position:relative;border-radius:22px;overflow:hidden;color:#fff;
+  background:radial-gradient(120% 80% at 100% 0%,rgba(255,90,31,.28),transparent 55%),radial-gradient(90% 70% at 0% 100%,rgba(212,175,110,.16),transparent 60%),#0B0B0C;
+  box-shadow:0 14px 34px rgba(0,0,0,.16),inset 0 0 0 1px rgba(255,255,255,.08);padding:26px 22px 24px}
+.tk-label{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--gold);border:1px solid rgba(212,175,110,.5);border-radius:999px;padding:5px 12px}
+.ticket h1{margin-top:16px;font-size:27px;line-height:1.3;letter-spacing:-.045em;font-weight:800}
+.tk-time{margin-top:12px;display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
+.tk-time b{font-size:40px;line-height:1;font-weight:800;letter-spacing:-.05em;background:linear-gradient(180deg,#FFD7B0,#FF5A1F);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tk-time span{font-size:14px;font-weight:800;letter-spacing:.12em;color:#fff;background:var(--accent);border-radius:8px;padding:5px 10px;align-self:center}
+.tk-inc{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px}
+.tk-inc i{font-style:normal;font-size:13px;font-weight:600;color:#E8E8E8;background:rgba(255,255,255,.08);border-radius:999px;padding:5px 11px;white-space:nowrap}
+
+.tk-from{margin-top:16px;display:flex;align-items:baseline;gap:12px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.07)}
+.tk-from span{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--gold)}
+.tk-from b{font-size:17px;font-weight:700;color:#fff}
+/* 질문 */
+.q{background:var(--card);border-radius:20px;padding:24px 20px;margin-top:14px}
+.q h2{font-size:20px;line-height:1.4;font-weight:700;letter-spacing:-.035em}
+.q h2 small{display:inline-block;margin-left:6px;font-size:13px;font-weight:600;color:var(--accent);vertical-align:2px}
+.q .hint{margin-top:4px;font-size:15px;color:var(--sub)}
+.opts{margin-top:16px;display:grid;gap:8px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{display:block;width:100%;text-align:left;font:inherit;font-size:17px;font-weight:600;letter-spacing:-.02em;color:var(--ink);background:#F6F6F6;border:1.5px solid transparent;border-radius:14px;padding:15px 16px;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.opt.on{background:var(--accent-soft);border-color:var(--accent);color:#B23A0C}
+.opts.two .opt{text-align:center}
+.field{margin-top:14px}
+.field label{display:block;font-size:15px;font-weight:600;color:var(--sub);margin-bottom:6px}
+.field input{width:100%;font:inherit;font-size:17px;border:1.5px solid var(--rule);border-radius:14px;padding:15px 14px;background:#fff;color:var(--ink);outline:none}
+.field input:focus{border-color:var(--ink)}
+.cp-note{margin-top:6px;font-size:14px;color:var(--faint)}
+.agree{display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:15px;color:var(--sub);line-height:1.5}
+.agree input{width:22px;height:22px;margin:0;flex:0 0 auto;accent-color:var(--ink)}
+.err{margin-top:12px;color:#D23B1F;font-size:15px;font-weight:600;min-height:22px}
+.submit{display:block;width:100%;margin:6px 0 0;border:0;border-radius:16px;padding:19px 16px;font:inherit;font-size:18px;font-weight:700;background:var(--ink);color:#fff;cursor:pointer}
+.submit[disabled]{opacity:.5}
+.foot{padding:22px 0 calc(36px + env(safe-area-inset-bottom,0px));color:var(--faint);font-size:13px;line-height:1.7}
+
+/* 완료 */
+.pass{margin-top:28px;background:#0B0B0C;color:#fff;border-radius:20px;padding:24px 20px;text-align:left}
+.pass h3{font-size:20px;line-height:1.45;font-weight:700;letter-spacing:-.035em}
+.pass p{margin-top:8px!important;color:#BDBDBD!important;font-size:15px!important}
+.pass .submit{margin-top:16px;background:#fff;color:var(--ink)}
+.pass-msg{margin-top:8px;font-size:14px;color:#FFB08F;min-height:20px}
+.done{display:none;padding:56px 0 40px;text-align:center}
+.done.on{display:block}
+.done .ok{width:64px;height:64px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;margin:0 auto;font-size:30px}
+.done h2{margin-top:22px;font-size:26px;line-height:1.35;letter-spacing:-.04em;font-weight:800}
+.done p{margin-top:12px;color:var(--sub);font-size:17px}
+.done p b{color:var(--ink)}
+.done .sum{margin-top:26px;background:var(--card);border-radius:18px;padding:18px 20px;text-align:left;font-size:16px}
+.done .sum div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule)}
+.done .sum div:last-child{border-bottom:0}
+.done .sum span{color:var(--sub)}
+.done .sum b{text-align:right}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <div class="ticket">
+      <span class="tk-label">INVITATION · COACHING</span>
+      <h1>전문가 1:1 맞춤 코칭<br>신청서</h1>
+      <div class="tk-time"><b class="nw">2시간 코칭</b><span class="nw free">FREE</span></div>
+      <div class="tk-inc"><i>현금흐름 점검</i><i>보유자산 평가</i><i>돈 모으는 툴 제공</i></div>
+      <div class="tk-from"><span>FROM</span><b id="fromName">추천해 주신 분</b></div>
+    </div>
+  </header>
+
+  <form id="f" novalidate>
+    <section class="q">
+      <h2>누구의 추천으로 오셨나요?<small>필수</small></h2>
+      <p class="hint">이 코칭권은 추천해 주신 분 덕분에 열렸어요</p>
+      <div class="field"><input id="by" type="text" maxlength="10" placeholder="추천해 주신 분 성함" autocomplete="off"></div>
+    </section>
+
+    <section class="q" data-key="worry">
+      <h2>가장 불편한 재정 고민은?<small>필수</small></h2>
+      <p class="hint">하나만 골라 주세요</p>
+      <div class="opts">
+        <button type="button" class="opt">늘어나는 고정지출</button>
+        <button type="button" class="opt">대출 상환 부담</button>
+        <button type="button" class="opt">교육비 &amp; 노후준비</button>
+        <button type="button" class="opt">소득 대비 낮은 저축</button>
+        <button type="button" class="opt">자산 성장의 정체</button>
+        <button type="button" class="opt">낮은 금융 지식</button>
+        <button type="button" class="opt">기타</button>
+      </div>
+    </section>
+
+    <section class="q" data-key="rate">
+      <h2>희망 수익률은?<small>필수</small></h2>
+      <div class="opts two">
+        <button type="button" class="opt">연 3%</button>
+        <button type="button" class="opt">연 5%</button>
+        <button type="button" class="opt">연 10%</button>
+        <button type="button" class="opt">잘 모르겠어요</button>
+      </div>
+    </section>
+
+    <section class="q" data-key="goal">
+      <h2>제2의 월급, 월배당 목표는?<small>필수</small></h2>
+      <div class="opts two">
+        <button type="button" class="opt">월 30만원</button>
+        <button type="button" class="opt">월 50만원</button>
+        <button type="button" class="opt">월 100만원</button>
+        <button type="button" class="opt">월 200만원 이상</button>
+      </div>
+    </section>
+
+    <section class="q" data-key="director">
+      <h2>담당 디렉터<small>필수</small></h2>
+      <p class="hint">소개받은 디렉터가 없으면 '배정 요청'을 골라 주세요</p>
+      <div class="opts two" id="dirs"></div>
+    </section>
+
+    <section class="q">
+      <h2>연락받을 정보</h2>
+      <div class="field"><label for="nm">이름</label><input id="nm" type="text" autocomplete="name" maxlength="20" placeholder="홍길동"></div>
+      <div class="field"><label for="ph">연락처</label><input id="ph" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" placeholder="010-0000-0000"></div>
+      <div class="field"><label for="cp">쿠폰번호</label><input id="cp" type="text" inputmode="numeric" maxlength="20" placeholder="카카오 쿠폰함의 쿠폰번호"><p class="cp-note" id="cpNote">카카오 쿠폰에서 넘어오면 자동으로 입력됩니다</p></div>
+      <label class="agree"><input type="checkbox" id="ag"><span>코칭 일정 안내를 위해 이름·연락처를 수집하고, 담당 디렉터에게 전달하는 것에 동의합니다. (코칭 종료 후 1년 보관)</span></label>
+      <div class="err" id="err" aria-live="polite"></div>
+      <button class="submit" id="go" type="submit">코칭 신청하기</button>
+    </section>
+  </form>
+
+  <section class="done" id="done">
+    <div class="ok">✓</div>
+    <h2>코칭 신청이<br>접수되었습니다</h2>
+    <p><b id="doneBy"></b>추천으로 시작된 코칭입니다.<br>담당 디렉터가 <span class="nw">평일 10~17시</span> 중<br>연락드려 일정을 잡아 드립니다.</p>
+    <div class="sum" id="sum"></div>
+    <div class="pass">
+      <h3>좋은 걸 알게 되면<br>가장 먼저 떠오르는 사람에게</h3>
+      <p>당신이 받은 이 초대를, 이번엔 당신이 건네 보세요.</p>
+      <button type="button" class="submit" id="passBtn">초대장 보내기</button>
+      <div class="pass-msg" id="passMsg" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <p class="foot">© 2026 MAKESBETTER DIRECTION<br>금융 정보 제공 및 상담 안내 목적이며 특정 상품의 투자 권유가 아닙니다.</p>
+</div>
+
+<script>
+(function(){
+  var CONFIG={
+    // cashflow 페이지와 같은 디렉터 목록 · EmailJS 계정
+    directors:[
+      {name:"이종호",email:"bd187@naver.com"},{name:"오수현",email:"u0112383@naver.com"},
+      {name:"변보라",email:"wpqlrhc217@naver.com"},{name:"홍민아",email:"carrot8807@naver.com"},
+      {name:"강소리",email:"kangpro1004@kakao.com"},{name:"김다희",email:"plandh@naver.com"},
+      {name:"김상윤",email:"gnswnajr@naver.com"}
+    ],
+    assignTo:"bd187@naver.com",           // '배정 요청'은 대표에게
+    monitorEmail:"makesbetter.direction@gmail.com",
+    emailjsPublicKey:"37rMXVT1INDvECR8k",emailjsServiceId:"service_lehvmhu",emailjsTemplateId:"template_myptiih"
+  };
+  var q=new URLSearchParams(location.search);
+  var TEST=q.get('test')==='1';
+  var MAILTEST=q.get('mailtest')==='1';
+  var S={worry:'',rate:'',goal:'',director:''};
+
+  // 디렉터 버튼
+  var dirs=document.getElementById('dirs');
+  CONFIG.directors.concat([{name:'배정 요청',email:''}]).forEach(function(d){
+    var b=document.createElement('button');b.type='button';b.className='opt';b.textContent=d.name==='배정 요청'?'배정 요청':d.name+' 디렉터';b.dataset.v=d.name;dirs.appendChild(b);
+  });
+  // 디렉터 링크(?d=이름)로 들어오면 미리 선택
+  var pre=(q.get('d')||'').trim();
+
+  // 선택 버튼 동작
+  [].forEach.call(document.querySelectorAll('.q[data-key]'),function(sec){
+    var key=sec.dataset.key;
+    sec.addEventListener('click',function(e){
+      var b=e.target.closest('.opt');if(!b)return;
+      [].forEach.call(sec.querySelectorAll('.opt'),function(x){x.classList.toggle('on',x===b)});
+      S[key]=b.dataset.v||b.textContent.trim();
+    });
+  });
+  if(pre){var pb=dirs.querySelector('[data-v="'+pre.replace(/"/g,'')+'"]');if(pb)pb.click();}
+
+  // 추천인: ?by= → 같은 기기에 저장된 추천인(초대장 페이지에서 저장) 순서로 채움
+  var byIn=document.getElementById('by'),fromName=document.getElementById('fromName');
+  var bv=(q.get('by')||'').trim();try{if(!bv)bv=localStorage.getItem('mb_by')||''}catch(e){}
+  bv=bv.slice(0,10);if(bv)byIn.value=bv;
+  function syncFrom(){var v=byIn.value.trim();fromName.textContent=v?v+' 님':'추천해 주신 분';try{if(v)localStorage.setItem('mb_by',v)}catch(e){}}
+  byIn.addEventListener('input',syncFrom);syncFrom();
+  // 쿠폰번호 자동 입력 (cashflow와 같은 이름의 주소값을 모두 받음)
+  var cv=q.get('coupon')||q.get('coupon_no')||q.get('couponNumber')||q.get('coupon_number')||'';
+  if(cv){document.getElementById('cp').value=cv;document.getElementById('cpNote').textContent='카카오 쿠폰번호가 자동으로 입력되었습니다';}
+
+  // 연락처 하이픈
+  var ph=document.getElementById('ph');
+  ph.addEventListener('input',function(){var d=ph.value.replace(/\D/g,'').slice(0,11);ph.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7)});
+
+  if(window.emailjs){try{emailjs.init({publicKey:CONFIG.emailjsPublicKey})}catch(e){}}
+
+  var err=document.getElementById('err'),go=document.getElementById('go');
+  function pad(n){return String(n).padStart(2,'0')}
+  document.getElementById('f').addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=document.getElementById('nm').value.trim(),phone=ph.value.trim(),cp=document.getElementById('cp').value.trim();
+    var byv=document.getElementById('by').value.trim();
+    var miss=!byv?'추천해 주신 분 성함을 적어 주세요':!S.worry?'재정 고민을 골라 주세요':!S.rate?'희망 수익률을 골라 주세요':!S.goal?'월배당 목표를 골라 주세요':!S.director?'담당 디렉터를 골라 주세요':!name?'이름을 입력해 주세요':phone.replace(/\D/g,'').length<10?'연락처를 정확히 입력해 주세요':!document.getElementById('ag').checked?'개인정보 수집에 동의해 주세요':'';
+    if(miss){err.textContent=miss;return}
+    err.textContent='';go.disabled=true;go.textContent='보내는 중…';
+    var d=CONFIG.directors.filter(function(x){return x.name===S.director})[0];
+    var to=(d?d.email:CONFIG.assignTo)+','+CONFIG.monitorEmail;
+    var now=new Date();
+    var memo=['[전문가 1:1 코칭 쿠폰 신청 · 2시간 코칭(FREE)]','유입: 카카오 채널 쿠폰','쿠폰번호: '+(cp||'없음'),'추천인: '+byv,'',
+      '가장 불편한 재정 고민: '+S.worry,'희망 수익률: '+S.rate,'월배당 목표: '+S.goal,'담당 디렉터: '+S.director,'',
+      '※ 평일 10~17시 중 연락해 2시간 코칭 일정을 잡아 주세요. 코칭 후 파트너센터에서 쿠폰 사용 처리.'].join('\n');
+    var params={site_label:' · 코칭 쿠폰',consult_type:'전문가 1:1 코칭 (쿠폰 · 2시간 코칭 FREE)',
+      date:now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate()),time:pad(now.getHours())+':'+pad(now.getMinutes()),
+      name:name,phone:phone,email:'-',memo:memo,director:S.director,to_email:to};
+    function finish(ok){
+      if(!ok){go.disabled=false;go.textContent='코칭 신청하기';err.textContent='전송에 실패했습니다. 잠시 후 다시 눌러 주세요.';return}
+      document.getElementById('f').style.display='none';
+      document.getElementById('sum').innerHTML=[['추천인',byv+' 님'],['재정 고민',S.worry],['희망 수익률',S.rate],['월배당 목표',S.goal],['담당 디렉터',S.director]].map(function(r){return '<div><span>'+r[0]+'</span><b>'+r[1].replace(/</g,'&lt;')+'</b></div>'}).join('');
+      document.getElementById('doneBy').textContent=byv+' 님의 ';document.getElementById('done').classList.add('on');scrollTo(0,0);
+    }
+    if(MAILTEST){params.to_email=CONFIG.monitorEmail;params.consult_type='[발송 시험] '+params.consult_type;}
+    if(TEST){window.__coachParams=params;setTimeout(function(){finish(true)},300);return}
+    if(!MAILTEST){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/coaching-apply',{keepalive:true,mode:'no-cors'})}catch(e){}}
+    if(!window.emailjs){finish(false);return}
+    emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,params).then(function(){finish(true)},function(){finish(false)});
+  });
+
+  // 완료 화면: 신청자 이름으로 초대장 공유
+  document.getElementById('passBtn').addEventListener('click',function(){
+    var n=document.getElementById('nm').value.trim().slice(0,10);
+    var url='https://calc.makesbetter.co.kr/join/'+(n?'?by='+encodeURIComponent(n):'');
+    var text='좋은 걸 알게 되면 가장 먼저 떠오르는 사람이 있어요. 그게 당신이었어요.';
+    var msg=document.getElementById('passMsg');
+    if(navigator.share){navigator.share({title:'MAKESBETTER 초대장',text:text,url:url}).catch(function(){});return}
+    try{navigator.clipboard.writeText(text+'\n'+url).then(function(){msg.textContent='초대장 링크를 복사했어요. 카카오톡에 붙여 넣어 보내 주세요.'},function(){msg.textContent=url})}catch(e){msg.textContent=url}
+  });
+})();
+</script>
+</body>
+</html>
