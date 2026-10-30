@@ -53,6 +53,28 @@ h1,h2,h3,p{margin:0}
 .field{margin-top:14px}
 .field label{display:block;font-size:15px;font-weight:600;color:var(--sub);margin-bottom:6px}
 .field input{width:100%;font:inherit;font-size:17px;border:1.5px solid var(--rule);border-radius:14px;padding:15px 14px;background:#fff;color:var(--ink);outline:none}
+/* 탭 선택 행 */
+.rows{margin-top:10px}
+.row{display:flex;align-items:center;gap:12px;width:100%;font:inherit;text-align:left;background:none;border:0;border-bottom:1px solid var(--rule);padding:17px 2px;cursor:pointer;color:var(--ink);-webkit-tap-highlight-color:transparent}
+.row:last-child{border-bottom:0}
+.row .rl{flex:1 1 auto;min-width:0;font-size:16px;font-weight:600;color:var(--sub)}
+.row .rv{flex:0 0 auto;font-size:17px;font-weight:700;color:var(--faint);white-space:nowrap}
+.row.set .rv{color:var(--accent)}
+.row.need .rl{color:#D23B1F}
+.row::after{content:"";flex:0 0 auto;width:8px;height:8px;border-right:2px solid #BDBDBD;border-bottom:2px solid #BDBDBD;transform:rotate(-45deg);margin-right:4px}
+/* 바텀시트 */
+.dim{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;background:#fff;border-radius:24px 24px 0 0;padding:10px var(--g) calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .26s cubic-bezier(.2,.8,.2,1);max-height:82vh;overflow:auto}
+.sheet-on .dim{opacity:1;pointer-events:auto}
+.sheet-on .sheet{transform:none}
+.sheet .grab{width:40px;height:5px;border-radius:3px;background:#DDD;margin:0 auto 16px}
+.sheet h3{font-size:20px;font-weight:700;letter-spacing:-.035em;max-width:480px;margin:0 auto}
+.sheet .hint{max-width:480px;margin:4px auto 0;font-size:15px;color:var(--sub)}
+.sheet .opts{max-width:480px;margin:16px auto 0}
+/* 쿠폰 적용 표시 */
+.tk-cp{display:none;margin-top:10px;font-size:14px;font-weight:600;color:#E8E8E8}
+.tk-cp.on{display:block}
+.tk-cp i{font-style:normal;color:var(--gold);letter-spacing:.04em}
 .field input:focus{border-color:var(--ink)}
 .cp-note{margin-top:6px;font-size:14px;color:var(--faint)}
 .agree{display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:15px;color:var(--sub);line-height:1.5}
@@ -90,6 +112,7 @@ h1,h2,h3,p{margin:0}
       <div class="tk-time"><b class="nw">2시간 코칭</b><span class="nw free">FREE</span></div>
       <div class="tk-inc"><i>현금흐름 점검</i><i>보유자산 평가</i><i>돈 모으는 툴 제공</i></div>
       <div class="tk-from"><span>FROM</span><b id="fromName">추천해 주신 분</b></div>
+      <p class="tk-cp" id="tkCp">✓ 코칭 쿠폰 적용됨 <i id="tkCpNo"></i></p>
     </div>
   </header>
 
@@ -100,51 +123,17 @@ h1,h2,h3,p{margin:0}
       <div class="field"><input id="by" type="text" maxlength="10" placeholder="추천해 주신 분 성함" autocomplete="off"></div>
     </section>
 
-    <section class="q" data-key="worry">
-      <h2>가장 불편한 재정 고민은?<small>필수</small></h2>
-      <p class="hint">하나만 골라 주세요</p>
-      <div class="opts">
-        <button type="button" class="opt">늘어나는 고정지출</button>
-        <button type="button" class="opt">대출 상환 부담</button>
-        <button type="button" class="opt">교육비 &amp; 노후준비</button>
-        <button type="button" class="opt">소득 대비 낮은 저축</button>
-        <button type="button" class="opt">자산 성장의 정체</button>
-        <button type="button" class="opt">낮은 금융 지식</button>
-        <button type="button" class="opt">기타</button>
-      </div>
-    </section>
-
-    <section class="q" data-key="rate">
-      <h2>희망 수익률은?<small>필수</small></h2>
-      <div class="opts two">
-        <button type="button" class="opt">연 3%</button>
-        <button type="button" class="opt">연 5%</button>
-        <button type="button" class="opt">연 10%</button>
-        <button type="button" class="opt">잘 모르겠어요</button>
-      </div>
-    </section>
-
-    <section class="q" data-key="goal">
-      <h2>제2의 월급, 월배당 목표는?<small>필수</small></h2>
-      <div class="opts two">
-        <button type="button" class="opt">월 30만원</button>
-        <button type="button" class="opt">월 50만원</button>
-        <button type="button" class="opt">월 100만원</button>
-        <button type="button" class="opt">월 200만원 이상</button>
-      </div>
-    </section>
-
-    <section class="q" data-key="director">
-      <h2>담당 디렉터<small>필수</small></h2>
-      <p class="hint">소개받은 디렉터가 없으면 '배정 요청'을 골라 주세요</p>
-      <div class="opts two" id="dirs"></div>
+    <section class="q">
+      <h2>코칭 전에 알려 주세요<small>필수</small></h2>
+      <p class="hint">눌러서 골라 주세요</p>
+      <div class="rows" id="rows"></div>
     </section>
 
     <section class="q">
       <h2>연락받을 정보</h2>
-      <div class="field"><label for="nm">이름</label><input id="nm" type="text" autocomplete="name" maxlength="20" placeholder="홍길동"></div>
-      <div class="field"><label for="ph">연락처</label><input id="ph" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" placeholder="010-0000-0000"></div>
-      <div class="field"><label for="cp">쿠폰번호</label><input id="cp" type="text" inputmode="numeric" maxlength="20" placeholder="카카오 쿠폰함의 쿠폰번호"><p class="cp-note" id="cpNote">카카오 쿠폰에서 넘어오면 자동으로 입력됩니다</p></div>
+      <div class="field"><label for="nm">이름</label><input id="nm" name="name" type="text" autocomplete="name" autocapitalize="off" maxlength="20" placeholder="홍길동"></div>
+      <div class="field"><label for="ph">연락처</label><input id="ph" name="tel" type="tel" inputmode="tel" autocomplete="tel" maxlength="13" placeholder="010-0000-0000"></div>
+      <input id="cp" type="hidden">
       <label class="agree"><input type="checkbox" id="ag"><span>코칭 일정 안내를 위해 이름·연락처를 수집하고, 담당 디렉터에게 전달하는 것에 동의합니다. (코칭 종료 후 1년 보관)</span></label>
       <div class="err" id="err" aria-live="polite"></div>
       <button class="submit" id="go" type="submit">코칭 신청하기</button>
@@ -167,6 +156,9 @@ h1,h2,h3,p{margin:0}
   <p class="foot">© 2026 MAKESBETTER DIRECTION<br>금융 정보 제공 및 상담 안내 목적이며 특정 상품의 투자 권유가 아닙니다.</p>
 </div>
 
+<div class="dim" id="dim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle"><div class="grab"></div><h3 id="shTitle"></h3><p class="hint" id="shHint"></p><div class="opts" id="shOpts"></div></div>
+
 <script>
 (function(){
   var CONFIG={
@@ -186,24 +178,31 @@ h1,h2,h3,p{margin:0}
   var MAILTEST=q.get('mailtest')==='1';
   var S={worry:'',rate:'',goal:'',director:''};
 
-  // 디렉터 버튼
-  var dirs=document.getElementById('dirs');
-  CONFIG.directors.concat([{name:'배정 요청',email:''}]).forEach(function(d){
-    var b=document.createElement('button');b.type='button';b.className='opt';b.textContent=d.name==='배정 요청'?'배정 요청':d.name+' 디렉터';b.dataset.v=d.name;dirs.appendChild(b);
+  // 탭 → 바텀시트에서 선택
+  var Q=[
+    {k:'worry',l:'가장 불편한 재정 고민',t:'가장 불편한 재정 고민은?',h:'하나만 골라 주세요',o:['늘어나는 고정지출','대출 상환 부담','교육비 & 노후준비','소득 대비 낮은 저축','자산 성장의 정체','낮은 금융 지식','기타']},
+    {k:'rate',l:'희망 수익률',t:'희망 수익률은?',two:1,o:['연 3%','연 5%','연 10%','잘 모르겠어요']},
+    {k:'goal',l:'월배당 목표',t:'제2의 월급, 월배당 목표는?',two:1,o:['월 30만원','월 50만원','월 100만원','월 200만원 이상']},
+    {k:'director',l:'담당 디렉터',t:'담당 디렉터',h:"소개받은 디렉터가 없으면 '배정 요청'을 골라 주세요",two:1,o:CONFIG.directors.map(function(d){return d.name}).concat(['배정 요청']),lab:function(v){return v==='배정 요청'?v:v+' 디렉터'}}
+  ];
+  var rows=document.getElementById('rows'),sheet=document.getElementById('sheet'),shOpts=document.getElementById('shOpts'),cur=null;
+  function lab(qq,v){return qq.lab?qq.lab(v):v}
+  Q.forEach(function(qq){
+    var r=document.createElement('button');r.type='button';r.className='row';r.innerHTML='<span class="rl"></span><span class="rv">선택</span>';
+    r.querySelector('.rl').textContent=qq.l;qq.el=r;r.addEventListener('click',function(){openSheet(qq)});rows.appendChild(r);
   });
+  function setVal(qq,v){S[qq.k]=v;qq.el.classList.add('set');qq.el.classList.remove('need');qq.el.querySelector('.rv').textContent=lab(qq,v)}
+  function openSheet(qq){
+    cur=qq;document.getElementById('shTitle').textContent=qq.t;document.getElementById('shHint').textContent=qq.h||'';
+    shOpts.className='opts'+(qq.two?' two':'');shOpts.innerHTML='';
+    qq.o.forEach(function(v){var b=document.createElement('button');b.type='button';b.className='opt'+(S[qq.k]===v?' on':'');b.textContent=lab(qq,v);b.addEventListener('click',function(){setVal(qq,v);closeSheet()});shOpts.appendChild(b)});
+    document.body.classList.add('sheet-on');
+  }
+  function closeSheet(){document.body.classList.remove('sheet-on');cur=null}
+  document.getElementById('dim').addEventListener('click',closeSheet);
   // 디렉터 링크(?d=이름)로 들어오면 미리 선택
   var pre=(q.get('d')||'').trim();
-
-  // 선택 버튼 동작
-  [].forEach.call(document.querySelectorAll('.q[data-key]'),function(sec){
-    var key=sec.dataset.key;
-    sec.addEventListener('click',function(e){
-      var b=e.target.closest('.opt');if(!b)return;
-      [].forEach.call(sec.querySelectorAll('.opt'),function(x){x.classList.toggle('on',x===b)});
-      S[key]=b.dataset.v||b.textContent.trim();
-    });
-  });
-  if(pre){var pb=dirs.querySelector('[data-v="'+pre.replace(/"/g,'')+'"]');if(pb)pb.click();}
+  if(pre&&Q[3].o.indexOf(pre)>-1)setVal(Q[3],pre);
 
   // 추천인: ?by= → 같은 기기에 저장된 추천인(초대장 페이지에서 저장) 순서로 채움
   var byIn=document.getElementById('by'),fromName=document.getElementById('fromName');
@@ -213,7 +212,10 @@ h1,h2,h3,p{margin:0}
   byIn.addEventListener('input',syncFrom);syncFrom();
   // 쿠폰번호 자동 입력 (cashflow와 같은 이름의 주소값을 모두 받음)
   var cv=q.get('coupon')||q.get('coupon_no')||q.get('couponNumber')||q.get('coupon_number')||'';
-  if(cv){document.getElementById('cp').value=cv;document.getElementById('cpNote').textContent='카카오 쿠폰번호가 자동으로 입력되었습니다';}
+  cv=String(cv).replace(/[^0-9A-Za-z-]/g,'').slice(0,20);
+  if(cv){document.getElementById('cp').value=cv;document.getElementById('tkCpNo').textContent='· '+cv.slice(-4);document.getElementById('tkCp').classList.add('on');}
+  // 이름: 같은 기기에서 초대장을 보낼 때 적은 이름이 있으면 미리 채움 (연락처는 휴대폰 자동완성 사용)
+  try{var me=localStorage.getItem('mb_me');if(me&&!document.getElementById('nm').value)document.getElementById('nm').value=me.slice(0,20)}catch(e){}
 
   // 연락처 하이픈
   var ph=document.getElementById('ph');
@@ -227,8 +229,8 @@ h1,h2,h3,p{margin:0}
     e.preventDefault();
     var name=document.getElementById('nm').value.trim(),phone=ph.value.trim(),cp=document.getElementById('cp').value.trim();
     var byv=document.getElementById('by').value.trim();
-    var miss=!byv?'추천해 주신 분 성함을 적어 주세요':!S.worry?'재정 고민을 골라 주세요':!S.rate?'희망 수익률을 골라 주세요':!S.goal?'월배당 목표를 골라 주세요':!S.director?'담당 디렉터를 골라 주세요':!name?'이름을 입력해 주세요':phone.replace(/\D/g,'').length<10?'연락처를 정확히 입력해 주세요':!document.getElementById('ag').checked?'개인정보 수집에 동의해 주세요':'';
-    if(miss){err.textContent=miss;return}
+    var miss=!byv?'추천해 주신 분 성함을 적어 주세요':!S.worry?'가장 불편한 재정 고민을 골라 주세요':!S.rate?'희망 수익률을 골라 주세요':!S.goal?'월배당 목표를 골라 주세요':!S.director?'담당 디렉터를 골라 주세요':!name?'이름을 입력해 주세요':phone.replace(/\D/g,'').length<10?'연락처를 정확히 입력해 주세요':!document.getElementById('ag').checked?'개인정보 수집에 동의해 주세요':'';
+    if(miss){err.textContent=miss;Q.forEach(function(qq){if(!S[qq.k])qq.el.classList.add('need')});return}
     err.textContent='';go.disabled=true;go.textContent='보내는 중…';
     var d=CONFIG.directors.filter(function(x){return x.name===S.director})[0];
     var to=(d?d.email:CONFIG.assignTo)+','+CONFIG.monitorEmail;
