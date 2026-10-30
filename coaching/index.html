@@ -8,7 +8,9 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="전문가 1:1 코칭 2시간(FREE) · MAKESBETTER">
 <meta property="og:description" content="현금흐름 점검, 보유자산 평가, 돈 모으는 툴까지. 채널 친구 전용 쿠폰으로 신청하세요.">
-<meta property="og:image" content="https://calc.makesbetter.co.kr/studio/og-v3.png">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/coaching/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <link rel="icon" href="/studio/icon-32.png">
 <link rel="apple-touch-icon" href="/studio/icon-180.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -181,6 +183,7 @@ h1,h2,h3,p{margin:0}
   };
   var q=new URLSearchParams(location.search);
   var TEST=q.get('test')==='1';
+  var MAILTEST=q.get('mailtest')==='1';
   var S={worry:'',rate:'',goal:'',director:''};
 
   // 디렉터 버튼
@@ -242,7 +245,9 @@ h1,h2,h3,p{margin:0}
       document.getElementById('sum').innerHTML=[['추천인',byv+' 님'],['재정 고민',S.worry],['희망 수익률',S.rate],['월배당 목표',S.goal],['담당 디렉터',S.director]].map(function(r){return '<div><span>'+r[0]+'</span><b>'+r[1].replace(/</g,'&lt;')+'</b></div>'}).join('');
       document.getElementById('doneBy').textContent=byv+' 님의 ';document.getElementById('done').classList.add('on');scrollTo(0,0);
     }
+    if(MAILTEST){params.to_email=CONFIG.monitorEmail;params.consult_type='[발송 시험] '+params.consult_type;}
     if(TEST){window.__coachParams=params;setTimeout(function(){finish(true)},300);return}
+    if(!MAILTEST){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/coaching-apply',{keepalive:true,mode:'no-cors'})}catch(e){}}
     if(!window.emailjs){finish(false);return}
     emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,params).then(function(){finish(true)},function(){finish(false)});
   });

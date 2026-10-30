@@ -3,12 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MAKESBETTER · 돈이 쉬지 않고 일하게</title>
+<title>MAKESBETTER 초대장</title>
 <meta name="description" content="현금흐름부터 월배당까지, 내 돈이 일하는 구조를 함께 만드는 금융 플랫폼. 가입은 무료입니다.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="MAKESBETTER · 돈이 쉬지 않고 일하게">
-<meta property="og:description" content="현금흐름부터 월배당까지. 가입 무료, 채널 친구 전용 혜택을 확인해 보세요.">
-<meta property="og:image" content="https://calc.makesbetter.co.kr/studio/og-v3.png">
+<meta property="og:title" content="MAKESBETTER 초대장">
+<meta property="og:description" content="좋은 걸 알게 되면 가장 먼저 떠오르는 사람이 있습니다. 그게 당신이었어요.">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/join/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:url" content="https://calc.makesbetter.co.kr/join/">
 <link rel="icon" href="/studio/icon-32.png">
 <link rel="apple-touch-icon" href="/studio/icon-180.png">
@@ -223,8 +225,7 @@ footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--f
     <div class="wrap">
       <h2>가장 먼저 받은 초대,<br>카카오톡 채널에서 시작하세요</h2>
       <a class="btn kakao" href="https://pf.kakao.com/_eETXxj/friend" rel="noreferrer" referrerpolicy="no-referrer">초대 수락하기 · 카카오톡 채널 추가</a>
-      <a class="btn line" href="https://mbkr.my/cashflow" target="_blank" rel="noopener">내 현금흐름 먼저 확인해 보기</a>
-      <p class="note">채널 추가와 현금흐름 확인은 모두 무료입니다.</p>
+      <p class="note">채널 추가는 무료이며, 언제든 차단할 수 있습니다.</p>
     </div>
   </section>
 
@@ -256,6 +257,9 @@ footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--f
   try{var x=new XMLHttpRequest();x.open('GET','https://abacus.jasoncameron.dev/get/mbkr.my/cashflow-basic');x.timeout=4000;
     x.onload=function(){try{var v=JSON.parse(x.responseText).value;if(v>=1347)document.getElementById('cnt').textContent=v.toLocaleString('ko-KR')+'명'}catch(e){}};x.send()}catch(e){}
 
+
+  // 초대장 → 채널 추가 버튼 누른 수 (abacus: mbkr.my/invite-cta)
+  [].forEach.call(document.querySelectorAll('a[href*="pf.kakao.com/_eETXxj"]'),function(a){a.addEventListener('click',function(){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/invite-cta',{keepalive:true,mode:'no-cors'})}catch(e){}})});
   var toast=document.getElementById('toast');
   function link(){var n=document.getElementById('nm').value.trim().slice(0,10);return 'https://calc.makesbetter.co.kr/join/'+(n?'?by='+encodeURIComponent(n):'')}
   function copy(t,cb){
