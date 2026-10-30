@@ -126,6 +126,18 @@ section{padding:64px 0 0}
 .tk-from{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:baseline;margin:0 24px 22px;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.06)}
 .tk-from span{font-size:12px;font-weight:700;letter-spacing:.16em;color:#D4AF6E}
 .tk-from b{font-size:17px;font-weight:700;color:#fff}
+/* 보내는 사람 모드 (?send=1) */
+.sp{display:none}
+body.send .hero,body.send main>section:not(.share){display:none}
+body.send .share{margin-top:0;min-height:100vh;min-height:100dvh;padding-top:44px}
+body.send .sp{display:block;margin:22px 0 6px;border:1px solid rgba(212,175,110,.45);border-radius:18px;padding:20px 18px;background:linear-gradient(160deg,rgba(212,175,110,.12),rgba(255,255,255,0) 60%)}
+.sp small{display:block;font-size:12px;font-weight:700;letter-spacing:.2em;color:#D4AF6E}
+.sp p{margin-top:10px;font-size:16px;line-height:1.6;color:#E6E6E6}
+.sp p b{color:#F3D9A6}
+.sp .sp-t{margin-top:12px;padding-top:12px;border-top:1px solid rgba(212,175,110,.25);font-size:14px;color:#BDBDBD}
+.share .s-send{display:none}
+body.send .share .s-def{display:none}
+body.send .share .s-send{display:inline}
 footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--faint);font-size:13px;line-height:1.7}
 </style>
 </head>
@@ -231,8 +243,13 @@ footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--f
 
   <section class="share">
     <div class="wrap">
-      <h2>이제 당신이<br>초대할 차례입니다</h2>
-      <p>내 이름이 적힌 초대장을 보내면, 받는 분은 당신의 추천으로 코칭권과 모든 혜택을 받게 됩니다.</p>
+      <h2><span class="s-def">이제 당신이<br>초대할 차례입니다</span><span class="s-send">떠오르는 한 사람에게<br>초대장을 보내 주세요</span></h2>
+      <p>내 이름이 적힌 초대장을 보내면, 받는 분은 당신의 추천으로 <span class="nw">전문가 1:1 코칭권</span>과 모든 혜택을 받게 됩니다.</p>
+      <div class="sp" aria-hidden="true">
+        <small>INVITATION · 미리보기</small>
+        <p>좋은 걸 알게 되면<br>가장 먼저 떠오르는 사람이 있습니다.<br><b>그게 당신이었어요.</b></p>
+        <p class="sp-t">이 초대장은 <b id="spName" class="nw">당신을 아끼는 분</b>이<br>가장 먼저 보낸 것입니다.</p>
+      </div>
       <label for="nm">초대장에 들어갈 내 이름 (선택)</label>
       <input id="nm" type="text" maxlength="10" placeholder="예: 홍길동" autocomplete="name">
       <button class="btn" id="shareBtn" type="button">내 이름으로 초대장 보내기</button>
@@ -260,6 +277,12 @@ footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--f
 
   // 초대장 → 채널 추가 버튼 누른 수 (abacus: mbkr.my/invite-cta)
   [].forEach.call(document.querySelectorAll('a[href*="pf.kakao.com/_eETXxj"]'),function(a){a.addEventListener('click',function(){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/invite-cta',{keepalive:true,mode:'no-cors'})}catch(e){}})});
+  // 보내는 사람 모드: 채널 메뉴 '친구 초대'에서 들어옴 (?send=1)
+  var nmEl=document.getElementById('nm'), spName=document.getElementById('spName');
+  if(q.get('send')){document.body.classList.add('send');try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/invite-open',{keepalive:true,mode:'no-cors'})}catch(e){}}
+  try{var me=localStorage.getItem('mb_me');if(me)nmEl.value=me.slice(0,10)}catch(e){}
+  function syncName(){var n=nmEl.value.trim().slice(0,10);spName.textContent=n?n+' 님':'당신을 아끼는 분'}
+  nmEl.addEventListener('input',syncName);syncName();
   var toast=document.getElementById('toast');
   function link(){var n=document.getElementById('nm').value.trim().slice(0,10);return 'https://calc.makesbetter.co.kr/join/'+(n?'?by='+encodeURIComponent(n):'')}
   function copy(t,cb){
@@ -267,7 +290,9 @@ footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--f
   }
   function fallback(t){try{var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();var ok=document.execCommand('copy');a.remove();return ok}catch(e){return false}}
   document.getElementById('shareBtn').addEventListener('click',function(){
-    var url=link(), n0=document.getElementById('nm').value.trim(), text='좋은 걸 알게 되면 가장 먼저 떠오르는 사람이 있어요. 그게 당신이었어요.';
+    var url=link(), n0=nmEl.value.trim();try{if(n0)localStorage.setItem('mb_me',n0.slice(0,10))}catch(e){}
+    try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/invite-send',{keepalive:true,mode:'no-cors'})}catch(e){}
+    var text='좋은 걸 알게 되면 가장 먼저 떠오르는 사람이 있어요. 그게 당신이었어요.';
     if(navigator.share){navigator.share({title:'MAKESBETTER',text:text,url:url}).catch(function(){})}
     else copy(text+'\n'+url,function(ok){toast.textContent=ok?'링크를 복사했어요. 카카오톡에 붙여 넣어 보내 주세요.':url});
   });
