@@ -326,6 +326,17 @@ html.big .hint{color:#333}
 .na{flex:none;min-height:40px;padding:0 12px;border-radius:20px;border:1px solid var(--rule2);background:var(--card);font-size:13px;font-weight:600;color:var(--sub);cursor:pointer;white-space:nowrap}
 .na[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
 .ckrow:has(.na[aria-pressed=true]) .ck-t{color:var(--sub);text-decoration:line-through}
+/* 체크 목록: 아이폰(사파리)에서 큰 글씨일 때 글자 칸이 좁게 눌리지 않도록 grid로 고정 */
+.ck{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:16px;align-items:center}
+.ck-t{display:block;word-break:keep-all;overflow-wrap:break-word}
+/* 큰 글씨: [해당 없음]을 글자 아래 줄로 내림 */
+html.big .ckrow{display:block}
+html.big .ckrow .ck{width:100%}
+html.big .ckrow .na{display:inline-block;margin:0 0 16px 40px;min-height:44px;padding:0 16px;font-size:15px}
+html.big .cklist li:first-child .ck{padding-top:8px}
+/* 하단 버튼 글자 한 줄 유지 */
+#next{white-space:nowrap}
+html.big .bottom button{font-size:16px}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(112px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:16px;padding:8px 8px 8px 18px;border-radius:16px;background:var(--ink);color:#fff;font-size:15px;box-shadow:0 8px 24px rgba(0,0,0,.2);max-width:calc(100% - 40px);white-space:nowrap}
 .toast button{min-height:40px;padding:0 14px;border-radius:12px;border:0;background:#fff;color:var(--ink);font-weight:700;cursor:pointer}
 .saved{grid-column:1/-1;margin:-2px 0 2px;text-align:center;font-size:12px;line-height:16px;color:var(--sub)}
