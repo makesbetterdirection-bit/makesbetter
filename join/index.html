@@ -256,33 +256,22 @@ h2{font-size:26px;line-height:1.38;font-weight:700;letter-spacing:-.035em}
 
 
 /* 오프닝 커버 */
-.cover{position:fixed;inset:0;z-index:60;background:#E8692E;background:radial-gradient(120% 90% at 50% 0%,#F0783A 0%,#E35F22 55%,#C94F19 100%);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:calc(28px + env(safe-area-inset-top,0px)) var(--g) calc(36px + env(safe-area-inset-bottom,0px));transition:transform .95s cubic-bezier(.76,0,.24,1);will-change:transform;box-shadow:0 30px 60px rgba(0,0,0,.25)}
-.cover::before{content:"";position:absolute;inset:0;opacity:.14;background-image:radial-gradient(rgba(255,255,255,.9) .7px,transparent .8px);background-size:7px 7px;pointer-events:none;mix-blend-mode:overlay}
-.cover::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent 30%,transparent 70%,rgba(0,0,0,.18))}
-.cover>*{position:relative}
+.cover{position:fixed;inset:0;z-index:60;background:#E8692E;background:linear-gradient(170deg,#EF7336 0%,#E35F22 60%,#D4561E 100%);color:#fff;padding:0 var(--g);transition:transform .95s cubic-bezier(.76,0,.24,1);will-change:transform;box-shadow:0 30px 60px rgba(0,0,0,.25)}
+.cover::before{content:"";position:absolute;inset:0;opacity:.12;background-image:radial-gradient(rgba(255,255,255,.9) .7px,transparent .8px);background-size:7px 7px;pointer-events:none;mix-blend-mode:overlay}
 .cover.off{transform:translateY(-102%);pointer-events:none}
-.cv-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:700;letter-spacing:.26em;opacity:.85}
-.cv-mid{margin:auto 0}
-.cv-line{display:block;font-size:14vw;font-size:clamp(36px,11vw,60px);line-height:.98;font-weight:800;letter-spacing:-.045em;text-transform:uppercase;transform:translateY(110%);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
-.cv-wrap{overflow:hidden;padding-bottom:.06em}
-.cv-sub{display:block;margin-top:20px;font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:clamp(20px,6vw,30px);line-height:1.2;font-weight:400;letter-spacing:-.02em;text-transform:none;opacity:0;transform:translateY(10px);transition:opacity .8s ease .85s,transform .8s cubic-bezier(.2,.8,.2,1) .85s}
-.cv-sub i{font-style:italic;font-weight:500}
-.cv-rule{width:0;height:1px;background:rgba(255,255,255,.75);margin-top:30px;transition:width 1.1s cubic-bezier(.2,.8,.2,1) 1.1s}
-.cv-brand{margin-top:22px;font-size:12px;font-weight:800;letter-spacing:.36em;opacity:0;transition:opacity .8s ease 1.5s}
-.cv-bot{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
-.cv-hint{font-size:12px;letter-spacing:.1em;color:rgba(255,255,255,.8);opacity:0;transition:opacity .7s ease 2.2s}
-.cv-arrow{width:92px;height:92px;flex:none;border:0;background:none;padding:0;cursor:pointer;color:#fff;opacity:0;transform:translate(-14px,-14px);transition:opacity .7s ease 2.1s,transform .7s cubic-bezier(.2,.8,.2,1) 2.1s;-webkit-tap-highlight-color:transparent}
-.cv-arrow svg{width:100%;height:100%;display:block;stroke:currentColor;stroke-width:2.2;stroke-linecap:square;fill:none}
-.cv-arrow svg .ln{stroke-dasharray:120;stroke-dashoffset:120;transition:stroke-dashoffset .9s cubic-bezier(.2,.8,.2,1) 2.3s}
-.cv-arrow svg .hd{stroke-dasharray:60;stroke-dashoffset:60;transition:stroke-dashoffset .6s ease 2.9s}
-.cover.on .cv-line{transform:none}
-.cv-wrap:nth-child(2) .cv-line{transition-delay:.1s}.cv-wrap:nth-child(3) .cv-line{transition-delay:.2s}
-.cover.on .cv-sub{opacity:1;transform:none}
-.cover.on .cv-rule{width:100%}
-.cover.on .cv-brand,.cover.on .cv-hint{opacity:1}
-.cover.on .cv-arrow{opacity:1;transform:none;animation:nudge 2.4s ease-in-out 3.4s infinite}
+.cv-mid{position:absolute;left:var(--g);right:var(--g);top:50%;transform:translateY(-60%)}
+.cv-wrap{display:block;overflow:hidden;padding-bottom:.08em}
+.cv-line{display:block;font-size:clamp(38px,11.5vw,64px);line-height:1.02;font-weight:800;letter-spacing:-.04em;transform:translateY(110%);transition:transform .95s cubic-bezier(.2,.8,.2,1)}
+.cv-line.cv-low{font-size:clamp(19px,5.75vw,32px);line-height:1.2;margin-top:10px;font-weight:300;letter-spacing:-.02em;transition-delay:.14s}
+.cv-brand{display:block;margin-top:clamp(72px,18vh,140px);font-size:15px;font-weight:600;letter-spacing:.02em;transform:translateY(120%);transition:transform .9s cubic-bezier(.2,.8,.2,1) .55s}
+.cv-arrow{position:absolute;right:var(--g);bottom:calc(40px + env(safe-area-inset-bottom,0px));width:64px;height:64px;border:0;background:none;padding:0;cursor:pointer;color:#fff;opacity:0;transition:opacity .6s ease 1.6s;-webkit-tap-highlight-color:transparent}
+.cv-arrow svg{width:100%;height:100%;display:block;stroke:currentColor;stroke-width:2;stroke-linecap:square;fill:none}
+.cv-arrow svg .ln{stroke-dasharray:70;stroke-dashoffset:70;transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1) 1.7s}
+.cv-arrow svg .hd{stroke-dasharray:60;stroke-dashoffset:60;transition:stroke-dashoffset .5s ease 2.2s}
+.cover.on .cv-line,.cover.on .cv-brand{transform:none}
+.cover.on .cv-arrow{opacity:1;animation:nudge 2.6s ease-in-out 2.8s infinite}
 .cover.on .cv-arrow svg .ln,.cover.on .cv-arrow svg .hd{stroke-dashoffset:0}
-@keyframes nudge{50%{transform:translate(6px,6px)}}
+@keyframes nudge{50%{transform:translate(5px,5px)}}
 .cv-arrow:active{transform:translate(8px,8px) scale(.96)}
 body.cv-lock{overflow:hidden;height:100vh;height:100dvh}
 body.send .cover{display:none}
@@ -316,19 +305,12 @@ body.send .share{display:block;min-height:calc(100vh - 56px);min-height:calc(100
 <body>
 
 <div class="cover" id="cover" role="dialog" aria-label="시작 화면">
-  <div class="cv-top"><span>INVITATION</span><span>2026</span></div>
   <div class="cv-mid">
-    <span class="cv-wrap"><b class="cv-line">No Magic</b></span>
-    <span class="cv-wrap"><b class="cv-line">Just Common</b></span>
-    <span class="cv-wrap"><b class="cv-line">Sense</b></span>
-    <span class="cv-sub">돈이 쉬지 않고 <i>일하게.</i></span>
-    <div class="cv-rule"></div>
-    <div class="cv-brand">MAKESBETTER</div>
+    <span class="cv-wrap"><b class="cv-line">NO MAGIC</b></span>
+    <span class="cv-wrap"><b class="cv-line cv-low">just common sense</b></span>
+    <span class="cv-wrap"><b class="cv-brand">makesbetter</b></span>
   </div>
-  <div class="cv-bot">
-    <span class="cv-hint">초대장 열기</span>
-    <button class="cv-arrow" id="cvArrow" type="button" aria-label="초대장 열기"><svg viewBox="0 0 92 92" aria-hidden="true"><path class="ln" d="M8 8 L84 84"/><path class="hd" d="M84 40 V84 H40"/></svg></button>
-  </div>
+  <button class="cv-arrow" id="cvArrow" type="button" aria-label="초대장 열기"><svg viewBox="0 0 64 64" aria-hidden="true"><path class="ln" d="M10 10 L54 54"/><path class="hd" d="M54 24 V54 H24"/></svg></button>
 </div>
 
 <header class="appbar">
