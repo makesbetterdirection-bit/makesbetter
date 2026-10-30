@@ -30,10 +30,6 @@ h1,h2,h3,p{margin:0}
 h2{font-size:28px;line-height:1.3;letter-spacing:-.04em;font-weight:700}
 section{padding:64px 0 0}
 
-/* 추천 배너 */
-.ref{display:none;margin:16px auto 0;max-width:480px;padding:0 var(--g)}
-.ref.on{display:block}
-.ref div{background:var(--accent-soft);color:#B23A0C;border-radius:14px;padding:14px 16px;font-size:16px;font-weight:600}
 
 /* 히어로 */
 .hero{background:var(--dark);color:#fff;padding:56px 0 48px}
@@ -116,15 +112,28 @@ section{padding:64px 0 0}
 .tk-list small{display:block;margin-top:2px;font-size:15px;color:#A8A8A8;line-height:1.55}
 .tk-btn{display:block;margin:22px 24px 0;text-align:center;border-radius:14px;padding:17px 16px;font-size:17px;font-weight:700;background:#FEE500;color:#191919}
 .tk-note{margin:12px 24px 0;padding-bottom:24px;text-align:center;font-size:14px;color:#8E8E8E}
+
+/* 초대장 */
+.invite{border:1px solid rgba(212,175,110,.45);border-radius:20px;padding:22px 20px;margin-bottom:36px;background:linear-gradient(160deg,rgba(212,175,110,.10),rgba(255,255,255,0) 60%)}
+.inv-label{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.2em;color:#D4AF6E}
+.hero .inv-from{margin-top:12px;font-size:24px;line-height:1.4;font-weight:700;letter-spacing:-.04em;color:#fff}
+.inv-from b{color:#F3D9A6}
+.hero .inv-sub{margin-top:10px;font-size:15px;color:#BDBDBD}
+.tk-from{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:baseline;margin:0 24px 22px;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.06)}
+.tk-from span{font-size:12px;font-weight:700;letter-spacing:.16em;color:#D4AF6E}
+.tk-from b{font-size:17px;font-weight:700;color:#fff}
 footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--faint);font-size:13px;line-height:1.7}
 </style>
 </head>
 <body>
 
-<div class="ref" id="ref"><div id="refText"></div></div>
-
 <header class="hero">
   <div class="wrap">
+    <div class="invite">
+      <span class="inv-label">INVITATION</span>
+      <p class="inv-from"><b class="rn nw">추천해 주신 분</b>이<br>당신을 메이크스베러에<br>초대했습니다</p>
+      <p class="inv-sub">이 페이지의 모든 혜택은<br><span class="rn">추천해 주신 분</span>의 추천으로 열렸습니다.</p>
+    </div>
     <div class="brand">MAKESBETTER</div>
     <h1>돈이 쉬지 않고<br><em>일하게.</em></h1>
     <p>내 돈의 흐름을 알고, 새는 돈을 막고, 모은 돈이 일하게 만드는 금융 플랫폼입니다.</p>
@@ -149,7 +158,7 @@ footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--f
   <section>
     <div class="wrap">
       <span class="eyebrow">Benefit</span>
-      <h2>채널 친구가 되면<br>받는 혜택</h2>
+      <h2><span class="rn nw">추천해 주신 분</span> 덕분에<br>받는 혜택</h2>
       <div class="bene">
         <div class="bn"><span class="tag">무료</span><h3>금융 전자책</h3><p>「현금흐름은 산소다」, 「시장의 기분은 숫자로 온다」</p></div>
         <div class="bn"><span class="tag">무료</span><h3>퇴직연금 세미나</h3><p>회사 동료·친구 모임 등 <span class="nw">5인 이상</span> 신청 시 찾아가 강의합니다.</p></div>
@@ -160,21 +169,22 @@ footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--f
   <section class="special">
     <div class="wrap">
       <span class="eyebrow">Special</span>
-      <h2>채널 친구에게만 드리는<br>코칭 쿠폰</h2>
+      <h2><span class="rn nw">추천해 주신 분</span>이 선물한<br>코칭 초대권</h2>
       <div class="ticket">
         <div class="tk-top">
-          <span class="tk-label">COACHING COUPON</span>
+          <span class="tk-label">INVITATION · COACHING</span>
           <h3>전문가 1:1<br>맞춤 코칭</h3>
           <div class="tk-time"><b class="nw">2시간 코칭</b><span class="nw free">FREE</span></div>
         </div>
+        <div class="tk-from"><span>FROM</span><b class="rn">추천해 주신 분</b><span>TO</span><b>초대받은 당신</b></div>
         <div class="tk-cut" aria-hidden="true"></div>
         <ol class="tk-list">
           <li><span>01</span><div><b>현금흐름 점검</b><small>소득·지출·저축, 지금 내 돈의 흐름을 정확히</small></div></li>
           <li><span>02</span><div><b>보유자산 평가</b><small>예금·투자·연금·보험, 가진 자산을 한눈에</small></div></li>
           <li><span>03</span><div><b>돈 모으는 툴 제공</b><small>코칭 뒤에도 혼자 관리할 수 있도록</small></div></li>
         </ol>
-        <a class="tk-btn" href="https://pf.kakao.com/_eETXxj/friend" rel="noreferrer" referrerpolicy="no-referrer">채널 추가하고 쿠폰 받기</a>
-        <p class="tk-note">담당 디렉터가 1:1로 진행합니다</p>
+        <a class="tk-btn" href="https://pf.kakao.com/_eETXxj/friend" rel="noreferrer" referrerpolicy="no-referrer">초대 수락하고 코칭권 받기</a>
+        <p class="tk-note">추천인의 초대로만 받을 수 있는 코칭권입니다 · 담당 디렉터 1:1 진행</p>
       </div>
     </div>
   </section>
@@ -208,8 +218,8 @@ footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--f
 
   <section class="cta">
     <div class="wrap">
-      <h2>첫 시작은<br>카카오톡 채널에서</h2>
-      <a class="btn kakao" href="https://pf.kakao.com/_eETXxj/friend" rel="noreferrer" referrerpolicy="no-referrer">카카오톡 채널 추가하고 혜택 받기</a>
+      <h2><span class="rn nw">추천해 주신 분</span>의 초대,<br>카카오톡 채널에서 시작하세요</h2>
+      <a class="btn kakao" href="https://pf.kakao.com/_eETXxj/friend" rel="noreferrer" referrerpolicy="no-referrer">초대 수락하기 · 카카오톡 채널 추가</a>
       <a class="btn line" href="https://mbkr.my/cashflow" target="_blank" rel="noopener">내 현금흐름 먼저 확인해 보기</a>
       <p class="note">채널 추가와 현금흐름 확인은 모두 무료입니다.</p>
     </div>
@@ -217,11 +227,11 @@ footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--f
 
   <section class="share">
     <div class="wrap">
-      <h2>이 페이지를<br>소중한 사람에게</h2>
-      <p>내 이름이 들어간 링크로 보내면, 받는 분 화면에 추천인으로 표시됩니다.</p>
-      <label for="nm">내 이름 (선택)</label>
+      <h2>이제 당신이<br>초대할 차례입니다</h2>
+      <p>내 이름이 적힌 초대장을 보내면, 받는 분은 당신의 추천으로 코칭권과 모든 혜택을 받게 됩니다.</p>
+      <label for="nm">초대장에 들어갈 내 이름</label>
       <input id="nm" type="text" maxlength="10" placeholder="예: 홍길동" autocomplete="name">
-      <button class="btn" id="shareBtn" type="button">친구에게 보내기</button>
+      <button class="btn" id="shareBtn" type="button">내 이름으로 초대장 보내기</button>
       <div class="toast" id="toast" aria-live="polite"></div>
     </div>
   </section>
@@ -235,7 +245,9 @@ footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--f
 (function(){
   var q=new URLSearchParams(location.search), by=(q.get('by')||'').trim().slice(0,10);
   function esc(s){return s.replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-  if(by){document.getElementById('refText').innerHTML='<span class="nw">'+esc(by)+' 님</span>이 추천한 금융 플랫폼이에요 👋';document.getElementById('ref').classList.add('on')}
+  // 추천인: 주소의 ?by= → 없으면 이 기기에 저장된 추천인 → 없으면 '추천해 주신 분'
+  try{ if(by) localStorage.setItem('mb_by',by); else by=(localStorage.getItem('mb_by')||'').slice(0,10); }catch(e){}
+  if(by){ [].forEach.call(document.querySelectorAll('.rn'),function(el){el.textContent=by+' 님'}); }
 
   // 현금흐름 지도 수 (cashflow 페이지와 같은 카운터, 실패하면 1,347 유지)
   try{var x=new XMLHttpRequest();x.open('GET','https://abacus.jasoncameron.dev/get/mbkr.my/cashflow-basic');x.timeout=4000;
@@ -248,7 +260,7 @@ footer{padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--f
   }
   function fallback(t){try{var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();var ok=document.execCommand('copy');a.remove();return ok}catch(e){return false}}
   document.getElementById('shareBtn').addEventListener('click',function(){
-    var url=link(), text='돈이 쉬지 않고 일하게. 메이크스베러 금융 플랫폼을 소개해요. 가입은 무료예요.';
+    var url=link(), n0=document.getElementById('nm').value.trim(), text=(n0?n0+' 님이 보낸 ':'')+'메이크스베러 초대장이에요. 초대받은 분만 받는 전문가 1:1 코칭권(2시간)이 들어 있어요.';
     if(navigator.share){navigator.share({title:'MAKESBETTER',text:text,url:url}).catch(function(){})}
     else copy(text+'\n'+url,function(ok){toast.textContent=ok?'링크를 복사했어요. 카카오톡에 붙여 넣어 보내 주세요.':url});
   });
