@@ -61,6 +61,11 @@ h1,h2,h3,p{margin:0}
 .foot{padding:22px 0 calc(36px + env(safe-area-inset-bottom,0px));color:var(--faint);font-size:13px;line-height:1.7}
 
 /* 완료 */
+.pass{margin-top:28px;background:#0B0B0C;color:#fff;border-radius:20px;padding:24px 20px;text-align:left}
+.pass h3{font-size:20px;line-height:1.45;font-weight:700;letter-spacing:-.035em}
+.pass p{margin-top:8px!important;color:#BDBDBD!important;font-size:15px!important}
+.pass .submit{margin-top:16px;background:#fff;color:var(--ink)}
+.pass-msg{margin-top:8px;font-size:14px;color:#FFB08F;min-height:20px}
 .done{display:none;padding:56px 0 40px;text-align:center}
 .done.on{display:block}
 .done .ok{width:64px;height:64px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;margin:0 auto;font-size:30px}
@@ -149,6 +154,12 @@ h1,h2,h3,p{margin:0}
     <h2>코칭 신청이<br>접수되었습니다</h2>
     <p><b id="doneBy"></b>추천으로 시작된 코칭입니다.<br>담당 디렉터가 <span class="nw">평일 10~17시</span> 중<br>연락드려 일정을 잡아 드립니다.</p>
     <div class="sum" id="sum"></div>
+    <div class="pass">
+      <h3>좋은 걸 알게 되면<br>가장 먼저 떠오르는 사람에게</h3>
+      <p>당신이 받은 이 초대를, 이번엔 당신이 건네 보세요.</p>
+      <button type="button" class="submit" id="passBtn">초대장 보내기</button>
+      <div class="pass-msg" id="passMsg" aria-live="polite"></div>
+    </div>
   </section>
 
   <p class="foot">© 2026 MAKESBETTER DIRECTION<br>금융 정보 제공 및 상담 안내 목적이며 특정 상품의 투자 권유가 아닙니다.</p>
@@ -234,6 +245,16 @@ h1,h2,h3,p{margin:0}
     if(TEST){window.__coachParams=params;setTimeout(function(){finish(true)},300);return}
     if(!window.emailjs){finish(false);return}
     emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,params).then(function(){finish(true)},function(){finish(false)});
+  });
+
+  // 완료 화면: 신청자 이름으로 초대장 공유
+  document.getElementById('passBtn').addEventListener('click',function(){
+    var n=document.getElementById('nm').value.trim().slice(0,10);
+    var url='https://calc.makesbetter.co.kr/join/'+(n?'?by='+encodeURIComponent(n):'');
+    var text='좋은 걸 알게 되면 가장 먼저 떠오르는 사람이 있어요. 그게 당신이었어요.';
+    var msg=document.getElementById('passMsg');
+    if(navigator.share){navigator.share({title:'MAKESBETTER 초대장',text:text,url:url}).catch(function(){});return}
+    try{navigator.clipboard.writeText(text+'\n'+url).then(function(){msg.textContent='초대장 링크를 복사했어요. 카카오톡에 붙여 넣어 보내 주세요.'},function(){msg.textContent=url})}catch(e){msg.textContent=url}
   });
 })();
 </script>
