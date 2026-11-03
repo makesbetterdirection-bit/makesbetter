@@ -62,6 +62,15 @@ h2{font-size:clamp(22px,6.2vw,27px);font-weight:700;line-height:1.38}
 .play .bar span.bl{animation:fadeUp .5s ease 1.8s forwards,breathe 1.6s ease-in-out 2.6s infinite}
 .acc,.tot .v{opacity:0}
 .ben,.st,.b1,.b2{opacity:0}
+.roles b{display:inline-block;opacity:0;transform:scale(.6);transform-origin:left bottom}
+.play .roles b{animation:pop .5s cubic-bezier(.3,1.6,.5,1) forwards}
+.play .roles>div:nth-child(1) b{animation-delay:.5s}.play .roles>div:nth-child(2) b{animation-delay:.8s}.play .roles>div:nth-child(3) b{animation-delay:1.1s}.play .roles>div:nth-child(4) b{animation-delay:1.4s}
+#rv{position:relative;overflow:hidden}
+#rv::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:45%;background:linear-gradient(100deg,transparent,rgba(212,174,98,.28),transparent);transform:skewX(-20deg);pointer-events:none;animation:shine 2.6s ease-in-out 1s infinite}
+#rv.done::after{display:none}
+#rvv.tap{display:flex;align-items:center;gap:6px;border:1px solid rgba(212,174,98,.7);border-radius:999px;padding:7px 13px;font-size:14px;animation:ring 1.6s ease-out infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(212,174,98,.55)}100%{box-shadow:0 0 0 12px rgba(212,174,98,0)}}
+#rvv.tap .dot{width:7px;height:7px;border-radius:50%;background:#D4AE62;animation:vdot 1.2s ease-in-out infinite}
 .ben i{transform:scale(0)}
 .play .ben{animation:fadeUp .6s ease forwards}
 .play .ben i{animation:pop .45s cubic-bezier(.3,1.6,.5,1) forwards}
@@ -281,7 +290,7 @@ h2{font-size:clamp(22px,6.2vw,27px);font-weight:700;line-height:1.38}
         <div class="row"><span>그동안 받은 분배금</span><b style="color:#F04452">+14.56%</b></div>
         <button id="rv" type="button" data-nodrag style="all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:16px 18px;background:#191F28;color:#fff;min-height:62px">
           <span style="font-size:14px;font-weight:600">실제 성과</span>
-          <b id="rvv" style="font-size:15px;color:#D4AE62">탭해서 확인 ▸</b>
+          <b id="rvv" class="tap" style="color:#D4AE62"><i class="dot"></i>눌러서 확인</b>
         </button>
       </div>
       <p class="p" style="color:#4E5968"><b>당신 계좌는 몇 %일까요?</b><br>수익률만 보면 놓치는 것들이 있어요.</p>
@@ -516,10 +525,13 @@ h2{font-size:clamp(22px,6.2vw,27px);font-weight:700;line-height:1.38}
     st.removeAttribute('target');
   }
   document.getElementById('rv').addEventListener('click',function(){
-    var v=document.getElementById('rvv');v.textContent='+5.13%';v.style.color='#FFB36B';v.style.fontSize='24px';v.style.letterSpacing='-.02em';
+    var rv=this,v=document.getElementById('rvv');if(rv.classList.contains('done'))return;
+    rv.classList.add('done');v.className='';v.style.color='#FFB36B';v.style.fontSize='24px';v.style.letterSpacing='-.02em';v.style.fontVariantNumeric='tabular-nums';
+    var t0=performance.now(),D=1100,from=-9.43,to=5.13;
+    (function step(t){var p=Math.min(1,(t-t0)/D),e=1-Math.pow(1-p,3),x=from+(to-from)*e;v.textContent=(x>=0?'+':'−')+Math.abs(x).toFixed(2)+'%';v.style.color=x>=0?'#FFB36B':'#7FB6FF';if(p<1)requestAnimationFrame(step);else{v.animate([{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:350,easing:'ease-out'});}})(t0);
   });
   var tabs=[].slice.call(document.querySelectorAll('#tabs button')), rps=[].slice.call(document.querySelectorAll('.rp'));
-  var TAB_MS=3600, tab=0, tTimer=null;
+  var TAB_MS=1800, tab=0, tTimer=null;
   function setTab(t,run){
     tab=t;
     tabs.forEach(function(x,i){x.classList.toggle('on',i===t);x.classList.remove('run');});
