@@ -76,6 +76,16 @@ h2{font-size:clamp(24px,6.6vw,30px);font-weight:700;line-height:1.4}
 .dark #prev{border-color:rgba(255,255,255,.2);color:#fff}.dark #next{background:#D4AE62;color:#15171C}
 .toast{position:absolute;left:50%;bottom:96px;transform:translateX(-50%) translateY(16px);opacity:0;pointer-events:none;transition:.3s;background:#191F28;color:#fff;font-size:14px;font-weight:600;padding:12px 18px;border-radius:12px;z-index:20;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@keyframes wipe{0%{clip-path:inset(0 100% 0 0)}55%,100%{clip-path:inset(0 0 0 0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+.wipe{display:inline-block;animation:wipe 2.4s cubic-bezier(.6,0,.2,1) infinite alternate}
+.blink{animation:blink 1s ease-in-out infinite}
+.go{display:inline-flex;width:30px;height:30px;border-radius:50%;background:#191F28;color:#fff;align-items:center;justify-content:center;animation:nudge 1.2s ease-in-out infinite}
+.go svg{width:16px;height:16px}
+.idx{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.idx div{background:#F9FAFB;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.idx span{font-size:11px;color:#8B95A1;font-weight:600}.idx b{font-size:15px;color:#3182F6;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 </style>
 </head>
 <body>
@@ -105,6 +115,11 @@ h2{font-size:clamp(24px,6.6vw,30px);font-weight:700;line-height:1.4}
       <span class="tag">10월 · 베러 포트폴리오 수익률</span>
       <div style="font-size:clamp(88px,27vw,140px);font-weight:800;letter-spacing:-.06em;line-height:.95;color:#3182F6;white-space:nowrap">−4.3%</div>
       <h2>9월 −0.6%에 이어<br>두 달 연속 내렸어요.</h2>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+        <span style="font-size:12px;color:#8B95A1;font-weight:600">같은 달 시장 · 10월 등락률</span>
+        <div class="idx"><div><span>코스피</span><b>−16.2%</b></div><div><span>S&amp;P500</span><b>−0.9%</b></div><div><span>나스닥</span><b>−5.3%</b></div></div>
+        <span style="font-size:11px;color:#B0B8C1">9/30 → 10/30 종가 기준</span>
+      </div>
     </div>
   </section>
 
@@ -120,7 +135,7 @@ h2{font-size:clamp(24px,6.6vw,30px);font-weight:700;line-height:1.4}
       <h2>수익률은 내렸어도<br><span style="color:#3182F6">입금은 늘었어요.</span></h2>
       <div style="border:1px solid #E5E8EB;border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;align-items:center;gap:8px"><span style="background:#EEF5FF;color:#1B64DA;border-radius:6px;padding:4px 8px;font-size:12px;font-weight:700">재투자</span><span style="font-size:14px;color:#6B7684">8 · 9 · 10월 배당금으로</span></div>
-        <b style="font-size:18px;letter-spacing:-.02em">코어 ETF 매수 진행</b>
+        <b style="font-size:18px;letter-spacing:-.02em"><span class="wipe">코어 ETF 매수 진행</span></b>
         <div style="display:flex;gap:8px"><span class="chip"><i>✓</i>8월</span><span class="chip"><i>✓</i>9월</span><span class="chip"><i>✓</i>10월</span></div>
       </div>
     </div>
@@ -138,7 +153,7 @@ h2{font-size:clamp(24px,6.6vw,30px);font-weight:700;line-height:1.4}
           <div class="bar" style="height:100%;background:#D5F0DF"><span style="color:#6B7684">407만</span></div>
           <div class="bar" style="height:88%"><span>358만</span></div>
           <div class="bar" style="height:89.2%"><span>363만</span></div>
-          <div class="bar" style="height:89.5%"><span>364만</span></div>
+          <div class="bar blink" style="height:89.5%"><span>364만</span></div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;font-size:12px;color:#8B95A1;text-align:center"><span>7월</span><b style="color:#191F28">8월</b><b style="color:#191F28">9월</b><b style="color:#191F28">10월</b></div>
       </div>
@@ -183,7 +198,7 @@ h2{font-size:clamp(24px,6.6vw,30px);font-weight:700;line-height:1.4}
         <div class="role"><i style="background:#3A86B8"></i><div><b>Cash</b><span>단기채·MMF 완충</span></div><b>25%</b></div>
       </div>
       <p style="margin:0;font-size:14px;line-height:1.7;color:#4E5968">이번 개정에서 TIGER 미국MSCI리츠가 제외되고 KODEX 미국배당커버드콜액티브가 편입되었습니다. 분배금 재투자는 종목별 매수 신호를 반영합니다.</p>
-      <a class="btn" href="https://calc.makesbetter.co.kr/studio/" target="_blank" rel="noopener">스튜디오에서 7.2 구성·신호 보기</a>
+      <a class="btn" id="studio" href="https://calc.makesbetter.co.kr/studio/" target="_blank" rel="noopener">스튜디오에서 7.2 구성·신호 보기</a>
     </div>
   </section>
 
@@ -191,9 +206,9 @@ h2{font-size:clamp(24px,6.6vw,30px);font-weight:700;line-height:1.4}
   <section class="pg">
     <div class="in" style="gap:24px">
       <div style="background:#15171C;border-radius:22px;padding:22px 20px;display:flex;flex-direction:column;gap:14px;box-shadow:0 16px 40px rgba(21,23,28,.22);border:1px solid rgba(212,174,98,.4)">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#D4AE62">MAKESBETTER MEMBERS</span><span style="background:#D4AE62;color:#15171C;font-size:12px;font-weight:800;border-radius:999px;padding:4px 10px">무료</span></div>
-        <div style="font-size:22px;font-weight:700;line-height:1.4;color:#fff;letter-spacing:-.03em">고객님 계좌,<br>담당 디렉터가 직접 점검합니다.</div>
-        <p style="margin:0;font-size:14px;line-height:1.65;color:#B6BAC2">이번 달부터 메이크스베러 고객님께만 <b style="color:#fff">1:1 계좌 리포트</b>를 무료로 드려요.</p>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#D4AE62;white-space:nowrap">MAKESBETTER MEMBERS</span><span style="font-size:11px;font-weight:700;letter-spacing:.12em;color:#8B909A;white-space:nowrap">1:1 REPORT</span></div>
+        <div style="font-size:22px;font-weight:700;line-height:1.4;color:#fff;letter-spacing:-.03em">포트폴리오를 분석하고,<br>한 편의 리포트로 드립니다.</div>
+        <p style="margin:0;font-size:14px;line-height:1.65;color:#B6BAC2">보유 종목의 성과와 원인을 짚고, 7.2 기준의 조정 방향까지 담아 <b style="color:#fff">고객님만을 위한 리포트</b>로 전해 드립니다.</p>
         <div style="height:1px;background:rgba(255,255,255,.1)"></div>
         <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:#E5E8EB">
           <div class="ben"><i>✓</i>수익률 뒤에 숨은 실제 성과</div>
@@ -220,10 +235,10 @@ h2{font-size:clamp(24px,6.6vw,30px);font-weight:700;line-height:1.4}
         <div class="step"><b>3</b><span>채널로 보내기 <span style="color:#8B95A1">· 0원이어도 괜찮아요</span></span></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <a class="btn" id="app" target="_blank" rel="noopener" href="https://apps.apple.com/kr/app/id1621986905">한투 앱 열기</a>
-        <a class="btn cp" href="https://pf.kakao.com/_eETXxj/chat" target="_blank" rel="noopener" style="min-height:58px;font-size:17px;background:#15171C;color:#fff;box-shadow:inset 0 0 0 1px rgba(212,174,98,.5)">캡처 보내고 <span style="color:#D4AE62">무료 점검</span> 받기</a>
+        <a class="btn" id="app" target="_blank" rel="noopener" href="https://apps.apple.com/kr/app/id1621986905"><span>한투 앱 열기</span><i class="go"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></i></a>
+        
       </div>
-      <p style="margin:-8px 0 0;font-size:12px;line-height:1.6;color:#8B95A1;text-align:center">누르면 요청 문구가 복사돼요. 채팅창에 붙여 넣어 주세요.</p>
+      
     </div>
   </section>
 
@@ -394,6 +409,11 @@ h2{font-size:clamp(24px,6.6vw,30px);font-weight:700;line-height:1.4}
 
   if(/android/i.test(navigator.userAgent)){
     document.getElementById('app').href='intent://#Intent;package=com.truefriend.neosmartarenewal;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.truefriend.neosmartarenewal;end';
+  }
+  if(/KAKAOTALK/i.test(navigator.userAgent)){
+    var st=document.getElementById('studio');
+    st.href='kakaotalk://web/openExternal?url='+encodeURIComponent('https://calc.makesbetter.co.kr/studio/');
+    st.removeAttribute('target');
   }
   document.getElementById('rv').addEventListener('click',function(){
     var v=document.getElementById('rvv');v.textContent='+5.13%';v.style.color='#FFB36B';v.style.fontSize='24px';v.style.letterSpacing='-.02em';
