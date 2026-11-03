@@ -2,3 +2,8 @@ https://harmonious-rolypoly-8184da.netlify.app/* /404.html 404!
 http://harmonious-rolypoly-8184da.netlify.app/* /404.html 404!
 /ebook  /ebook/market-mood.pdf  200
 /ebook02  /ebook/market-mood.pdf  200
+# 리포트 전용 주소: report.makesbetter.co.kr → /report/ (월별 보관: /2610 → /report/2610/)
+https://report.makesbetter.co.kr/  /report/  200!
+http://report.makesbetter.co.kr/  /report/  200!
+https://report.makesbetter.co.kr/:month  /report/:month/  200!
+http://report.makesbetter.co.kr/:month  /report/:month/  200!
