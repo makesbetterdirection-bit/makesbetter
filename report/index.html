@@ -18,6 +18,11 @@ button{font-family:inherit}
 @keyframes vpulse{0%,100%{background:#191F28;box-shadow:0 0 0 0 rgba(255,90,31,0)}50%{background:#FF5A1F;box-shadow:0 0 0 6px rgba(255,90,31,.2)}}
 @keyframes wipe{to{clip-path:inset(0 0 0 0)}}
 @keyframes sheen{to{background-position:0% 0}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes fadeOut{to{opacity:0}}
+@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
 @keyframes breathe{0%,100%{opacity:1}50%{opacity:.4}}
 .wipe{display:inline-block;padding-right:.04em;clip-path:inset(0 100% 0 0);background:linear-gradient(105deg,#3182F6 0 44%,#CFE1FF 50%,#3182F6 56% 100%);background-size:300% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .play .wipe{animation:wipe 1.2s cubic-bezier(.65,0,.35,1) .3s forwards,sheen 1.6s cubic-bezier(.4,0,.2,1) 1.4s forwards}
@@ -45,8 +50,21 @@ h2{font-size:clamp(22px,6.2vw,27px);font-weight:700;line-height:1.38}
 .mk span{font-size:12px;color:#6B7684;font-weight:600}
 .mk b{font-size:clamp(16px,4.8vw,19px);color:#3182F6;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .bars{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:end;height:clamp(110px,22vh,190px)}
-.bar{border-radius:8px 8px 4px 4px;position:relative;background:#2AC769}
-.bar span{position:absolute;left:-6px;right:-6px;top:-21px;text-align:center;font-size:12px;font-weight:700;white-space:nowrap}
+.bar{position:relative}
+.bar i{position:absolute;inset:0;border-radius:8px 8px 4px 4px;transform-origin:bottom;transform:scaleY(0)}
+.bar span{position:absolute;left:-6px;right:-6px;top:-21px;text-align:center;font-size:12px;font-weight:700;white-space:nowrap;opacity:0}
+.play .bar i{animation:grow .9s cubic-bezier(.22,.8,.22,1) forwards}
+.play .bar span{animation:fadeUp .5s ease forwards}
+.play .bar i.bl{animation:grow .9s cubic-bezier(.22,.8,.22,1) 1.4s forwards,breathe 1.6s ease-in-out 2.6s infinite}
+.play .bar span.bl{animation:fadeUp .5s ease 1.8s forwards,breathe 1.6s ease-in-out 2.6s infinite}
+.acc,.tot .v{opacity:0}
+.sg{transform:scaleX(0);transform-origin:left}
+.play .acc{animation:fadeUp .5s ease forwards}
+.play .sg{animation:growX .6s cubic-bezier(.22,.8,.22,1) forwards}
+.tot{display:grid;justify-items:end}.tot>span{grid-area:1/1}
+.tot .q{color:#B0B8C1}
+.play .tot .q{animation:fadeOut .3s ease 2.7s forwards}
+.play .tot .v{animation:pop .6s cubic-bezier(.22,.8,.22,1) 2.85s forwards}
 .lg{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:#6B7684;line-height:1.45}
 .lg div{display:flex;gap:8px}
 .lg i{width:9px;height:9px;border-radius:3px;flex:none;margin-top:4px}
@@ -178,20 +196,20 @@ h2{font-size:clamp(22px,6.2vw,27px);font-weight:700;line-height:1.38}
     <div class="in">
       <div style="display:flex;flex-direction:column;gap:8px">
         <span class="k">2026.07 – 10 · 월별 입금액</span>
-        <h2>7월 이후 줄었던 입금,<br><span style="color:#1FA25A">두 달 연속 다시 늘었어요.</span></h2>
+        <h2><span style="color:#8B95A1">7월 이후 줄었던 입금,</span><br>두 달 연속 다시 늘었어요.</h2>
       </div>
       <div class="card" style="padding:32px 16px 14px;display:flex;flex-direction:column;gap:10px">
         <div class="bars">
-          <div class="bar" style="height:100%;background:#D5F0DF"><span style="color:#6B7684">407만</span></div>
-          <div class="bar" style="height:88%"><span>358만</span></div>
-          <div class="bar" style="height:89.2%"><span>363만</span></div>
-          <div class="bar" style="height:89.5%"><span>364만</span></div>
+          <div class="bar" style="height:100%"><i style="background:#E5E8EB;animation-delay:.2s"></i><span style="color:#8B95A1;animation-delay:.6s">407만</span></div>
+          <div class="bar" style="height:88%"><i style="background:#B0B8C1;animation-delay:.6s"></i><span style="color:#6B7684;animation-delay:1s">358만</span></div>
+          <div class="bar" style="height:89.2%"><i style="background:#6B7684;animation-delay:1s"></i><span style="color:#4E5968;animation-delay:1.4s">363만</span></div>
+          <div class="bar" style="height:89.5%"><i class="bl" style="background:#2AC769"></i><span class="bl" style="color:#1FA25A">364만</span></div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font-size:12px;color:#8B95A1;text-align:center"><span>7월</span><b style="color:#191F28">8월</b><b style="color:#191F28">9월</b><b style="color:#191F28">10월</b></div>
       </div>
       <div class="lg">
-        <div><i style="background:#D5F0DF"></i><span>7월 · 수익률 −9.6%였던 달</span></div>
-        <div><i style="background:#2AC769"></i><span>8월 −0.3% · 9월 −0.3% · 10월 −4.8%<br>수익률은 내렸지만 입금은 늘었어요</span></div>
+        <div><i style="background:#E5E8EB"></i><span>7월 · 수익률 −9.6%였던 달</span></div>
+        <div><i style="background:#8B95A1"></i><span>8월 −0.3% · 9월 −0.3% · 10월 −4.8%<br>수익률은 내렸지만 입금은 늘었어요</span></div>
         <div style="padding-left:17px;color:#8B95A1">계좌 4개 합산, 실수령액</div>
       </div>
     </div>
@@ -202,13 +220,13 @@ h2{font-size:clamp(22px,6.2vw,27px);font-weight:700;line-height:1.38}
     <div class="in" style="gap:20px">
       <h2>4개 계좌가<br>모두 일했어요.</h2>
       <div class="card" style="padding:18px;display:flex;flex-direction:column;gap:16px">
-        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13.5px;color:#6B7684">10월 입금</span><b class="num" style="font-size:19px">3,643,944원</b></div>
-        <div style="display:flex;height:10px;border-radius:5px;overflow:hidden;gap:2px"><div style="width:47.5%;background:#191F28"></div><div style="width:22.1%;background:#4E5968"></div><div style="width:20.4%;background:#8B95A1"></div><div style="flex:1;background:#C9CED5"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13.5px;color:#6B7684">10월 입금</span><b class="num tot" style="font-size:19px"><span class="q">?</span><span class="v">3,643,944원</span></b></div>
+        <div style="display:flex;height:10px;border-radius:5px;overflow:hidden;gap:2px"><div class="sg" style="width:47.5%;background:#191F28;animation-delay:.3s"></div><div class="sg" style="width:22.1%;background:#4E5968;animation-delay:.9s"></div><div class="sg" style="width:20.4%;background:#8B95A1;animation-delay:1.5s"></div><div class="sg" style="flex:1;background:#C9CED5;animation-delay:2.1s"></div></div>
         <div style="display:flex;flex-direction:column;gap:12px">
-          <div class="acc"><span><i style="background:#191F28"></i>연금저축</span><b>1,731,749원</b></div>
-          <div class="acc"><span><i style="background:#4E5968"></i>중개형 ISA</span><b>803,654원</b></div>
-          <div class="acc"><span><i style="background:#8B95A1"></i>일반계좌</span><b>741,835원</b></div>
-          <div class="acc"><span><i style="background:#C9CED5"></i>퇴직연금</span><b>366,706원</b></div>
+          <div class="acc" style="animation-delay:.3s"><span><i style="background:#191F28"></i>연금저축</span><b>1,731,749원</b></div>
+          <div class="acc" style="animation-delay:.9s"><span><i style="background:#4E5968"></i>중개형 ISA</span><b>803,654원</b></div>
+          <div class="acc" style="animation-delay:1.5s"><span><i style="background:#8B95A1"></i>일반계좌</span><b>741,835원</b></div>
+          <div class="acc" style="animation-delay:2.1s"><span><i style="background:#C9CED5"></i>퇴직연금</span><b>366,706원</b></div>
         </div>
       </div>
       <p class="p"><b>연금저축 한 계좌가 절반 가까이.</b><br>계좌마다 하는 일이 달라요.</p>
