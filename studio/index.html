@@ -1194,16 +1194,16 @@ function tick(){var o=kst();clk.textContent=pad(+o.hour%24)+':'+o.minute+':'+o.s
 tick();setInterval(tick,1000);
 // 월별 분배 일정 (운용사 공시 기준, 1주당 세전). 새 달은 MONTHS에 'YYYY-MM' 키를 추가. 일정이 없는 달은 '공시 전'으로 표시, 지난 달 데이터는 지우지 않고 ◀ ▶ 로 확인.
 var MONTHS={
- '2026-10':{hol:{3:1,5:1,9:1},note:'분배금은 운용사 공시 기준 1주당 세전 금액입니다. 10.30 월말 기준일은 매월 마지막 영업일 규칙에 따른 예정일이고, 매수 마감은 기준일 2영업일 전입니다. 11월 초 지급일은 공시 전입니다. 10.3·10.5·10.9는 휴장입니다.',ev:{
+ '2026-10':{hol:{3:1,5:1,9:1},note:'분배금은 운용사 공시 기준 1주당 세전 금액입니다. 매수 마감은 기준일 2영업일 전입니다. 10.30 월말 기준일 분배금은 11월 초 지급(11월 달력). 10.3·10.5·10.9는 휴장입니다.',ev:{
   1:{type:'pay',rec:'9.30',label:'지급',items:[['SOL 국제금커버드콜','43원'],['SOL 미국30년국채커버드콜','60원']]},
   2:{type:'pay',rec:'9.30',label:'지급',items:[['KODEX 미국나스닥100커버드콜','150원'],['PLUS 미국단기회사채','369원']]},
   13:{type:'buy',rec:'10.15',label:'매수 마감 · 중간배당',items:[['KODEX 200타겟위클리커버드콜','이날까지 매수'],['ACE 미국500커버드콜','이날까지 매수'],['KODEX 미국배당커버드콜','이날까지 매수']]},
   15:{type:'rec',label:'기준일',items:[['KODEX 200타겟위클리커버드콜','281원'],['ACE 미국500커버드콜','191원'],['KODEX 미국배당커버드콜','94원']]},
   19:{type:'pay',rec:'10.15',label:'지급',items:[['KODEX 200타겟위클리커버드콜','281원'],['ACE 미국500커버드콜','191원'],['KODEX 미국배당커버드콜','94원']]},
-  28:{type:'buy',rec:'10.30',label:'매수 마감 · 월말배당 예정',items:[['KODEX 미국나스닥100커버드콜','지난달 150원'],['SOL 국제금커버드콜','지난달 43원'],['SOL 미국30년국채커버드콜','지난달 60원'],['PLUS 미국단기회사채','지난달 369원']]},
-  30:{type:'est',label:'월말 기준일 · 예정',items:[['나스닥100CC · 국제금CC · 30년국채CC · 단기회사채','공시 전']]}
+  28:{type:'buy',rec:'10.30',label:'매수 마감 · 월말배당',items:[['KODEX 미국나스닥100커버드콜','이날까지 매수'],['SOL 국제금커버드콜','이날까지 매수'],['SOL 미국30년국채커버드콜','이날까지 매수'],['PLUS 미국단기회사채','이날까지 매수']]},
+  30:{type:'rec',label:'월말 기준일',items:[['KODEX 미국나스닥100커버드콜','146원'],['SOL 국제금커버드콜','39원'],['SOL 미국30년국채커버드콜','123원'],['PLUS 미국단기회사채','354원']]}
 }},
- '2026-11':{hol:{},note:'분배금은 운용사 공시 기준 1주당 세전 금액입니다. 11월 분배 일정과 금액은 공시 후 업데이트합니다. 매수 마감은 기준일 2영업일 전입니다.',ev:{}}
+ '2026-11':{hol:{},note:'분배금은 운용사 공시 기준 1주당 세전 금액입니다. 11월 초 지급은 10.30 기준일분이고, KODEX 미국나스닥100커버드콜(146원)은 지급일 확인 후 표시합니다. 11월 중간·월말 일정은 공시 후 업데이트합니다.',ev:{2:{type:'pay',rec:'10.30',label:'지급',items:[['SOL 국제금커버드콜','39원'],['SOL 미국30년국채커버드콜','123원']]},3:{type:'pay',rec:'10.30',label:'지급',items:[['PLUS 미국단기회사채','354원']]}}}
 };
 var MKEYS=Object.keys(MONTHS).sort(),o0=kst(),NOWK=o0.year+'-'+o0.month;
 var CK=MONTHS[NOWK]?NOWK:MKEYS[MKEYS.length-1];            // 홈 카드·티커 기준 달 (이번 달 데이터가 있으면 이번 달, 없으면 최근 달)
@@ -1230,7 +1230,7 @@ if(nd){var dt=new Date(CY,CM-1,nd),left=today?nd-today:null;
    +'<div class="when">'+MM(nd)+'<small>'+DOW[dt.getDay()]+'요일</small></div><p class="dday">'+(EV[nd].rec?'기준일 '+EV[nd].rec+'에':'기준일에')+' 보유한 1주당 금액입니다.</p>'
    +'<ul class="pay">'+EV[nd].items.map(function(x){return '<li><span>'+x[0]+'</span><span>'+x[1]+'</span></li>'}).join('')+'</ul>';}
 else if(!Object.keys(EV).length){nc.innerHTML='<div class="card-h"><span class="mono">Next payment</span><span class="pill">공시 전</span></div><div class="when">공시 전</div><p class="dday">'+CM+'월 분배 일정은 운용사 공시 후 업데이트합니다.</p>';}
-else{nc.innerHTML='<div class="card-h"><span class="mono">Next payment</span><span class="pill">'+(CM%12+1)+'월 초</span></div><div class="when">'+(CM%12+1)+'월 초</div><p class="dday">월말 기준일 분배금은 운용사 공시 후 업데이트합니다.</p>';}
+else{nc.innerHTML='<div class="card-h"><span class="mono">Next payment</span><span class="pill">공시 전</span></div><div class="when">공시 전</div><p class="dday">다음 지급 일정은 운용사 공시 후 업데이트합니다.</p>';}
 // buy-by card (매수 마감 = 기준일 2영업일 전)
 var bd=Object.keys(EV).map(Number).filter(function(d){return EV[d].type==='buy'&&d>=today})[0];
 if(bd){var bc=document.getElementById('buyCard'),bdt=new Date(CY,CM-1,bd),bl=today?bd-today:null,isEnd=EV[bd].rec===String(CM)+'.30'||/월말/.test(EV[bd].label);
