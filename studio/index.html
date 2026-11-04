@@ -123,6 +123,7 @@ ul{list-style:none;margin:0;padding:0}
 .cal .d i.buy{background:var(--accent)}
 .cal .d.has{cursor:pointer}
 .cal .d.has:active,.cal .d.sel{background:#F2F2F2}
+.calnav{display:flex;align-items:center;justify-content:center;gap:18px;margin:2px 0 10px}.calnav button{border:0;background:none;font:inherit;font-size:12px;color:var(--ink);padding:8px 14px;cursor:pointer}.calnav button:disabled{color:var(--faint);cursor:default}.calnav span{font-weight:600;font-size:15px;min-width:44px;text-align:center}
 .cal-key{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);color:var(--sub)}
 .cal-key span{display:inline-flex;align-items:center;gap:6px}
 .cal-key i{width:5px;height:5px;border-radius:50%;background:var(--ink);display:inline-block}
@@ -849,12 +850,13 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
         <div class="card next rv" id="nextCard"></div>
         <div class="card next rv" id="buyCard" hidden></div>
         <div class="card rv" id="calCard">
-          <div class="card-h"><span class="mono">October 2026</span><span class="pill">1주당 세전</span></div>
+          <div class="card-h"><span class="mono" id="calTitle">October 2026</span><span class="pill">1주당 세전</span></div>
+          <div class="calnav"><button type="button" id="calPrev" aria-label="이전 달">◀</button><span id="calMon">10월</span><button type="button" id="calNext" aria-label="다음 달">▶</button></div>
           <div class="cal" id="cal" aria-label="2026년 10월 분배 일정"></div>
           <div class="cal-key mono"><span><i></i>지급</span><span><i class="rec"></i>기준일</span><span><i class="est"></i>예정</span><span><i class="buy"></i>매수 마감</span></div>
           <div class="day" id="day" aria-live="polite"></div>
         </div>
-        <p class="note">분배금은 운용사 공시 기준 1주당 세전 금액입니다. 10.30 월말 기준일은 매월 마지막 영업일 규칙에 따른 예정일이고, 매수 마감은 기준일 2영업일 전입니다. 11월 초 지급일은 공시 전입니다. 10.3·10.5·10.9는 휴장입니다.</p>
+        <p class="note" id="calNote"></p>
       </div>
     </div>
   </section>
@@ -1190,58 +1192,78 @@ function tick(){var o=kst();clk.textContent=pad(+o.hour%24)+':'+o.minute+':'+o.s
   var t=(+o.hour%24)*3600+(+o.minute)*60+(+o.second),wd=['Mon','Tue','Wed','Thu','Fri'].indexOf(o.weekday)>=0&&KRX_HOL.indexOf(o.year+'-'+o.month+'-'+o.day)<0,op=32400,cl=55800;
   mkt.textContent=wd&&t>=op&&t<cl?'KRX open · '+hms(cl-t):(wd&&t<op?'KRX opens in '+hms(op-t):'KRX closed');}
 tick();setInterval(tick,1000);
-// 10월 분배 일정 (운용사 공시 기준, 1주당 세전)
-var EV={
-  1:{type:'pay',label:'지급',items:[['SOL 국제금커버드콜','43원'],['SOL 미국30년국채커버드콜','60원']]},
-  2:{type:'pay',label:'지급',items:[['KODEX 미국나스닥100커버드콜','150원'],['PLUS 미국단기회사채','369원']]},
-  13:{type:'buy',label:'매수 마감 · 중간배당',items:[['KODEX 200타겟위클리커버드콜','이날까지 매수'],['ACE 미국500커버드콜','이날까지 매수'],['KODEX 미국배당커버드콜','이날까지 매수']]},
+// 월별 분배 일정 (운용사 공시 기준, 1주당 세전). 새 달은 MONTHS에 'YYYY-MM' 키를 추가. 일정이 없는 달은 '공시 전'으로 표시, 지난 달 데이터는 지우지 않고 ◀ ▶ 로 확인.
+var MONTHS={
+ '2026-10':{hol:{3:1,5:1,9:1},note:'분배금은 운용사 공시 기준 1주당 세전 금액입니다. 10.30 월말 기준일은 매월 마지막 영업일 규칙에 따른 예정일이고, 매수 마감은 기준일 2영업일 전입니다. 11월 초 지급일은 공시 전입니다. 10.3·10.5·10.9는 휴장입니다.',ev:{
+  1:{type:'pay',rec:'9.30',label:'지급',items:[['SOL 국제금커버드콜','43원'],['SOL 미국30년국채커버드콜','60원']]},
+  2:{type:'pay',rec:'9.30',label:'지급',items:[['KODEX 미국나스닥100커버드콜','150원'],['PLUS 미국단기회사채','369원']]},
+  13:{type:'buy',rec:'10.15',label:'매수 마감 · 중간배당',items:[['KODEX 200타겟위클리커버드콜','이날까지 매수'],['ACE 미국500커버드콜','이날까지 매수'],['KODEX 미국배당커버드콜','이날까지 매수']]},
   15:{type:'rec',label:'기준일',items:[['KODEX 200타겟위클리커버드콜','281원'],['ACE 미국500커버드콜','191원'],['KODEX 미국배당커버드콜','94원']]},
-  19:{type:'pay',label:'지급',items:[['KODEX 200타겟위클리커버드콜','281원'],['ACE 미국500커버드콜','191원'],['KODEX 미국배당커버드콜','94원']]},
-  28:{type:'buy',label:'매수 마감 · 월말배당 예정',items:[['KODEX 미국나스닥100커버드콜','지난달 150원'],['SOL 국제금커버드콜','지난달 43원'],['SOL 미국30년국채커버드콜','지난달 60원'],['PLUS 미국단기회사채','지난달 369원']]},
+  19:{type:'pay',rec:'10.15',label:'지급',items:[['KODEX 200타겟위클리커버드콜','281원'],['ACE 미국500커버드콜','191원'],['KODEX 미국배당커버드콜','94원']]},
+  28:{type:'buy',rec:'10.30',label:'매수 마감 · 월말배당 예정',items:[['KODEX 미국나스닥100커버드콜','지난달 150원'],['SOL 국제금커버드콜','지난달 43원'],['SOL 미국30년국채커버드콜','지난달 60원'],['PLUS 미국단기회사채','지난달 369원']]},
   30:{type:'est',label:'월말 기준일 · 예정',items:[['나스닥100CC · 국제금CC · 30년국채CC · 단기회사채','공시 전']]}
+}},
+ '2026-11':{hol:{},note:'분배금은 운용사 공시 기준 1주당 세전 금액입니다. 11월 분배 일정과 금액은 공시 후 업데이트합니다. 매수 마감은 기준일 2영업일 전입니다.',ev:{}}
 };
-var items=(function(){var o=kst(),td=(+o.year===2026&&+o.month===10)?+o.day:0,ks=Object.keys(EV).map(Number),out=[];
-  var np=ks.filter(function(d){return EV[d].type==='pay'&&d>=td})[0];if(np)out.push('10.'+pad(np)+' · 분배금 지급 '+EV[np].items.length+'건');
-  var nb=ks.filter(function(d){return EV[d].type==='buy'&&d>=td})[0];if(nb)out.push('10.'+pad(nb)+' · '+(nb===28?'월말배당':'중간배당')+' 매수 마감');
+var MKEYS=Object.keys(MONTHS).sort(),o0=kst(),NOWK=o0.year+'-'+o0.month;
+var CK=MONTHS[NOWK]?NOWK:MKEYS[MKEYS.length-1];            // 홈 카드·티커 기준 달 (이번 달 데이터가 있으면 이번 달, 없으면 최근 달)
+var CY=+CK.slice(0,4),CM=+CK.slice(5),EV=MONTHS[CK].ev,HOL=MONTHS[CK].hol,DAYS=new Date(CY,CM,0).getDate();
+var DOW=['일','월','화','수','목','금','토'];
+var today=(CK===NOWK)?+o0.day:0;
+var MM=function(d){return CM+'.'+pad(d)};
+var items=(function(){var td=today,ks=Object.keys(EV).map(Number),out=[];
+  var np=ks.filter(function(d){return EV[d].type==='pay'&&d>=td})[0];if(np)out.push(MM(np)+' · 분배금 지급 '+EV[np].items.length+'건');
+  var nb=ks.filter(function(d){return EV[d].type==='buy'&&d>=td})[0];if(nb)out.push(MM(nb)+' · '+(EV[nb].rec==='10.30'||/월말/.test(EV[nb].label)?'월말배당':'중간배당')+' 매수 마감');
+  if(!np&&!nb)out.push(CM+'월 분배 일정 · 공시 전');
   out.push('Signal · 머니마켓 확대','24 Indicators · 10.15 장마감');return out})();
 var bars=document.getElementById('bars'),msg=document.getElementById('msg'),ki=0;
 bars.innerHTML=items.map(function(){return '<i><span></span></i>'}).join('');var bs=[].slice.call(bars.children);
 function show(n){msg.classList.add('fade');setTimeout(function(){msg.textContent=items[n];msg.classList.remove('fade')},250);bs.forEach(function(b,j){b.className=j<n?'done':'';var s=b.firstChild;s.style.animation='none';void s.offsetWidth;s.style.animation=''});bs[n].className='run'}
 show(0);setInterval(function(){ki=(ki+1)%items.length;show(ki)},4500);
 
-var HOL={3:1,5:1,9:1},DOW=['일','월','화','수','목','금','토'];
-var o=kst(),today=(+o.year===2026&&+o.month===10)?+o.day:0;
 // next payment card
 var payDays=Object.keys(EV).map(Number).filter(function(d){return EV[d].type==='pay'});
 var nd=payDays.filter(function(d){return d>=today})[0];
 var nc=document.getElementById('nextCard');
-if(nd){var dt=new Date(2026,9,nd),left=today?nd-today:null;
+if(nd){var dt=new Date(CY,CM-1,nd),left=today?nd-today:null;
   nc.innerHTML='<div class="card-h"><span class="mono">Next payment</span><span class="pill up">'+(left===0?'오늘':left!==null?'D−'+left:'다음')+'</span></div>'
-   +'<div class="when">10.'+pad(nd)+'<small>'+DOW[dt.getDay()]+'요일</small></div><p class="dday">기준일 10.15에 보유한 1주당 금액입니다.</p>'
+   +'<div class="when">'+MM(nd)+'<small>'+DOW[dt.getDay()]+'요일</small></div><p class="dday">'+(EV[nd].rec?'기준일 '+EV[nd].rec+'에':'기준일에')+' 보유한 1주당 금액입니다.</p>'
    +'<ul class="pay">'+EV[nd].items.map(function(x){return '<li><span>'+x[0]+'</span><span>'+x[1]+'</span></li>'}).join('')+'</ul>';}
-else{nc.innerHTML='<div class="card-h"><span class="mono">Next payment</span><span class="pill">11월 초</span></div><div class="when">11월 초</div><p class="dday">10.30 기준일 분배금은 운용사 공시 후 업데이트합니다.</p>';}
+else if(!Object.keys(EV).length){nc.innerHTML='<div class="card-h"><span class="mono">Next payment</span><span class="pill">공시 전</span></div><div class="when">공시 전</div><p class="dday">'+CM+'월 분배 일정은 운용사 공시 후 업데이트합니다.</p>';}
+else{nc.innerHTML='<div class="card-h"><span class="mono">Next payment</span><span class="pill">'+(CM%12+1)+'월 초</span></div><div class="when">'+(CM%12+1)+'월 초</div><p class="dday">월말 기준일 분배금은 운용사 공시 후 업데이트합니다.</p>';}
 // buy-by card (매수 마감 = 기준일 2영업일 전)
 var bd=Object.keys(EV).map(Number).filter(function(d){return EV[d].type==='buy'&&d>=today})[0];
-if(bd){var bc=document.getElementById('buyCard'),bdt=new Date(2026,9,bd),bl=today?bd-today:null,rec=bd===28?30:15;
-  bc.innerHTML='<div class="card-h"><span class="mono">Buy by · '+(bd===28?'월말배당':'중간배당')+'</span><span class="pill up">'+(bl===0?'오늘 마감':bl!==null?'D−'+bl:'다음')+'</span></div>'
-   +'<div class="when">10.'+pad(bd)+'<small>'+DOW[bdt.getDay()]+'요일</small></div><p class="dday">10.'+rec+(bd===28?' 월말':'')+' 기준일 분배금을 받으려면 이날 장 마감 전까지 매수해야 합니다.</p>'
+if(bd){var bc=document.getElementById('buyCard'),bdt=new Date(CY,CM-1,bd),bl=today?bd-today:null,isEnd=EV[bd].rec===String(CM)+'.30'||/월말/.test(EV[bd].label);
+  bc.innerHTML='<div class="card-h"><span class="mono">Buy by · '+(isEnd?'월말배당':'중간배당')+'</span><span class="pill up">'+(bl===0?'오늘 마감':bl!==null?'D−'+bl:'다음')+'</span></div>'
+   +'<div class="when">'+MM(bd)+'<small>'+DOW[bdt.getDay()]+'요일</small></div><p class="dday">'+(EV[bd].rec||'')+(isEnd?' 월말':'')+' 기준일 분배금을 받으려면 이날 장 마감 전까지 매수해야 합니다.</p>'
    +'<ul class="pay">'+EV[bd].items.map(function(x){return '<li><span>'+x[0]+'</span><span class="sm">'+x[1]+'</span></li>'}).join('')+'</ul>';
   bc.hidden=false;}
-window.__MB={td:today,np:nd,bd:bd,EV:EV};
-// calendar
-var cal=document.getElementById('cal'),html='';
-['M','T','W','T','F','S','S'].forEach(function(d){html+='<span class="dow mono">'+d+'</span>'});
-var first=3;for(var i=0;i<first;i++)html+='<span></span>';
-for(var d=1;d<=31;d++){var wk=(first+d-1)%7,e=EV[d];
-  var cls='d'+(wk>=5?' off':'')+(HOL[d]?' hol':'')+(d===today?' today':'')+(e?' has':'');
-  var dot=e?'<i class="'+(e.type==='pay'?'':e.type)+'"></i>':'';
-  html+=e?'<button type="button" class="'+cls+'" data-d="'+d+'" aria-label="10월 '+d+'일 '+e.label+'">'+d+dot+'</button>':'<span class="'+cls+'">'+d+'</span>';}
-cal.innerHTML=html;
-var day=document.getElementById('day');
-function pick(d){var e=EV[d];cal.querySelectorAll('.sel').forEach(function(x){x.classList.remove('sel')});var b=cal.querySelector('[data-d="'+d+'"]');if(b)b.classList.add('sel');
-  day.innerHTML='<div class="t mono"><span>10.'+pad(d)+' '+DOW[new Date(2026,9,d).getDay()]+'</span><span>'+e.label+'</span></div><ul>'+e.items.map(function(x){return '<li><span>'+x[0]+'</span><span>'+x[1]+'</span></li>'}).join('')+'</ul>';}
-var keys=Object.keys(EV).map(Number);pick(keys.filter(function(d){return d>=today})[0]||keys[keys.length-1]);
+window.__MB={td:today,np:nd,bd:bd,EV:EV,MN:CM,days:DAYS,Y:CY};
+// calendar (월 이동)
+var cal=document.getElementById('cal'),day=document.getElementById('day'),VK=CK,CALEV=EV;
+var MONEN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function renderCal(k){VK=k;var mo=MONTHS[k],Y=+k.slice(0,4),Mn=+k.slice(5),ev=mo.ev,hol=mo.hol,td=(k===NOWK)?+o0.day:0,nDays=new Date(Y,Mn,0).getDate(),html='';
+  CALEV=ev;
+  ['M','T','W','T','F','S','S'].forEach(function(d){html+='<span class="dow mono">'+d+'</span>'});
+  var first=(new Date(Y,Mn-1,1).getDay()+6)%7;for(var i=0;i<first;i++)html+='<span></span>';
+  for(var d=1;d<=nDays;d++){var wk=(first+d-1)%7,e=ev[d];
+    var cls='d'+(wk>=5?' off':'')+(hol[d]?' hol':'')+(d===td?' today':'')+(e?' has':'');
+    var dot=e?'<i class="'+(e.type==='pay'?'':e.type)+'"></i>':'';
+    html+=e?'<button type="button" class="'+cls+'" data-d="'+d+'" aria-label="'+Mn+'월 '+d+'일 '+e.label+'">'+d+dot+'</button>':'<span class="'+cls+'">'+d+'</span>';}
+  cal.innerHTML=html;cal.setAttribute('aria-label',Y+'년 '+Mn+'월 분배 일정');
+  [].slice.call(cal.querySelectorAll('.d.has')).forEach(function(b,i){b.style.setProperty('--dl',(i*70)+'ms')});if(cal.classList.contains('go'))cal.classList.add('go');
+  var ct=document.getElementById('calTitle');if(ct)ct.textContent=MONEN[Mn-1]+' '+Y;var lb=document.querySelector('#calCard .lb');if(lb&&lb.lastChild&&lb.lastChild.nodeType===3)lb.lastChild.textContent=Mn+'월 분배 일정';document.getElementById('calMon').textContent=Mn+'월';
+  document.getElementById('calNote').textContent=mo.note;
+  var ix=MKEYS.indexOf(k);document.getElementById('calPrev').disabled=ix<=0;document.getElementById('calNext').disabled=ix>=MKEYS.length-1;
+  var keys=Object.keys(ev).map(Number);
+  if(keys.length)pick(keys.filter(function(d){return d>=td})[0]||keys[keys.length-1]);
+  else day.innerHTML='<div class="t mono"><span>'+Mn+'월</span><span>공시 전</span></div><ul><li><span>분배 일정과 금액은 운용사 공시 후 업데이트합니다.</span><span></span></li></ul>';}
+function pick(d){var e=CALEV[d],Y=+VK.slice(0,4),Mn=+VK.slice(5);cal.querySelectorAll('.sel').forEach(function(x){x.classList.remove('sel')});var b=cal.querySelector('[data-d="'+d+'"]');if(b)b.classList.add('sel');
+  day.innerHTML='<div class="t mono"><span>'+Mn+'.'+pad(d)+' '+DOW[new Date(Y,Mn-1,d).getDay()]+'</span><span>'+e.label+'</span></div><ul>'+e.items.map(function(x){return '<li><span>'+x[0]+'</span><span>'+x[1]+'</span></li>'}).join('')+'</ul>';}
+renderCal(CK);
 cal.addEventListener('click',function(ev){var b=ev.target.closest('[data-d]');if(b)pick(+b.dataset.d)});
+document.getElementById('calPrev').onclick=function(){var i=MKEYS.indexOf(VK);if(i>0)renderCal(MKEYS[i-1])};
+document.getElementById('calNext').onclick=function(){var i=MKEYS.indexOf(VK);if(i<MKEYS.length-1)renderCal(MKEYS[i+1])};
 
 // header solid after hero
 var hdr=document.getElementById('hdr');function hs(){hdr.classList.toggle('solid',window.scrollY>window.innerHeight*.6)}hs();window.addEventListener('scroll',hs,{passive:true});
@@ -1513,14 +1535,14 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&view.classL
 (function(){
   var V0='R',V=V0==='R'?'M':V0,TILE={nextCard:1,buyCard:1,trkCard:1},M=window.__MB||{},td=M.td||0,EV=M.EV||{};
   var p2=function(n){return String(n).padStart(2,'0')};
-  var DW=['일','월','화','수','목','금','토'],dw=function(d){return DW[new Date(2026,9,d).getDay()]};
+  var DW=['일','월','화','수','목','금','토'],dw=function(d){return DW[new Date(M.Y||2026,(M.MN||10)-1,d).getDay()]};
   var pc=function(a,b,c){return b>a?Math.max(3,Math.min(100,(c-a)/(b-a)*100)):0};
   var recBefore=function(d){var ks=Object.keys(EV).map(Number).filter(function(k){return EV[k].type==='rec'&&k<d});return ks.length?Math.max.apply(null,ks):1};
   var cnt=lvlCount(),SEGC={w:'rgba(255,255,255,.9)',wn:'rgba(255,255,255,.5)',n:'rgba(255,255,255,.22)',np:'rgba(255,90,31,.55)',p:'#FF5A1F'};
   var CFG={
-    nextCard:function(){if(!M.np)return null;var s=recBefore(M.np);return {lb:'다음 지급',t:'10월 '+(M.np<25?'중간배당':'월말배당'),tile:['남은 날',String(M.np-td)],pill:['D−'+(M.np-td),1],bar:[pc(s,M.np,td)],sb:['10.'+p2(M.np)+' ('+dw(M.np)+') 지급']}},
-    buyCard:function(){if(!M.bd)return null;var s=recBefore(M.bd);return {lb:'매수 마감',t:(M.bd===28?'월말배당':'중간배당')+' 받으려면',tile:['남은 날',String(M.bd-td)],pill:['D−'+(M.bd-td),1],bar:[pc(s,M.bd,td)],sb:['10.'+p2(M.bd)+' ('+dw(M.bd)+') 장 마감']}},
-    calCard:function(){return {lb:'10월 분배 일정',t:'1주당 세전 금액',tile:['Today',String(td||'—')],pill:['1주당 세전',0],bar:[pc(0,31,td)],sb:['10.01','10.'+p2(td||1)+' 오늘','10.31']}},
+    nextCard:function(){if(!M.np)return null;var s=recBefore(M.np);return {lb:'다음 지급',t:(M.MN||10)+'월 '+((EV[M.np]&&EV[M.np].rec&&/\.30$/.test(EV[M.np].rec))||M.np>=25?'월말배당':'중간배당'),tile:['남은 날',String(M.np-td)],pill:['D−'+(M.np-td),1],bar:[pc(s,M.np,td)],sb:[(M.MN||10)+'.'+p2(M.np)+' ('+dw(M.np)+') 지급']}},
+    buyCard:function(){if(!M.bd)return null;var s=recBefore(M.bd);return {lb:'매수 마감',t:((EV[M.bd]&&/\.30$/.test(EV[M.bd].rec||''))||M.bd>=25?'월말배당':'중간배당')+' 받으려면',tile:['남은 날',String(M.bd-td)],pill:['D−'+(M.bd-td),1],bar:[pc(s,M.bd,td)],sb:[(M.MN||10)+'.'+p2(M.bd)+' ('+dw(M.bd)+') 장 마감']}},
+    calCard:function(){var mn=M.MN||10,dd=M.days||31;return {lb:mn+'월 분배 일정',t:'1주당 세전 금액',tile:['Today',String(td||'—')],pill:['1주당 세전',0],bar:[pc(0,dd,td)],sb:[mn+'.01',mn+'.'+p2(td||1)+' 오늘',mn+'.'+dd]}},
     rollCard:function(){var n=INDICATORS.length;return {lb:'지표 '+n+'개',t:'경고 '+cnt.w+', 중립 '+(cnt.wn+cnt.n+cnt.np)+', 긍정 '+cnt.p,tile:['Indicators',String(n)],pill:['10.15 장마감',0],seg:LV_ORDER.map(function(k){return [cnt[k]/n,SEGC[k]]})}},
     resCard:function(){return {lb:'이달의 배분',t:'위험회피 국면, 100만원 기준',tile:['Regime','위험회피',1],pill:['위험회피',0]}},
     trkCard:function(){var R=window.__TRKALL||[],c=R[R.length-1];return {lb:'성과 기록',t:'베러 추천과 기본 비중',tile:['기준',c?c.end.slice(5).replace('-','.'):'—',1],pill:['',0]}},
