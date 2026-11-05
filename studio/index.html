@@ -997,7 +997,7 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
         <summary><span>24개 지표 전체 보기</span><span class="mono" id="confN"></span></summary>
         <ul id="indAll"></ul>
       </details>
-      <p class="note">2026.10.15 장마감 기준. 잠정 표시 지표는 확정치 발표 후 다시 반영합니다. 분배 기준일 직전 매수는 피하고, 일반 계좌는 배당소득세 15.4%를 뗀 입금액으로 계산하세요. 투자 판단의 참고 자료이며 특정 상품의 투자 권유가 아닙니다.</p>
+      <p class="note">신호는 2026.10.15 장마감 기준으로 확정하고 다음 신호일에 다시 정합니다. 금리·지수·VIX·반도체·금·신용·환율처럼 시세로 계산되는 지표는 매일 자동 갱신(자동 표시)하고, 나머지는 신호일 값입니다. 잠정 표시 지표는 확정치 발표 후 다시 반영합니다. 분배 기준일 직전 매수는 피하고, 일반 계좌는 배당소득세 15.4%를 뗀 입금액으로 계산하세요. 투자 판단의 참고 자료이며 특정 상품의 투자 권유가 아닙니다.</p>
     </div>
   </div>
 </div>
@@ -1050,10 +1050,11 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
   </div>
 </div>
 
+<script src="indicators.js"></script>
 <script>
 // ===== Better.7 Signal v2 — 2026-10-15 장마감 기준 =====
 const ASOF="2026.10.15 장마감";
-const NEXT="10.16 07:50 갱신";
+const NEXT="다음 신호 11월 중순 신호일 장마감 뒤";
 const AXES={
   R:{name:"미국 금리",desc:"금리 하락·완화 기대면 우호"},
   SK:{name:"국내 심리",desc:"코스피·VKOSPI·외국인 수급·시장 폭"},
@@ -1069,7 +1070,7 @@ const AXES={
 // state: −1 ~ +1 (연속). w: 축 내 가중치. conf: 확정/잠정
 // state: −1 ~ +1 (연속). 표시 5단계: ≤−0.6 경고 · ≤−0.2 경고-중립 · <0.2 중립 · <0.6 중립-긍정 · 그 이상 긍정
 // view(관점): 시장 = 해당 자산 시장 환경 · 분배 재원 = 커버드콜 옵션 프리미엄 · 달러 매수 = 지금 원화로 달러 자산을 살 때
-const INDICATORS=[
+const SIG_IND=[
   {axis:"R",tag:"US2Y",name:"美 2년물",value:"4.82%",chg:"20일 +8bp",rule:"20일 금리 변화 ±40bp를 ±1로 환산 (오르면 경고 쪽)",why:"단기금리 소폭 상승. 연준 긴축 기대가 조금 강해짐",state:-0.2,date:"10/14",conf:"확정",view:"시장"},
   {axis:"R",tag:"US10Y",name:"美 10년물",value:"5.19%",chg:"20일 +18bp",rule:"20일 금리 변화 ±40bp를 ±1로 환산 (오르면 경고 쪽)",why:"5%대 고금리에서 추가 상승. 채권 가격과 주식 밸류에 부담",state:-0.45,date:"10/14",conf:"확정",view:"시장"},
   {axis:"R",tag:"US30Y",name:"美 30년물",value:"5.52%",chg:"20일 +17bp",rule:"20일 금리 변화 ±40bp를 ±1로 환산 (오르면 경고 쪽)",why:"장기금리 상승. 30년국채 커버드콜 가격에 직접 부담",state:-0.425,date:"10/14",conf:"확정",view:"시장"},
@@ -1095,6 +1096,9 @@ const INDICATORS=[
   {axis:"F",tag:"USD/KRW",name:"원/달러 20일 변화",value:"−1.75%",chg:"9/16 1,368.6",rule:"±2% 이내 중립",why:"한 달간 원화가 소폭 강세. 방향 신호로는 약함",state:0,date:"10/15",conf:"확정",view:"달러 매수"},
   {axis:"F",tag:"DXY",name:"달러인덱스",value:"102.22",chg:"20일 +1.97%",rule:"20일 등락 ±5%를 ±1로 환산 (달러 강세면 지금 매수에 긍정)",why:"세계적으로 달러가 강해지는 중. 원/달러 상승 압력",state:0.39,date:"10/14",conf:"확정",view:"달러 매수"}
 ];
+// 표시용 지표: 시세로 계산되는 지표는 매일 자동 갱신(indicators.js). 신호(확대·기본·축소)는 신호일 스냅샷 SIG_IND로만 계산.
+const LIVE=window.LIVE||null;
+const INDICATORS=SIG_IND.map(i=>{const L=LIVE&&LIVE.ind&&LIVE.ind[i.tag+"|"+i.name];if(!L)return i;const s=L.state;const w=s<=-0.6?"경고 구간":s<=-0.2?"경고 쪽으로 기운 구간":s<0.2?"중립 구간":s<0.6?"긍정 쪽으로 기운 구간":"긍정 구간";return Object.assign({},i,L,{why:"자동 계산("+L.date+" 종가) · 판정 기준상 "+w+"이에요. 신호일 판단: "+i.why,note:"신호는 "+ASOF+" 값으로 확정",live:true})});
 // 5단계 표시
 function lvl(s){return s<=-0.6?['w','경고']:s<=-0.2?['wn','경고-중립']:s<0.2?['n','중립']:s<0.6?['np','중립-긍정']:['p','긍정']}
 const LV_ORDER=['w','wn','n','np','p'],LV_NAME={w:'경고',wn:'경고-중립',n:'중립',np:'중립-긍정',p:'긍정'};
@@ -1128,7 +1132,7 @@ const clip=(v,a,b)=>Math.max(a,Math.min(b,v));
 function axisScores(){
   const ax={};
   for(const k of Object.keys(AXES)){ if(k==="Q")continue;
-    const inds=INDICATORS.filter(i=>i.axis===k); let s=0,w=0;
+    const inds=SIG_IND.filter(i=>i.axis===k); let s=0,w=0;
     inds.forEach(i=>{const ww=i.w||1; s+=ww*i.state; w+=ww});
     ax[k]=w?Math.round(clip(s/w,-1,1)*100)/100:0; }
   ax.Q=(ax.SK<=-0.5||ax.SU<=-0.5)?1:0;
@@ -1290,7 +1294,7 @@ var WIND={'유리':'우호','중립':'중립','불리':'비우호'};
 var SIGC={'강':'var(--accent)','중립':'#1a1a1a','보류':'#CFCFCF'};
 var stOf=function(v){return lvl(v)};
 var asof=ASOF.replace('2026.','').replace(' 장마감','');
-$('#sigAsof').textContent=asof+' 장마감';$('#pkAsof').textContent=asof;
+$('#sigAsof').textContent='신호 '+asof+' 장마감'+(LIVE?' · 지표 '+LIVE.asof+' 자동 갱신':'');$('#pkAsof').textContent=asof;
 
 // ---------- indicator roll
 var N=INDICATORS.length;$('#indN').textContent=N;
@@ -1484,7 +1488,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&view.classL
   var N=INDICATORS.length,RH=68,k=N,tm=null,fromCard=false,rect=null,pauseUntil=0;
   var st=function(v){return lvl(v)};
   var cnt=lvlCount(),SEGC={w:'rgba(255,255,255,.9)',wn:'rgba(255,255,255,.5)',n:'rgba(255,255,255,.22)',np:'rgba(255,90,31,.55)',p:'#FF5A1F'};
-  document.getElementById('ivAsof').textContent=ASOF.replace('2026.','')+'';
+  document.getElementById('ivAsof').textContent=(LIVE?'지표 '+LIVE.asof+' · 신호 ':'')+ASOF.replace('2026.','');
   if(document.getElementById('ivCnt'))document.getElementById('ivCnt').innerHTML=LV_ORDER.map(function(k){return LV_NAME[k]+' <b>'+cnt[k]+'</b>'}).join(', ');
   if(document.getElementById('ivSeg'))document.getElementById('ivSeg').innerHTML=LV_ORDER.map(function(k){return '<span style="width:'+(cnt[k]/N*100)+'%;background:'+SEGC[k]+'"></span>'}).join('');
   var item=function(i,j){var s=st(i.state);return '<li data-i="'+j+'"><span class="tg">'+i.tag+'</span><span class="dt"></span><div class="tx"><p><span>'+i.name+'</span><em class="st '+s[0]+'">'+s[1]+'</em></p><small>'+(i.view!=='시장'?i.view+' 관점 · ':'')+i.value+' · '+i.chg+'</small></div></li>'};
@@ -1543,7 +1547,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&view.classL
     nextCard:function(){if(!M.np)return null;var s=recBefore(M.np);return {lb:'다음 지급',t:(M.MN||10)+'월 '+((EV[M.np]&&EV[M.np].rec&&/\.30$/.test(EV[M.np].rec))||M.np>=25?'월말배당':'중간배당'),tile:['남은 날',String(M.np-td)],pill:['D−'+(M.np-td),1],bar:[pc(s,M.np,td)],sb:[(M.MN||10)+'.'+p2(M.np)+' ('+dw(M.np)+') 지급']}},
     buyCard:function(){if(!M.bd)return null;var s=recBefore(M.bd);return {lb:'매수 마감',t:((EV[M.bd]&&/\.30$/.test(EV[M.bd].rec||''))||M.bd>=25?'월말배당':'중간배당')+' 받으려면',tile:['남은 날',String(M.bd-td)],pill:['D−'+(M.bd-td),1],bar:[pc(s,M.bd,td)],sb:[(M.MN||10)+'.'+p2(M.bd)+' ('+dw(M.bd)+') 장 마감']}},
     calCard:function(){var mn=M.MN||10,dd=M.days||31;return {lb:mn+'월 분배 일정',t:'1주당 세전 금액',tile:['Today',String(td||'—')],pill:['1주당 세전',0],bar:[pc(0,dd,td)],sb:[mn+'.01',mn+'.'+p2(td||1)+' 오늘',mn+'.'+dd]}},
-    rollCard:function(){var n=INDICATORS.length;return {lb:'지표 '+n+'개',t:'경고 '+cnt.w+', 중립 '+(cnt.wn+cnt.n+cnt.np)+', 긍정 '+cnt.p,tile:['Indicators',String(n)],pill:['10.15 장마감',0],seg:LV_ORDER.map(function(k){return [cnt[k]/n,SEGC[k]]})}},
+    rollCard:function(){var n=INDICATORS.length;return {lb:'지표 '+n+'개',t:'경고 '+cnt.w+', 중립 '+(cnt.wn+cnt.n+cnt.np)+', 긍정 '+cnt.p,tile:['Indicators',String(n)],pill:[LIVE?'지표 '+LIVE.asof:'10.15 장마감',0],seg:LV_ORDER.map(function(k){return [cnt[k]/n,SEGC[k]]})}},
     resCard:function(){return {lb:'이달의 배분',t:'위험회피 국면, 100만원 기준',tile:['Regime','위험회피',1],pill:['위험회피',0]}},
     trkCard:function(){var R=window.__TRKALL||[],c=R[R.length-1];return {lb:'성과 기록',t:'베러 추천과 기본 비중',tile:['기준',c?c.end.slice(5).replace('-','.'):'—',1],pill:['',0]}},
     olist:function(){return {lb:'주문 목록',t:'복사해서 증권사 앱에 그대로',tile:['종목','11',0,'종'],pill:['11종',0],keepId:'oCount'}}
