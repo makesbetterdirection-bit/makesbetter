@@ -51,12 +51,20 @@ jobs:
           set -o pipefail
           python3 scripts/update_indicators.py | tee -a "$GITHUB_OUTPUT"
 
+      - name: Update judgment board prices (studio/board/prices.json)
+        id: brd
+        if: steps.upd.outputs.mode != 'intraday'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python3 scripts/board_prices.py | tee -a "$GITHUB_OUTPUT"
+
       - name: Commit and push if changed
-        if: steps.upd.outputs.changed == 'true' || steps.trk.outputs.changed == 'true' || steps.ind.outputs.changed == 'true'
+        if: steps.upd.outputs.changed == 'true' || steps.trk.outputs.changed == 'true' || steps.ind.outputs.changed == 'true' || steps.brd.outputs.changed == 'true'
         run: |
           git config user.name "better7-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add better7_prices.json studio/track.json studio/indicators.js
+          git add better7_prices.json studio/track.json studio/indicators.js studio/board/prices.json
           if [ "${{ steps.upd.outputs.changed }}" = "true" ]; then
             MODE="${{ steps.upd.outputs.mode }}"
             if [ "$MODE" = "intraday" ]; then LABEL="intraday"; else LABEL="closing price"; fi
@@ -66,7 +74,7 @@ jobs:
           elif [ "${{ steps.trk.outputs.changed }}" = "true" ]; then
             MSG="Update studio track record"
           else
-            MSG="Update studio indicators — ${{ steps.ind.outputs.asof }}"
+            MSG="Update studio indicators / board prices"
           fi
           git commit -m "$MSG"
           git pull --rebase origin "${GITHUB_REF_NAME}"
