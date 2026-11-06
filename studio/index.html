@@ -798,6 +798,14 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
 .js #signal .btn.rv{transition:opacity .6s,transform .6s cubic-bezier(.2,.7,.2,1),background-color .45s ease}
 #signal .btn.tapped{background:var(--accent,#FF5A1F)!important;color:#fff}
 </style><style>/* v11 지표/배분 사이 제목 */
+#evCard{margin-top:12px}
+#evCard .ev-lead{margin:0 0 12px;font-size:14px;line-height:1.55}
+#evCard .ev-list{list-style:none;margin:0;padding:0}
+#evCard .ev-list li{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #E8E8E8;font-size:13.5px}
+#evCard .ev-list b{display:block;font-weight:600}
+#evCard .ev-list small{display:block;color:var(--sub);font-size:11.5px}
+#evCard .ev-list .d{color:var(--sub);font-size:12.5px;font-variant-numeric:tabular-nums}
+#evCard .ev-note{margin:10px 0 0;font-size:11.5px;line-height:1.5;color:var(--sub)}
 #signal .mid-h{margin:56px 0 18px;font-weight:600}
 #signal .mid-h + .card{margin-top:0}
 </style><style>/* v11 QA fixes */
@@ -871,6 +879,12 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
           <div class="card-h"><span class="mono"><b class="num" id="indN">24</b> Indicators</span><span class="mono roll-cnt" id="rollCnt"></span></div>
           <div class="roll" id="roll" aria-label="지표 판정 목록"><ul id="rollList"></ul></div>
           <div class="roll-more">전체 보기 <b>↗</b></div>
+        </div>
+        <div class="card rv" id="evCard" hidden>
+          <div class="card-h"><span class="mono">Event Alert · 실적 발표 변동성</span><span class="pill" id="evPill">경보 없음</span></div>
+          <p class="ev-lead" id="evLead"></p>
+          <ul class="ev-list" id="evList"></ul>
+          <p class="ev-note">발표 전날~다음날에만 켜집니다. 방향 신호가 아니며 매수 신호·수량에는 반영하지 않습니다. 일정은 예정일이라 바뀔 수 있고, 종목별 배수는 표본 12~13건 참고값입니다.</p>
         </div>
         <h3 class="h2 mid-h rv">이 달의 월배당</h3>
         <div class="card rv" id="resCard">
@@ -1422,6 +1436,29 @@ render();
     else if(!on&&V.classList.contains('open')){V.classList.remove('open');V.setAttribute('aria-hidden','true');if(!document.querySelector('.view.open'))document.body.classList.remove('lock')}}
   window.addEventListener('hashchange',route);route();
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&V.classList.contains('open'))location.hash='record'});
+})();
+// Event Alert — studio/events.json (GitHub Actions가 갱신, scripts/update_events.py). 신호·수량에는 반영하지 않는 참고 정보.
+(function(){
+  var FALLBACK={"rule":"발표 D-1~D+1 변동성 경보. 방향 신호 없음, 매수 신호·수량에는 반영하지 않음","basis":"2023.10~2026.11 이벤트 스터디: 미국 7사 61개 발표일 나스닥100 1.29배·반도체지수 1.24배, 삼성전자 반도체지수 1.37배(평소 2일 변동 대비)","note":"일정은 예정일이며 회사 공시 전까지 바뀔 수 있음. 종목별 배수는 표본 12~13건 참고값","watch":{"AAPL":{"name":"애플","alert":true,"ndx":1.75,"sox":1.61},"AMZN":{"name":"아마존","alert":true,"ndx":1.8,"sox":1.82},"GOOGL":{"name":"알파벳","alert":true,"ndx":1.41,"sox":1.14},"005930.KS":{"name":"삼성전자","alert":true,"ndx":null,"sox":1.37},"NVDA":{"name":"엔비디아","alert":false,"ndx":0.85,"sox":0.92},"MSFT":{"name":"마이크로소프트","alert":false,"ndx":0.96,"sox":1.09},"META":{"name":"메타","alert":false,"ndx":1.08,"sox":1.13},"TSLA":{"name":"테슬라","alert":false,"ndx":1.2,"sox":1.07}},"events":[{"t":"NVDA","date":"2026-11-17"},{"t":"005930.KS","date":"2027-01-27"},{"t":"META","date":"2027-01-27"},{"t":"MSFT","date":"2027-01-27"},{"t":"TSLA","date":"2027-01-27"},{"t":"AAPL","date":"2027-01-28"},{"t":"GOOGL","date":"2027-02-03"},{"t":"AMZN","date":"2027-02-04"}],"updated":"2026-11-06 14:58 KST"};
+  var KST=function(){var p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());return p};
+  var dd=function(a,b){return Math.round((new Date(a+'T00:00:00Z')-new Date(b+'T00:00:00Z'))/864e5)};
+  var md=function(d){return +d.slice(5,7)+'.'+ +d.slice(8)};
+  function draw(e){
+    var card=document.getElementById('evCard');if(!e||!e.events||!card)return;
+    var today=KST(),W=e.watch||{},ev=e.events.filter(function(x){return dd(x.date,today)>=-1}).slice(0,8);
+    var on=ev.filter(function(x){return W[x.t]&&W[x.t].alert&&Math.abs(dd(x.date,today))<=1});
+    var nx=ev.filter(function(x){return W[x.t]&&W[x.t].alert&&dd(x.date,today)>1})[0];
+    var pill=document.getElementById('evPill'),lead=document.getElementById('evLead');
+    if(on.length){pill.textContent='경보 중';pill.className='pill up';lead.textContent=on.map(function(x){return W[x.t].name}).join('·')+' 실적 발표 구간입니다. 분할 매수는 발표 다음 날 이후로 두는 것을 권합니다.'}
+    else{pill.textContent='경보 없음';pill.className='pill';lead.textContent=nx?'다음 경보는 '+md(nx.date)+' '+W[nx.t].name+' 실적 발표(D-'+dd(nx.date,today)+')입니다.':'예정된 경보 대상 발표가 없습니다.'}
+    document.getElementById('evList').innerHTML=ev.map(function(x){var w=W[x.t]||{},m=[];
+      if(w.ndx!=null)m.push('나스닥100 '+w.ndx.toFixed(2)+'배');if(w.sox!=null)m.push('반도체지수 '+w.sox.toFixed(2)+'배');
+      var a=w.alert,d=dd(x.date,today);
+      return '<li><span class="d">'+md(x.date)+'<br>D'+(d>=0?'-':'+')+Math.abs(d)+'</span><div><b>'+(w.name||x.t)+'</b><small>'+m.join(' · ')+'</small></div><span class="pill'+(a&&Math.abs(d)<=1?' up':'')+'">'+(a?'경보 대상':'참고')+'</span></li>'}).join('');
+    card.hidden=false;
+  }
+  draw(FALLBACK);
+  if(window.fetch&&location.protocol!=='file:')getJ('studio/events.json','events.json').then(draw).catch(function(){});
 })();
 // Track record — studio/track.json (GitHub Actions가 시세 갱신 때 함께 계산)
 (function(){
