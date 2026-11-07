@@ -768,6 +768,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 /* 첫 화면은 히어로만 */
 .hero{min-height:100svh}
 .pen-fly{position:absolute;left:0;top:0;z-index:3;font-size:calc(clamp(52px,14.2vw,96px)*.5);line-height:1;opacity:0;pointer-events:none;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;will-change:transform}
+.old{font-weight:600;color:var(--sub,#8a8a8a);border:1px solid currentColor;border-radius:6px;padding:0 5px;font-size:.86em;margin-right:2px}
 </style>
 <script>document.documentElement.classList.add('js')</script>
 <style>/* v11 hero order + tagline + footer line */
@@ -864,7 +865,7 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
   <section class="sec" id="signal">
     <div class="wrap">
       <span class="eyebrow"><span id="sigAsof">10.15 장마감</span> 기준</span>
-      <h2 class="h2 rv">10월 배당금<br>재투자 방향</h2>
+      <h2 class="h2 rv" id="sigTitle">11월<br>재투자 방향</h2>
       <p class="lede rv">금리·시장심리·변동성·AI 사이클·금·신용·환율 7개 영역 24개 지표에, 기초지수의 25년 최대낙폭 대비 위치를 더해 판정합니다.</p>
       <div class="sec-body">
         <div class="card roll-card rv" id="rollCard">
@@ -1294,14 +1295,14 @@ var WIND={'유리':'우호','중립':'중립','불리':'비우호'};
 var SIGC={'강':'var(--accent)','중립':'#1a1a1a','보류':'#CFCFCF'};
 var stOf=function(v){return lvl(v)};
 var asof=ASOF.replace('2026.','').replace(' 장마감','');
-$('#sigAsof').textContent='신호 '+asof+' 장마감'+(LIVE?' · 지표 '+LIVE.asof+' 자동 갱신':'');$('#pkAsof').textContent=asof;
+(function(){var t=document.getElementById('sigTitle');if(t){var m=new Date(Date.now()+9*36e5).getUTCMonth()+1;t.innerHTML=m+'월<br>재투자 방향'}})();$('#sigAsof').textContent='신호 '+asof+' 장마감'+(LIVE?' · 지표 '+LIVE.asof+' 자동 갱신':'');$('#pkAsof').textContent=asof;
 
 // ---------- indicator roll
 var N=INDICATORS.length;$('#indN').textContent=N;
 var cnt=lvlCount();
 $('#rollCnt').innerHTML=LV_ORDER.map(function(k){return LV_NAME[k]+' <b>'+cnt[k]+'</b>'}).join(', ');
 function rollItem(i){var s=stOf(i.state);
-  return '<li><span class="tg">'+i.tag+'</span><span class="dt"></span><div class="tx"><p><span>'+i.name+'</span><em class="stt '+s[0]+'">'+s[1]+'</em></p><small>'+(i.view!=='시장'?i.view+' 관점 · ':'')+i.value+' · '+i.chg+' ('+i.date+(i.conf==='잠정'?' · 잠정':'')+')</small></div></li>'}
+  return '<li><span class="tg">'+i.tag+'</span><span class="dt"></span><div class="tx"><p><span>'+i.name+'</span><em class="stt '+s[0]+'">'+s[1]+'</em></p><small>'+(i.live?'':'<b class="old">'+String(i.date).replace(' 종가','')+' 신호일</b> ')+(i.view!=='시장'?i.view+' 관점 · ':'')+i.value+' · '+i.chg+(i.live?' ('+i.date+')':'')+'</small></div></li>'}
 var rl=$('#rollList');rl.innerHTML=INDICATORS.concat(INDICATORS.slice(0,3)).map(rollItem).join('');
 var lis=rl.children,ri=0,RH=52;
 function rollTo(k,anim){window.__rollIdx=k;rl.style.transition=anim?'':'none';rl.style.transform='translateY('+(-(k-1)*RH)+'px)';
@@ -1464,7 +1465,7 @@ var GL={'강':['s2','확대'],'중립':['s1','기본'],'보류':['s0','축소']}
 $('#gridBody').innerHTML=['유리','중립','불리'].map(function(w){return '<tr><td>'+WIND[w]+'</td>'+['보통','바닥권','과열'].map(function(s){var x=GL[GRID[w][s]];return '<td><span class="'+x[0]+'">'+x[1]+'</span></td>'}).join('')+'</tr>'}).join('');
 var nP=INDICATORS.filter(function(i){return i.conf==='잠정'}).length;
 $('#confN').textContent='확정 '+(N-nP)+' · 잠정 '+nP;
-$('#indAll').innerHTML=INDICATORS.map(function(i){var s=stOf(i.state);return '<li><div class="a"><span>'+i.name+'</span><em class="stt '+s[0]+'">'+s[1]+'</em></div><div class="b">'+i.value+' · '+i.chg+'</div><div class="b" style="color:var(--ink)">'+i.why+'</div><div class="c">'+AXES[i.axis].name+' · '+i.view+' 관점 · '+i.rule+' · '+i.date+' '+i.conf+(i.note?' · '+i.note:'')+'</div></li>'}).join('');
+$('#indAll').innerHTML=INDICATORS.map(function(i){var s=stOf(i.state);return '<li><div class="a"><span>'+i.name+'</span><em class="stt '+s[0]+'">'+s[1]+'</em></div><div class="b">'+(i.live?'':'<b class="old">'+String(i.date).replace(' 종가','')+' 신호일</b> ')+i.value+' · '+i.chg+'</div><div class="b" style="color:var(--ink)">'+i.why+'</div><div class="c">'+AXES[i.axis].name+' · '+i.view+' 관점 · '+i.rule+' · '+i.date+' '+i.conf+(i.note?' · '+i.note:'')+'</div></li>'}).join('');
 // copy
 function toast(t){var el=$('#toast');el.textContent=t;clearTimeout(toast.t);toast.t=setTimeout(function(){el.textContent=''},2400)}
 $('#copy').addEventListener('click',function(){var t=render.text;
@@ -1491,7 +1492,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&view.classL
   document.getElementById('ivAsof').textContent=(LIVE?'지표 '+LIVE.asof+' · 신호 ':'')+ASOF.replace('2026.','');
   if(document.getElementById('ivCnt'))document.getElementById('ivCnt').innerHTML=LV_ORDER.map(function(k){return LV_NAME[k]+' <b>'+cnt[k]+'</b>'}).join(', ');
   if(document.getElementById('ivSeg'))document.getElementById('ivSeg').innerHTML=LV_ORDER.map(function(k){return '<span style="width:'+(cnt[k]/N*100)+'%;background:'+SEGC[k]+'"></span>'}).join('');
-  var item=function(i,j){var s=st(i.state);return '<li data-i="'+j+'"><span class="tg">'+i.tag+'</span><span class="dt"></span><div class="tx"><p><span>'+i.name+'</span><em class="st '+s[0]+'">'+s[1]+'</em></p><small>'+(i.view!=='시장'?i.view+' 관점 · ':'')+i.value+' · '+i.chg+'</small></div></li>'};
+  var item=function(i,j){var s=st(i.state);return '<li data-i="'+j+'"><span class="tg">'+i.tag+'</span><span class="dt"></span><div class="tx"><p><span>'+i.name+'</span><em class="st '+s[0]+'">'+s[1]+'</em></p><small>'+(i.live?'':'<b class="old">'+String(i.date).replace(' 종가','')+' 신호일</b> ')+(i.view!=='시장'?i.view+' 관점 · ':'')+i.value+' · '+i.chg+'</small></div></li>'};
   var all=INDICATORS.concat(INDICATORS,INDICATORS);
   list.innerHTML=all.map(function(i,j){return item(i,j)}).join('');
   var lis=list.children;window.__ivGo=function(n){pauseUntil=Date.now()+6000;go(N+n,true)};
@@ -1983,7 +1984,7 @@ if(s==='2'){var g=document.createElement('span');g.className='g';a.forEach(funct
   addEventListener('scroll',req,{passive:true});addEventListener('resize',req);upd();
 })();
 </script><script>/* ===== v11 snapstop3: 섹션 제목에서 무조건 멈춤 + 멈추는 순간 만년필 밑줄 =====
-   1) 첫 화면 → '다음 배당금은 언제 들어오나요'  2) → '10월 배당금 재투자 방향'
+   1) 첫 화면 → '다음 배당금은 언제 들어오나요'  2) → '이번 달 재투자 방향'
    메뉴·링크 이동, 공유 링크(#…), 뒤로 가기 위치 복원은 막지 않음. 동작 줄이기 설정이면 멈춤 없음. */
 (function(){
   var d=document,html=d.documentElement,RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
