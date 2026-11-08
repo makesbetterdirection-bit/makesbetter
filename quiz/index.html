@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>이번 주 퀴즈 · MAKESBETTER</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{--bg:#0A0A0A;--card:#141416;--line:#26282C;--ink:#F9FAFB;--sub:#9CA3AF;--mute:#6B7280;--gold:#FACC15;--red:#B91C1C;--ok:#22C55E;--no:#EF4444}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Pretendard,system-ui,sans-serif;word-break:keep-all;min-height:100vh;display:flex;justify-content:center;padding:28px 16px 48px}
+.wrap{width:100%;max-width:560px}
+.wm{text-align:center;font-weight:100;letter-spacing:.55em;padding-left:.55em;color:var(--sub);font-size:13px;margin-bottom:28px}
+.pill{display:inline-block;background:var(--red);border:2px solid #fff;color:#fff;font-weight:600;font-size:14px;padding:5px 14px;border-radius:999px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.count{color:var(--mute);font-size:14px;font-variant-numeric:tabular-nums}
+.bar{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:28px}
+.bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .35s ease}
+.tag{color:var(--gold);font-weight:700;font-size:14px;margin-bottom:10px}
+h1{font-size:26px;line-height:1.38;font-weight:700;letter-spacing:-.02em;margin-bottom:26px}
+.opts{display:grid;gap:10px}
+button.o{all:unset;box-sizing:border-box;display:flex;gap:12px;align-items:center;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:16px 18px;font-size:17px;line-height:1.4;cursor:pointer;transition:border-color .15s}
+button.o:hover{border-color:#4B5563}
+button.o:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button.o b{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#1F2125;color:var(--sub);font-size:14px;font-weight:700}
+button.o.ok{border-color:var(--ok)}button.o.ok b{background:var(--ok);color:#000}
+button.o.no{border-color:var(--no)}button.o.no b{background:var(--no);color:#fff}
+button.o[disabled]{cursor:default}
+.hint{all:unset;cursor:pointer;color:var(--sub);font-size:14px;margin-top:16px;display:inline-block;border-bottom:1px solid var(--line)}
+.hintbox{margin-top:10px;color:var(--sub);font-size:15px;line-height:1.6;display:none}
+.exp{margin-top:22px;padding:18px 20px;border-left:3px solid var(--gold);background:#111214;border-radius:0 12px 12px 0;display:none}
+.exp strong{display:block;font-size:17px;margin-bottom:6px}
+.exp p{color:#D1D5DB;font-size:15.5px;line-height:1.7}
+.next{all:unset;box-sizing:border-box;display:none;width:100%;text-align:center;margin-top:24px;background:var(--gold);color:#000;font-weight:800;font-size:17px;padding:16px;border-radius:14px;cursor:pointer}
+.next:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.end{display:none;text-align:center;padding-top:20px}
+.score{font-size:76px;font-weight:800;letter-spacing:-.04em;color:var(--gold);line-height:1}
+.score small{font-size:28px;color:var(--sub);font-weight:400}
+.end h2{font-size:24px;margin:18px 0 10px;letter-spacing:-.02em}
+.end p{color:var(--sub);font-size:16px;line-height:1.7}
+.save{margin-top:28px;border:2px solid var(--gold);border-radius:14px;padding:18px;text-align:left;font-size:16px;line-height:1.6}
+.save b{color:var(--gold)}
+.again{all:unset;cursor:pointer;margin-top:22px;color:var(--sub);font-size:15px;border-bottom:1px solid var(--line)}
+.join{margin-top:28px;border:1.5px solid var(--line);border-radius:14px;padding:20px;text-align:left;background:var(--card)}
+.join h3{font-size:18px;margin-bottom:6px;letter-spacing:-.02em}
+.join .s{color:var(--sub);font-size:14.5px;line-height:1.6;margin-bottom:14px}
+.join label.f{display:block;font-size:14px;color:var(--sub);margin-bottom:6px}
+.join input[type=text]{width:100%;background:#0E0F11;border:1.5px solid var(--line);border-radius:10px;color:var(--ink);font:inherit;font-size:17px;padding:13px 14px}
+.join input[type=text]:focus{outline:none;border-color:var(--gold)}
+.agree{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:13.5px;color:var(--sub);line-height:1.55;cursor:pointer}
+.agree input{margin-top:3px;width:18px;height:18px;accent-color:#FACC15;flex:none}
+.send{all:unset;box-sizing:border-box;display:block;width:100%;text-align:center;margin-top:16px;background:var(--gold);color:#000;font-weight:800;font-size:17px;padding:15px;border-radius:12px;cursor:pointer}
+.send[disabled]{opacity:.45;cursor:default}
+.msg{margin-top:12px;font-size:14.5px;line-height:1.6}
+.hp{position:absolute;left:-9999px}
+.disc{margin-top:36px;color:var(--mute);font-size:12.5px;line-height:1.6;text-align:center}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="wm">M A K E S · B E T T E R</div>
+  <section id="quiz">
+    <div class="top"><span class="pill">이번 주 퀴즈 | 11.08</span><span class="count" id="count">1 / 5</span></div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="tag" id="tag"></div>
+    <h1 id="q"></h1>
+    <div class="opts" id="opts"></div>
+    <button class="hint" id="hintBtn">힌트 보기</button>
+    <div class="hintbox" id="hint"></div>
+    <div class="exp" id="exp"><strong id="verdict"></strong><p id="expText"></p></div>
+    <button class="next" id="next">다음 문제</button>
+  </section>
+  <section class="end" id="end">
+    <div class="score"><span id="sc">0</span><small> / 5</small></div>
+    <h2 id="endTitle"></h2>
+    <p id="endText"></p>
+    <div class="save"><b>저장해두고,</b> 다음 주 리뷰 전에 다시 풀어 보세요.<br>틀린 문제는 수·금·일 게시물에 답이 있어요.</div>
+    <form class="join" id="join" name="quiz-1108" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <h3>참여 등록하기</h3>
+      <p class="s">카카오톡 닉네임을 남기면 참여와 점수가 기록돼요.</p>
+      <input type="hidden" name="form-name" value="quiz-1108">
+      <p class="hp"><label>비워두세요 <input name="bot-field"></label></p>
+      <input type="hidden" name="score"><input type="hidden" name="q1"><input type="hidden" name="q2"><input type="hidden" name="q3"><input type="hidden" name="q4"><input type="hidden" name="q5">
+      <label class="f" for="nick">카카오톡 닉네임</label>
+      <input type="text" id="nick" name="nickname" maxlength="20" required autocomplete="nickname" placeholder="채널 대화에 보이는 이름">
+      <label class="agree"><input type="checkbox" name="agree" value="동의" required><span>[필수] 개인정보 수집·이용 동의<br>항목: 카카오톡 닉네임, 퀴즈 응답 · 목적: 참여 및 정답 확인 · 보관: 퀴즈 종료 후 1개월 내 파기</span></label>
+      <button class="send" id="send" type="submit">참여 등록</button>
+      <p class="msg" id="msg" role="status"></p>
+    </form>
+    <button class="again" id="again">처음부터 다시 풀기</button>
+  </section>
+  <p class="disc">※ 본 콘텐츠는 정보 제공을 목적으로 하며, 특정 금융상품의 투자 권유가 아닙니다.</p>
+</main>
+<script>
+const Q=[
+ {tag:"수요일 · 거인의 투자 S&P 500",q:"S&P 500은 미국 상장기업 전체 시가총액의 약 몇 %를 담고 있을까요?",o:["약 50%","약 65%","약 80%","약 95%"],a:2,h:"500개 기업이지만, 미국 시장 대부분을 차지해요.",e:"미국 상장기업 시가총액 약 78.7조 달러 중 S&P 500이 약 80%를 담고 있어요. 그래서 종목을 고르지 않아도 미국 경제 전체를 담게 돼요.",ok:"정답! 거인의 크기를 아시네요.",no:"아쉬워요, 생각보다 더 커요."},
+ {tag:"금요일 · 연말정산 완벽 가이드 ②",q:"연금저축·IRP에 넣은 돈은 연말정산에서 어디에 해당할까요?",o:["소득공제 (장바구니에서 빼기)","세액공제 (계산서 할인 쿠폰)","둘 다 해당","공제 대상 아님"],a:1,h:"다 계산된 세금에서 바로 빼주는 쪽이에요.",e:"연금저축·IRP는 세액공제예요. 계산이 끝난 세금에서 바로 빼주는 할인 쿠폰이라, 세율과 상관없이 공제받은 만큼 세금이 줄어요.",ok:"정답! 쿠폰을 아시는군요.",no:"아쉬워요, 쿠폰 쪽이에요."},
+ {tag:"금요일 · 연말정산 완벽 가이드 ②",q:"세율 24% 구간인 사람이 소득공제 100만 원을 받으면, 줄어드는 세금은 약 얼마일까요? (지방소득세 포함)",o:["약 6.6만 원","약 16.5만 원","약 26.4만 원","100만 원"],a:2,h:"소득공제는 내 세율만큼만 효과가 나요.",e:"100만 원 × 24% = 24만 원, 여기에 지방소득세 10%를 더하면 약 26.4만 원이에요. 100만 원이 그대로 줄어드는 건 세액공제(쿠폰)일 때예요.",ok:"정답! 계산까지 완벽해요.",no:"아쉬워요, 세율을 곱해 보세요."},
+ {tag:"일요일 · 베러리뷰",q:"지난주(11/2~6) 외국인이 국내 증시에서 판 10조 5,843억 원 중, SK하이닉스·삼성전자 두 종목의 비중은?",o:["약 32%","약 52%","약 72%","약 92%"],a:2,h:"코스피가 한 주 −11.7% 빠진 이유와 연결돼요.",e:"SK하이닉스 5조 4,219억 원, 삼성전자 2조 1,942억 원으로 두 종목이 약 72%였어요. 몰린 돈은 남의 나라 선거에도 크게 흔들려요.",ok:"정답! 이번 주 핵심을 잡았어요.",no:"아쉬워요, 생각보다 더 몰렸어요."},
+ {tag:"일요일 · 베러리뷰",q:"머스크가 약 1억 5,800만 달러를 쏟은 텍사스 상원 선거, 핵심 쟁점은 무엇이었을까요?",o:["전기차 보조금","데이터센터 건설","우주 발사 허가","최저임금 인상"],a:1,h:"AI와 관련이 있어요.",e:"공화당 팩스턴 후보는 데이터센터를 빠르게 짓겠다고 했고, 민주당 탈라리코 후보는 규제 강화를 내세웠어요. 결과는 민주당 승리였고, 그 여파로 테슬라·스페이스X 시가총액이 약 573조 원 줄었어요.",ok:"정답! 진짜 이유를 아시네요.",no:"아쉬워요, AI 쪽이에요."}
+];
+const $=id=>document.getElementById(id);
+let i=0,score=0,ans=[];
+function show(){
+  const d=Q[i];
+  $('count').textContent=`${i+1} / ${Q.length}`;
+  $('bar').style.width=`${i/Q.length*100}%`;
+  $('tag').textContent=d.tag; $('q').textContent=d.q;
+  $('hint').textContent=d.h; $('hint').style.display='none'; $('hintBtn').style.display='inline-block';
+  $('exp').style.display='none'; $('next').style.display='none';
+  $('opts').innerHTML='';
+  d.o.forEach((t,k)=>{
+    const b=document.createElement('button'); b.className='o';
+    b.innerHTML=`<b>${'ABCD'[k]}</b><span></span>`; b.querySelector('span').textContent=t;
+    b.onclick=()=>pick(k); $('opts').appendChild(b);
+  });
+}
+function pick(k){
+  const d=Q[i],btns=[...$('opts').children];
+  btns.forEach(b=>b.disabled=true);
+  btns[d.a].classList.add('ok');
+  const right=k===d.a; ans[i]='ABCD'[k]+(right?' (O)':' (X)'); if(right)score++; else btns[k].classList.add('no');
+  $('verdict').textContent=right?d.ok:d.no; $('verdict').style.color=right?'#22C55E':'#EF4444';
+  $('expText').textContent=d.e; $('exp').style.display='block';
+  $('hintBtn').style.display='none'; $('hint').style.display='none';
+  $('next').textContent=i===Q.length-1?'결과 보기':'다음 문제';
+  $('next').style.display='block'; $('next').focus();
+}
+$('hintBtn').onclick=()=>{$('hint').style.display='block';$('hintBtn').style.display='none'};
+$('next').onclick=()=>{ i++; if(i<Q.length){show();window.scrollTo(0,0);} else end(); };
+function end(){
+  $('bar').style.width='100%'; $('quiz').style.display='none'; $('end').style.display='block';
+  $('sc').textContent=score;
+  const m=score===5?['만점! 이번 주를 완벽하게 따라오셨어요.','수·금·일 세 편을 모두 제대로 읽으셨네요.']
+    :score>=3?['좋아요! 거의 다 왔어요.','틀린 문제만 해당 요일 게시물에서 다시 확인해 보세요.']
+    :['괜찮아요, 지금부터 채우면 돼요.','수·금·일 게시물을 한 번씩 다시 보면 금방 만점이에요.'];
+  $('endTitle').textContent=m[0]; $('endText').textContent=m[1];
+}
+$('again').onclick=()=>{i=0;score=0;ans=[];$('end').style.display='none';$('quiz').style.display='block';show();};
+const F=$('join');
+function done(){try{return localStorage.getItem('mb-quiz-1108')==='1'}catch(e){return false}}
+function lock(t){$('send').disabled=true;$('send').textContent='참여 완료';$('msg').style.color='#22C55E';$('msg').textContent=t}
+F.addEventListener('submit',async ev=>{
+  ev.preventDefault();
+  if(done()){lock('이미 참여 등록하셨어요. 감사합니다!');return}
+  const nick=F.nickname.value.trim();
+  if(!nick){F.nickname.focus();return}
+  F.score.value=score+' / '+Q.length;
+  for(let n=0;n<5;n++)F['q'+(n+1)].value=ans[n]||'';
+  $('send').disabled=true;$('msg').style.color='#9CA3AF';$('msg').textContent='등록 중…';
+  try{
+    const r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(F)).toString()});
+    if(!r.ok)throw 0;
+    try{localStorage.setItem('mb-quiz-1108','1')}catch(e){}
+    lock(nick+'님, 참여 등록 완료! 정답과 결과는 카카오톡 채널에서 알려드릴게요.');
+  }catch(e){$('send').disabled=false;$('msg').style.color='#EF4444';$('msg').textContent='등록이 안 됐어요. 잠시 후 다시 눌러 주세요.'}
+});
+show();
+</script>
+</body>
+</html>
