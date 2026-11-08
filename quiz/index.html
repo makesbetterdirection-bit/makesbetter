@@ -105,7 +105,7 @@ button.o[disabled]{cursor:default}
     <div class="score"><span id="sc">0</span><small> / 5</small></div>
     <h2 id="endTitle" data-fit></h2>
     <p id="endText" data-fit></p>
-    <div class="save" data-fit><span class="ln"><b>저장해두고,</b> 다음 주 리뷰 전에 다시 풀어 보세요.</span><span class="ln">틀린 문제는 수·금·일 게시물에 답이 있어요.</span></div>
+    <div class="save" data-fit><span class="ln"><b>저장해두고,</b> 다음 주 리뷰 전에 다시 풀어 보세요.</span><span class="ln">틀린 문제의 답은 금융 도서관에 있어요.</span></div>
     <form class="join" id="join" name="quiz-1108" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <h3>참여 등록하기</h3>
       <p class="s" data-fit><span class="ln">만점이 아니어도 아차상 기회가 있어요.</span><span class="ln">이름과 연락처를 남기면 참여가 등록돼요.</span></p>
@@ -188,9 +188,9 @@ $('next').onclick=()=>{ i++; if(i<Q.length){show();window.scrollTo(0,0);} else e
 function end(){
   $('bar').style.width='100%'; $('quiz').style.display='none'; $('end').style.display='block';
   $('sc').textContent=score;
-  const m=score===5?['만점! 이번 주를 완벽하게 따라오셨어요.','수·금·일 세 편을 모두 제대로 읽으셨네요.']
-    :score>=3?['좋아요! 거의 다 왔어요.','틀린 문제만 해당 요일 게시물에서 다시 확인해 보세요.']
-    :['괜찮아요, 지금부터 채우면 돼요.','수·금·일 게시물을 한 번씩 다시 보면 금방 만점이에요.'];
+  const m=score===5?['만점! 이번 주를 완벽하게 따라오셨어요.','금융 도서관을 제대로 읽으셨네요.']
+    :score>=3?['좋아요! 거의 다 왔어요.','틀린 문제는 금융 도서관에서 다시 확인해 보세요.']
+    :['괜찮아요, 지금부터 채우면 돼요.','힌트는 금융 도서관 @makesbetter.one에 있어요.'];
   $('endTitle').innerHTML='<span class="ln"></span>'; $('endTitle').firstChild.textContent=m[0]; $('endText').innerHTML='<span class="ln"></span>'; $('endText').firstChild.textContent=m[1]; fitAll();
 }
 const F=$('join');
