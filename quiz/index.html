@@ -52,6 +52,22 @@ button.o[disabled]{cursor:default}
 .send[disabled]{opacity:.45;cursor:default}
 .msg{margin-top:12px;font-size:14.5px;line-height:1.6}
 .hp{position:absolute;left:-9999px}
+.lib{display:none;padding-top:8px}
+.ok-mark{width:64px;height:64px;border-radius:50%;background:var(--ok);color:#000;display:grid;place-items:center;font-size:34px;font-weight:900;margin:0 auto 18px}
+.lib .done h2{text-align:center;font-size:24px;letter-spacing:-.02em;margin-bottom:8px}
+.lib .done p{text-align:center;color:var(--sub);font-size:16px;line-height:1.7}
+.libcard{margin-top:36px;border:2px solid var(--gold);border-radius:18px;padding:26px 22px}
+.libcard .k{color:var(--gold);font-weight:700;font-size:14px;letter-spacing:.02em}
+.libcard h3{font-size:27px;line-height:1.35;letter-spacing:-.03em;margin:8px 0 10px}
+.libcard .acc{color:var(--sub);font-size:15px}
+.shelf{margin-top:22px;display:grid;gap:10px}
+.shelf div{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px 16px}
+.shelf b{display:block;font-size:16px;margin-bottom:3px}
+.shelf span{color:var(--sub);font-size:14.5px;line-height:1.55}
+.shelf em{font-style:normal;color:var(--gold);font-weight:700;margin-right:6px}
+.libcard .tip{margin-top:18px;font-size:15.5px;line-height:1.65}
+.go{display:block;text-align:center;margin-top:20px;background:var(--gold);color:#000;font-weight:800;font-size:17px;padding:16px;border-radius:14px;text-decoration:none}
+.go:focus-visible{outline:2px solid #fff;outline-offset:3px}
 .disc{margin-top:36px;color:var(--mute);font-size:12.5px;line-height:1.6;text-align:center}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
 </style>
@@ -89,6 +105,21 @@ button.o[disabled]{cursor:default}
       <button class="send" id="send" type="submit">참여 등록</button>
       <p class="msg" id="msg" role="status"></p>
     </form>
+  </section>
+  <section class="lib" id="lib">
+    <div class="done"><div class="ok-mark" aria-hidden="true">✓</div><h2 id="doneTitle">참여 등록 완료!</h2><p>정답과 당첨 안내는<br>카카오톡 채널에서 알려드릴게요.</p></div>
+    <div class="libcard">
+      <div class="k">MAKESBETTER.ONE</div>
+      <h3>베러 가족들을 위한<br>금융 도서관</h3>
+      <div class="acc">인스타그램 @makesbetter.one</div>
+      <div class="shelf">
+        <div><b><em>수</em>베러 인사이트</b><span>꼭 알아야 할 투자 흐름 하나를 깊게</span></div>
+        <div><b><em>금</em>베러 상식</b><span>연말정산처럼 내 돈과 바로 연결되는 생활 금융</span></div>
+        <div><b><em>일</em>베러리뷰</b><span>한 주 시장을 한 번에 정리</span></div>
+      </div>
+      <p class="tip">이번 퀴즈 문제도 모두 여기서 나왔어요.<br>팔로우하고 저장해 두면, 필요할 때 꺼내 보는<br>나만의 금융 책장이 돼요.</p>
+      <a class="go" href="https://www.instagram.com/makesbetter.one/" target="_blank" rel="noopener">@makesbetter.one 보러 가기</a>
+    </div>
   </section>
   <p class="disc">※ 본 콘텐츠는 정보 제공을 목적으로 하며, 특정 금융상품의 투자 권유가 아닙니다.</p>
 </main>
@@ -139,10 +170,10 @@ function end(){
 }
 const F=$('join');
 function done(){try{return localStorage.getItem('mb-quiz-1108')==='1'}catch(e){return false}}
-function lock(t){$('send').disabled=true;$('send').textContent='참여 완료';$('msg').style.color='#22C55E';$('msg').textContent=t}
+function lock(nm){$('end').style.display='none';$('lib').style.display='block';$('doneTitle').textContent=nm?nm+'님, 참여 등록 완료!':'이미 참여 등록하셨어요';window.scrollTo(0,0)}
 F.addEventListener('submit',async ev=>{
   ev.preventDefault();
-  if(done()){lock('이미 참여 등록하셨어요. 감사합니다!');return}
+  if(done()){lock('');return}
   const nm=F.name.value.trim(), ph=F.phone.value.replace(/[^0-9]/g,'');
   if(!nm){F.name.focus();return}
   if(!/^01[016789][0-9]{7,8}$/.test(ph)){$('msg').style.color='#EF4444';$('msg').textContent='휴대폰 번호를 다시 확인해 주세요.';F.phone.focus();return}
@@ -154,7 +185,7 @@ F.addEventListener('submit',async ev=>{
     const r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(F)).toString()});
     if(!r.ok)throw 0;
     try{localStorage.setItem('mb-quiz-1108','1')}catch(e){}
-    lock(nm+'님, 참여 등록 완료! 정답과 당첨 안내는 카카오톡 채널에서 알려드릴게요.');
+    lock(nm);
   }catch(e){$('send').disabled=false;$('msg').style.color='#EF4444';$('msg').textContent='등록이 안 됐어요. 잠시 후 다시 눌러 주세요.'}
 });
 show();
