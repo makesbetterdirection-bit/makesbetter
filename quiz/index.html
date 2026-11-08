@@ -34,8 +34,11 @@ button.o b{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place
 button.o.ok{border-color:var(--ok)}button.o.ok b{background:var(--ok);color:#000}
 button.o.no{border-color:var(--no)}button.o.no b{background:var(--no);color:#fff}
 button.o[disabled]{cursor:default}
-.hint{all:unset;cursor:pointer;color:var(--sub);font-size:14px;margin-top:16px;display:inline-block;border-bottom:1px solid var(--line)}
-.hintbox{margin-top:10px;color:var(--sub);font-size:15px;line-height:1.6;display:none}
+.hint{all:unset;cursor:pointer;color:#74FAFB;font-weight:700;font-size:15px;margin-top:18px;display:inline-flex;align-items:center;gap:8px;border:1.5px solid #74FAFB;border-radius:999px;padding:8px 16px;animation:blink 1.1s ease-in-out infinite}
+.hint:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(116,250,251,.45)}50%{opacity:.35;box-shadow:0 0 14px 2px rgba(116,250,251,.35)}}
+.hintbox a{display:inline-block;margin-top:10px;color:#74FAFB;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(116,250,251,.5)}
+.hintbox{margin-top:14px;color:#D1D5DB;font-size:15px;line-height:1.6;display:none;background:#0F1A1B;border:1.5px solid rgba(116,250,251,.35);border-radius:12px;padding:14px 16px}
 .exp{margin-top:22px;padding:18px 20px;border-left:3px solid var(--gold);background:#111214;border-radius:0 12px 12px 0;display:none}
 .exp strong{display:block;font-size:17px;margin-bottom:6px}
 .exp p{color:#D1D5DB;font-size:15.5px;line-height:1.7}
@@ -77,7 +80,7 @@ button.o[disabled]{cursor:default}
 .go{display:block;text-align:center;margin-top:20px;background:var(--gold);color:#000;font-weight:800;font-size:17px;padding:16px;border-radius:14px;text-decoration:none}
 .go:focus-visible{outline:2px solid #fff;outline-offset:3px}
 .disc{margin-top:36px;color:var(--mute);font-size:12.5px;line-height:1.6;text-align:center}
-@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}.hint{animation:none}}
 </style>
 </head>
 <body>
@@ -89,7 +92,7 @@ button.o[disabled]{cursor:default}
     <div class="tag" id="tag"></div>
     <h1 id="q"></h1>
     <div class="opts" id="opts"></div>
-    <button class="hint" id="hintBtn">힌트 보기</button>
+    <button class="hint" id="hintBtn">💡 힌트 보기</button>
     <div class="hintbox" id="hint"></div>
     <div class="exp" id="exp"><strong id="verdict"></strong><p id="expText"></p></div>
     <button class="next" id="next">다음 문제</button>
@@ -133,11 +136,11 @@ button.o[disabled]{cursor:default}
 </main>
 <script>
 const Q=[
- {tag:"수요일 · 거인의 투자 S&P 500",q:"S&P 500은 미국 상장기업 전체 시가총액의 약 몇 %를 담고 있을까요?",o:["약 50%","약 65%","약 80%","약 95%"],a:2,h:"500개 기업이지만, 미국 시장 대부분을 차지해요.",e:"미국 상장기업 시가총액 약 78.7조 달러 중 S&P 500이 약 80%를 담고 있어요. 그래서 종목을 고르지 않아도 미국 경제 전체를 담게 돼요.",ok:"정답! 거인의 크기를 아시네요.",no:"아쉬워요, 생각보다 더 커요."},
- {tag:"금요일 · 연말정산 완벽 가이드 ②",q:"연금저축·IRP에 넣은 돈은 연말정산에서 어디에 해당할까요?",o:["소득공제 (장바구니에서 빼기)","세액공제 (계산서 할인 쿠폰)","둘 다 해당","공제 대상 아님"],a:1,h:"다 계산된 세금에서 바로 빼주는 쪽이에요.",e:"연금저축·IRP는 세액공제예요. 계산이 끝난 세금에서 바로 빼주는 할인 쿠폰이라, 세율과 상관없이 공제받은 만큼 세금이 줄어요.",ok:"정답! 쿠폰을 아시는군요.",no:"아쉬워요, 쿠폰 쪽이에요."},
- {tag:"금요일 · 연말정산 완벽 가이드 ②",q:"세율 24% 구간인 사람이 소득공제 100만 원을 받으면, 줄어드는 세금은 약 얼마일까요? (지방소득세 포함)",o:["약 6.6만 원","약 16.5만 원","약 26.4만 원","100만 원"],a:2,h:"소득공제는 내 세율만큼만 효과가 나요.",e:"100만 원 × 24% = 24만 원, 여기에 지방소득세 10%를 더하면 약 26.4만 원이에요. 100만 원이 그대로 줄어드는 건 세액공제(쿠폰)일 때예요.",ok:"정답! 계산까지 완벽해요.",no:"아쉬워요, 세율을 곱해 보세요."},
- {tag:"일요일 · 베러리뷰",q:"지난주(11/2~6) 외국인이 국내 증시에서 판 10조 5,843억 원 중, SK하이닉스·삼성전자 두 종목의 비중은?",o:["약 32%","약 52%","약 72%","약 92%"],a:2,h:"코스피가 한 주 −11.7% 빠진 이유와 연결돼요.",e:"SK하이닉스 5조 4,219억 원, 삼성전자 2조 1,942억 원으로 두 종목이 약 72%였어요. 몰린 돈은 남의 나라 선거에도 크게 흔들려요.",ok:"정답! 이번 주 핵심을 잡았어요.",no:"아쉬워요, 생각보다 더 몰렸어요."},
- {tag:"일요일 · 베러리뷰",q:"머스크가 약 1억 5,800만 달러를 쏟은 텍사스 상원 선거, 핵심 쟁점은 무엇이었을까요?",o:["전기차 보조금","데이터센터 건설","우주 발사 허가","최저임금 인상"],a:1,h:"AI와 관련이 있어요.",e:"공화당 팩스턴 후보는 데이터센터를 빠르게 짓겠다고 했고, 민주당 탈라리코 후보는 규제 강화를 내세웠어요. 결과는 민주당 승리였고, 그 여파로 테슬라·스페이스X 시가총액이 약 573조 원 줄었어요.",ok:"정답! 진짜 이유를 아시네요.",no:"아쉬워요, AI 쪽이에요."}
+ {tag:"수요일 · 거인의 투자 S&P 500",q:"S&P 500은 미국 상장기업 전체 시가총액의 약 몇 %를 담고 있을까요?",o:["약 50%","약 65%","약 80%","약 95%"],a:2,h:"500개 기업이지만, 미국 시장 대부분을 차지해요.",l:"https://www.instagram.com/p/DfTmg9imQpg/",ln:"수요일 베러 인사이트 「거인의 투자 S&P500」",e:"미국 상장기업 시가총액 약 78.7조 달러 중 S&P 500이 약 80%를 담고 있어요. 그래서 종목을 고르지 않아도 미국 경제 전체를 담게 돼요.",ok:"정답! 거인의 크기를 아시네요.",no:"아쉬워요, 생각보다 더 커요."},
+ {tag:"금요일 · 연말정산 완벽 가이드 ②",q:"연금저축·IRP에 넣은 돈은 연말정산에서 어디에 해당할까요?",o:["소득공제 (장바구니에서 빼기)","세액공제 (계산서 할인 쿠폰)","둘 다 해당","공제 대상 아님"],a:1,h:"다 계산된 세금에서 바로 빼주는 쪽이에요.",l:"https://www.instagram.com/p/DfYXjTamZdf/",ln:"금요일 베러 상식 「연말정산 완벽 가이드 ②」",e:"연금저축·IRP는 세액공제예요. 계산이 끝난 세금에서 바로 빼주는 할인 쿠폰이라, 세율과 상관없이 공제받은 만큼 세금이 줄어요.",ok:"정답! 쿠폰을 아시는군요.",no:"아쉬워요, 쿠폰 쪽이에요."},
+ {tag:"금요일 · 연말정산 완벽 가이드 ②",q:"세율 24% 구간인 사람이 소득공제 100만 원을 받으면, 줄어드는 세금은 약 얼마일까요? (지방소득세 포함)",o:["약 6.6만 원","약 16.5만 원","약 26.4만 원","100만 원"],a:2,h:"소득공제는 내 세율만큼만 효과가 나요.",l:"https://www.instagram.com/p/DfYXjTamZdf/",ln:"금요일 베러 상식 「연말정산 완벽 가이드 ②」",e:"100만 원 × 24% = 24만 원, 여기에 지방소득세 10%를 더하면 약 26.4만 원이에요. 100만 원이 그대로 줄어드는 건 세액공제(쿠폰)일 때예요.",ok:"정답! 계산까지 완벽해요.",no:"아쉬워요, 세율을 곱해 보세요."},
+ {tag:"일요일 · 베러리뷰",q:"지난주(11/2~6) 외국인이 국내 증시에서 판 10조 5,843억 원 중, SK하이닉스·삼성전자 두 종목의 비중은?",o:["약 32%","약 52%","약 72%","약 92%"],a:2,h:"코스피가 한 주 −11.7% 빠진 이유와 연결돼요.",l:"https://www.instagram.com/p/DfdoiU-mduC/",ln:"일요일 베러리뷰 「진짜 패배자는 머스크였다?」",e:"SK하이닉스 5조 4,219억 원, 삼성전자 2조 1,942억 원으로 두 종목이 약 72%였어요. 몰린 돈은 남의 나라 선거에도 크게 흔들려요.",ok:"정답! 이번 주 핵심을 잡았어요.",no:"아쉬워요, 생각보다 더 몰렸어요."},
+ {tag:"일요일 · 베러리뷰",q:"머스크가 약 1억 5,800만 달러를 쏟은 텍사스 상원 선거, 핵심 쟁점은 무엇이었을까요?",o:["전기차 보조금","데이터센터 건설","우주 발사 허가","최저임금 인상"],a:1,h:"AI와 관련이 있어요.",l:"https://www.instagram.com/p/DfdoiU-mduC/",ln:"일요일 베러리뷰 「진짜 패배자는 머스크였다?」",e:"공화당 팩스턴 후보는 데이터센터를 빠르게 짓겠다고 했고, 민주당 탈라리코 후보는 규제 강화를 내세웠어요. 결과는 민주당 승리였고, 그 여파로 테슬라·스페이스X 시가총액이 약 573조 원 줄었어요.",ok:"정답! 진짜 이유를 아시네요.",no:"아쉬워요, AI 쪽이에요."}
 ];
 const $=id=>document.getElementById(id);
 let i=0,score=0,ans=[];
@@ -146,7 +149,7 @@ function show(){
   $('count').textContent=`${i+1} / ${Q.length}`;
   $('bar').style.width=`${i/Q.length*100}%`;
   $('tag').textContent=d.tag; $('q').textContent=d.q;
-  $('hint').textContent=d.h; $('hint').style.display='none'; $('hintBtn').style.display='inline-block';
+  $('hint').innerHTML='';$('hint').append(d.h);const br=document.createElement('br');const a=document.createElement('a');a.href=d.l;a.target='_blank';a.rel='noopener';a.textContent='📌 '+d.ln+' 게시물에서 확인 →';$('hint').append(br,a); $('hint').style.display='none'; $('hintBtn').style.display='inline-block';
   $('exp').style.display='none'; $('next').style.display='none';
   $('opts').innerHTML='';
   d.o.forEach((t,k)=>{
