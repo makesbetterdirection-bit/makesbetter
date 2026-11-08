@@ -16,6 +16,10 @@
 <style>
 :root{--bg:#0A0A0A;--card:#141416;--line:#26282C;--ink:#F9FAFB;--sub:#9CA3AF;--mute:#6B7280;--gold:#FACC15;--red:#B91C1C;--ok:#22C55E;--no:#EF4444}
 *{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.ln{display:block;white-space:nowrap;min-width:0}
+.shelf{grid-template-columns:minmax(0,1fr)}.shelf>div{min-width:0}
+.hintbox a{display:block!important;width:fit-content;max-width:100%}
 body{background:var(--bg);color:var(--ink);font-family:Pretendard,system-ui,sans-serif;word-break:keep-all;min-height:100vh;display:flex;justify-content:center;padding:28px 16px 48px}
 .wrap{width:100%;max-width:560px}
 .wm{text-align:center;font-weight:100;letter-spacing:.55em;padding-left:.55em;color:var(--sub);font-size:13px;margin-bottom:28px}
@@ -85,7 +89,7 @@ button.o[disabled]{cursor:default}
 </head>
 <body>
 <main class="wrap">
-  <div class="wm">M A K E S · B E T T E R</div>
+  <div class="wm" data-fit><span class="ln">M A K E S · B E T T E R</span></div>
   <section id="quiz">
     <div class="top"><span class="pill">이번 주 퀴즈 | 11.08</span><span class="count" id="count">1 / 5</span></div>
     <div class="bar"><i id="bar"></i></div>
@@ -93,18 +97,18 @@ button.o[disabled]{cursor:default}
     <h1 id="q"></h1>
     <div class="opts" id="opts"></div>
     <button class="hint" id="hintBtn">💡 힌트 보기</button>
-    <div class="hintbox" id="hint"></div>
+    <div class="hintbox" id="hint" data-fit></div>
     <div class="exp" id="exp"><strong id="verdict"></strong><p id="expText"></p></div>
     <button class="next" id="next">다음 문제</button>
   </section>
   <section class="end" id="end">
     <div class="score"><span id="sc">0</span><small> / 5</small></div>
-    <h2 id="endTitle"></h2>
-    <p id="endText"></p>
-    <div class="save"><b>저장해두고,</b> 다음 주 리뷰 전에 다시 풀어 보세요.<br>틀린 문제는 수·금·일 게시물에 답이 있어요.</div>
+    <h2 id="endTitle" data-fit></h2>
+    <p id="endText" data-fit></p>
+    <div class="save" data-fit><span class="ln"><b>저장해두고,</b> 다음 주 리뷰 전에 다시 풀어 보세요.</span><span class="ln">틀린 문제는 수·금·일 게시물에 답이 있어요.</span></div>
     <form class="join" id="join" name="quiz-1108" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <h3>참여 등록하기</h3>
-      <p class="s">만점이 아니어도 아차상 기회가 있어요.<br>이름과 연락처를 남기면 참여가 등록돼요.</p>
+      <p class="s" data-fit><span class="ln">만점이 아니어도 아차상 기회가 있어요.</span><span class="ln">이름과 연락처를 남기면 참여가 등록돼요.</span></p>
       <input type="hidden" name="form-name" value="quiz-1108">
       <p class="hp"><label>비워두세요 <input name="bot-field"></label></p>
       <input type="hidden" name="score"><input type="hidden" name="q1"><input type="hidden" name="q2"><input type="hidden" name="q3"><input type="hidden" name="q4"><input type="hidden" name="q5">
@@ -112,27 +116,27 @@ button.o[disabled]{cursor:default}
       <input type="text" id="nm" name="name" maxlength="20" required autocomplete="name" placeholder="홍길동">
       <label class="f" for="ph" style="margin-top:12px">휴대폰 번호</label>
       <input type="text" id="ph" name="phone" maxlength="13" required inputmode="tel" autocomplete="tel" placeholder="010-1234-5678">
-      <label class="agree"><input type="checkbox" name="agree" value="동의" required><span>[필수] 개인정보 수집·이용 동의<br>항목: 이름, 휴대폰 번호, 퀴즈 응답 · 목적: 참여 확인 및 경품 안내 · 보관: 퀴즈 종료 후 1개월 내 파기</span></label>
+      <label class="agree"><input type="checkbox" name="agree" value="동의" required><span data-fit style="flex:1;min-width:0"><span class="ln">[필수] 개인정보 수집·이용 동의</span><span class="ln">항목: 이름, 휴대폰 번호, 퀴즈 응답</span><span class="ln">목적: 참여 확인 및 경품 안내</span><span class="ln">보관: 퀴즈 종료 후 1개월 내 파기</span></span></label>
       <button class="send" id="send" type="submit">참여 등록</button>
       <p class="msg" id="msg" role="status"></p>
     </form>
   </section>
   <section class="lib" id="lib">
-    <div class="done"><div class="ok-mark" aria-hidden="true">✓</div><h2 id="doneTitle">참여 등록 완료!</h2><p>정답과 당첨 안내는<br>카카오톡 채널에서 알려드릴게요.</p></div>
+    <div class="done"><div class="ok-mark" aria-hidden="true">✓</div><h2 id="doneTitle" data-fit><span class="ln">참여 등록 완료!</span></h2><p data-fit><span class="ln">정답과 당첨 안내는</span><span class="ln">카카오톡 채널에서 알려드릴게요.</span></p></div>
     <div class="libcard">
       <div class="k">MAKESBETTER.ONE</div>
       <h3>베러 가족들을 위한<br>금융 도서관</h3>
       <div class="acc">인스타그램 @makesbetter.one</div>
-      <div class="shelf">
-        <div><b><em>수</em>베러 인사이트</b><span>꼭 알아야 할 투자 흐름 하나를 깊게</span></div>
-        <div><b><em>금</em>베러 상식</b><span>연말정산처럼 내 돈과 바로 연결되는 생활 금융</span></div>
-        <div><b><em>일</em>베러리뷰</b><span>한 주 시장을 한 번에 정리</span></div>
+      <div class="shelf" data-fit>
+        <div><b><em>수</em>베러 인사이트</b><span class="ln">꼭 알아야 할 투자 흐름 하나를 깊게</span></div>
+        <div><b><em>금</em>베러 상식</b><span class="ln">연말정산처럼 내 돈과 직결되는 생활 금융</span></div>
+        <div><b><em>일</em>베러리뷰</b><span class="ln">한 주 시장을 한 번에 정리</span></div>
       </div>
-      <p class="tip">이번 퀴즈 문제도 모두 여기서 나왔어요.<br>팔로우하고 저장해 두면, 필요할 때 꺼내 보는<br>나만의 금융 책장이 돼요.</p>
-      <a class="go" href="https://www.instagram.com/makesbetter.one/" target="_blank" rel="noopener">@makesbetter.one 보러 가기</a>
+      <p class="tip" data-fit><span class="ln">이번 퀴즈 문제도 모두 여기서 나왔어요.</span><span class="ln">팔로우하고 저장해 두면, 필요할 때 꺼내 보는</span><span class="ln">나만의 금융 책장이 돼요.</span></p>
+      <a class="go" href="https://www.instagram.com/makesbetter.one/" target="_blank" rel="noopener" data-fit><span class="ln">@makesbetter.one 보러 가기</span></a>
     </div>
   </section>
-  <p class="disc">※ 본 콘텐츠는 정보 제공을 목적으로 하며, 특정 금융상품의 투자 권유가 아닙니다.</p>
+  <p class="disc" data-fit><span class="ln">※ 본 콘텐츠는 정보 제공을 목적으로 하며,</span><span class="ln">특정 금융상품의 투자 권유가 아닙니다.</span></p>
 </main>
 <script>
 const Q=[
@@ -143,13 +147,23 @@ const Q=[
  {tag:"일요일 · 베러리뷰",q:"머스크가 약 1억 5,800만 달러를 쏟은 텍사스 상원 선거, 핵심 쟁점은 무엇이었을까요?",o:["전기차 보조금","데이터센터 건설","우주 발사 허가","최저임금 인상"],a:1,h:"AI와 관련이 있어요.",l:"https://www.instagram.com/p/DfdoiU-mduC/",ln:"일요일 베러리뷰 「진짜 패배자는 머스크였다?」",e:"공화당 팩스턴 후보는 데이터센터를 빠르게 짓겠다고 했고, 민주당 탈라리코 후보는 규제 강화를 내세웠어요. 결과는 민주당 승리였고, 그 여파로 테슬라·스페이스X 시가총액이 약 573조 원 줄었어요.",ok:"정답! 진짜 이유를 아시네요.",no:"아쉬워요, AI 쪽이에요."}
 ];
 const $=id=>document.getElementById(id);
+function fitAll(){document.querySelectorAll('[data-fit]').forEach(g=>{
+  if(!g.offsetParent&&g!==document.body)return;
+  const ls=[...g.querySelectorAll('.ln')];if(!ls.length)return;
+  ls.forEach(l=>l.style.fontSize='');
+  let sz=Math.min(...ls.map(l=>parseFloat(getComputedStyle(l).fontSize)));
+  const over=()=>ls.some(l=>l.scrollWidth>l.clientWidth+0.5);
+  ls.forEach(l=>l.style.fontSize=sz+'px');
+  while(over()&&sz>9){sz-=0.5;ls.forEach(l=>l.style.fontSize=sz+'px')}
+});}
+addEventListener('resize',fitAll);document.fonts&&document.fonts.ready.then(fitAll);
 let i=0,score=0,ans=[];
 function show(){
   const d=Q[i];
   $('count').textContent=`${i+1} / ${Q.length}`;
   $('bar').style.width=`${i/Q.length*100}%`;
   $('tag').textContent=d.tag; $('q').textContent=d.q;
-  $('hint').innerHTML='';$('hint').append(d.h);const br=document.createElement('br');const a=document.createElement('a');a.href=d.l;a.target='_blank';a.rel='noopener';a.textContent='📌 '+d.ln+' 게시물에서 확인 →';$('hint').append(br,a); $('hint').style.display='none'; $('hintBtn').style.display='inline-block';
+  $('hint').innerHTML='';const h1=document.createElement('span');h1.className='ln';h1.textContent=d.h;const a=document.createElement('a');a.href=d.l;a.target='_blank';a.rel='noopener';a.innerHTML='<span class="ln"></span><span class="ln"></span>';a.children[0].textContent='📌 '+d.ln;a.children[1].textContent='게시물에서 확인하기 →';$('hint').append(h1,a); $('hint').style.display='none'; $('hintBtn').style.display='inline-block';
   $('exp').style.display='none'; $('next').style.display='none';
   $('opts').innerHTML='';
   d.o.forEach((t,k)=>{
@@ -167,9 +181,9 @@ function pick(k){
   $('expText').textContent=d.e; $('exp').style.display='block';
   $('hintBtn').style.display='none'; $('hint').style.display='none';
   $('next').textContent=i===Q.length-1?'결과 보기':'다음 문제';
-  $('next').style.display='block'; $('next').focus();
+  $('next').style.display='block'; $('next').focus(); fitAll();
 }
-$('hintBtn').onclick=()=>{$('hint').style.display='block';$('hintBtn').style.display='none'};
+$('hintBtn').onclick=()=>{$('hint').style.display='block';$('hintBtn').style.display='none';fitAll()};
 $('next').onclick=()=>{ i++; if(i<Q.length){show();window.scrollTo(0,0);} else end(); };
 function end(){
   $('bar').style.width='100%'; $('quiz').style.display='none'; $('end').style.display='block';
@@ -177,11 +191,11 @@ function end(){
   const m=score===5?['만점! 이번 주를 완벽하게 따라오셨어요.','수·금·일 세 편을 모두 제대로 읽으셨네요.']
     :score>=3?['좋아요! 거의 다 왔어요.','틀린 문제만 해당 요일 게시물에서 다시 확인해 보세요.']
     :['괜찮아요, 지금부터 채우면 돼요.','수·금·일 게시물을 한 번씩 다시 보면 금방 만점이에요.'];
-  $('endTitle').textContent=m[0]; $('endText').textContent=m[1];
+  $('endTitle').innerHTML='<span class="ln"></span>'; $('endTitle').firstChild.textContent=m[0]; $('endText').innerHTML='<span class="ln"></span>'; $('endText').firstChild.textContent=m[1]; fitAll();
 }
 const F=$('join');
 function done(){try{return localStorage.getItem('mb-quiz-1108')==='1'}catch(e){return false}}
-function lock(nm){$('end').style.display='none';$('lib').style.display='block';$('doneTitle').textContent=nm?nm+'님, 참여 등록 완료!':'이미 참여 등록하셨어요';window.scrollTo(0,0)}
+function lock(nm){$('end').style.display='none';$('lib').style.display='block';$('doneTitle').firstChild.textContent=nm?nm+'님, 참여 등록 완료!':'이미 참여 등록하셨어요';window.scrollTo(0,0);fitAll()}
 F.addEventListener('submit',async ev=>{
   ev.preventDefault();
   if(done()){lock('');return}
@@ -199,7 +213,7 @@ F.addEventListener('submit',async ev=>{
     lock(nm);
   }catch(e){$('send').disabled=false;$('msg').style.color='#EF4444';$('msg').textContent='등록이 안 됐어요. 잠시 후 다시 눌러 주세요.'}
 });
-show();
+show();fitAll();
 </script>
 </body>
 </html>
