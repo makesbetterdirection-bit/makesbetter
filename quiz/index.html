@@ -40,7 +40,6 @@ button.o[disabled]{cursor:default}
 .end p{color:var(--sub);font-size:16px;line-height:1.7}
 .save{margin-top:28px;border:2px solid var(--gold);border-radius:14px;padding:18px;text-align:left;font-size:16px;line-height:1.6}
 .save b{color:var(--gold)}
-.again{all:unset;cursor:pointer;margin-top:22px;color:var(--sub);font-size:15px;border-bottom:1px solid var(--line)}
 .join{margin-top:28px;border:1.5px solid var(--line);border-radius:14px;padding:20px;text-align:left;background:var(--card)}
 .join h3{font-size:18px;margin-bottom:6px;letter-spacing:-.02em}
 .join .s{color:var(--sub);font-size:14.5px;line-height:1.6;margin-bottom:14px}
@@ -78,17 +77,18 @@ button.o[disabled]{cursor:default}
     <div class="save"><b>저장해두고,</b> 다음 주 리뷰 전에 다시 풀어 보세요.<br>틀린 문제는 수·금·일 게시물에 답이 있어요.</div>
     <form class="join" id="join" name="quiz-1108" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <h3>참여 등록하기</h3>
-      <p class="s">카카오톡 닉네임을 남기면 참여와 점수가 기록돼요.</p>
+      <p class="s">만점이 아니어도 아차상 기회가 있어요.<br>이름과 연락처를 남기면 참여가 등록돼요.</p>
       <input type="hidden" name="form-name" value="quiz-1108">
       <p class="hp"><label>비워두세요 <input name="bot-field"></label></p>
       <input type="hidden" name="score"><input type="hidden" name="q1"><input type="hidden" name="q2"><input type="hidden" name="q3"><input type="hidden" name="q4"><input type="hidden" name="q5">
-      <label class="f" for="nick">카카오톡 닉네임</label>
-      <input type="text" id="nick" name="nickname" maxlength="20" required autocomplete="nickname" placeholder="채널 대화에 보이는 이름">
-      <label class="agree"><input type="checkbox" name="agree" value="동의" required><span>[필수] 개인정보 수집·이용 동의<br>항목: 카카오톡 닉네임, 퀴즈 응답 · 목적: 참여 및 정답 확인 · 보관: 퀴즈 종료 후 1개월 내 파기</span></label>
+      <label class="f" for="nm">이름</label>
+      <input type="text" id="nm" name="name" maxlength="20" required autocomplete="name" placeholder="홍길동">
+      <label class="f" for="ph" style="margin-top:12px">휴대폰 번호</label>
+      <input type="text" id="ph" name="phone" maxlength="13" required inputmode="tel" autocomplete="tel" placeholder="010-1234-5678">
+      <label class="agree"><input type="checkbox" name="agree" value="동의" required><span>[필수] 개인정보 수집·이용 동의<br>항목: 이름, 휴대폰 번호, 퀴즈 응답 · 목적: 참여 확인 및 경품 안내 · 보관: 퀴즈 종료 후 1개월 내 파기</span></label>
       <button class="send" id="send" type="submit">참여 등록</button>
       <p class="msg" id="msg" role="status"></p>
     </form>
-    <button class="again" id="again">처음부터 다시 풀기</button>
   </section>
   <p class="disc">※ 본 콘텐츠는 정보 제공을 목적으로 하며, 특정 금융상품의 투자 권유가 아닙니다.</p>
 </main>
@@ -137,15 +137,16 @@ function end(){
     :['괜찮아요, 지금부터 채우면 돼요.','수·금·일 게시물을 한 번씩 다시 보면 금방 만점이에요.'];
   $('endTitle').textContent=m[0]; $('endText').textContent=m[1];
 }
-$('again').onclick=()=>{i=0;score=0;ans=[];$('end').style.display='none';$('quiz').style.display='block';show();};
 const F=$('join');
 function done(){try{return localStorage.getItem('mb-quiz-1108')==='1'}catch(e){return false}}
 function lock(t){$('send').disabled=true;$('send').textContent='참여 완료';$('msg').style.color='#22C55E';$('msg').textContent=t}
 F.addEventListener('submit',async ev=>{
   ev.preventDefault();
   if(done()){lock('이미 참여 등록하셨어요. 감사합니다!');return}
-  const nick=F.nickname.value.trim();
-  if(!nick){F.nickname.focus();return}
+  const nm=F.name.value.trim(), ph=F.phone.value.replace(/[^0-9]/g,'');
+  if(!nm){F.name.focus();return}
+  if(!/^01[016789][0-9]{7,8}$/.test(ph)){$('msg').style.color='#EF4444';$('msg').textContent='휴대폰 번호를 다시 확인해 주세요.';F.phone.focus();return}
+  F.name.value=nm; F.phone.value=ph.replace(/^(\d{3})(\d{3,4})(\d{4})$/,'$1-$2-$3');
   F.score.value=score+' / '+Q.length;
   for(let n=0;n<5;n++)F['q'+(n+1)].value=ans[n]||'';
   $('send').disabled=true;$('msg').style.color='#9CA3AF';$('msg').textContent='등록 중…';
@@ -153,7 +154,7 @@ F.addEventListener('submit',async ev=>{
     const r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(F)).toString()});
     if(!r.ok)throw 0;
     try{localStorage.setItem('mb-quiz-1108','1')}catch(e){}
-    lock(nick+'님, 참여 등록 완료! 정답과 결과는 카카오톡 채널에서 알려드릴게요.');
+    lock(nm+'님, 참여 등록 완료! 정답과 당첨 안내는 카카오톡 채널에서 알려드릴게요.');
   }catch(e){$('send').disabled=false;$('msg').style.color='#EF4444';$('msg').textContent='등록이 안 됐어요. 잠시 후 다시 눌러 주세요.'}
 });
 show();
