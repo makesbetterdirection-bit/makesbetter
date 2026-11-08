@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1c1915">
+<title>MAKESBETTER 전자책</title>
+<meta property="og:title" content="MAKESBETTER 전자책">
+<meta property="og:description" content="한 장씩 넘기며 읽는 무료 전자책">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/books/cover-01.jpg">
+<link rel="icon" href="/studio/icon-32.png">
+<link rel="apple-touch-icon" href="/studio/icon-180.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--bg:#1c1915;--ink:#f3eee6;--sub:#a59c8f;--line:rgba(243,238,230,.14);--accent:#c2552f}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,system-ui,sans-serif;overflow:hidden;overscroll-behavior:none}
+body{background:radial-gradient(120% 80% at 50% 38%,#2f2a23 0%,#1c1915 62%,#141210 100%)}
+.top,.bot{position:fixed;left:0;right:0;z-index:5;display:flex;align-items:center;padding:0 16px;transition:opacity .35s}
+.top{top:0;height:calc(56px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);justify-content:space-between;gap:12px}
+.bot{bottom:0;height:calc(64px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);gap:14px}
+.hide .top,.hide .bot{opacity:0;pointer-events:none}
+.ib{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:none;text-decoration:none}
+.ib svg{width:18px;height:18px}
+.ib:disabled{opacity:.3}
+.ttl{flex:1;min-width:0;text-align:center}
+.ttl b{display:block;font-size:15px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ttl small{display:block;font-size:11px;color:var(--sub);letter-spacing:.14em;margin-top:2px}
+.pg{font-size:13px;color:var(--sub);font-variant-numeric:tabular-nums;min-width:64px;text-align:center}
+.pg b{color:var(--ink);font-weight:600}
+input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:linear-gradient(var(--accent),var(--accent)) 0/var(--p,0%) 100% no-repeat,rgba(243,238,230,.18);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--ink);border:3px solid var(--accent)}
+input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--ink);border:3px solid var(--accent)}
+.stage{position:fixed;inset:calc(60px + env(safe-area-inset-top)) 0 calc(68px + env(safe-area-inset-bottom));display:grid;place-items:center;padding:0 12px}
+.desk{position:relative}
+#book{filter:drop-shadow(0 22px 34px rgba(0,0,0,.55)) drop-shadow(0 4px 8px rgba(0,0,0,.35))}
+.edge{position:absolute;top:6px;bottom:6px;width:6px;pointer-events:none;border-radius:2px;opacity:0;transition:opacity .3s}
+.edge.r{right:-5px;background:repeating-linear-gradient(90deg,#e9e3d8 0 1px,#cfc7b9 1px 2px)}
+.edge.l{left:-5px;background:repeating-linear-gradient(90deg,#cfc7b9 0 1px,#e9e3d8 1px 2px)}
+.load{position:fixed;inset:0;display:grid;place-items:center;color:var(--sub);font-size:13px;letter-spacing:.1em;z-index:4;transition:opacity .4s}
+.load.off{opacity:0;pointer-events:none}
+.hint{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);background:rgba(20,18,16,.82);border:1px solid var(--line);color:var(--ink);font-size:13px;padding:9px 16px;border-radius:999px;z-index:6;transition:opacity .5s;white-space:nowrap}
+.hint.off{opacity:0;pointer-events:none}
+.end{position:fixed;inset:0;z-index:7;display:none;place-items:center;background:rgba(20,18,16,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:24px}
+.end.on{display:grid}
+.card{width:min(360px,100%);background:#f3eee6;color:#221e19;border-radius:20px;padding:28px 24px;text-align:center}
+.card small{font-size:11px;letter-spacing:.18em;color:#9b8f80}
+.card h2{font-size:21px;line-height:1.4;margin:10px 0 8px;letter-spacing:-.02em}
+.card p{font-size:14px;color:#5d554b;line-height:1.6}
+.card .b{display:block;margin-top:12px;padding:14px;border-radius:12px;font-weight:600;font-size:15px;text-decoration:none;border:0;cursor:pointer;width:100%}
+.card .y{background:#fee500;color:#191600;margin-top:20px}
+.card .g{background:#e4ddd1;color:#221e19}
+.card .t{background:none;color:#7b7266;font-weight:500;font-size:14px;padding:10px}
+@media (prefers-reduced-motion:reduce){.top,.bot,.hint{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="ib" href="/books/" aria-label="전자책 목록으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></a>
+  <div class="ttl"><b id="ttl">전자책</b><small id="no">MAKESBETTER</small></div>
+  <a class="ib" id="dl" href="#" download aria-label="PDF 다운로드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg></a>
+</header>
+<div class="load" id="load">책을 펼치는 중…</div>
+<main class="stage" id="stage"><div class="desk" id="desk"><div class="edge l" id="el"></div><div id="book"></div><div class="edge r" id="er"></div></div></main>
+<div class="hint off" id="hint">옆으로 넘기거나 화면 가장자리를 눌러 넘겨요</div>
+<footer class="bot">
+  <button class="ib" id="prev" aria-label="이전 장"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <input type="range" id="bar" min="1" value="1" aria-label="페이지 이동">
+  <span class="pg" id="pg"><b>1</b> / 1</span>
+  <button class="ib" id="next" aria-label="다음 장"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+</footer>
+<div class="end" id="end" role="dialog" aria-modal="true" aria-labelledby="endT">
+  <div class="card">
+    <small>THE END</small>
+    <h2 id="endT">끝까지 읽어 주셔서<br>고맙습니다</h2>
+    <p>이 책이 떠오르는 분이 있다면<br>카카오톡으로 보내 주세요.</p>
+    <button class="b y" id="share">카카오톡으로 보내기</button>
+    <a class="b g" href="https://pf.kakao.com/_eETXxj/friend" rel="noreferrer">매주 새 이야기 받기 · 채널 추가</a>
+    <button class="b t" id="again">처음부터 다시 보기</button>
+  </div>
+</div>
+<script src="page-flip.js"></script>
+<script>
+(function(){
+var BOOKS={
+  cashflow:{t:'현금흐름은 산소다',no:'E-BOOK No.01',n:63,pdf:'/ebook/cashflow.pdf',file:'MAKESBETTER_현금흐름은산소다.pdf'},
+  'market-mood':{t:'시장의 기분은 숫자로 온다',no:'E-BOOK No.02',n:6,pdf:'/ebook/market-mood.pdf',file:'MAKESBETTER_시장의기분은숫자로온다.pdf'}
+};
+var q=new URLSearchParams(location.search),id=q.get('b');if(!BOOKS[id])id='cashflow';var B=BOOKS[id];
+document.title=B.t+' · MAKESBETTER 전자책';
+document.getElementById('ttl').textContent=B.t;document.getElementById('no').textContent=B.no;
+var dl=document.getElementById('dl');dl.href=B.pdf;dl.setAttribute('download',B.file);
+var urls=[];for(var i=1;i<=B.n;i++)urls.push(id+'/'+(i<10?'0':'')+i+'.webp');
+var KEY='mb-read-'+id,start=0;try{start=Math.min(B.n-1,Math.max(0,parseInt(localStorage.getItem(KEY)||'0',10)||0))}catch(e){}
+var pi=parseInt(q.get('p'),10);if(pi>0)start=Math.min(B.n-1,pi-1);
+
+var stage=document.getElementById('stage'),desk=document.getElementById('desk'),bookEl=document.getElementById('book');
+var bar=document.getElementById('bar'),pg=document.getElementById('pg'),prev=document.getElementById('prev'),next=document.getElementById('next');
+var el=document.getElementById('el'),er=document.getElementById('er'),end=document.getElementById('end'),hint=document.getElementById('hint');
+bar.max=B.n;
+var flip=null;
+
+function dims(){
+  var r=stage.getBoundingClientRect(),W=r.width-24,H=r.height-8;
+  var spread=W>H*1.05&&W>=640;
+  var pw=Math.min(spread?W/2:W,H*0.75);pw=Math.floor(Math.max(200,pw));
+  return {w:pw,h:Math.round(pw/0.75),spread:spread};
+}
+function build(){
+  var d=dims(),keep=flip?flip.getCurrentPageIndex():start;
+  if(flip){flip.destroy();bookEl=document.createElement('div');bookEl.id='book';desk.insertBefore(bookEl,er);}
+  desk.style.width=(d.spread?d.w*2:d.w)+'px';desk.style.height=d.h+'px';
+  flip=new St.PageFlip(bookEl,{width:d.w,height:d.h,size:'fixed',showCover:true,usePortrait:!d.spread,maxShadowOpacity:.45,flippingTime:820,mobileScrollSupport:false,startPage:keep,drawShadow:true,autoSize:false,swipeDistance:24,showPageCorners:true});
+  flip.loadFromImages(urls);
+  flip.on('flip',function(e){sync(e.data)});
+  flip.on('init',function(){sync(flip.getCurrentPageIndex());document.getElementById('load').classList.add('off')});
+  flip.__spread=d.spread;
+}
+function sync(i){
+  var n=B.n,sp=flip&&flip.__spread,lo=i+1,hi=lo;
+  if(sp&&i>0){lo=i%2?i+1:i;hi=Math.min(n,lo+1);}
+  pg.innerHTML='<b>'+(lo===hi?lo:lo+'–'+hi)+'</b> / '+n;
+  bar.value=lo;bar.style.setProperty('--p',((lo-1)/(n-1)*100)+'%');
+  prev.disabled=i<=0;next.disabled=hi>=n;
+  var f=(lo-1)/(n-1);el.style.opacity=sp&&i>0?Math.min(1,f*3):0;er.style.opacity=sp?Math.min(1,(1-f)*3):0;
+  try{localStorage.setItem(KEY,String(i))}catch(e){}
+  if(hi>=n)setTimeout(function(){end.classList.add('on')},900);
+}
+prev.onclick=function(){flip&&flip.flipPrev('top')};
+next.onclick=function(){flip&&flip.flipNext('top')};
+bar.oninput=function(){var p=+bar.value;pg.innerHTML='<b>'+p+'</b> / '+B.n;bar.style.setProperty('--p',((p-1)/(B.n-1)*100)+'%')};
+bar.onchange=function(){flip&&flip.turnToPage(+bar.value-1);sync(+bar.value-1)};
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')next.onclick();if(e.key==='ArrowLeft')prev.onclick();if(e.key==='Escape')end.classList.remove('on')});
+// 가운데 탭: 메뉴 숨기기/보이기
+var t0=0,x0=0,y0=0;
+stage.addEventListener('pointerdown',function(e){t0=Date.now();x0=e.clientX;y0=e.clientY});
+stage.addEventListener('pointerup',function(e){
+  if(Date.now()-t0>300||Math.abs(e.clientX-x0)>8||Math.abs(e.clientY-y0)>8)return;
+  var w=innerWidth,x=e.clientX;
+  if(x>w*0.3&&x<w*0.7)document.body.classList.toggle('hide');
+  else if(!flip.__spread){if(x<=w*0.3)prev.onclick();else next.onclick();}
+});
+document.getElementById('again').onclick=function(){end.classList.remove('on');flip.turnToPage(0);sync(0)};
+end.addEventListener('click',function(e){if(e.target===end)end.classList.remove('on')});
+document.getElementById('share').onclick=function(){
+  var u=location.origin+'/books/read/?b='+id,data={title:B.t,text:'MAKESBETTER 무료 전자책 「'+B.t+'」',url:u};
+  if(navigator.share){navigator.share(data).catch(function(){})}
+  else{try{navigator.clipboard.writeText(u);this.textContent='링크를 복사했어요'}catch(e){}}
+};
+var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){var d=dims();if(!flip||d.spread!==flip.__spread||Math.abs(parseFloat(desk.style.height)-d.h)>20)build()},250)});
+build();
+try{if(!localStorage.getItem('mb-read-hint')){hint.classList.remove('off');setTimeout(function(){hint.classList.add('off')},3500);localStorage.setItem('mb-read-hint','1')}}catch(e){hint.classList.remove('off');setTimeout(function(){hint.classList.add('off')},3500)}
+})();
+</script>
+</body>
+</html>
