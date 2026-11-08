@@ -10,6 +10,7 @@
 <meta property="og:type" content="website">
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap">
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;background:#E4E7EB;color:#191F28;font-family:Pretendard,"Apple SD Gothic Neo",sans-serif;-webkit-font-smoothing:antialiased;word-break:keep-all;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
@@ -163,119 +164,132 @@ h2{font-size:clamp(22px,6.2vw,27px);font-weight:700;line-height:1.38}
 .dark #prev{background:#22252B;color:#fff;box-shadow:none}.dark #next{background:#D4AE62;color:#15171C}
 .toast{position:absolute;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(16px);opacity:0;pointer-events:none;transition:.3s;background:#191F28;color:#fff;font-size:14px;font-weight:600;padding:12px 18px;border-radius:12px;z-index:20;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ═════════ IVORY EDITORIAL THEME ═════════ */
+:root{--iv:#EDEAE3;--ink:#1A1A1A;--sub:#5E5A52;--mute:#8F8A80;--teal:#1B7B7A;--line:rgba(26,26,26,.14);--paper:#F7F5F0}
+html,body{background:#D9D5CC}
+.stage{background:#D9D5CC}
+.pg{background:var(--iv)}
+.pg::after{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.22;mix-blend-mode:multiply;pointer-events:none;z-index:0}
+.in{position:relative;z-index:1;justify-content:flex-start;padding-top:calc(env(safe-area-inset-top) + 30px)}
+.serif{font-family:'Noto Serif KR',serif;font-weight:700;letter-spacing:-.04em}
+.mast{display:flex;justify-content:space-between;border-top:1.5px solid var(--ink);border-bottom:1px solid var(--line);padding:8px 0;font-size:10.5px;font-weight:700;letter-spacing:.22em;color:var(--ink)}
+.mast span:last-child{color:var(--teal)}
+.hd{margin:22px 0 0;font-size:clamp(27px,7.8vw,31px);line-height:1.42;color:var(--ink)}
+.hd em{font-style:normal;color:var(--teal)}
+.lead{margin:12px 0 0;font-size:15.5px;line-height:1.65;color:var(--sub)}
+.f{opacity:0;transform:translateY(8px);transition:opacity .7s ease,transform .7s ease}
+.play .f{opacity:1;transform:none}
+.play .f.d1{transition-delay:.05s}.play .f.d2{transition-delay:.2s}.play .f.d3{transition-delay:1.5s}
+
+/* 1 · 책상 위 리포트 */
+.desk-st{position:relative;flex:1;min-height:270px;perspective:900px;margin:0 -22px}
+.desk{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(48deg) rotateZ(-13deg) translate(1%,-2%)}
+.sh{position:absolute;left:50%;top:50%;width:clamp(124px,36vw,148px);aspect-ratio:794/1123;margin:0;border-radius:5px;overflow:hidden;
+  box-shadow:0 2px 3px rgba(60,50,30,.18),0 22px 30px rgba(60,50,30,.22);transform:translate(-50%,-50%);transition:transform 1.2s cubic-bezier(.2,.85,.25,1)}
+.sh img{display:block;width:100%;height:100%;object-fit:cover}
+.play.open .sh.s3{transform:translate(-50%,-50%) translate(-86px,22px) rotate(-14deg);transition-delay:0s}
+.play.open .sh.s1{transform:translate(-50%,-50%) translate(-24px,-8px) rotate(-5deg);transition-delay:.15s}
+.play.open .sh.s2{transform:translate(-50%,-50%) translate(44px,6px) rotate(6deg);transition-delay:.3s}
+.play.open .sh.s0{transform:translate(-50%,-50%) translate(96px,28px) rotate(14deg);transition-delay:.45s}
+.chips{display:flex;gap:6px}.chips span{border:1px solid rgba(26,26,26,.25);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--ink)}
+
+/* 2 · 점검을 받으면 */
+.gv{display:flex;gap:14px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px 18px 18px 16px;box-shadow:0 1px 2px rgba(60,50,30,.06)}
+.gv>i{flex:none;width:44px;height:44px;border-radius:12px;background:rgba(27,123,122,.10);display:flex;align-items:center;justify-content:center}
+.gv b{display:block;font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.35}
+.gv p{margin:6px 0 0;font-size:15px;line-height:1.6;color:var(--sub)}
+.play .gv.f.g1{transition-delay:.45s}.play .gv.f.g2{transition-delay:.8s}.play .gv.f.g3{transition-delay:1.15s}
+.gend{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:18px}
+.gend b{font-size:clamp(21px,5.9vw,24px);line-height:1.45;color:var(--ink)}
+.gend b em{font-style:normal;color:var(--teal)}
+.gend .fn{font-size:12.5px;color:var(--mute)}
+.play .gend.f{transition-delay:1.6s}
+
+/* 3 · 신청 */
+.steps2{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:4px 18px}
+.st2{display:flex;gap:13px;align-items:center;padding:15px 0;font-size:15.5px;line-height:1.45;color:var(--sub)}
+.st2+.st2{border-top:1px solid var(--line)}
+.st2 i{font-style:normal;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--ink);color:var(--ink);font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.st2 i.t{background:var(--teal);border-color:var(--teal);color:#fff}
+.st2 b{color:var(--ink)}
+.play .st2.f:nth-child(1){transition-delay:.3s}.play .st2.f:nth-child(2){transition-delay:.55s}.play .st2.f:nth-child(3){transition-delay:.8s}.play .st2.f:nth-child(4){transition-delay:1.05s}
+.btn{border-radius:14px;background:var(--paper);color:var(--ink);border:1px solid rgba(26,26,26,.18);box-shadow:none}
+.btn.d{background:var(--ink);color:#F7F5F0;border:0;box-shadow:0 10px 24px rgba(26,26,26,.22)}
+.b2 .arw{color:#7FD3CF}
+.play .b2{animation:fadeUp .6s ease 1.5s forwards}
+.b2::after{background:linear-gradient(100deg,transparent,rgba(127,211,207,.30),transparent)}
+.play .b1{animation:fadeUp .6s ease 1.3s forwards}
+
+.appbtn{display:flex;align-items:center;gap:13px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:12px 14px 12px 12px;color:var(--ink);opacity:0}
+.appbtn .ai{width:52px;height:52px;border-radius:13px;flex:none;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#3F7BFF,#1F55E6);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 4px 10px rgba(31,85,230,.28)}
+.appbtn .at{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.appbtn .at b{font-size:16.5px;font-weight:700;letter-spacing:-.02em}
+.appbtn .at small{font-size:13px;color:var(--mute);font-weight:500}
+.appbtn .ao{flex:none;background:#E6E9EF;color:#1F55E6;font-size:15px;font-weight:800;border-radius:999px;padding:8px 18px}
+.appbtn:active{transform:scale(.985)}
+
+/* 공통 내비 */
+.nav{background:rgba(237,234,227,.94);border-top:1px solid var(--line)}
+#prev{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+#next{background:var(--teal);color:#fff}
+.segs i{background:rgba(26,26,26,.15)}.segs i.on{background:var(--ink)}
+.pr b{color:var(--ink)}.pr span{color:var(--mute)}
+.toast{background:var(--ink)}
 </style>
 </head>
 <body>
 <div class="stage" id="stage">
 
-  <!-- 08 -->
+  <!-- 01 · 질문 + 책상 위 리포트 -->
   <section class="pg">
-    <div class="in">
-      <div style="background:#15171C;border-radius:22px;padding:22px 20px;display:flex;flex-direction:column;gap:14px;box-shadow:0 18px 44px rgba(21,23,28,.28);border:1px solid rgba(212,174,98,.4)">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
-          <div style="display:flex;flex-direction:column;gap:4px">
-            <span style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#D4AE62">MAKESBETTER MEMBERS</span>
-            <span style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#8A8F98">1:1 REPORT</span>
-          </div>
-          <span style="background:#D4AE62;color:#15171C;font-size:12px;font-weight:800;border-radius:999px;padding:4px 10px;flex:none">무료</span>
-        </div>
-        <div style="font-size:clamp(20px,5.8vw,24px);font-weight:700;line-height:1.4;color:#fff;letter-spacing:-.03em">포트폴리오를 분석하고,<br>한 편의 리포트로 드립니다.</div>
-        <p style="margin:0;font-size:14px;line-height:1.65;color:#B6BAC2">보유 종목의 성과와 원인을 짚고, 7.2 기준의 조정 방향까지 담아 <b style="color:#fff">고객님만을 위한 리포트</b>로 전해 드립니다.</p>
-        <div style="height:1px;background:rgba(255,255,255,.1)"></div>
-        <div style="display:flex;flex-direction:column;gap:11px;font-size:14px;color:#E5E8EB">
-          <div class="ben"><i>✓</i>수익률 뒤에 숨은 실제 성과</div>
-          <div class="ben"><i>✓</i>리밸런싱 · 조정 / 검토 / 관찰 / 수정</div>
-          <div class="ben"><i>✓</i>7.2 기준 월 분배금 변화</div>
-        </div>
-      </div>
-      <span style="font-size:12.5px;color:#8B95A1;text-align:center">메이크스베러 고객님께만 제공됩니다</span>
+    <div class="in" style="gap:0">
+      <div class="mast f d1"><span>MAKESBETTER MEMBERS</span><span>1:1 REPORT</span></div>
+      <h2 class="hd serif f d2">내 포트폴리오,<br><em>점검</em> 받고 싶으세요?</h2>
+      <p class="lead f d2">보유 종목을 분석해, 나만을 위한<br>리포트 한 편으로 돌려드려요.</p>
+      <div class="desk-st" id="fan"><div class="desk">
+        <figure class="sh s3"><img src="img/r-rev.jpg" alt=""></figure>
+        <figure class="sh s1"><img src="img/r-p1.jpg" alt=""></figure>
+        <figure class="sh s2"><img src="img/r-p2.jpg" alt=""></figure>
+        <figure class="sh s0"><img src="img/r-cover.jpg" alt=""></figure>
+      </div></div>
+      <div class="chips f d3"><span>피드백</span><span>수정</span><span>제안</span></div>
     </div>
   </section>
 
-  <!-- 09 -->
-  <section class="pg" style="background:#101216;color:#fff">
+  <!-- 02 · 점검을 받으면 -->
+  <section class="pg">
+    <div class="in" style="gap:12px">
+      <div class="mast f d1"><span>점검을 받으면</span><span>02</span></div>
+      <h2 class="hd serif f d2" style="margin:10px 0 8px">막연했던 내 계좌가,<br><em>선명</em>해져요.</h2>
+      <div class="gv f g1"><i><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1B7B7A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l3.5-4 3 2.5L20 7"/></svg></i><div><b>지금 잘 가고 있는지</b><p>수익률 숫자 하나가 아니라,<br>받은 분배금까지 합쳐서 봐요.</p></div></div>
+      <div class="gv f g2"><i><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1B7B7A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 1.8-2M4 12l1 1 1.8-2M4 18l1 1 1.8-2"/></svg></i><div><b>종목마다 한 줄 정리</b><p>어떤 종목이 제 역할을 하고 있는지<br>한눈에 보여요.</p></div></div>
+      <div class="gv f g3"><i><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1B7B7A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></i><div><b>다음에 할 일 하나</b><p>막연한 걱정 대신,<br>다음 한 걸음이 분명해져요.</p></div></div>
+      <div class="gend f" style="margin-top:8px"><b class="serif">혼자 보던 계좌,<br><em>이제 함께 봐 드릴게요.</em></b><span class="fn">담당 디렉터 1:1 작성 · 메이크스베러 고객님께 무료</span></div>
+    </div>
+  </section>
+
+  <!-- 03 · 무료 점검 신청 -->
+  <section class="pg">
     <div class="in" style="gap:14px">
-      <div style="display:flex;flex-direction:column;gap:6px">
-        <span style="font-size:11px;font-weight:700;color:#D4AE62;letter-spacing:.16em">MAKESBETTER.7 REPORT</span>
-        <h2 style="color:#fff;font-size:clamp(21px,5.8vw,25px)">리포트는 이 세 장으로<br>돌려드립니다.</h2>
+      <div class="mast f d1"><span>고객님 전용 · 무료</span><span>03</span></div>
+      <h2 class="hd serif f d2" style="margin:10px 0 6px">캡처만 보내면<br><em>무료 점검</em> 신청 끝.</h2>
+      <div class="steps2">
+        <div class="st2 f"><i>1</i><span>한투 앱 → 왼쪽 위 <b>MY</b> → <b>나의 배당</b></span></div>
+        <div class="st2 f"><i>2</i><span>받은 배당금 화면 캡처 <span style="color:var(--mute)">(계좌별 한 장씩)</span></span></div>
+        <div class="st2 f"><i>3</i><span>연도별로 <b>2024 · 2025 · 2026년</b> 캡처</span></div>
+        <div class="st2 f"><i class="t">4</i><span>채널로 보내기 <span style="color:var(--mute)">· 0원이어도 괜찮아요</span></span></div>
       </div>
-      <div class="tabs" id="tabs" data-nodrag>
-        <button type="button" data-t="0" class="on">제안<span class="fl"><i></i></span></button>
-        <button type="button" data-t="1">수정<span class="fl"><i></i></span></button>
-        <button type="button" data-t="2">피드백<span class="fl"><i></i></span></button>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+        <a class="appbtn b1" id="app" target="_blank" rel="noopener" href="https://apps.apple.com/kr/app/id1621986905">
+          <span class="ai"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.6"/><path d="M9.2 14.5l2-2.2 1.7 1.4 2.5-3"/><path d="M10.5 18.5h3"/></svg></span>
+          <span class="at"><b>한투 앱 열기</b><small>MY → 나의 배당</small></span>
+          <span class="ao">열기</span>
+        </a>
+        <a class="btn d cp b2" href="https://pf.kakao.com/_eETXxj/chat" target="_blank" rel="noopener" style="min-height:56px;font-size:16.5px">캡처 보내고 <span style="color:#7FD3CF">무료 점검</span> 받기 <span class="arw">→</span></a>
       </div>
-      <div class="paper">
-        <div class="rps">
-        <div class="rp on" data-r="0">
-          <div class="rk"><span>PORTFOLIO PROPOSAL</span><span>No.01</span></div>
-          <div class="rt"><span>MAKESBETTER.7</span><b>ver2 제안서</b></div>
-          <p class="rd">11개 ETF를 4개 역할로 나눠 매월 분배금을 만들고, 성장을 더하고, 흔들림을 줄입니다.</p>
-          <div class="rbar"><div style="width:50%;background:#0F6E6A"></div><div style="width:15%;background:#B5731F"></div><div style="width:10%;background:#5B4FA8"></div><div style="width:25%;background:#3A86B8"></div></div>
-          <div class="rlg"><span><i style="background:#0F6E6A"></i>Income Core<b>50%</b></span><span><i style="background:#B5731F"></i>Growth Engine<b>15%</b></span><span><i style="background:#5B4FA8"></i>Defense<b>10%</b></span><span><i style="background:#3A86B8"></i>Cash<b>25%</b></span></div>
-          <div>
-            <div class="rr"><span>예상 분배율 (연)</span><b>10.8%</b></div>
-            <div class="rr"><span>매월 지급분 (월)</span><b>0.87%</b></div>
-            <div class="rr"><span>구성</span><b style="font-size:14.5px">11 ETF · 4개 역할</b></div>
-          </div>
-        </div>
-        <div class="rp" data-r="1">
-          <div class="rk"><span>PORTFOLIO REVISION</span><span>No.02</span></div>
-          <div class="rt"><span>MAKESBETTER.7</span><b>리밸런싱 제안</b></div>
-          <p class="rd">현재 보유를 MAKESBETTER.7 ver2와 비교하고, 두 가지 조정 방향을 제시합니다.</p>
-          <div class="rbar"><div style="width:51%;background:#0F6E6A"></div><div style="width:21%;background:#B5731F"></div><div style="width:28%;background:#5B4FA8"></div></div>
-          <div class="rlg"><span><i style="background:#0F6E6A"></i>Income Core<b>51%</b></span><span><i style="background:#B5731F"></i>Growth Engine<b>21%</b></span><span><i style="background:#5B4FA8"></i>Defense<b>27%</b></span><span><i style="background:#3A86B8"></i>Cash<b>0%</b></span></div>
-          <div>
-            <div class="rr"><span>월 분배금 (추정)</span><b style="color:#C2410C">22 → 24만원</b></div>
-            <div class="rr"><span>현금성 비중</span><b style="color:#C2410C">0% → 25%</b></div>
-            <div class="rr"><span>조정 규모</span><b style="font-size:14.5px">정리 8 · 신규 7종목</b></div>
-          </div>
-        </div>
-        <div class="rp" data-r="2">
-          <div class="rk"><span>PORTFOLIO FEEDBACK</span><span>No.03</span></div>
-          <div class="rt"><span>MAKESBETTER.7</span><b>포트폴리오 피드백</b></div>
-          <p class="rd">보유 ETF 12종목의 성과와 원인을 점검하고, 앞으로의 조정 방향을 제안합니다.</p>
-          <div class="rbar"><div style="width:51%;background:#0F6E6A"></div><div style="width:21%;background:#B5731F"></div><div style="width:28%;background:#5B4FA8"></div></div>
-          <div class="rlg"><span><i style="background:#0F6E6A"></i>Income Core<b>51%</b></span><span><i style="background:#B5731F"></i>Growth Engine<b>21%</b></span><span><i style="background:#5B4FA8"></i>Defense<b>27%</b></span><span><i style="background:#3A86B8"></i>Cash<b>0%</b></span></div>
-          <div class="r2">
-            <div><span>총수익</span><b style="color:#2B6FD6">−9.43%</b></div>
-            <div><span>실제 성과</span><b style="color:#D9363E">+5.13%</b></div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <span style="font-size:12px;font-weight:700">리밸런싱</span>
-            <div class="rb">
-              <div><b style="color:#C2410C">3</b><span>조정</span></div>
-              <div><b>2</b><span>검토</span></div>
-              <div><b>5</b><span>관찰</span></div>
-              <div><b>2</b><span>수정</span></div>
-            </div>
-          </div>
-        </div>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:#8B95A1"><span>담당 디렉터 1:1 작성</span><b style="letter-spacing:.1em;color:#191F28">MAKESBETTER</b></div>
-      </div>
-      <p style="margin:0;font-size:11px;line-height:1.55;color:#8A8F98">익명 사례 · 참고용 자료이며 투자 권유가 아닙니다.</p>
-    </div>
-  </section>
-
-  <!-- 10 -->
-  <section class="pg">
-    <div class="in" style="gap:18px">
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <span style="align-self:flex-start;display:flex;gap:6px;align-items:center;background:#15171C;color:#D4AE62;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:700">고객님 전용 · 무료</span>
-        <h2>캡처만 보내면<br>무료 점검 신청 끝.</h2>
-      </div>
-      <div class="card steps">
-        <div class="st"><i>1</i><span>한투 앱 → 왼쪽 위 <b>MY</b> → <b>나의 배당</b></span></div>
-        <div class="st"><i>2</i><span>받은 배당금 화면 캡처 <span style="color:#8B95A1">(계좌별 한 장씩)</span></span></div>
-        <div class="st"><i>3</i><span>연도를 바꿔 <b>2024 · 2025 · 2026년</b> 각각 캡처</span></div>
-        <div class="st"><i style="background:#D4AE62;color:#15171C">4</i><span>채널로 보내기 <span style="color:#8B95A1">· 0원이어도 괜찮아요</span></span></div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <a class="btn b1" id="app" target="_blank" rel="noopener" href="https://apps.apple.com/kr/app/id1621986905">한투 앱 열기</a>
-        <a class="btn d cp b2" href="https://pf.kakao.com/_eETXxj/chat" target="_blank" rel="noopener" style="min-height:56px;font-size:16.5px">캡처 보내고 <span style="color:#D4AE62">무료 점검</span> 받기 <span class="arw">→</span></a>
-      </div>
-      <p style="margin:-4px 0 0;font-size:12px;line-height:1.6;color:#8B95A1;text-align:center">누르면 요청 문구가 복사돼요. 채팅창에 붙여 넣어 주세요.</p>
-      <div style="display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:#8B95A1;margin-top:4px"><b style="color:#191F28;font-weight:800;letter-spacing:.08em">MAKESBETTER</b><span>NO MAGIC · JUST COMMON SENSE</span></div>
+      <p style="margin:0;font-size:12px;line-height:1.6;color:var(--mute);text-align:center">누르면 요청 문구가 복사돼요. 채팅창에 붙여 넣어 주세요.</p>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:var(--mute);margin-top:auto;border-top:1px solid var(--line);padding-top:10px"><b style="color:var(--ink);font-weight:800;letter-spacing:.08em">MAKESBETTER</b><span>NO MAGIC · JUST COMMON SENSE</span></div>
     </div>
   </section>
 
@@ -283,7 +297,7 @@ h2{font-size:clamp(22px,6.2vw,27px);font-weight:700;line-height:1.38}
     <button type="button" id="prev" class="off" aria-label="이전">←</button>
     <div class="mid">
       <div class="segs" id="segs"></div>
-      <div class="pr"><b id="lab">멤버스 리포트</b><span id="pgn">1 / 3</span></div>
+      <div class="pr"><b id="lab">점검 받고 싶으세요?</b><span id="pgn">1 / 3</span></div>
     </div>
     <button type="button" id="next" aria-label="다음">→</button>
   </div>
@@ -292,8 +306,8 @@ h2{font-size:clamp(22px,6.2vw,27px);font-weight:700;line-height:1.38}
 
 <script>
 (function(){
-  var LABELS=['멤버스 리포트','받게 되는 리포트','무료 점검 신청'];
-  var DARK=1;
+  var LABELS=['점검 받고 싶으세요?','점검을 받으면','무료 점검 신청'];
+  var DARK=-1;
   var stage=document.getElementById('stage'), pages=[].slice.call(stage.querySelectorAll('.pg')), N=pages.length, cur=0, touched=false, drag=null, justDragged=false;
   var segs=document.getElementById('segs');
   LABELS.forEach(function(){segs.appendChild(document.createElement('i'));});
@@ -343,6 +357,7 @@ h2{font-size:clamp(22px,6.2vw,27px);font-weight:700;line-height:1.38}
     pages[n].scrollTop=0;
     cur=n;layout(0,0,true);ui();
     if(cur===DARK)startTabs();else stopTabs();
+    if(cur===0)fanOpen();
   }
   fit();layout(0,0,false);ui();
   window.addEventListener('resize',fit);
@@ -414,9 +429,16 @@ h2{font-size:clamp(22px,6.2vw,27px);font-weight:700;line-height:1.38}
     void b.offsetWidth;b.classList.add('run');
     tTimer=setTimeout(function(){setTab((tab+1)%tabs.length,true);},TAB_MS);
   }
-  function startTabs(){setTab(0,true);}
+  function startTabs(){if(tabs.length)setTab(0,true);}
   function stopTabs(){clearTimeout(tTimer);tabs.forEach(function(x){x.classList.remove('run');});}
   tabs.forEach(function(b){b.addEventListener('click',function(){setTab(+b.dataset.t,true);});});
+
+  var fanPg=document.getElementById('fan').closest('.pg'), fanT=null;
+  function fanOpen(){clearTimeout(fanT);fanPg.classList.remove('open');fanT=setTimeout(function(){fanPg.classList.add('open');},550);}
+  fanOpen();
+  if(/KAKAOTALK/i.test(navigator.userAgent)){
+    [].forEach.call(document.querySelectorAll('a[target="_blank"]'),function(a){a.removeAttribute('target');});
+  }
   var tt;
   [].forEach.call(document.querySelectorAll('.cp'),function(a){
     a.addEventListener('click',function(){
