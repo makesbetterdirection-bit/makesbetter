@@ -106,10 +106,10 @@ button.o[disabled]{cursor:default}
     <h2 id="endTitle" data-fit></h2>
     <p id="endText" data-fit></p>
     <div class="save" data-fit><span class="ln"><b>저장해두고,</b> 다음 주 리뷰 전에 다시 풀어 보세요.</span><span class="ln">틀린 문제의 답은 금융 도서관에 있어요.</span></div>
-    <form class="join" id="join" name="quiz-1108" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <form class="join" id="join" name="quiz-1109" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <h3>참여 등록하기</h3>
       <p class="s" data-fit><span class="ln">만점이 아니어도 아차상 기회가 있어요.</span><span class="ln">이름과 연락처를 남기면 참여가 등록돼요.</span></p>
-      <input type="hidden" name="form-name" value="quiz-1108">
+      <input type="hidden" name="form-name" value="quiz-1109">
       <p class="hp"><label>비워두세요 <input name="bot-field"></label></p>
       <input type="hidden" name="score"><input type="hidden" name="q1"><input type="hidden" name="q2"><input type="hidden" name="q3"><input type="hidden" name="q4"><input type="hidden" name="q5">
       <label class="f" for="nm">이름</label>
@@ -194,7 +194,7 @@ function end(){
   $('endTitle').innerHTML='<span class="ln"></span>'; $('endTitle').firstChild.textContent=m[0]; $('endText').innerHTML='<span class="ln"></span>'; $('endText').firstChild.textContent=m[1]; fitAll();
 }
 const F=$('join');
-function done(){try{return localStorage.getItem('mb-quiz-1108')==='1'}catch(e){return false}}
+function done(){try{return localStorage.getItem('mb-quiz-1109')==='1'}catch(e){return false}}
 function lock(nm){$('end').style.display='none';$('lib').style.display='block';$('doneTitle').firstChild.textContent=nm?nm+'님, 참여 등록 완료!':'이미 참여 등록하셨어요';window.scrollTo(0,0);fitAll()}
 F.addEventListener('submit',async ev=>{
   ev.preventDefault();
@@ -209,7 +209,7 @@ F.addEventListener('submit',async ev=>{
   try{
     const r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(F)).toString()});
     if(!r.ok)throw 0;
-    try{localStorage.setItem('mb-quiz-1108','1')}catch(e){}
+    try{localStorage.setItem('mb-quiz-1109','1')}catch(e){}
     lock(nm);
   }catch(e){$('send').disabled=false;$('msg').style.color='#EF4444';$('msg').textContent='등록이 안 됐어요. 잠시 후 다시 눌러 주세요.'}
 });
