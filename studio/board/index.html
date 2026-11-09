@@ -61,7 +61,7 @@ svg text{font-family:inherit}
   <h2>판단일별 초과 성과 <small>추천 비중 − 기본 비중 (분배금 반영)</small></h2>
   <div class="chart" id="chart"><div class="tip" id="tip"></div></div>
 
-  <h2>종목별 오차 <small>평균 우위가 낮은 순 = 판단이 자주 틀린 종목</small></h2>
+  <h2>종목별 오차 <small>평균 대비 = 11종 평균보다 더(+)·덜(−) 오른 정도. 기본 종목은 ±3%p 안이면 범위 안</small></h2>
   <div class="card"><table id="byEtf"></table></div>
 
   <h2>근거별 적중 <small>어떤 근거로 낸 판단이 맞았는지</small></h2>
@@ -83,7 +83,7 @@ svg text{font-family:inherit}
     평가 방법: 판단일 종가(휴장이면 다음 거래일 종가) 대비 5·20거래일 뒤 수정종가(분배금 반영) 수익률. 상대 수익률 = 종목 수익률 − 11종 평균.
     확대는 상대 수익률이 +이면 적중, 축소는 −이면 적중. 기본은 적중 계산에서 빼고, 상대 수익률이 ±3%p를 넘으면 "놓친 기회"로 표시합니다.
     우위 = 확대면 상대 수익률, 축소면 −상대 수익률(%p). 초과 성과 = 기본 비중 × (확대 2, 기본 1, 축소 0.5)로 다시 나눈 비중의 수익률 − 기본 비중 수익률.
-    가격: 야후파이낸스 수정종가. 투자 권유가 아닌 내부 점검용 기록입니다.
+    스튜디오 신호일 기록(시장 판단 없음)은 기록 표에만 남기고 채점에서 제외합니다. 가격: 야후파이낸스 수정종가. 투자 권유가 아닌 내부 점검용 기록입니다.
   </p>
 </div>
 <script>
@@ -92,8 +92,9 @@ var H=5,LOG=null,PX=null;
 var NAME={"488770":"머니마켓","473330":"美30년국채CC","332610":"美단기회사채","480030":"美500CC","441640":"美배당CC","494300":"나스닥100CC","498400":"200위클리CC","0022T0":"국제금CC","497570":"필라AI반도체","485690":"AI밸류체인","0036R0":"휴머노이드"};
 var BENCH={"480030":20,"494300":15,"498400":10,"497570":5,"485690":5,"0036R0":5,"473330":10,"0022T0":10,"332610":5,"441640":5,"488770":10};
 var MISS=3;
+function isEval(e){return /^Claude/.test(e.by||'')} // 스튜디오 신호일 기록은 채점에서 제외
 function $(id){return document.getElementById(id)}
-function pct(x,d){if(x==null||isNaN(x))return'—';d=d==null?1:d;return(x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(d)}
+function pct(x,d){if(x==null||isNaN(x))return'—';d=d==null?1:d;var t=Math.abs(x).toFixed(d);if(+t===0)return t;return(x>0?'+':'−')+t}
 function cls(x){return x==null?'n':x>0?'g':x<0?'b':''}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function idxOnOrAfter(series,d){for(var i=0;i<series.length;i++)if(series[i][0]>=d)return i;return -1}
@@ -113,12 +114,13 @@ function agg(list){var d=list.filter(function(c){return c.hit!==null});var hit=d
   var e=d.reduce(function(a,c){return a+c.edge},0);return{n:d.length,hit:hit,rate:d.length?hit/d.length*100:null,edge:d.length?e/d.length:null,miss:list.filter(function(c){return c.miss}).length,all:list.length}}
 function render(){
   var ents=LOG.entries.slice().sort(function(a,b){return a.date<b.date?-1:1});
-  var ev=ents.map(function(e){return{e:e,r:evalEntry(e,H)}});
+  var ev=ents.map(function(e){return{e:e,x:!isEval(e),r:isEval(e)?evalEntry(e,H):null}});
+  var nEval=ev.filter(function(x){return!x.x}).length;
   var done=ev.filter(function(x){return x.r}),calls=[];done.forEach(function(x){calls=calls.concat(x.r.calls)});
   var A=agg(calls),ex=done.length?done.reduce(function(a,x){return a+x.r.excess},0)/done.length:null;
-  $('meta').textContent='판단 '+ents.length+'건 · 가격 '+lastDate()+'까지 ('+(PX.updated||'')+') · 기록 '+(ents.length?ents[ents.length-1].date:'—');
+  $('meta').textContent='판단 '+nEval+'건 (스튜디오 신호 '+(ents.length-nEval)+'건은 채점 제외) · 가격 '+lastDate()+'까지 ('+(PX.updated||'')+') · 기록 '+(ents.length?ents[ents.length-1].date:'—');
   $('tiles').innerHTML=[
-    ['평가 완료',done.length+' / '+ents.length+'건',H+'거래일이 지난 판단만'],
+    ['평가 완료',done.length+' / '+nEval+'건',H+'거래일이 지난 일일 판단만'],
     ['확대·축소 적중률',A.rate==null?'—':A.rate.toFixed(0)+'%',A.n?A.hit+' / '+A.n+'건':'평가 대기'],
     ['평균 우위',A.edge==null?'—':pct(A.edge)+'%p','맞으면 +, 틀리면 −'],
     ['평균 초과 성과',ex==null?'—':pct(ex,2)+'%p','추천 비중 − 기본 비중'],
@@ -128,19 +130,25 @@ function render(){
   // by ETF
   var byE={};calls.forEach(function(c){(byE[c.code]=byE[c.code]||[]).push(c)});
   var rows=Object.keys(NAME).map(function(k){var g=agg(byE[k]||[]);var relAvg=(byE[k]||[]).reduce(function(a,c){return a+c.rel},0)/((byE[k]||[]).length||1);return{k:k,g:g,rel:(byE[k]||[]).length?relAvg:null}});
-  rows.sort(function(a,b){var x=a.g.edge==null?99:a.g.edge,y=b.g.edge==null?99:b.g.edge;return x-y});
-  $('byEtf').innerHTML='<tr><th>종목</th><th>평가된 판단</th><th>확대·축소</th><th>적중률</th><th>평균 우위</th><th>평균 상대 수익률</th><th>놓친 기회</th></tr>'+
-    (calls.length?rows.map(function(r){return'<tr><td>'+NAME[r.k]+'</td><td>'+r.g.all+'</td><td>'+r.g.n+'</td><td class="'+(r.g.rate==null?'n':r.g.rate>=55?'g':r.g.rate<45?'b':'')+'">'+(r.g.rate==null?'—':r.g.rate.toFixed(0)+'%')+'</td><td class="'+cls(r.g.edge)+'">'+(r.g.edge==null?'—':pct(r.g.edge)+'%p')+'</td><td>'+(r.rel==null?'—':pct(r.rel)+'%p')+'</td><td>'+(r.g.miss||'')+'</td></tr>'}).join(''):'<tr><td colspan="7" class="empty">아직 '+H+'거래일이 지난 판단이 없어요.</td></tr>');
+  // 확대·축소가 있는 종목은 평균 우위 낮은 순, 기본만 있는 종목은 그 아래에 평균과 차이가 큰 순
+  rows.sort(function(a,b){var ea=a.g.edge,eb=b.g.edge;if(ea!=null&&eb!=null)return ea-eb;if(ea!=null)return -1;if(eb!=null)return 1;return Math.abs(b.rel||0)-Math.abs(a.rel||0)});
+  $('byEtf').innerHTML='<tr><th>종목</th><th>평균 대비</th><th>적중률</th><th>평균 우위</th><th>평가된 판단</th><th>확대·축소</th><th>놓친 기회</th></tr>'+
+    (calls.length?rows.map(function(r){var only=r.g.n===0,mc=only&&r.rel!=null&&Math.abs(r.rel)>MISS;
+      return'<tr><td>'+NAME[r.k]+'</td>'+
+        '<td class="'+(mc?'b':'')+'">'+(r.rel==null?'—':pct(r.rel)+'%p')+'</td>'+
+        (only?'<td class="n">기본</td><td class="n">'+(r.rel==null?'—':(mc?'놓친 기회':'범위 안'))+'</td>'
+             :'<td class="'+(r.g.rate>=55?'g':r.g.rate<45?'b':'')+'">'+r.g.rate.toFixed(0)+'%</td><td class="'+cls(r.g.edge)+'">'+pct(r.g.edge)+'%p</td>')+
+        '<td>'+r.g.all+'</td><td>'+r.g.n+'</td><td>'+(r.g.miss||'')+'</td></tr>'}).join(''):'<tr><td colspan="7" class="empty">아직 '+H+'거래일이 지난 판단이 없어요.</td></tr>');
   // by driver
   var byD={};calls.forEach(function(c){(c.drivers.length?c.drivers:['(근거 없음)']).forEach(function(d){(byD[d]=byD[d]||[]).push(c)})});
   var dr=Object.keys(byD).map(function(k){return{k:k,g:agg(byD[k])}}).filter(function(x){return x.g.n}).sort(function(a,b){return a.g.edge-b.g.edge});
   $('byDriver').innerHTML='<tr><th>근거</th><th>확대·축소</th><th>적중률</th><th>평균 우위</th></tr>'+(dr.length?dr.map(function(r){return'<tr><td>'+esc(r.k)+'</td><td>'+r.g.n+'</td><td>'+r.g.rate.toFixed(0)+'%</td><td class="'+cls(r.g.edge)+'">'+pct(r.g.edge)+'%p</td></tr>'}).join(''):'<tr><td colspan="4" class="empty">평가 대기</td></tr>');
   // by confidence
-  var B=[['확신 낮음 (0.5 미만)',function(c){return c.conf!=null&&c.conf<0.5}],['보통 (0.5~0.7)',function(c){return c.conf!=null&&c.conf>=0.5&&c.conf<0.7}],['확신 높음 (0.7 이상)',function(c){return c.conf!=null&&c.conf>=0.7}],['확신도 없음 (신호일 규칙)',function(c){return c.conf==null}]];
+  var B=[['확신 낮음 (0.5 미만)',function(c){return c.conf!=null&&c.conf<0.5}],['보통 (0.5~0.7)',function(c){return c.conf!=null&&c.conf>=0.5&&c.conf<0.7}],['확신 높음 (0.7 이상)',function(c){return c.conf!=null&&c.conf>=0.7}],['확신도 없음',function(c){return c.conf==null}]];
   $('byConf').innerHTML='<tr><th>확신도</th><th>확대·축소</th><th>적중률</th><th>평균 우위</th></tr>'+B.map(function(b){var g=agg(calls.filter(b[1]));return'<tr><td>'+b[0]+'</td><td>'+g.n+'</td><td>'+(g.rate==null?'—':g.rate.toFixed(0)+'%')+'</td><td class="'+cls(g.edge)+'">'+(g.edge==null?'—':pct(g.edge)+'%p')+'</td></tr>'}).join('');
   // regime
   var R={};done.forEach(function(x){var k=x.e.regime?x.e.regime.call:'(기록 없음)';(R[k]=R[k]||[]).push(x.r.base)});
-  var order=['적극','분할','대기','(기록 없음)'];
+  var order=['적극','분할','대기'];
   $('byRegime').innerHTML='<tr><th>판단</th><th>평가된 날</th><th>이후 평균 수익률</th><th>설명</th></tr>'+order.map(function(k){var a=R[k]||[];var m=a.length?a.reduce(function(s,x){return s+x},0)/a.length:null;return'<tr><td>'+k+'</td><td>'+a.length+'</td><td class="'+cls(m)+'">'+(m==null?'—':pct(m,2)+'%')+'</td><td class="l">'+({'적극':'이후 수익률이 가장 높아야 정상','분할':'적극과 대기 사이여야 정상','대기':'이후 수익률이 가장 낮아야 정상','(기록 없음)':'신호일 규칙 기록'})[k]+'</td></tr>'}).join('');
   // worst
   var w=calls.filter(function(c){return c.hit===false||c.miss}).sort(function(a,b){var x=a.edge!=null?a.edge:-Math.abs(a.rel),y=b.edge!=null?b.edge:-Math.abs(b.rel);return x-y}).slice(0,10);
@@ -148,7 +156,7 @@ function render(){
   // log
   $('log').innerHTML='<tr><th>판단일</th><th style="text-align:left">시장 판단</th><th style="text-align:left">확대</th><th style="text-align:left">축소</th><th>'+H+'일 초과 성과</th><th>상태</th></tr>'+ev.slice().reverse().map(function(x){var e=x.e,up=[],dn=[];Object.keys(e.etf).forEach(function(c){if(e.etf[c].call==='확대')up.push(NAME[c]);if(e.etf[c].call==='축소')dn.push(NAME[c])});
     var rg=e.regime?'<span class="pill '+(e.regime.call==='적극'?'up':e.regime.call==='대기'?'dn':'')+'">'+e.regime.call+'</span> <span class="n">'+esc(e.regime.why||'')+'</span>':'<span class="n">'+esc(e.by)+'</span>';
-    return'<tr><td>'+e.date+'</td><td class="l">'+rg+'</td><td class="l">'+(up.join(', ')||'—')+'</td><td class="l">'+(dn.join(', ')||'—')+'</td><td class="'+(x.r?cls(x.r.excess):'n')+'">'+(x.r?pct(x.r.excess,2)+'%p':'—')+'</td><td>'+(x.r?'평가 완료':'<span class="pill">'+H+'거래일 대기</span>')+'</td></tr>'}).join('');
+    return'<tr><td>'+e.date+'</td><td class="l">'+rg+'</td><td class="l">'+(up.join(', ')||'—')+'</td><td class="l">'+(dn.join(', ')||'—')+'</td><td class="'+(x.r?cls(x.r.excess):'n')+'">'+(x.r?pct(x.r.excess,2)+'%p':'—')+'</td><td>'+(x.x?'<span class="pill">채점 제외</span>':x.r?'평가 완료':'<span class="pill">'+H+'거래일 대기</span>')+'</td></tr>'}).join('');
 }
 function drawChart(done){
   var el=$('chart'),tip=$('tip');[].slice.call(el.querySelectorAll('svg,.empty')).forEach(function(n){n.remove()});
