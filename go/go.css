@@ -218,3 +218,4 @@ h1 em{font-style:normal;color:var(--gold)}
 .spark{position:absolute;left:50%;top:50%;width:7px;height:7px;border-radius:2px;z-index:4;pointer-events:none;animation:sp 1s cubic-bezier(.15,.7,.3,1) forwards}
 @keyframes sp{0%{transform:translate(-50%,-50%) scale(.4) rotate(0);opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1) rotate(200deg);opacity:0}}
 .gnote{margin-top:14px;text-align:center;font-size:12px;color:var(--faint)}
+.wrapx .wn{left:50%;right:auto;transform:translateX(-50%);white-space:nowrap;background:#15171C;padding:7px 16px;border-radius:99px;border:1px solid rgba(233,207,142,.55);z-index:1}
