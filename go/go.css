@@ -510,3 +510,4 @@ h1,h2,.lead,.a-s,.l-why{text-wrap:balance}
 .env .btn{background:linear-gradient(180deg,#E9CF8E,#C29A4A)}
 .env-v{width:150vw;max-width:700px;top:5svh}
 .pf-n{flex-wrap:nowrap;white-space:nowrap;overflow:hidden}.pf-n b{white-space:nowrap;font-size:min(42px,10.6vw)}.pf-n span{flex:0 0 auto}
+.nd summary .ndq{flex:1;min-width:0;white-space:nowrap;overflow:hidden;font-weight:700;font-size:15.5px}
