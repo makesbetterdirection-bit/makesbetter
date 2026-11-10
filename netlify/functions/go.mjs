@@ -3,7 +3,7 @@
 import { getStore } from "@netlify/blobs";
 import { createHash } from "node:crypto";
 
-export const config = { path: "/api/go/*" };
+export const config = { path: ["/api/go/*", "/g/*"] };
 
 const ADMIN_HASH = "4fac70b63fc7034f6813f1bfbc68d93c8bac5a1b18523993f471a4f37cc24bc9";
 const sha = (s) => createHash("sha256").update(String(s)).digest("hex");
@@ -103,6 +103,21 @@ function meView(d, id) {
 export default async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: { "access-control-allow-origin": "*", "access-control-allow-headers": "content-type", "access-control-allow-methods": "GET,POST" } });
   const url = new URL(req.url);
+  // 공유 링크 /g/<id>: 카카오 미리보기에 초대한 사람 이름을 넣고 바로 초대장 페이지로 이동
+  if (url.pathname.startsWith("/g/")) {
+    const id = url.pathname.slice(3).replace(/[^a-z0-9]/gi, "").slice(0, 12);
+    let name = null;
+    try { const { data } = await loadState(); const p = data.participants.find((x) => x.id === id); name = p ? p.name : null; } catch (e) {}
+    const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    const title = name ? `${esc(name)} 님이 초대장을 보냈어요` : "메이크스베러 초대장이 도착했어요";
+    const to = "/go/" + (name ? "?r=" + id : "");
+    return new Response(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${title}</title><meta property="og:type" content="website"><meta property="og:title" content="${title}"><meta property="og:description" content="그게 당신이었어요.">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/go/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:url" content="https://calc.makesbetter.co.kr/g/${id}"><meta http-equiv="refresh" content="0;url=${to}"></head>
+<body><script>location.replace(${JSON.stringify(to)})</script><a href="${to}">초대장 열기</a></body></html>`,
+      { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "public, max-age=300" } });
+  }
   const op = url.pathname.replace(/^\/api\/go\/?/, "").split("/")[0];
   const body = req.method === "POST" ? await req.json().catch(() => ({})) : {};
 

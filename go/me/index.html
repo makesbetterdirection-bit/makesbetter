@@ -103,8 +103,8 @@
   function fallback(s){try{var a=document.createElement('textarea');a.value=s;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();var ok=document.execCommand('copy');a.remove();return ok}catch(e){return false}}
   $('send').addEventListener('click',function(){
     if(!me)return;
-    var url='https://calc.makesbetter.co.kr/go/?r='+me.id;
-    var text='좋은 걸 알게 되면 가장 먼저 떠오르는 사람이 있어요. 그게 당신이었어요. - '+me.name;
+    var url='https://calc.makesbetter.co.kr/g/'+me.id;
+    var text=me.name+' 님이 메이크스베러 초대장을 보냈어요.';
     try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/go-send',{keepalive:true,mode:'no-cors'})}catch(e){}
     if(navigator.share){navigator.share({title:'메이크스베러 초대장',text:text,url:url}).catch(function(){})}
     else if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text+'\n'+url).then(function(){toast('링크를 복사했어요. 카카오톡에 붙여 넣어 보내 주세요.')},function(){toast(fallback(text+'\n'+url)?'링크를 복사했어요.':url)})}
