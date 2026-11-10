@@ -138,3 +138,29 @@ h1 em{font-style:normal;color:var(--gold)}
 .b7-m i.on{background:var(--gold)}
 .b7-m span{font-size:9px;color:var(--faint);text-align:center;white-space:nowrap}
 .b7-n{margin-top:12px;font-size:12px;color:var(--sub);line-height:1.5}
+.chg{margin-top:4px}
+.cg{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--line)}
+.cg .no{flex:0 0 auto;font-size:12px;font-weight:800;color:var(--gold);letter-spacing:.06em;padding-top:4px}
+.cg .bf{font-size:13px;color:var(--faint);text-decoration:line-through;text-decoration-color:rgba(154,149,138,.6)}
+.cg .af{margin-top:2px;font-size:20px;font-weight:800;letter-spacing:-.03em;line-height:1.35}
+.cg .af em{font-style:normal;color:var(--gold)}
+.cg .hw{margin-top:6px;font-size:12px;color:var(--sub)}
+.cg .hw b{font-weight:700;color:var(--ink)}
+.rv{display:flex;gap:12px;margin:16px -24px 0;padding:0 24px 8px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.rv::-webkit-scrollbar{display:none}
+.rc{flex:0 0 78%;scroll-snap-align:center;margin:0;background:var(--card);border-radius:20px;padding:22px 20px;display:flex;flex-direction:column;box-shadow:0 1px 0 var(--line)}
+.rc .q{font-size:40px;line-height:.8;font-weight:800;color:var(--gold);font-family:Georgia,serif}
+.rc blockquote{margin-top:8px;font-size:16px;line-height:1.65;font-weight:500;flex:1}
+.rc figcaption{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;font-size:13px}
+.rc figcaption span{font-size:12px;color:var(--faint)}
+.rc.best{padding:0;overflow:hidden}
+.rc.best img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.rc.best figcaption{margin:0;padding:14px 18px;border:0;flex-direction:column;gap:2px}
+.more{display:block;margin-top:14px;font-size:14px;font-weight:700}
+.ev{list-style:none;margin-top:6px}
+.ev li{display:flex;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px}
+.ev li span{flex:0 0 40px;font-size:12px;font-weight:700;color:var(--faint)}
+.ev li b{flex:1;font-weight:700}
+.ev li.now span,.ev li.now b{color:var(--ink)}
+.ev li i{font-style:normal;font-size:11px;font-weight:800;color:#fff;background:var(--gold);border-radius:99px;padding:4px 10px}
+.ev-n{margin-top:12px;font-size:12px;color:var(--sub)}
