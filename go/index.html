@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>메이크스베러 초대장</title>
+<meta name="description" content="좋은 걸 알게 되면 가장 먼저 떠오르는 사람이 있어요. 그게 당신이었어요.">
+<meta property="og:title" content="메이크스베러 초대장이 도착했어요">
+<meta property="og:description" content="좋은 걸 알게 되면 가장 먼저 떠오르는 사람이 있어요. 그게 당신이었어요.">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/go/og.png">
+<meta property="og:url" content="https://calc.makesbetter.co.kr/go/">
+<meta name="theme-color" content="#F5F3EE">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="/go/go.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><b>MAKESBETTER</b><span id="topR">가입비 없음</span></div>
+
+  <!-- A. 받는 사람 -->
+  <main id="A">
+    <div class="kick">INVITATION</div>
+    <h1 id="hA">메이크스베러<br>초대장이 도착했어요</h1>
+    <p class="lead">매달 들어오는 돈을 만드는 사람들의 금융 공간.<br>등록하면 아래 선물을 바로 받아요.</p>
+
+    <div class="sec">
+      <div class="sec-h">등록하면 바로 받아요<small>FREE</small></div>
+      <div class="gift">
+        <div class="th"><img src="/books/cover-01.jpg" alt=""><img src="/books/cover-02.jpg" alt=""></div>
+        <div class="tx"><div class="n">01</div><div class="t">전자책 2권</div><div class="d">현금흐름은 산소다 · 공포·탐욕 지수 읽는 법</div></div>
+      </div>
+      <div class="gift">
+        <div class="th one"><img src="/go/img/studio.webp" alt=""></div>
+        <div class="tx"><div class="n">02</div><div class="t">이번 달 매수 방향</div><div class="d">24개 지표로 정한 11월 재투자 방향</div></div>
+      </div>
+      <div class="gift">
+        <div class="th one"><img src="/go/img/report.webp" alt="" style="object-position:center"></div>
+        <div class="tx"><div class="n">03</div><div class="t">매달 월배당 리포트</div><div class="d">실제 계좌로 받은 배당을 그대로 공개</div></div>
+      </div>
+      <div class="gift" style="border-bottom:0">
+        <div class="tx"><div class="n">BONUS · 초대로만</div><div class="t">전문가 1:1 코칭 2시간</div><div class="d">초대받은 분께만 드리는 코칭권</div></div>
+      </div>
+    </div>
+
+    <form class="form" id="f" novalidate>
+      <label for="nm">이름</label>
+      <input type="text" id="nm" autocomplete="name" placeholder="홍길동" maxlength="10">
+      <label for="ph">휴대폰 번호</label>
+      <input type="tel" id="ph" autocomplete="tel" inputmode="numeric" placeholder="010-0000-0000" maxlength="13">
+      <div id="refBox" class="hide">
+        <label for="rf">초대해 준 분 이름 <span style="font-weight:400;color:var(--faint)">(선택)</span></label>
+        <input type="text" id="rf" placeholder="이름" maxlength="10">
+      </div>
+      <div class="agree">
+        <label><input type="checkbox" id="ag"> 개인정보 수집·이용에 동의합니다 (필수)</label>
+        <details><summary>자세히</summary>수집 항목: 이름, 휴대폰 번호<br>목적: 초대 이벤트 집계, 선물·혜택 안내<br>보관: 이벤트 종료 후 3개월 뒤 파기<br>동의하지 않으면 등록할 수 없어요.</details>
+      </div>
+      <button class="btn" id="go" type="submit">등록하고 바로 받기</button>
+      <div class="err" id="err" role="alert"></div>
+    </form>
+
+    <div class="stats">
+      <div><b id="cnt">1,347명</b><span>현금흐름 진단</span></div>
+      <div><b>20년</b><span>현장 노하우</span></div>
+      <div><a href="https://mbkr.my/review"><b>후기 →</b><span>먼저 경험한 분들</span></a></div>
+    </div>
+  </main>
+
+  <!-- B. 등록 완료 -->
+  <main id="B" class="hide">
+    <div class="kick">WELCOME</div>
+    <h1 id="hB">선물이 도착했어요</h1>
+    <p class="lead" id="lB">지금 바로 열어 보세요.</p>
+
+    <div class="sec">
+      <div class="sec-h">01 · 전자책 2권<small>책장 넘기듯 읽기</small></div>
+      <div class="books">
+        <a href="/books/read/?b=cashflow"><img src="/books/cover-01.jpg" alt="현금흐름은 산소다 표지"><span>현금흐름은 산소다 →</span></a>
+        <a href="/books/read/?b=market-mood"><img src="/books/cover-02.jpg" alt="공포·탐욕 지수 읽는 법 표지"><span>공포·탐욕 지수 →</span></a>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h">02 · 이번 달 매수 방향<small>STUDIO</small></div>
+      <a href="/studio/"><div class="shot"><img src="/go/img/studio.webp" alt="11월 재투자 방향 화면"></div></a>
+      <a class="btn line" href="/studio/">11월 재투자 방향 보기</a>
+    </div>
+
+    <div class="dark">
+      <div class="k">03 · 매달 받는 건 카카오톡으로</div>
+      <p>월배당 리포트 · ETF 매수 일정 · 금융 뉴스를 채널로 보내드려요.</p>
+      <a class="btn kakao" id="ch" href="https://pf.kakao.com/_eETXxj/friend">카카오톡 채널 추가하기</a>
+    </div>
+
+    <a class="bonus" id="cp" href="https://pf.kakao.com/_eETXxj/coupons/_JRkj">
+      <div><small>BONUS · 초대로만 받는</small><b>전문가 1:1 코칭 2시간</b></div><span>받기 →</span>
+    </a>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search), r=q.get('r')||'', inviter=null;
+  var $=function(id){return document.getElementById(id)};
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function hit(k){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/'+k,{keepalive:true,mode:'no-cors'})}catch(e){}}
+
+  function showB(name,inv){
+    $('A').classList.add('hide');$('B').classList.remove('hide');$('B').classList.add('fade');$('topR').textContent='등록 완료';
+    $('hB').innerHTML=esc(name)+' 님,<br>선물이 도착했어요';
+    $('lB').textContent=inv?inv+' 님 덕분에 받은 선물이에요. 지금 바로 열어 보세요.':'지금 바로 열어 보세요.';
+    window.scrollTo(0,0);
+  }
+  try{var s=JSON.parse(localStorage.getItem('mb-go')||'null');if(s&&s.name){showB(s.name,s.inv)}}catch(e){}
+
+  if(r){fetch('/api/go/who?r='+encodeURIComponent(r)).then(function(x){return x.json()}).then(function(d){if(d.name){inviter=d.name;$('hA').innerHTML='<em>'+esc(d.name)+'</em> 님이<br>당신을 떠올렸어요'}else $('refBox').classList.remove('hide')}).catch(function(){})}
+  else $('refBox').classList.remove('hide');
+  hit('go-open');
+
+  $('ph').addEventListener('input',function(){var d=this.value.replace(/\D/g,'').slice(0,11);this.value=d.length>7?d.slice(0,3)+'-'+d.slice(3,d.length-4)+'-'+d.slice(-4):d.length>3?d.slice(0,3)+'-'+d.slice(3):d});
+
+  $('f').addEventListener('submit',function(e){
+    e.preventDefault();var err=$('err');err.textContent='';
+    var name=$('nm').value.trim(), phone=$('ph').value.replace(/\D/g,'');
+    if(name.length<2){err.textContent='이름을 입력해 주세요.';return}
+    if(!/^01\d{8,9}$/.test(phone)){err.textContent='휴대폰 번호를 확인해 주세요.';return}
+    if(!$('ag').checked){err.textContent='개인정보 수집·이용에 동의해 주세요.';return}
+    var b=$('go');b.disabled=true;b.textContent='등록 중…';
+    fetch('/api/go/reg',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:name,phone:phone,r:r,refName:$('rf').value.trim(),agree:true})})
+      .then(function(x){return x.json()}).then(function(d){
+        if(d.ok||d.code==='dup'){var inv=d.inviter||inviter;try{localStorage.setItem('mb-go',JSON.stringify({name:name,inv:inv}))}catch(e){}hit('go-reg');showB(name,inv);if(d.code==='dup')toast('이미 등록된 번호예요. 선물은 그대로 받으실 수 있어요.')}
+        else{err.textContent=d.msg||'다시 시도해 주세요.';b.disabled=false;b.textContent='등록하고 바로 받기'}
+      }).catch(function(){err.textContent='연결이 불안정해요. 잠시 후 다시 눌러 주세요.';b.disabled=false;b.textContent='등록하고 바로 받기'});
+  });
+
+  $('ch').addEventListener('click',function(){hit('go-channel')});
+  $('cp').addEventListener('click',function(){hit('go-coaching')});
+  var t=$('toast');function toast(m){t.textContent=m;t.classList.add('on');setTimeout(function(){t.classList.remove('on')},3200)}
+
+  try{var x=new XMLHttpRequest();x.open('GET','https://abacus.jasoncameron.dev/get/mbkr.my/cashflow-basic');x.timeout=4000;x.onload=function(){try{var v=JSON.parse(x.responseText).value;if(v>=1347)$('cnt').textContent=v.toLocaleString('ko-KR')+'명'}catch(e){}};x.send()}catch(e){}
+})();
+</script>
+</body>
+</html>

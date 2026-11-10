@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>초대 이벤트 관리</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="/go/go.css">
+<style>
+.wrap{max-width:980px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px;background:#fff}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-size:12px;color:var(--sub)}
+.x{color:#C2410C}
+textarea{width:100%;height:140px;margin-top:8px;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;font-size:14px}
+.tools{display:flex;gap:8px;flex-wrap:wrap}.tools .btn{width:auto;padding:0 18px;height:46px;margin-top:10px;font-size:14px}
+.scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><b>MAKESBETTER</b><span>초대 이벤트 관리</span></div>
+  <form class="form" id="kf"><label>관리자 키</label><div class="row2"><input type="text" id="key" autocomplete="off"><button class="btn" style="margin-top:6px;height:54px">열기</button></div></form>
+  <div id="app" class="hide">
+    <div class="stats" id="sum"></div>
+    <div class="tools">
+      <button class="btn" id="dlR">등록자 엑셀(CSV)</button>
+      <button class="btn line" id="dlP">참여자 순위 엑셀(CSV)</button>
+      <button class="btn line" id="rf">새로고침</button>
+    </div>
+
+    <div class="sec"><div class="sec-h">참여자 순위<small>TOP · 3명 선착순</small></div><div class="scroll"><table id="tRank"></table></div></div>
+    <div class="sec"><div class="sec-h">등록자 전체<small>최신순</small></div><div class="scroll"><table id="tReg"></table></div></div>
+
+    <div class="sec"><div class="sec-h">기간 설정<small>KST</small></div>
+      <div class="form row2"><div><label>시작</label><input type="text" id="ms" placeholder="2026-11-17T00:00:00+09:00"></div><div><label>마감</label><input type="text" id="me" placeholder="2026-11-30T23:59:59+09:00"></div></div>
+      <div class="tools"><button class="btn" id="saveM">기간 저장</button></div>
+    </div>
+
+    <div class="sec"><div class="sec-h">퀴즈 참여자 명단 올리기<small>한 줄에 이름,휴대폰</small></div>
+      <textarea id="pl" placeholder="홍길동,010-1234-5678"></textarea>
+      <div class="tools"><button class="btn" id="saveP">명단 저장 (기존 명단 교체)</button></div>
+      <p class="note" style="text-align:left">같은 이름·번호는 한 번만 들어가요. 이미 있던 분은 공유 링크(id)가 유지돼요.</p>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)},K='',D=null,t=$('toast');
+  function toast(m){t.textContent=m;t.classList.add('on');setTimeout(function(){t.classList.remove('on')},3000)}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function dt(ts){if(!ts)return '';var d=new Date(ts+9*3600e3);return d.toISOString().slice(5,16).replace('T',' ')}
+  function ph(p){return p?p.replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3'):''}
+  var WHY={participant:'퀴즈 참여자',self:'본인',period:'기간 밖',noref:'추천인 미확인',admin:'관리자 제외'};
+  function post(b){b.key=K;return fetch('/api/go/admin',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(b)}).then(function(x){return x.json()})}
+  function load(){return fetch('/api/go/admin?key='+encodeURIComponent(K)).then(function(x){return x.json()}).then(function(d){
+    if(!d.ok){toast(d.msg);return}
+    D=d;try{localStorage.setItem('mb-go-admin',K)}catch(e){}
+    $('kf').classList.add('hide');$('app').classList.remove('hide');
+    var pm={};d.participants.forEach(function(p){pm[p.id]=p});
+    var c=d.computed;
+    $('sum').innerHTML='<div><b>'+d.participants.length+'명</b><span>퀴즈 참여자</span></div><div><b>'+d.regs.length+'건</b><span>전체 등록</span></div><div><b>'+c.valid+'명</b><span>인정 인원</span></div><div><b>'+c.three.length+' / '+c.limit+'</b><span>3만원 지급</span></div>';
+    $('tRank').innerHTML='<tr><th>순위</th><th>이름</th><th>휴대폰</th><th>인원</th><th>커피</th><th>3만원</th><th>3명 도달</th><th>공유 링크</th></tr>'+c.rows.map(function(r){var p=pm[r.id]||{};return '<tr><td>'+r.rank+'</td><td>'+esc(r.name)+'</td><td>'+ph(p.phone)+'</td><td><b>'+r.count+'</b></td><td>O</td><td>'+(c.three.indexOf(r.id)>-1?'O':'')+'</td><td>'+dt(r.t3)+'</td><td>?r='+r.id+'</td></tr>'}).join('');
+    var regs=d.regs.slice().sort(function(a,b){return b.at-a.at});
+    $('tReg').innerHTML='<tr><th>등록 시각</th><th>이름</th><th>휴대폰</th><th>초대한 분</th><th>입력한 추천인</th><th>인정</th><th>기기</th></tr>'+regs.map(function(r){return '<tr><td>'+dt(r.at)+'</td><td>'+esc(r.name)+'</td><td>'+ph(r.phone)+'</td><td>'+esc(pm[r.ref]?pm[r.ref].name:'')+'</td><td>'+esc(r.refName)+'</td><td'+(r.ok?'>O':' class="x">'+(WHY[r.why]||r.why))+'</td><td>'+esc(r.dev)+'</td></tr>'}).join('');
+    $('ms').value=d.meta.start||'';$('me').value=d.meta.end||'';
+    $('pl').value=d.participants.map(function(p){return p.name+','+ph(p.phone)}).join('\n');
+  })}
+  function csv(rows,name){var s='﻿'+rows.map(function(r){return r.map(function(v){v=String(v==null?'':v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}).join(',')}).join('\r\n');
+    var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([s],{type:'text/csv;charset=utf-8'}));a.download=name;a.click()}
+  $('dlR').onclick=function(){var pm={};D.participants.forEach(function(p){pm[p.id]=p});csv([['등록 시각','이름','휴대폰','초대한 분','입력한 추천인','인정','제외 사유','기기']].concat(D.regs.map(function(r){return [dt(r.at),r.name,ph(r.phone),pm[r.ref]?pm[r.ref].name:'',r.refName,r.ok?'O':'X',r.ok?'':WHY[r.why]||r.why,r.dev]})),'초대이벤트_등록자.csv')};
+  $('dlP').onclick=function(){var pm={};D.participants.forEach(function(p){pm[p.id]=p});var c=D.computed;csv([['순위','이름','휴대폰','인원','커피','3만원','3명 도달 시각']].concat(c.rows.map(function(r){return [r.rank,r.name,ph((pm[r.id]||{}).phone),r.count,'O',c.three.indexOf(r.id)>-1?'O':'',dt(r.t3)]})),'초대이벤트_순위.csv')};
+  $('rf').onclick=function(){load().then(function(){toast('새로고침했어요')})};
+  $('saveM').onclick=function(){post({op:'meta',meta:{start:$('ms').value.trim()||null,end:$('me').value.trim()||null}}).then(function(d){toast(d.ok?'기간을 저장했어요':d.msg);load()})};
+  $('saveP').onclick=function(){var list=$('pl').value.split(/\n/).map(function(l){var a=l.split(/[,\t]/);return {name:(a[0]||'').trim(),phone:(a[1]||'').trim()}}).filter(function(x){return x.name});
+    if(!confirm(list.length+'명으로 명단을 교체할까요?'))return;post({op:'participants',list:list}).then(function(d){toast(d.ok?d.participants+'명 저장했어요':d.msg);load()})};
+  $('kf').onsubmit=function(e){e.preventDefault();K=$('key').value.trim();load()};
+  try{var s=localStorage.getItem('mb-go-admin');if(s){K=s;load()}}catch(e){}
+})();
+</script>
+</body>
+</html>

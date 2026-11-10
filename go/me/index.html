@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>퀴즈 참여자 전용 · 초대 이벤트</title>
+<meta name="robots" content="noindex">
+<meta property="og:title" content="베러 퀴즈 참여자 전용 · 2라운드">
+<meta property="og:description" content="내 이름으로 초대장을 보내고, 선물을 쌓아 가세요.">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/go/og-me.png">
+<meta name="theme-color" content="#F5F3EE">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="/go/go.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><b>MAKESBETTER</b><span id="per">퀴즈 참여자 전용</span></div>
+
+  <div class="kick">BETTER QUIZ · ROUND 2</div>
+  <h1>퀴즈에 참여해 주신 분께<br><em>2라운드</em>를 열어 드려요</h1>
+  <p class="lead">내 이름으로 보낸 초대장으로 한 분이 등록할 때마다 선물이 쌓여요. 단계별 선물은 모두 받을 수 있어요.</p>
+
+  <div class="sec">
+    <div class="sec-h">등록 인원별 선물<small>모두 받아요</small></div>
+    <div class="prize"><div class="c">1명</div><div><div class="t">스타벅스 커피</div><div class="d">1명만 등록해도 모두</div></div></div>
+    <div class="prize"><div class="c">3명</div><div><div class="t">3만원 상품권</div><div class="d">먼저 3명을 채운 10분</div></div></div>
+    <div class="prize"><div class="c">2위</div><div><div class="t">조 말론 향수 또는 현금 30만원</div><div class="d">등록 인원 2위</div></div></div>
+    <div class="prize" style="border:0"><div class="c">1위</div><div><div class="t">일본 여행 현금 50만원</div><div class="d">등록 인원 1위 · 같은 인원이면 먼저 도달한 분</div></div></div>
+  </div>
+
+  <!-- 확인 전 -->
+  <form class="box" id="vf" novalidate>
+    <h3>내 이름으로 보내기</h3>
+    <p style="margin-top:4px;font-size:13px;color:var(--sub)">퀴즈에 등록한 이름과 휴대폰 뒤 4자리로 확인해요.</p>
+    <div class="form row2" style="margin-top:4px">
+      <div><input type="text" id="vn" placeholder="이름" maxlength="10" autocomplete="name"></div>
+      <div><input type="tel" id="vl" placeholder="휴대폰 뒤 4자리" inputmode="numeric" maxlength="4"></div>
+    </div>
+    <button class="btn" id="vb" type="submit">확인하기</button>
+    <div class="err" id="verr" role="alert"></div>
+  </form>
+
+  <!-- 확인 후 -->
+  <section id="mine" class="hide">
+    <div class="box">
+      <div class="me-h"><div><span id="mName"></span><br><b id="mCnt">0<small>명</small></b></div><span id="mRank"></span></div>
+      <div class="bar"><i id="mBar" style="width:0"></i></div>
+      <div class="steps"><span id="s1">1명 커피</span><span id="s3">3명 3만원</span><span id="sT">TOP 2</span></div>
+      <p class="nextgoal" id="mNext"></p>
+      <button class="btn kakao" id="send" type="button">카카오톡으로 초대장 보내기</button>
+      <p class="note">받는 분 화면에 <b id="mName2"></b> 님의 이름이 보여요.</p>
+    </div>
+    <div class="sec">
+      <div class="sec-h">내 초대로 등록한 분<small id="mUpd"></small></div>
+      <ul class="list" id="mList"><li><span>아직 없어요. 첫 초대장을 보내 보세요.</span></li></ul>
+    </div>
+    <a class="btn line" href="/go/live/">실시간 순위 보기</a>
+    <p class="note"><a href="#" id="out" style="text-decoration:underline">다른 이름으로 확인하기</a></p>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  var me=null, t=$('toast');
+  function toast(m){t.textContent=m;t.classList.add('on');setTimeout(function(){t.classList.remove('on')},3200)}
+  function hhmm(ts){var d=new Date(ts);return (d.getMonth()+1)+'/'+d.getDate()+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
+  var WHY={participant:'퀴즈 참여자라 제외',self:'본인 번호라 제외',period:'기간 밖 등록',noref:'확인 중'};
+
+  function render(d){
+    me=d;try{localStorage.setItem('mb-go-me',d.id)}catch(e){}
+    $('vf').classList.add('hide');$('mine').classList.remove('hide');
+    $('mName').textContent=d.name+' 님의 등록 인원';$('mName2').textContent=d.name;
+    $('mCnt').innerHTML=d.count+'<small>명</small>';
+    $('mRank').textContent=d.rank?'현재 '+d.rank+'위 / '+d.players+'명':'';
+    $('mBar').style.width=Math.min(100,d.count/5*100)+'%';
+    $('s1').classList.toggle('on',d.count>=1);$('s3').classList.toggle('on',d.three);$('sT').classList.toggle('on',d.rank&&d.rank<=2);
+    var n;
+    if(d.count<1)n='1명만 등록하면 스타벅스 커피를 받아요.';
+    else if(d.count<3)n=(3-d.count)+'명 더 등록하면 3만원 상품권 도전 (남은 자리 '+d.threeLeft+'개)';
+    else if(d.three)n='3만원 상품권 확정! 이제 TOP 2에 도전해 보세요.';
+    else n='3만원 상품권 10자리는 마감됐어요. TOP 2에 도전해 보세요.';
+    $('mNext').textContent=n;
+    $('mList').innerHTML=d.recent.length?d.recent.map(function(x){return '<li><b>'+esc(x.name)+'</b><span>'+(x.ok?hhmm(x.at):WHY[x.why]||'제외')+'</span></li>'}).join(''):'<li><span>아직 없어요. 첫 초대장을 보내 보세요.</span></li>';
+    $('mUpd').textContent='방금 갱신';
+  }
+  function load(id){return fetch('/api/go/me?id='+encodeURIComponent(id)).then(function(x){return x.json()}).then(function(d){if(d.ok)render(d);else{try{localStorage.removeItem('mb-go-me')}catch(e){}}})}
+  var saved=null;try{saved=localStorage.getItem('mb-go-me')}catch(e){}
+  if(saved)load(saved);
+
+  $('vl').addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').slice(0,4)});
+  $('vf').addEventListener('submit',function(e){
+    e.preventDefault();var err=$('verr');err.textContent='';
+    var n=$('vn').value.trim(),l=$('vl').value;
+    if(n.length<2||l.length!==4){err.textContent='이름과 뒤 4자리를 입력해 주세요.';return}
+    var b=$('vb');b.disabled=true;
+    fetch('/api/go/me',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:n,last4:l})})
+      .then(function(x){return x.json()}).then(function(d){b.disabled=false;if(d.ok)render(d);else err.textContent=d.msg})
+      .catch(function(){b.disabled=false;err.textContent='연결이 불안정해요. 다시 눌러 주세요.'});
+  });
+
+  function fallback(s){try{var a=document.createElement('textarea');a.value=s;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();var ok=document.execCommand('copy');a.remove();return ok}catch(e){return false}}
+  $('send').addEventListener('click',function(){
+    if(!me)return;
+    var url='https://calc.makesbetter.co.kr/go/?r='+me.id;
+    var text='좋은 걸 알게 되면 가장 먼저 떠오르는 사람이 있어요. 그게 당신이었어요. - '+me.name;
+    try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/go-send',{keepalive:true,mode:'no-cors'})}catch(e){}
+    if(navigator.share){navigator.share({title:'메이크스베러 초대장',text:text,url:url}).catch(function(){})}
+    else if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text+'\n'+url).then(function(){toast('링크를 복사했어요. 카카오톡에 붙여 넣어 보내 주세요.')},function(){toast(fallback(text+'\n'+url)?'링크를 복사했어요.':url)})}
+    else toast(fallback(text+'\n'+url)?'링크를 복사했어요.':url);
+  });
+  $('out').addEventListener('click',function(e){e.preventDefault();try{localStorage.removeItem('mb-go-me')}catch(x){}me=null;$('mine').classList.add('hide');$('vf').classList.remove('hide')});
+  setInterval(function(){if(me&&!document.hidden)load(me.id)},30000);
+})();
+</script>
+</body>
+</html>
