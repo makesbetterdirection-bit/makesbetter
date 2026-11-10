@@ -14,88 +14,97 @@
 <link rel="stylesheet" href="/go/go.css">
 </head>
 <body>
+<div class="env" id="env">
+  <div class="env-in">
+    <div class="env-k">INVITATION</div>
+    <div class="env-c"><i class="fl"></i><div class="env-p"><small>To.</small><b>소중한 당신에게</b><small class="fr" id="envFrom">From. MAKESBETTER</small></div><span class="env-s">M</span></div>
+    <button class="btn" id="openEnv" type="button">초대장 열기</button>
+    <p class="env-n">♪ 잔잔한 피아노 음악이 함께 나와요</p>
+  </div>
+</div>
+<button class="bgm hide" id="bgm" type="button" aria-label="배경 음악 켜기/끄기"><i></i><i></i><i></i></button>
 <div class="wrap">
   <div class="top"><b>MAKESBETTER</b><span id="topR">가입비 없음</span></div>
 
   <!-- A. 받는 사람 -->
   <main id="A">
-    <div class="kick">INVITATION</div>
-    <h1 id="hA">메이크스베러<br>초대장이 도착했어요</h1>
-    <p class="lead">매달 들어오는 돈을 만드는 사람들의 금융 도서관.<br>가입비 없이, 등록하면 선물을 바로 받아요.</p>
-
-    <section class="b7">
-      <div class="b7-k">BETTER.7 · VER 7.2</div>
-      <h2>제2의 월급을 만드는<br>11개의 조합</h2>
-      <div class="b7-bar"><i style="flex:50;background:#15171C"></i><i style="flex:15;background:#B08A3E"></i><i style="flex:10;background:#8C8577"></i><i style="flex:25;background:#D9D3C5"></i></div>
-      <ul class="b7-r">
-        <li><em style="background:#15171C"></em><b>Income Core</b><span>매달 분배금 · 커버드콜</span><strong>50%</strong></li>
-        <li><em style="background:#B08A3E"></em><b>Growth Engine</b><span>AI · 로봇 성장</span><strong>15%</strong></li>
-        <li><em style="background:#8C8577"></em><b>Defense</b><span>금 · 장기채 방어</span><strong>10%</strong></li>
-        <li><em style="background:#D9D3C5"></em><b>Cash</b><span>단기채 · MMF 완충</span><strong>25%</strong></li>
-      </ul>
-      <div class="b7-g">
-        <div class="b7-c">미국 대표지수 커버드콜 ETF ●●●●</div><div class="b7-c">미국 기술주 커버드콜 ETF ●●●●</div><div class="b7-c">국내 대표지수 위클리 ETF ●●●●</div><div class="b7-c">AI 반도체 ETF ●●●●</div><div class="b7-c">AI 밸류체인 ETF ●●●●</div><div class="b7-c">휴머노이드 로봇 ETF ●●●●</div><div class="b7-c">미국 장기국채 ETF ●●●●</div><div class="b7-c">금 ETF ●●●●</div><div class="b7-c">미국 단기채 ETF ●●●●</div><div class="b7-c">미국 배당 ETF ●●●●</div><div class="b7-c">머니마켓 ETF ●●●●</div>
-        <div class="b7-lock"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>11개 종목은 채널에서 공개</div>
-      </div>
-      <div class="b7-p">
-        <div><small>10월 실제 입금 · 계좌 4개 합산</small><b>3,643,944<span>원</span></b></div>
-        <div class="b7-m"><i style="height:100%"></i><i style="height:88%"></i><i style="height:89%"></i><i class="on" style="height:89.5%"></i><span>7월</span><span>8월</span><span>9월</span><span>10월</span></div>
-      </div>
-      <p class="b7-n">월배당 리포트 2026년 10월호 · 수익률 −4.8%인 달에도 입금은 9월보다 늘었어요.</p>
+    <!-- 1. 편지 -->
+    <section class="ch c-letter">
+      <div class="kick rvl" id="kA">INVITATION</div>
+      <h1 class="rvl" id="hA">좋은 걸 알게 되면<br>가장 먼저 떠오르는<br>사람이 있어요.</h1>
+      <p class="l-who rvl" id="whoA">누군가에게는 그게 <em>당신</em>이었어요.</p>
+      <p class="l-why rvl" id="whyA">먼저 만나 본 분이, 당신에게도 전하고 싶어서 보낸 초대장이에요.</p>
+      <div class="scr rvl"><i></i>천천히 내려 보세요</div>
     </section>
 
-    <section class="sec">
-      <div class="sec-h">금융 도서관에 오면 달라지는 것<small>4 CHANGES</small></div>
-      <div class="chg">
-        <div class="cg"><span class="no">01</span><div><p class="bf">얼마 버는지만 알던 돈</p><p class="af">얼마 남는지가 <em>보여요</em></p><p class="hw">머니4스퀘어 현금흐름 진단 · <b id="cnt2">1,347</b>명이 진단했어요</p></div></div>
-        <div class="cg"><span class="no">02</span><div><p class="bf">이번 달 뭘 살지 고민</p><p class="af">24개 지표가 <em>정해 줘요</em></p><p class="hw">매달 재투자 방향 · STUDIO</p></div></div>
-        <div class="cg"><span class="no">03</span><div><p class="bf">언젠가의 노후 자금</p><p class="af">매달 <em>제2의 월급</em>으로</p><p class="hw">실제 계좌 월배당 리포트 · 매달 공개</p></div></div>
-        <div class="cg"><span class="no">04</span><div><p class="bf">시장이 흔들릴 때 불안</p><p class="af">흔들리지 않는 <em>기준</em>이 생겨요</p><p class="hw">전문 디렉터 1:1 코칭 · 전자책</p></div></div>
-      </div>
+    <!-- 2. 질문 -->
+    <section class="ch c-q">
+      <p class="q-k rvl">혹시 이런 생각, 해 본 적 있나요?</p>
+      <h2 class="rvl">내가 일을 멈추면,<br>돈도 같이 <em>멈출까요?</em></h2>
+      <p class="q-s rvl">월급날은 한 달에 한 번인데,<br>돈 걱정은 매일이니까요.</p>
     </section>
 
-    <section class="sec">
-      <div class="sec-h">먼저 경험한 분들의 이야기<small>REAL REVIEW</small></div>
-      <div class="rv" id="rv">
-        <figure class="rc best"><img src="/go/img/best-10.webp" alt="10월 베스트 리뷰 카드" loading="lazy"><figcaption><b>10월 베스트 리뷰</b><span>변보라 디렉터와 함께한 6개월 · 효정님</span></figcaption></figure>
+    <!-- 3. 답: 금융 도서관 -->
+    <section class="ch c-a">
+      <div class="kick rvl">MAKESBETTER</div>
+      <h2 class="rvl">메이크스베러는<br>그 답을 함께 찾는<br><em>금융 도서관</em>이에요.</h2>
+      <p class="a-s rvl">돈을 불리는 요령이 아니라, 일을 쉬어도 매달 들어오는 돈의 흐름을 만드는 곳.</p>
+      <ol class="lib">
+        <li class="rvl"><span class="lb">읽어요</span><div><b>쉽게 쓴 전자책</b><p>어려운 말 없이, 돈의 흐름부터.</p></div><span class="lt books2"><img src="/books/cover-01.jpg" alt=""><img src="/books/cover-02.jpg" alt=""></span></li>
+        <li class="rvl"><span class="lb">따라가요</span><div><b>매달 공개되는 실제 계좌</b><p>이번 달엔 뭘 사는지, 얼마가 들어왔는지.</p></div><span class="lt shot2"><img src="/go/img/studio.webp" alt=""></span></li>
+        <li class="rvl"><span class="lb">물어봐요</span><div><b>전문 디렉터 1:1 코칭</b><p>혼자 판단하지 않게, 내 상황에 맞게.</p></div><span class="lt cnt"><b id="cnt2">1,347</b><small>명 진단</small></span></li>
+      </ol>
+    </section>
+
+    <!-- 4. 증거 -->
+    <section class="ch c-p">
+      <div class="kick rvl">PROOF</div>
+      <h2 class="rvl">말이 아니라,<br>실제로 들어온 돈.</h2>
+      <div class="pf rvl">
+        <small>메이크스베러가 매달 공개하는 실제 계좌 · 2026년 10월 입금</small>
+        <div class="pf-n"><b id="amt" data-v="3643944">3,643,944</b><span>원</span></div>
+        <div class="pf-m"><div><i style="height:100%"></i><span>7월</span></div><div><i style="height:88%"></i><span>8월</span></div><div><i style="height:89%"></i><span>9월</span></div><div class="on"><i style="height:89.5%"></i><span>10월</span></div></div>
+        <p>포트폴리오 수익률이 <b>−4.8%</b>였던 달에도, 입금은 9월보다 <b>15,344원</b> 늘었어요.</p>
+      </div>
+      <div class="how rvl">
+        <div class="how-h"><span>어떻게요?</span><b>11개 ETF를 4개 역할로 나눈 포트폴리오, Better.7</b></div>
+        <div class="b7-bar"><i style="flex:50;background:#15171C"></i><i style="flex:15;background:#B08A3E"></i><i style="flex:10;background:#8C8577"></i><i style="flex:25;background:#D9D3C5"></i></div>
+        <ul class="b7-r">
+          <li><em style="background:#15171C"></em><div><b>Income Core</b><span>매달 분배금을 만드는 역할</span></div><strong>50%</strong></li>
+          <li><em style="background:#B08A3E"></em><div><b>Growth Engine</b><span>AI·로봇으로 성장을 더하는 역할</span></div><strong>15%</strong></li>
+          <li><em style="background:#8C8577"></em><div><b>Defense</b><span>금·장기채로 흔들림을 줄이는 역할</span></div><strong>10%</strong></li>
+          <li><em style="background:#D9D3C5"></em><div><b>Cash</b><span>단기채·MMF로 기회를 기다리는 역할</span></div><strong>25%</strong></li>
+        </ul>
+        <p class="how-l"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>11개 종목과 이번 달 방향은 등록 후 채널에서 공개해요</p>
+      </div>
+      <p class="dis rvl">실제 사례를 그대로 공개한 자료이며, 수익을 보장하거나 투자를 권유하는 내용이 아니에요.</p>
+    </section>
+
+    <!-- 5. 사람들 -->
+    <section class="ch c-r">
+      <div class="kick rvl">PEOPLE</div>
+      <h2 class="rvl">먼저 온 사람들은<br>이렇게 말해요.</h2>
+      <div class="rv rvl" id="rv">
         <figure class="rc"><span class="q">“</span><blockquote>아무것도 모르던 때에 돈을 모으는 재미를 알게 되었고, 불어나는 자산과 배당금으로 결혼자금·노후자금을 같이 준비하고 있어요.</blockquote><figcaption><b>이세**</b><span>2년째 함께 · 20대</span></figcaption></figure>
+        <figure class="rc best"><img src="/go/img/best-10.webp" alt="10월 베스트 리뷰 카드" loading="lazy"><figcaption><b>10월 베스트 리뷰</b><span>디렉터와 함께한 6개월 · 효정님</span></figcaption></figure>
         <figure class="rc"><span class="q">“</span><blockquote>지출도 심하고 돈 관리에 미숙했는데, 큰 흐름표를 만들 수 있게 되었어요. 돈도 모이기 시작했어요!</blockquote><figcaption><b>이소**</b><span>2년째 함께</span></figcaption></figure>
         <figure class="rc"><span class="q">“</span><blockquote>15년 전 시작된 만남이 자금 관리의 시작이 되었고, 아이가 자라 성인이 되는 변화까지 도움을 받고 있어요.</blockquote><figcaption><b>박보**</b><span>15년째 함께</span></figcaption></figure>
       </div>
-      <a class="more" href="https://mbkr.my/review">후기 게시판에서 더 보기 →</a>
+      <a class="more rvl" href="https://mbkr.my/review">후기 게시판에서 더 보기 →</a>
+      <div class="tg rvl"><p>혼자 하지 않아요. 채널에서 함께해 온 일들</p><div class="tg-l"><span>자산 성장 챌린지</span><span>BETTER FESTA</span><span>매수 실천 이벤트</span><span>이달의 베스트 리뷰</span><span class="on">11월 베러 금융 퀴즈 · 진행 중</span></div></div>
     </section>
 
-    <section class="sec">
-      <div class="sec-h">채널에서 함께한 이벤트<small>EVENTS</small></div>
-      <ol class="ev">
-        <li><span>2월</span><b>매수 이벤트</b></li>
-        <li><span>3월</span><b>매수 실천 이벤트</b></li>
-        <li><span>4월</span><b>자산 성장 챌린지</b></li>
-        <li><span>7월</span><b>BETTER FESTA</b></li>
-        <li><span>매달</span><b>이달의 베스트 리뷰</b></li>
-        <li class="now"><span>11월</span><b>베러 금융 퀴즈</b><i>진행 중</i></li>
-      </ol>
-      <p class="ev-n">채널 친구만 참여할 수 있어요. 다음 이벤트도 채널로 먼저 알려 드려요.</p>
+    <!-- 6. 선물 = 초대장 -->
+    <section class="ch c-g">
+      <div class="kick rvl">YOUR INVITATION</div>
+      <h2 class="rvl" id="hG">그래서 이 초대장에는<br>선물 세 가지가 들어 있어요.</h2>
+      <ul class="g3">
+        <li class="rvl"><span class="lb">읽어요</span><div><b>전자책 2권</b><p>현금흐름은 산소다 · 공포·탐욕 지수 읽는 법</p></div></li>
+        <li class="rvl"><span class="lb">따라가요</span><div><b>이번 달 매수 방향 + 매달 월배당 리포트</b><p>Better.7 11개 종목까지 채널에서 공개</p></div></li>
+        <li class="rvl"><span class="lb gold">물어봐요</span><div><b>전문 디렉터 1:1 코칭 2시간</b><p>초대장으로 온 분께만 드려요</p></div></li>
+      </ul>
+      <p class="g-n rvl">가입비 없음 · 이름과 휴대폰 번호만 · 30초</p>
     </section>
-
-    <div class="sec">
-      <div class="sec-h">등록하면 바로 받아요<small>FREE</small></div>
-      <div class="gift">
-        <div class="th"><img src="/books/cover-01.jpg" alt=""><img src="/books/cover-02.jpg" alt=""></div>
-        <div class="tx"><div class="n">01</div><div class="t">전자책 2권</div><div class="d">현금흐름은 산소다 · 공포·탐욕 지수 읽는 법</div></div>
-      </div>
-      <div class="gift">
-        <div class="th one"><img src="/go/img/studio.webp" alt=""></div>
-        <div class="tx"><div class="n">02</div><div class="t">이번 달 매수 방향</div><div class="d">24개 지표로 정한 11월 재투자 방향</div></div>
-      </div>
-      <div class="gift">
-        <div class="th one"><img src="/go/img/report.webp" alt="" style="object-position:center"></div>
-        <div class="tx"><div class="n">03</div><div class="t">매달 월배당 리포트</div><div class="d">실제 계좌로 받은 배당을 그대로 공개</div></div>
-      </div>
-      <div class="gift" style="border-bottom:0">
-        <div class="tx"><div class="n">BONUS · 초대로만</div><div class="t">전문가 1:1 코칭 2시간</div><div class="d">초대받은 분께만 드리는 코칭권</div></div>
-      </div>
-    </div>
 
     <form class="form" id="f" novalidate>
       <label for="nm">이름</label>
@@ -192,11 +201,40 @@
   if(q.get('reset')){try{localStorage.removeItem('mb-go');localStorage.removeItem('mb-go-ch')}catch(e){}history.replaceState(null,'',location.pathname+(r?'?r='+encodeURIComponent(r):''))}
   try{var s=JSON.parse(localStorage.getItem('mb-go')||'null');if(s&&s.name){showB(s.name,s.inv)}}catch(e){}
 
-  if(r){fetch('/api/go/who?r='+encodeURIComponent(r)).then(function(x){return x.json()}).then(function(d){if(d.name){inviter=d.name;$('hA').innerHTML='<em>'+esc(d.name)+'</em> 님이<br>당신을 떠올렸어요'}else $('refBox').classList.remove('hide')}).catch(function(){})}
+  function setInv(n){inviter=n;var e='<em>'+esc(n)+'</em>';
+    $('kA').textContent=n+' 님이 보낸 초대장';$('whoA').innerHTML=e+' 님에게는 그게 <em>당신</em>이었어요.';
+    $('whyA').textContent=n+' 님이 먼저 만나 보고, 당신에게도 전하고 싶어서 보낸 초대장이에요.';
+    $('envFrom').textContent='From. '+n;$('hG').innerHTML='그래서 '+esc(n)+' 님의 초대장에는<br>선물 세 가지가 들어 있어요.'}
+  if(r){fetch('/api/go/who?r='+encodeURIComponent(r)).then(function(x){return x.json()}).then(function(d){if(d.name)setInv(d.name);else $('refBox').classList.remove('hide')}).catch(function(){})}
   else $('refBox').classList.remove('hide');
   hit('go-open');
-  (function(){var sa=$('stickyA');$('toF').addEventListener('click',function(e){e.preventDefault();$('f').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){$('nm').focus()},500)});
-    if('IntersectionObserver' in window)new IntersectionObserver(function(es){es.forEach(function(e){sa.classList.toggle('hide',e.isIntersecting||$('A').classList.contains('hide'))})},{threshold:0}).observe($('f'));})();
+  (function(){var sa=$('stickyA'),atForm=false;function upd(){sa.classList.toggle('hide',atForm||window.scrollY<500||$('A').classList.contains('hide')||!$('env').classList.contains('gone'))}window.addEventListener('scroll',upd,{passive:true});upd();$('toF').addEventListener('click',function(e){e.preventDefault();$('f').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){$('nm').focus()},500)});
+    if('IntersectionObserver' in window)new IntersectionObserver(function(es){es.forEach(function(e){atForm=e.isIntersecting;upd()})},{threshold:0}).observe($('f'));})();
+
+  /* 봉투 · 등장 효과 · 숫자 · 음악 */
+  (function(){
+    var env=$('env'),bt=$('bgm');
+    if(!$('A').classList.contains('hide'))document.body.classList.add('noscroll');else env.classList.add('gone');
+    var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);if(e.target.querySelector&&e.target.querySelector('#amt'))count()}})},{threshold:.18,rootMargin:'0px 0px -6% 0px'}):null;
+    document.querySelectorAll('.rvl').forEach(function(el,i){if(io)io.observe(el);else el.classList.add('in')});
+    var counted=false;function count(){if(counted)return;counted=true;var el=$('amt'),v=+el.getAttribute('data-v'),t0=null;function st(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-k,3);el.textContent=Math.round(v*e).toLocaleString('ko-KR');if(k<1)requestAnimationFrame(st)}requestAnimationFrame(st)}
+    /* 음악: 직접 만든 피아노 선율 (Web Audio 합성, 음원 파일 없음) */
+    var AC=null,out=null,on=false,nextT=0,bar=0,tm=null,beat=60/63;
+    var CH=[[146.83,220,293.66,369.99,440],[123.47,185,246.94,293.66,369.99],[98,146.83,196,246.94,293.66],[110,164.81,220,277.18,329.63]];
+    var ML=[[[0,587.33,2],[2.5,659.25,.5],[3,739.99,1]],[[0,587.33,3],[3.5,493.88,.5]],[[0,493.88,1.5],[1.5,587.33,1.5],[3,783.99,1]],[[0,659.25,2.5],[3,554.37,1]],
+            [[0,739.99,1.5],[1.5,880,1.5],[3,739.99,1]],[[0,587.33,2],[2,739.99,2]],[[0,783.99,1],[1,739.99,1],[2,587.33,2]],[[0,659.25,4]]];
+    function note(f,t,d,v){var o=AC.createOscillator(),o2=AC.createOscillator(),g=AC.createGain();o.type='triangle';o2.type='sine';o.frequency.value=f;o2.frequency.value=f*2;var g2=AC.createGain();g2.gain.value=.18;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.015);g.gain.exponentialRampToValueAtTime(.0006,t+d);o.connect(g);o2.connect(g2);g2.connect(g);g.connect(out);o.start(t);o2.start(t);o.stop(t+d+.05);o2.stop(t+d+.05)}
+    function sched(){while(nextT<AC.currentTime+1.5){var c=CH[bar%4],pat=[0,2,3,4,3,2,1,2];for(var i=0;i<8;i++)note(c[pat[i]],nextT+i*beat/2,beat*2.2,.045);
+      ML[bar%8].forEach(function(m){note(m[1],nextT+m[0]*beat,m[2]*beat*1.5+.6,.075)});nextT+=4*beat;bar++}}
+    function play(){try{if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return;AC=new C();out=AC.createGain();out.gain.value=.9;var lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2600;
+          var dl=AC.createDelay(1),fb=AC.createGain(),wet=AC.createGain();dl.delayTime.value=.34;fb.gain.value=.32;wet.gain.value=.28;out.connect(lp);lp.connect(AC.destination);lp.connect(dl);dl.connect(fb);fb.connect(dl);dl.connect(wet);wet.connect(AC.destination)}
+        AC.resume();nextT=AC.currentTime+.15;on=true;bt.classList.add('on');clearInterval(tm);tm=setInterval(sched,400);sched()}catch(e){}}
+    function stop(){on=false;bt.classList.remove('on');clearInterval(tm);if(AC)AC.suspend()}
+    bt.addEventListener('click',function(){on?stop():play()});
+    document.addEventListener('visibilitychange',function(){if(document.hidden&&on){clearInterval(tm);AC.suspend()}else if(!document.hidden&&on){AC.resume();nextT=AC.currentTime+.15;tm=setInterval(sched,400)}});
+    $('openEnv').addEventListener('click',function(){env.classList.add('open');play();bt.classList.remove('hide');setTimeout(function(){env.classList.add('gone');document.body.classList.remove('noscroll');window.dispatchEvent(new Event('scroll'))},1100)});
+  })();
 
   $('ph').addEventListener('input',function(){var d=this.value.replace(/\D/g,'').slice(0,11);this.value=d.length>7?d.slice(0,3)+'-'+d.slice(3,d.length-4)+'-'+d.slice(-4):d.length>3?d.slice(0,3)+'-'+d.slice(3):d});
 
@@ -239,7 +277,7 @@
   $('cp').addEventListener('click',function(){hit('go-coaching')});
   var t=$('toast');function toast(m){t.textContent=m;t.classList.add('on');setTimeout(function(){t.classList.remove('on')},3200)}
 
-  try{var x=new XMLHttpRequest();x.open('GET','https://abacus.jasoncameron.dev/get/mbkr.my/cashflow-basic');x.timeout=4000;x.onload=function(){try{var v=JSON.parse(x.responseText).value;if(v>=1347)$('cnt2').textContent=v.toLocaleString('ko-KR')}catch(e){}};x.send()}catch(e){}
+  try{var x=new XMLHttpRequest();x.open('GET','https://abacus.jasoncameron.dev/get/mbkr.my/cashflow-basic');x.timeout=4000;x.onload=function(){try{var v=JSON.parse(x.responseText).value;if(v>=1347&&$('cnt2'))$('cnt2').textContent=v.toLocaleString('ko-KR')}catch(e){}};x.send()}catch(e){}
 })();
 </script>
 </body>
