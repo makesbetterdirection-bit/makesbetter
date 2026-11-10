@@ -137,6 +137,7 @@
     var opened=false;try{opened=localStorage.getItem('mb-go-ch')==='1'}catch(e){}
     if(opened)unlock(true);else watchSticky();
   }
+  if(q.get('reset')){try{localStorage.removeItem('mb-go');localStorage.removeItem('mb-go-ch')}catch(e){}history.replaceState(null,'',location.pathname+(r?'?r='+encodeURIComponent(r):''))}
   try{var s=JSON.parse(localStorage.getItem('mb-go')||'null');if(s&&s.name){showB(s.name,s.inv)}}catch(e){}
 
   if(r){fetch('/api/go/who?r='+encodeURIComponent(r)).then(function(x){return x.json()}).then(function(d){if(d.name){inviter=d.name;$('hA').innerHTML='<em>'+esc(d.name)+'</em> 님이<br>당신을 떠올렸어요'}else $('refBox').classList.remove('hide')}).catch(function(){})}
