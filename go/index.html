@@ -134,18 +134,40 @@
     </section>
 
     <section class="gifts locked" id="gifts">
-      <div class="sec-h">보내 드린 선물<small id="gState">LOCKED</small></div>
-      <div class="gw">
-        <div class="books">
-          <a href="/books/read/?b=cashflow"><img src="/books/cover-01.jpg" alt="현금흐름은 산소다 표지"><span>현금흐름은 산소다 →</span></a>
-          <a href="/books/read/?b=market-mood"><img src="/books/cover-02.jpg" alt="공포·탐욕 지수 읽는 법 표지"><span>공포·탐욕 지수 →</span></a>
+      <div class="sec-h">보내 드린 선물<small id="gState">3 GIFTS · LOCKED</small></div>
+
+      <article class="gc g1">
+        <div class="gc-in">
+          <div class="gc-tag"><span>GIFT 01</span>전자책 2권</div>
+          <div class="shelf">
+            <a class="bk" href="/books/read/?b=cashflow"><span class="bk3"><img src="/books/cover-01.jpg" alt="현금흐름은 산소다"></span><b>현금흐름은 산소다</b><small>63쪽 · 책장 넘기며 읽기</small></a>
+            <a class="bk" href="/books/read/?b=market-mood"><span class="bk3"><img src="/books/cover-02.jpg" alt="공포·탐욕 지수 읽는 법"></span><b>공포·탐욕 지수 읽는 법</b><small>6쪽 · 시장의 기분 읽기</small></a>
+          </div>
         </div>
-        <a href="/studio/" class="gl"><div class="shot"><img src="/go/img/studio.webp" alt="11월 재투자 방향 화면"></div><span>11월 재투자 방향 보기 →</span></a>
-        <a class="bonus" id="cp" href="https://pf.kakao.com/_eETXxj/coupons/_JRkj">
-          <div><small>BONUS · 초대로만 받는</small><b>전문가 1:1 코칭 2시간</b></div><span>받기 →</span>
-        </a>
-        <div class="lock" id="lock"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>채널을 추가하면 바로 열려요</b><span>전자책 2권 · 11월 매수 방향 · 코칭권</span></div>
-      </div>
+        <div class="wrapx" aria-hidden="true"><i class="wl"></i><i class="wr"></i><span class="bow"></span><span class="seal"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><b class="wt">GIFT 01</b><em class="wn">전자책 2권</em></div>
+      </article>
+
+      <article class="gc g2">
+        <div class="gc-in">
+          <div class="gc-tag"><span>GIFT 02</span>11월 재투자 방향</div>
+          <div class="ph-wrap"><div class="ph"><img src="/go/img/studio.webp" alt="11월 재투자 방향 화면"></div>
+            <ul class="ph-t"><li><b>24</b>개 지표</li><li><b>7</b>개 영역</li><li>매달 <b>신호</b> 갱신</li></ul></div>
+          <a class="btn gbtn" href="/studio/">11월 재투자 방향 열기</a>
+        </div>
+        <div class="wrapx" aria-hidden="true"><i class="wl"></i><i class="wr"></i><span class="bow"></span><span class="seal"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><b class="wt">GIFT 02</b><em class="wn">11월 재투자 방향</em></div>
+      </article>
+
+      <article class="gc g3">
+        <div class="gc-in">
+          <div class="gc-tag"><span>GIFT 03</span>초대로만 받는 코칭권</div>
+          <a class="tk" id="cp" href="https://pf.kakao.com/_eETXxj/coupons/_JRkj">
+            <div class="tk-l"><small>INVITATION ONLY</small><b>1:1 COACHING</b><span>전문 디렉터와 2시간 · 무료</span></div>
+            <div class="tk-r"><b>2H</b><span>받기</span></div>
+          </a>
+        </div>
+        <div class="wrapx" aria-hidden="true"><i class="wl"></i><i class="wr"></i><span class="bow"></span><span class="seal"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><b class="wt">GIFT 03</b><em class="wn">1:1 코칭권</em></div>
+      </article>
+      <p class="gnote" id="gnote">채널을 추가하면 포장이 열려요</p>
     </section>
   </main>
 </div>
@@ -194,7 +216,8 @@
 
   function unlock(quiet){
     var g=$('gifts');if(!g.classList.contains('locked'))return;
-    g.classList.remove('locked');$('gState').textContent='OPEN';$('sticky').classList.add('hide');
+    g.classList.remove('locked');g.classList.add(quiet?'opened':'opening');$('gState').textContent='3 GIFTS · OPEN';$('gnote').textContent='선물은 언제든 이 화면에서 다시 열 수 있어요';
+    if(!quiet){var cs=g.querySelectorAll('.gc');cs.forEach(function(c,i){setTimeout(function(){c.classList.add('pop');burst(c)},500+i*420)})}$('sticky').classList.add('hide');
     $('chCard').classList.add('ok');$('ch').lastChild.textContent='채널 추가 완료 · 다시 열기';
     document.querySelector('.stp .now').classList.add('done');
     $('hB').innerHTML=$('hB').innerHTML.replace('환영해요','선물이 열렸어요');
@@ -203,6 +226,7 @@
     try{localStorage.setItem('mb-go-ch','1')}catch(e){}
     if(!quiet)setTimeout(function(){g.scrollIntoView({behavior:'smooth',block:'start'})},300);
   }
+  function burst(c){var n=14;for(var i=0;i<n;i++){var sp=document.createElement('i');sp.className='spark';var a=Math.PI*2*i/n+Math.random()*.4,d=60+Math.random()*70;sp.style.setProperty('--x',Math.cos(a)*d+'px');sp.style.setProperty('--y',Math.sin(a)*d+'px');sp.style.background=i%3?'#D4AE62':'#F5E3B3';c.appendChild(sp);setTimeout(function(e){e.remove()},1100,sp)}}
   var clicked=false;
   function onCh(){hit('go-channel');clicked=true;try{localStorage.setItem('mb-go-ch','1')}catch(e){}}
   $('ch').addEventListener('click',onCh);$('ch2').addEventListener('click',onCh);
