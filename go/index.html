@@ -68,9 +68,9 @@
 
   <!-- B. 등록 완료 -->
   <main id="B" class="hide">
-    <div class="stp"><span class="done">등록 완료</span><i></i><span class="now">채널 추가</span></div>
-    <h1 id="hB">마지막 한 단계만<br>남았어요</h1>
-    <p class="lead" id="lB">채널을 추가하면 선물이 열리고, 앞으로 매달 카카오톡으로 받아요.</p>
+    <div class="stp"><span class="done">등록 완료</span><i></i><span class="now">선물 받을 채널 연결</span></div>
+    <h1 id="hB">환영해요</h1>
+    <p class="lead" id="lB">선물과 앞으로 매달 받을 소식은 메이크스베러 카카오톡 채널로 보내드려요.</p>
 
     <section class="chc" id="chCard">
       <div class="chc-id"><span class="lg">M</span><div><b>makesbetter</b><span>메이크스베러 공식 카카오톡 채널</span></div></div>
@@ -84,7 +84,7 @@
     </section>
 
     <section class="gifts locked" id="gifts">
-      <div class="sec-h">채널 추가 후 열리는 선물<small id="gState">LOCKED</small></div>
+      <div class="sec-h">보내 드린 선물<small id="gState">LOCKED</small></div>
       <div class="gw">
         <div class="books">
           <a href="/books/read/?b=cashflow"><img src="/books/cover-01.jpg" alt="현금흐름은 산소다 표지"><span>현금흐름은 산소다 →</span></a>
@@ -94,7 +94,7 @@
         <a class="bonus" id="cp" href="https://pf.kakao.com/_eETXxj/coupons/_JRkj">
           <div><small>BONUS · 초대로만 받는</small><b>전문가 1:1 코칭 2시간</b></div><span>받기 →</span>
         </a>
-        <div class="lock" id="lock"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>채널을 추가하면 열려요</b><span>전자책 2권 · 11월 매수 방향 · 코칭권</span></div>
+        <div class="lock" id="lock"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>채널을 추가하면 바로 열려요</b><span>전자책 2권 · 11월 매수 방향 · 코칭권</span></div>
       </div>
     </section>
   </main>
@@ -110,8 +110,8 @@
 
   function showB(name,inv){
     $('A').classList.add('hide');$('B').classList.remove('hide');$('B').classList.add('fade');$('topR').textContent='등록 완료';
-    $('hB').innerHTML=esc(name)+' 님,<br>마지막 한 단계만 남았어요';
-    $('lB').textContent=(inv?inv+' 님이 준비한 선물이에요. ':'')+'채널을 추가하면 선물이 열리고, 앞으로 매달 카카오톡으로 받아요.';
+    $('hB').innerHTML=esc(name)+' 님,<br>환영해요';
+    $('lB').textContent=(inv?inv+' 님이 보낸 ':'')+'선물과 앞으로 매달 받을 소식은 메이크스베러 카카오톡 채널로 보내드려요. 채널을 추가하면 이 화면에서도 바로 열려요.';
     window.scrollTo(0,0);
     var opened=false;try{opened=localStorage.getItem('mb-go-ch')==='1'}catch(e){}
     if(opened)unlock(true);else watchSticky();
@@ -143,7 +143,7 @@
     g.classList.remove('locked');$('gState').textContent='OPEN';$('sticky').classList.add('hide');
     $('chCard').classList.add('ok');$('ch').lastChild.textContent='채널 추가 완료 · 다시 열기';
     document.querySelector('.stp .now').classList.add('done');
-    $('hB').innerHTML=$('hB').innerHTML.replace('마지막 한 단계만 남았어요','선물이 모두 열렸어요');
+    $('hB').innerHTML=$('hB').innerHTML.replace('환영해요','선물이 열렸어요');
     $('lB').textContent='아래에서 바로 열어 보세요. 매달 소식은 카카오톡 채널로 보내드려요.';
     document.querySelector('.chc-n').textContent='채널 친구가 되신 걸 환영해요';
     try{localStorage.setItem('mb-go-ch','1')}catch(e){}
