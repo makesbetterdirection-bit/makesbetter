@@ -508,3 +508,4 @@ h1,h2,.lead,.a-s,.l-why{text-wrap:balance}
 .w-rw.best{background:linear-gradient(135deg,#17110F,#3B181F)}
 .btn.kakao{background-color:var(--kakao)}.btn.mid,.btn.line{background-color:transparent}
 .env .btn{background:linear-gradient(180deg,#E9CF8E,#C29A4A)}
+.env-v{width:150vw;max-width:700px;top:5svh}
