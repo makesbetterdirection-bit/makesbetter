@@ -481,3 +481,30 @@ h1,h2,.lead,.a-s,.l-why{text-wrap:balance}
 .w h2 em,.w h1 em{font-style:normal;color:var(--gold)}
 .w .w-dark h2 em,.w .c-q h2 em{color:var(--gold2)}
 .w .c-q{margin:84px -24px 0;padding:300px 28px 64px}
+
+/* ══ v6: 초대장 이미지 기준 색 (검정·아이보리·금·와인) ══ */
+.env{background:#0D0908;align-items:stretch;padding:0 28px calc(40px + env(safe-area-inset-bottom));overflow:hidden}
+.env:before{background:linear-gradient(180deg,rgba(13,9,8,0) 0,rgba(13,9,8,0) 52%,rgba(13,9,8,.92) 70%,#0D0908 100%);z-index:1}
+.env-v{position:absolute;left:50%;top:6svh;width:178vw;max-width:820px;aspect-ratio:1536/1024;transform:translateX(-50%)}
+.env-v img{position:absolute;display:block}
+.env-v .bgi{inset:0;width:100%;height:100%}
+.env-v .cd{left:24.93%;top:5.37%;width:50.59%;filter:drop-shadow(0 24px 40px rgba(0,0,0,.6));animation:rise 1.9s cubic-bezier(.2,.8,.2,1) .25s both}
+@keyframes rise{from{transform:translateY(48%);opacity:.0}35%{opacity:1}to{transform:none;opacity:1}}
+.env.open .env-v .cd{animation:none;transform:translateY(-150%) rotate(-3deg);transition:transform 1s cubic-bezier(.6,0,.3,1)}
+.env-in{z-index:2;min-height:100svh;justify-content:flex-end}
+.env-t{margin-top:0;margin-bottom:22px}
+.env-t b{font-size:27px}
+.w-ph{aspect-ratio:1/1;background:#0D0908}
+.w-ph:after{height:22%}
+.w .w-dark,.c-c{background:#140D0E}
+.c-c:before{background:radial-gradient(90% 46% at 85% 0,rgba(126,24,44,.5),transparent 70%),radial-gradient(70% 40% at 0 100%,rgba(212,174,98,.12),transparent 70%)}
+.tk2{background:linear-gradient(135deg,#2A1216,#3B181F 60%,#3A3423)}
+.c3{background:rgba(255,255,255,.07)}.c3 li{background:#1C1214}
+.nd{background:#1C1214}.nd[open]{background:#231518}
+.dc-m{background:radial-gradient(circle at 30% 25%,#6A1E2C,#1A0D0F)}
+.c-s,.tk2 span{color:#D5CEC6}.c3 li{color:#B9B0A8}.nd-a{color:#E6DFD8}
+.w-pt{background:#17110F}
+.w-bar,.pf,.g-hold,.w-vs .on,.w-step i,.w-tl li:before,.btn{background-color:#17110F}
+.w-rw.best{background:linear-gradient(135deg,#17110F,#3B181F)}
+.btn.kakao{background-color:var(--kakao)}.btn.mid,.btn.line{background-color:transparent}
+.env .btn{background:linear-gradient(180deg,#E9CF8E,#C29A4A)}

@@ -111,10 +111,10 @@ export default async (req) => {
     const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
     const title = name ? `${esc(name)} 님이 초대장을 보냈어요` : "메이크스베러 초대장이 도착했어요";
     const to = "/go/" + (name ? "?r=" + id : "");
-    const img = url.searchParams.get("t") === "gif" ? "og-anim.gif" : "og.png?v=3";
+    const img = url.searchParams.get("t") === "gif" ? "og-anim.gif" : "og.png?v=4";
     return new Response(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${title}</title><meta property="og:type" content="website"><meta property="og:title" content="${title}"><meta property="og:description" content="그게 당신이었어요.">
-<meta property="og:image" content="https://calc.makesbetter.co.kr/go/${img}"><meta property="og:image:width" content="800"><meta property="og:image:height" content="400">
+<title>${title}</title><meta property="og:type" content="website"><meta property="og:title" content="${title}"><meta property="og:description" content="전문 디렉터 1:1 금융 코칭 2시간 · 0원">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/go/${img}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="600">
 <meta property="og:url" content="https://calc.makesbetter.co.kr/g/${id}"><meta http-equiv="refresh" content="0;url=${to}"></head>
 <body><script>location.replace(${JSON.stringify(to)})</script><a href="${to}">초대장 열기</a></body></html>`,
       { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "public, max-age=300" } });
