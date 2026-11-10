@@ -22,6 +22,7 @@
     <p class="env-n">♪ 잔잔한 피아노 음악이 함께 나와요</p>
   </div>
 </div>
+<div class="prog" id="prog"><i></i></div>
 <button class="bgm hide" id="bgm" type="button" aria-label="배경 음악 켜기/끄기"><i></i><i></i><i></i></button>
 <div class="wrap">
   <div class="top"><b>MAKESBETTER</b><span id="topR">가입비 없음</span></div>
@@ -42,6 +43,8 @@
       <p class="q-k rvl">혹시 이런 생각, 해 본 적 있나요?</p>
       <h2 class="rvl">내가 일을 멈추면,<br>돈도 같이 <em>멈출까요?</em></h2>
       <p class="q-s rvl">월급날은 한 달에 한 번인데,<br>돈 걱정은 매일이니까요.</p>
+      <div class="qa rvl" id="qa"><button type="button" data-a="1">네, 멈춰요</button><button type="button" data-a="2">조금은 들어와요</button></div>
+      <p class="qa-r" id="qaR" aria-live="polite"></p>
     </section>
 
     <!-- 3. 답: 금융 도서관 -->
@@ -103,10 +106,13 @@
         <li class="rvl"><span class="lb">따라가요</span><div><b>이번 달 매수 방향 + 매달 월배당 리포트</b><p>Better.7 11개 종목까지 채널에서 공개</p></div></li>
         <li class="rvl"><span class="lb gold">물어봐요</span><div><b>전문 디렉터 1:1 코칭 2시간</b><p>초대장으로 온 분께만 드려요</p></div></li>
       </ul>
+      <p class="g-hold rvl" id="gHold">선물 3개가 받는 분을 기다리고 있어요.</p>
+      <p class="recip rvl hide" id="recip">당신이 등록하면 <b id="recipN"></b> 님에게도 감사 선물이 전해져요.</p>
       <p class="g-n rvl">가입비 없음 · 이름과 휴대폰 번호만 · 30초</p>
     </section>
 
     <form class="form" id="f" novalidate>
+      <div class="f-h"><b>선물 받는 분</b><span id="fFrom"></span></div>
       <label for="nm">이름</label>
       <input type="text" id="nm" autocomplete="name" placeholder="홍길동" maxlength="10">
       <label for="ph">휴대폰 번호</label>
@@ -119,7 +125,8 @@
         <label><input type="checkbox" id="ag"> 개인정보 수집·이용에 동의합니다 (필수)</label>
         <details><summary>자세히</summary>수집 항목: 이름, 휴대폰 번호<br>목적: 초대 이벤트 집계, 선물·혜택 안내<br>보관: 이벤트 종료 후 3개월 뒤 파기<br>동의하지 않으면 등록할 수 없어요.</details>
       </div>
-      <button class="btn" id="go" type="submit">등록하고 바로 받기</button>
+      <button class="btn" id="go" type="submit">선물 3개 받기</button>
+      <p class="f-n">등록 정보는 선물 전달과 이벤트 집계에만 써요.</p>
       <div class="err" id="err" role="alert"></div>
     </form>
 
@@ -181,7 +188,7 @@
   </main>
 </div>
 <div class="sticky hide" id="sticky"><a class="btn kakao" href="https://pf.kakao.com/_eETXxj/friend" id="ch2">채널 추가하고 선물 열기</a></div>
-<div class="sticky" id="stickyA"><a class="btn" href="#f" id="toF">등록하고 선물 받기</a></div>
+<div class="sticky" id="stickyA"><a class="btn" href="#f" id="toF">선물 3개 받기</a></div>
 <div class="toast" id="toast"></div>
 <script>
 (function(){
@@ -204,7 +211,7 @@
   function setInv(n){inviter=n;var e='<em>'+esc(n)+'</em>';
     $('kA').textContent=n+' 님이 보낸 초대장';$('whoA').innerHTML=e+' 님에게는 그게 <em>당신</em>이었어요.';
     $('whyA').textContent=n+' 님이 먼저 만나 보고, 당신에게도 전하고 싶어서 보낸 초대장이에요.';
-    $('envFrom').textContent='From. '+n;$('hG').innerHTML='그래서 '+esc(n)+' 님의 초대장에는<br>선물 세 가지가 들어 있어요.'}
+    $('envFrom').textContent='From. '+n;$('gHold').innerHTML=e+' 님이 맡겨 둔 선물 3개가 당신을 기다리고 있어요.';$('fFrom').textContent='보낸 분 · '+n;$('recip').classList.remove('hide');$('recipN').textContent=n;$('hG').innerHTML='그래서 '+esc(n)+' 님의 초대장에는<br>선물 세 가지가 들어 있어요.'}
   if(r){fetch('/api/go/who?r='+encodeURIComponent(r)).then(function(x){return x.json()}).then(function(d){if(d.name)setInv(d.name);else $('refBox').classList.remove('hide')}).catch(function(){})}
   else $('refBox').classList.remove('hide');
   hit('go-open');
@@ -216,7 +223,10 @@
     var env=$('env'),bt=$('bgm');
     if(!$('A').classList.contains('hide'))document.body.classList.add('noscroll');else env.classList.add('gone');
     var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);if(e.target.querySelector&&e.target.querySelector('#amt'))count()}})},{threshold:.18,rootMargin:'0px 0px -6% 0px'}):null;
-    document.querySelectorAll('.rvl').forEach(function(el,i){if(io)io.observe(el);else el.classList.add('in')});
+    function startRv(){document.querySelectorAll('.rvl').forEach(function(el){var k=0,pv=el.previousElementSibling;while(pv&&pv.classList.contains('rvl')&&k<5){k++;pv=pv.previousElementSibling}el.style.transitionDelay=(k*110)+'ms';if(io)io.observe(el);else el.classList.add('in')})}
+    if(env.classList.contains('gone'))startRv();
+    var pg=$('prog').firstChild;window.addEventListener('scroll',function(){var a=$('A');if(a.classList.contains('hide')){$('prog').style.display='none';return}var h=a.offsetHeight-window.innerHeight;pg.style.transform='scaleX('+Math.max(0,Math.min(1,window.scrollY/Math.max(1,h)))+')'},{passive:true});
+    $('qa').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;this.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});$('qaR').textContent=b.getAttribute('data-a')==='1'?'대부분 그래요. 그래서 이 도서관이 있어요.':'이미 흐름이 있으시네요. 더 단단하게 만드는 법을 함께 봐요.';$('qaR').classList.add('in');hit('go-qa'+b.getAttribute('data-a'))});
     var counted=false;function count(){if(counted)return;counted=true;var el=$('amt'),v=+el.getAttribute('data-v'),t0=null;function st(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-k,3);el.textContent=Math.round(v*e).toLocaleString('ko-KR');if(k<1)requestAnimationFrame(st)}requestAnimationFrame(st)}
     /* 음악: 직접 만든 피아노 선율 (Web Audio 합성, 음원 파일 없음) */
     var AC=null,out=null,on=false,nextT=0,bar=0,tm=null,beat=60/63;
@@ -233,7 +243,7 @@
     function stop(){on=false;bt.classList.remove('on');clearInterval(tm);if(AC)AC.suspend()}
     bt.addEventListener('click',function(){on?stop():play()});
     document.addEventListener('visibilitychange',function(){if(document.hidden&&on){clearInterval(tm);AC.suspend()}else if(!document.hidden&&on){AC.resume();nextT=AC.currentTime+.15;tm=setInterval(sched,400)}});
-    $('openEnv').addEventListener('click',function(){env.classList.add('open');play();bt.classList.remove('hide');setTimeout(function(){env.classList.add('gone');document.body.classList.remove('noscroll');window.dispatchEvent(new Event('scroll'))},1100)});
+    $('openEnv').addEventListener('click',function(){env.classList.add('open');play();bt.classList.remove('hide');setTimeout(function(){env.classList.add('gone');document.body.classList.remove('noscroll');window.dispatchEvent(new Event('scroll'))},1100);setTimeout(startRv,650)});
   })();
 
   $('ph').addEventListener('input',function(){var d=this.value.replace(/\D/g,'').slice(0,11);this.value=d.length>7?d.slice(0,3)+'-'+d.slice(3,d.length-4)+'-'+d.slice(-4):d.length>3?d.slice(0,3)+'-'+d.slice(3):d});
@@ -248,8 +258,8 @@
     fetch('/api/go/reg',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:name,phone:phone,r:r,refName:$('rf').value.trim(),agree:true})})
       .then(function(x){return x.json()}).then(function(d){
         if(d.ok||d.code==='dup'){var inv=d.inviter||inviter;try{localStorage.setItem('mb-go',JSON.stringify({name:name,inv:inv}))}catch(e){}hit('go-reg');showB(name,inv);if(d.code==='dup')toast('이미 등록된 번호예요. 선물은 그대로 받으실 수 있어요.')}
-        else{err.textContent=d.msg||'다시 시도해 주세요.';b.disabled=false;b.textContent='등록하고 바로 받기'}
-      }).catch(function(){err.textContent='연결이 불안정해요. 잠시 후 다시 눌러 주세요.';b.disabled=false;b.textContent='등록하고 바로 받기'});
+        else{err.textContent=d.msg||'다시 시도해 주세요.';b.disabled=false;b.textContent='선물 3개 받기'}
+      }).catch(function(){err.textContent='연결이 불안정해요. 잠시 후 다시 눌러 주세요.';b.disabled=false;b.textContent='선물 3개 받기'});
   });
 
   function unlock(quiet){
