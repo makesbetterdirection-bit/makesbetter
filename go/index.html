@@ -215,7 +215,7 @@
   if(r){fetch('/api/go/who?r='+encodeURIComponent(r)).then(function(x){return x.json()}).then(function(d){if(d.name)setInv(d.name);else $('refBox').classList.remove('hide')}).catch(function(){})}
   else $('refBox').classList.remove('hide');
   hit('go-open');
-  (function(){var sa=$('stickyA'),atForm=false;function upd(){sa.classList.toggle('hide',atForm||window.scrollY<500||$('A').classList.contains('hide')||!$('env').classList.contains('gone'))}window.addEventListener('scroll',upd,{passive:true});upd();$('toF').addEventListener('click',function(e){e.preventDefault();$('f').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){$('nm').focus()},500)});
+  (function(){var sa=$('stickyA'),atForm=false;function upd(){sa.classList.toggle('hide',atForm||window.scrollY<(document.querySelector('.c-p')?document.querySelector('.c-p').offsetTop-200:500)||$('A').classList.contains('hide')||!$('env').classList.contains('gone'))}window.addEventListener('scroll',upd,{passive:true});upd();$('toF').addEventListener('click',function(e){e.preventDefault();$('f').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){$('nm').focus()},500)});
     if('IntersectionObserver' in window)new IntersectionObserver(function(es){es.forEach(function(e){atForm=e.isIntersecting;upd()})},{threshold:0}).observe($('f'));})();
 
   /* 봉투 · 등장 효과 · 숫자 · 음악 */
