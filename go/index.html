@@ -189,12 +189,18 @@
   </main>
 
   <!-- B. 등록 완료 -->
-  <main id="B" class="hide">
-    <div class="stp"><span class="done">등록 완료</span><i></i><span class="now">선물 받을 채널 연결</span></div>
-    <h1 id="hB">환영해요</h1>
-    <p class="lead" id="lB">선물과 앞으로 매달 받을 소식은 메이크스베러 카카오톡 채널로 보내드려요.</p>
+  <main id="B" class="hide w">
+    <section class="b-hero">
+      <span class="b-ok" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+      <div class="kick">등록 완료</div>
+      <h1 id="hB">환영해요</h1>
+      <p class="lead" id="lB">선물과 앞으로 매달 받을 소식은 메이크스베러 카카오톡 채널로 보내드려요.</p>
+      <div class="stp"><span class="done"><i>1</i>등록 완료</span><span class="now"><i>2</i>채널 추가</span><span class="last"><i>3</i>선물 열기</span></div>
+    </section>
 
     <section class="chc" id="chCard">
+      <span class="w-pt gold">STEP 2 · 채널 추가</span>
+      <h2>선물은 카카오톡 채널로<br><mark>바로 전달</mark>돼요.</h2>
       <div class="chc-id"><span class="lg">M</span><div><b>makesbetter</b><span>메이크스베러 공식 카카오톡 채널</span></div></div>
       <ul class="chc-l">
         <li><b>선물 받는 곳</b><span>전자책 · 내 돈 진단</span></li>
@@ -206,7 +212,9 @@
     </section>
 
     <section class="gifts locked" id="gifts">
-      <div class="sec-h">보내 드린 선물<small id="gState">3 GIFTS · LOCKED</small></div>
+      <span class="w-pt">STEP 3 · 선물 열기</span>
+      <h2 class="b-gh">보내 드린 <mark>선물 세 가지</mark></h2>
+      <p class="b-gs" id="gState">3 GIFTS · LOCKED</p>
 
       <article class="gc g1">
         <div class="gc-in">
@@ -328,7 +336,7 @@
     g.classList.remove('locked');g.classList.add(quiet?'opened':'opening');$('gState').textContent='3 GIFTS · OPEN';$('gnote').textContent='선물은 언제든 이 화면에서 다시 열 수 있어요';
     if(!quiet){var cs=g.querySelectorAll('.gc');cs.forEach(function(c,i){setTimeout(function(){c.classList.add('pop');burst(c)},500+i*420)})}$('sticky').classList.add('hide');
     $('chCard').classList.add('ok');$('ch').lastChild.textContent='채널 추가 완료 · 다시 열기';
-    document.querySelector('.stp .now').classList.add('done');
+    document.querySelector('.stp .now').classList.add('done');var l3=document.querySelector('.stp .last');if(l3)l3.classList.add('done');
     $('hB').innerHTML=$('hB').innerHTML.replace('환영해요','선물이 열렸어요');
     $('lB').textContent='아래에서 바로 열어 보세요. 매달 소식은 카카오톡 채널로 보내드려요.';
     document.querySelector('.chc-n').textContent='채널 친구가 되신 걸 환영해요';
