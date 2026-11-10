@@ -68,35 +68,38 @@
 
   <!-- B. 등록 완료 -->
   <main id="B" class="hide">
-    <div class="kick">WELCOME</div>
-    <h1 id="hB">선물이 도착했어요</h1>
-    <p class="lead" id="lB">지금 바로 열어 보세요.</p>
+    <div class="stp"><span class="done">등록 완료</span><i></i><span class="now">채널 추가</span></div>
+    <h1 id="hB">마지막 한 단계만<br>남았어요</h1>
+    <p class="lead" id="lB">채널을 추가하면 선물이 열리고, 앞으로 매달 카카오톡으로 받아요.</p>
 
-    <div class="sec">
-      <div class="sec-h">01 · 전자책 2권<small>책장 넘기듯 읽기</small></div>
-      <div class="books">
-        <a href="/books/read/?b=cashflow"><img src="/books/cover-01.jpg" alt="현금흐름은 산소다 표지"><span>현금흐름은 산소다 →</span></a>
-        <a href="/books/read/?b=market-mood"><img src="/books/cover-02.jpg" alt="공포·탐욕 지수 읽는 법 표지"><span>공포·탐욕 지수 →</span></a>
+    <section class="chc" id="chCard">
+      <div class="chc-id"><span class="lg">M</span><div><b>makesbetter</b><span>메이크스베러 공식 카카오톡 채널</span></div></div>
+      <ul class="chc-l">
+        <li><b>월배당 리포트</b><span>매달 · 실제 계좌 공개</span></li>
+        <li><b>ETF 매수 일정</b><span>매수 기간마다 알림</span></li>
+        <li><b>이번 달 매수 방향</b><span>신호가 바뀔 때</span></li>
+      </ul>
+      <a class="btn kakao" id="ch" href="https://pf.kakao.com/_eETXxj/friend"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 3.5c-5 0-9 3.1-9 7 0 2.5 1.7 4.7 4.2 6l-1 3.7c-.1.3.3.6.6.4l4.4-2.9c.3 0 .5.1.8.1 5 0 9-3.1 9-7s-4-7.3-9-7.3Z"/></svg>채널 추가하고 선물 열기</a>
+      <p class="chc-n">추가한 뒤 이 화면으로 돌아오면 선물이 열려요</p>
+    </section>
+
+    <section class="gifts locked" id="gifts">
+      <div class="sec-h">채널 추가 후 열리는 선물<small id="gState">LOCKED</small></div>
+      <div class="gw">
+        <div class="books">
+          <a href="/books/read/?b=cashflow"><img src="/books/cover-01.jpg" alt="현금흐름은 산소다 표지"><span>현금흐름은 산소다 →</span></a>
+          <a href="/books/read/?b=market-mood"><img src="/books/cover-02.jpg" alt="공포·탐욕 지수 읽는 법 표지"><span>공포·탐욕 지수 →</span></a>
+        </div>
+        <a href="/studio/" class="gl"><div class="shot"><img src="/go/img/studio.webp" alt="11월 재투자 방향 화면"></div><span>11월 재투자 방향 보기 →</span></a>
+        <a class="bonus" id="cp" href="https://pf.kakao.com/_eETXxj/coupons/_JRkj">
+          <div><small>BONUS · 초대로만 받는</small><b>전문가 1:1 코칭 2시간</b></div><span>받기 →</span>
+        </a>
+        <div class="lock" id="lock"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>채널을 추가하면 열려요</b><span>전자책 2권 · 11월 매수 방향 · 코칭권</span></div>
       </div>
-    </div>
-
-    <div class="sec">
-      <div class="sec-h">02 · 이번 달 매수 방향<small>STUDIO</small></div>
-      <a href="/studio/"><div class="shot"><img src="/go/img/studio.webp" alt="11월 재투자 방향 화면"></div></a>
-      <a class="btn line" href="/studio/">11월 재투자 방향 보기</a>
-    </div>
-
-    <div class="dark">
-      <div class="k">03 · 매달 받는 건 카카오톡으로</div>
-      <p>월배당 리포트 · ETF 매수 일정 · 금융 뉴스를 채널로 보내드려요.</p>
-      <a class="btn kakao" id="ch" href="https://pf.kakao.com/_eETXxj/friend">카카오톡 채널 추가하기</a>
-    </div>
-
-    <a class="bonus" id="cp" href="https://pf.kakao.com/_eETXxj/coupons/_JRkj">
-      <div><small>BONUS · 초대로만 받는</small><b>전문가 1:1 코칭 2시간</b></div><span>받기 →</span>
-    </a>
+    </section>
   </main>
 </div>
+<div class="sticky hide" id="sticky"><a class="btn kakao" href="https://pf.kakao.com/_eETXxj/friend" id="ch2">채널 추가하고 선물 열기</a></div>
 <div class="toast" id="toast"></div>
 <script>
 (function(){
@@ -107,9 +110,11 @@
 
   function showB(name,inv){
     $('A').classList.add('hide');$('B').classList.remove('hide');$('B').classList.add('fade');$('topR').textContent='등록 완료';
-    $('hB').innerHTML=esc(name)+' 님,<br>선물이 도착했어요';
-    $('lB').textContent=inv?inv+' 님 덕분에 받은 선물이에요. 지금 바로 열어 보세요.':'지금 바로 열어 보세요.';
+    $('hB').innerHTML=esc(name)+' 님,<br>마지막 한 단계만 남았어요';
+    $('lB').textContent=(inv?inv+' 님이 준비한 선물이에요. ':'')+'채널을 추가하면 선물이 열리고, 앞으로 매달 카카오톡으로 받아요.';
     window.scrollTo(0,0);
+    var opened=false;try{opened=localStorage.getItem('mb-go-ch')==='1'}catch(e){}
+    if(opened)unlock(true);else watchSticky();
   }
   try{var s=JSON.parse(localStorage.getItem('mb-go')||'null');if(s&&s.name){showB(s.name,s.inv)}}catch(e){}
 
@@ -133,7 +138,26 @@
       }).catch(function(){err.textContent='연결이 불안정해요. 잠시 후 다시 눌러 주세요.';b.disabled=false;b.textContent='등록하고 바로 받기'});
   });
 
-  $('ch').addEventListener('click',function(){hit('go-channel')});
+  function unlock(quiet){
+    var g=$('gifts');if(!g.classList.contains('locked'))return;
+    g.classList.remove('locked');$('gState').textContent='OPEN';$('sticky').classList.add('hide');
+    $('chCard').classList.add('ok');$('ch').lastChild.textContent='채널 추가 완료 · 다시 열기';
+    document.querySelector('.stp .now').classList.add('done');
+    $('hB').innerHTML=$('hB').innerHTML.replace('마지막 한 단계만 남았어요','선물이 모두 열렸어요');
+    $('lB').textContent='아래에서 바로 열어 보세요. 매달 소식은 카카오톡 채널로 보내드려요.';
+    document.querySelector('.chc-n').textContent='채널 친구가 되신 걸 환영해요';
+    try{localStorage.setItem('mb-go-ch','1')}catch(e){}
+    if(!quiet)setTimeout(function(){g.scrollIntoView({behavior:'smooth',block:'start'})},300);
+  }
+  var clicked=false;
+  function onCh(){hit('go-channel');clicked=true;try{localStorage.setItem('mb-go-ch','1')}catch(e){}}
+  $('ch').addEventListener('click',onCh);$('ch2').addEventListener('click',onCh);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden&&clicked)unlock()});
+  window.addEventListener('focus',function(){if(clicked)setTimeout(unlock,400)});
+  function watchSticky(){
+    if(!('IntersectionObserver' in window))return;
+    new IntersectionObserver(function(es){es.forEach(function(e){var g=$('gifts');$('sticky').classList.toggle('hide',e.isIntersecting||!g.classList.contains('locked'))})},{threshold:0}).observe($('ch'));
+  }
   $('cp').addEventListener('click',function(){hit('go-coaching')});
   var t=$('toast');function toast(m){t.textContent=m;t.classList.add('on');setTimeout(function(){t.classList.remove('on')},3200)}
 
