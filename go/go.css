@@ -620,3 +620,7 @@ h1,h2,.lead,.a-s,.l-why{text-wrap:balance}
 .nm-b{margin-top:10px;font-size:12px;font-weight:800;letter-spacing:.34em;color:var(--gold2);transition-delay:.35s}
 .b-after{border-radius:28px 28px 0 0}
 @media (prefers-reduced-motion:reduce){.nm .ch{filter:none;opacity:1;color:#F5F3EE;-webkit-text-stroke-color:transparent;transition:none}.nm-k,.nm-b{opacity:1;transform:none}.nm .ul line{stroke-dashoffset:0}}
+.nm .ch{padding:0!important;margin:0}
+.nm>span{padding:.04em 0}
+.nm .ul{display:block;position:absolute;left:0;right:0;bottom:-6px;height:3px;border-radius:2px;background:#E9CF8E;transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.6,0,.2,1)}
+.b-fin.ul-on .nm .ul{transform:scaleX(1)}
