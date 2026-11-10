@@ -151,7 +151,7 @@ export default async (req) => {
       if (d.participants.some((x) => x.phone && x.phone === phone)) why = inviter && inviter.phone === phone ? "self" : "participant";
       else if (!inPeriod(d.meta, now)) why = "period";
       else if (!ref) why = "noref";
-      const res = await store().setJSON("r/" + phone, { name, phone, ref, refName, at: now, dev, ok: !why, why }, { onlyIfNew: true });
+      const res = await store().setJSON("r/" + phone, { name, phone, ref, refName, at: now, dev, ok: !why, why, mk: !!body.mk }, { onlyIfNew: true });
       if (res && res.modified === false) return json({ ok: false, code: "dup", msg: "이미 등록된 번호예요. 아래에서 바로 받아 보세요." });
       cache = null;
       const out = { ok: true, inviter: inviter ? inviter.name : null };

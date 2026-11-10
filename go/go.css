@@ -332,3 +332,26 @@ h1,h2,.lead,.a-s,.l-why{text-wrap:balance}
 .f-h{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:10px;border-bottom:1px solid var(--ink)}
 .f-h b{font-size:15px}.f-h span{font-size:12px;color:var(--gold);font-weight:700}
 .f-n{margin-top:10px;text-align:center;font-size:12px;color:var(--faint)}
+
+/* ══ v4: 사진 ══ */
+.env{background:#0E1512 url(/go/img/ph-env.webp) center/cover no-repeat;align-items:flex-end;padding:28px 28px calc(44px + env(safe-area-inset-bottom))}
+.env:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,12,.72) 0,rgba(10,14,12,.15) 34%,rgba(10,14,12,.2) 52%,rgba(10,14,12,.94) 82%)}
+.env-in{position:relative;display:flex;flex-direction:column;min-height:calc(100svh - 100px)}
+.env-k{margin-top:28px}
+.env-t{margin-top:auto;margin-bottom:26px;color:#fff;animation:fd 1s ease .2s both}
+.env-t small{display:block;font-size:12px;letter-spacing:.18em;color:#C9B07A}
+.env-t b{display:block;margin:8px 0 10px;font-size:30px;font-weight:800;letter-spacing:-.03em}
+.env.open{transform:scale(1.06);transition:opacity .9s ease .2s,transform 1.2s ease,visibility 0s 1.2s}
+.c-q{position:relative;overflow:hidden;padding-top:300px}
+.q-bg{position:absolute;inset:0;background:url(/go/img/ph-city.webp) center top/cover no-repeat}
+.q-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,23,28,.05) 0,rgba(21,23,28,.55) 34%,#15171C 62%)}
+.c-q>*:not(.q-bg){position:relative}
+.lib li{align-items:stretch;padding:0;overflow:hidden;gap:0}
+.lib .lp{flex:0 0 112px;width:112px;min-height:112px;object-fit:cover}
+.lib li div{padding:16px 16px 16px 16px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.lib li .lb{margin-bottom:8px;padding:5px 10px;font-size:11px}
+.lib li p .inl{display:inline;font-size:inherit;font-weight:700;color:var(--ink)}
+.btn.mid{margin-top:22px;background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.g-ph{margin-top:22px;border-radius:22px;overflow:hidden;box-shadow:0 24px 40px -24px rgba(21,23,28,.6)}
+.g-ph img{width:100%;aspect-ratio:3/2;object-fit:cover}
+.g-ph+.g3{margin-top:6px}

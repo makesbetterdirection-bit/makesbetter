@@ -17,7 +17,7 @@
 <div class="env" id="env">
   <div class="env-in">
     <div class="env-k">INVITATION</div>
-    <div class="env-c"><i class="fl"></i><div class="env-p"><small>To.</small><b>소중한 당신에게</b><small class="fr" id="envFrom">From. MAKESBETTER</small></div><span class="env-s">M</span></div>
+    <div class="env-t"><small>To.</small><b>소중한 당신에게</b><small class="fr" id="envFrom">From. MAKESBETTER</small></div>
     <button class="btn" id="openEnv" type="button">초대장 열기</button>
     <p class="env-n">♪ 잔잔한 피아노 음악이 함께 나와요</p>
   </div>
@@ -39,7 +39,7 @@
     </section>
 
     <!-- 2. 질문 -->
-    <section class="ch c-q">
+    <section class="ch c-q"><div class="q-bg" aria-hidden="true"></div>
       <p class="q-k rvl">혹시 이런 생각, 해 본 적 있나요?</p>
       <h2 class="rvl">내가 일을 멈추면,<br>돈도 같이 <em>멈출까요?</em></h2>
       <p class="q-s rvl">월급날은 한 달에 한 번인데,<br>돈 걱정은 매일이니까요.</p>
@@ -53,9 +53,9 @@
       <h2 class="rvl">메이크스베러는<br>그 답을 함께 찾는<br><em>금융 도서관</em>이에요.</h2>
       <p class="a-s rvl">돈을 불리는 요령이 아니라, 일을 쉬어도 매달 들어오는 돈의 흐름을 만드는 곳.</p>
       <ol class="lib">
-        <li class="rvl"><span class="lb">읽어요</span><div><b>쉽게 쓴 전자책</b><p>어려운 말 없이, 돈의 흐름부터.</p></div><span class="lt books2"><img src="/books/cover-01.jpg" alt=""><img src="/books/cover-02.jpg" alt=""></span></li>
-        <li class="rvl"><span class="lb">따라가요</span><div><b>매달 공개되는 실제 계좌</b><p>이번 달엔 뭘 사는지, 얼마가 들어왔는지.</p></div><span class="lt shot2"><img src="/go/img/studio.webp" alt=""></span></li>
-        <li class="rvl"><span class="lb">물어봐요</span><div><b>전문 디렉터 1:1 코칭</b><p>혼자 판단하지 않게, 내 상황에 맞게.</p></div><span class="lt cnt"><b id="cnt2">1,347</b><small>명 진단</small></span></li>
+        <li class="rvl"><img class="lp" src="/go/img/ph-read.webp" alt="" loading="lazy"><div><span class="lb">읽어요</span><b>쉽게 쓴 전자책</b><p>어려운 말 없이, 돈의 흐름부터.</p></div></li>
+        <li class="rvl"><img class="lp" src="/go/img/ph-follow.webp" alt="" loading="lazy"><div><span class="lb">따라가요</span><b>매달 공개되는 실제 계좌</b><p>이번 달엔 뭘 사는지, 얼마가 들어왔는지.</p></div></li>
+        <li class="rvl"><img class="lp" src="/go/img/ph-ask.webp" alt="" loading="lazy"><div><span class="lb">물어봐요</span><b>전문 디렉터 1:1 코칭</b><p>혼자 판단하지 않게, 내 상황에 맞게. <b id="cnt2" class="inl">1,347</b>명이 현금흐름 진단을 받았어요.</p></div></li>
       </ol>
     </section>
 
@@ -64,7 +64,7 @@
       <div class="kick rvl">PROOF</div>
       <h2 class="rvl">말이 아니라,<br>실제로 들어온 돈.</h2>
       <div class="pf rvl">
-        <small>메이크스베러가 매달 공개하는 실제 계좌 · 2026년 10월 입금</small>
+        <small>메이크스베러가 매달 공개하는 실제 계좌 · 2026년 10월<br>계좌 4개 합산 · 실수령액 기준</small>
         <div class="pf-n"><b id="amt" data-v="3643944">3,643,944</b><span>원</span></div>
         <div class="pf-m"><div><i style="height:100%"></i><span>7월</span></div><div><i style="height:88%"></i><span>8월</span></div><div><i style="height:89%"></i><span>9월</span></div><div class="on"><i style="height:89.5%"></i><span>10월</span></div></div>
         <p>포트폴리오 수익률이 <b>−4.8%</b>였던 달에도, 입금은 9월보다 <b>15,344원</b> 늘었어요.</p>
@@ -80,7 +80,8 @@
         </ul>
         <p class="how-l"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>11개 종목과 이번 달 방향은 등록 후 채널에서 공개해요</p>
       </div>
-      <p class="dis rvl">실제 사례를 그대로 공개한 자료이며, 수익을 보장하거나 투자를 권유하는 내용이 아니에요.</p>
+      <p class="dis rvl">실제 사례를 그대로 공개한 자료이며, 수익을 보장하거나 투자를 권유하는 내용이 아니에요. 분배금은 달마다 달라지고, 투자 원금은 손실이 날 수 있어요.</p>
+      <a class="btn mid rvl" href="#f" id="midF">여기까지 보고 바로 선물 받기</a>
     </section>
 
     <!-- 5. 사람들 -->
@@ -101,6 +102,7 @@
     <section class="ch c-g">
       <div class="kick rvl">YOUR INVITATION</div>
       <h2 class="rvl" id="hG">그래서 이 초대장에는<br>선물 세 가지가 들어 있어요.</h2>
+      <div class="g-ph rvl"><img src="/go/img/ph-gift.webp" alt="" loading="lazy"></div>
       <ul class="g3">
         <li class="rvl"><span class="lb">읽어요</span><div><b>전자책 2권</b><p>현금흐름은 산소다 · 공포·탐욕 지수 읽는 법</p></div></li>
         <li class="rvl"><span class="lb">따라가요</span><div><b>이번 달 매수 방향 + 매달 월배당 리포트</b><p>Better.7 11개 종목까지 채널에서 공개</p></div></li>
@@ -123,8 +125,9 @@
       </div>
       <div class="agree">
         <label><input type="checkbox" id="ag"> 개인정보 수집·이용에 동의합니다 (필수)</label>
-        <details><summary>자세히</summary>수집 항목: 이름, 휴대폰 번호<br>목적: 초대 이벤트 집계, 선물·혜택 안내<br>보관: 이벤트 종료 후 3개월 뒤 파기<br>동의하지 않으면 등록할 수 없어요.</details>
+        <details><summary>자세히</summary>수집 항목: 이름, 휴대폰 번호<br>목적: 초대 이벤트 집계, 선물 전달<br>보관: 이벤트 종료 후 3개월 뒤 파기<br>동의하지 않으면 등록할 수 없어요.</details>
       </div>
+      <div class="agree" style="margin-top:10px"><label><input type="checkbox" id="mk"> 혜택·이벤트 소식 받기 (선택)</label></div>
       <button class="btn" id="go" type="submit">선물 3개 받기</button>
       <p class="f-n">등록 정보는 선물 전달과 이벤트 집계에만 써요.</p>
       <div class="err" id="err" role="alert"></div>
@@ -222,7 +225,7 @@
   (function(){
     var env=$('env'),bt=$('bgm');
     if(!$('A').classList.contains('hide'))document.body.classList.add('noscroll');else env.classList.add('gone');
-    var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);if(e.target.querySelector&&e.target.querySelector('#amt'))count()}})},{threshold:.18,rootMargin:'0px 0px -6% 0px'}):null;
+    var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);if(e.target.querySelector&&e.target.querySelector('#amt')){count();hit('go-proof')}if(e.target.id==='gHold')hit('go-gift')}})},{threshold:.18,rootMargin:'0px 0px -6% 0px'}):null;
     function startRv(){document.querySelectorAll('.rvl').forEach(function(el){var k=0,pv=el.previousElementSibling;while(pv&&pv.classList.contains('rvl')&&k<5){k++;pv=pv.previousElementSibling}el.style.transitionDelay=(k*110)+'ms';if(io)io.observe(el);else el.classList.add('in')})}
     if(env.classList.contains('gone'))startRv();
     var pg=$('prog').firstChild;window.addEventListener('scroll',function(){var a=$('A');if(a.classList.contains('hide')){$('prog').style.display='none';return}var h=a.offsetHeight-window.innerHeight;pg.style.transform='scaleX('+Math.max(0,Math.min(1,window.scrollY/Math.max(1,h)))+')'},{passive:true});
@@ -243,9 +246,11 @@
     function stop(){on=false;bt.classList.remove('on');clearInterval(tm);if(AC)AC.suspend()}
     bt.addEventListener('click',function(){on?stop():play()});
     document.addEventListener('visibilitychange',function(){if(document.hidden&&on){clearInterval(tm);AC.suspend()}else if(!document.hidden&&on){AC.resume();nextT=AC.currentTime+.15;tm=setInterval(sched,400)}});
-    $('openEnv').addEventListener('click',function(){env.classList.add('open');play();bt.classList.remove('hide');setTimeout(function(){env.classList.add('gone');document.body.classList.remove('noscroll');window.dispatchEvent(new Event('scroll'))},1100);setTimeout(startRv,650)});
+    $('openEnv').addEventListener('click',function(){hit('go-env-open');env.classList.add('open');play();bt.classList.remove('hide');setTimeout(function(){env.classList.add('gone');document.body.classList.remove('noscroll');window.dispatchEvent(new Event('scroll'))},1100);setTimeout(startRv,650)});
   })();
 
+  $('nm').addEventListener('focus',function f(){hit('go-form');$('nm').removeEventListener('focus',f)});
+  $('midF').addEventListener('click',function(e){e.preventDefault();$('f').scrollIntoView({behavior:'smooth',block:'start'})});
   $('ph').addEventListener('input',function(){var d=this.value.replace(/\D/g,'').slice(0,11);this.value=d.length>7?d.slice(0,3)+'-'+d.slice(3,d.length-4)+'-'+d.slice(-4):d.length>3?d.slice(0,3)+'-'+d.slice(3):d});
 
   $('f').addEventListener('submit',function(e){
@@ -255,7 +260,7 @@
     if(!/^01\d{8,9}$/.test(phone)){err.textContent='휴대폰 번호를 확인해 주세요.';return}
     if(!$('ag').checked){err.textContent='개인정보 수집·이용에 동의해 주세요.';return}
     var b=$('go');b.disabled=true;b.textContent='등록 중…';
-    fetch('/api/go/reg',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:name,phone:phone,r:r,refName:$('rf').value.trim(),agree:true})})
+    fetch('/api/go/reg',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:name,phone:phone,r:r,refName:$('rf').value.trim(),agree:true,mk:$('mk').checked})})
       .then(function(x){return x.json()}).then(function(d){
         if(d.ok||d.code==='dup'){var inv=d.inviter||inviter;try{localStorage.setItem('mb-go',JSON.stringify({name:name,inv:inv}))}catch(e){}hit('go-reg');showB(name,inv);if(d.code==='dup')toast('이미 등록된 번호예요. 선물은 그대로 받으실 수 있어요.')}
         else{err.textContent=d.msg||'다시 시도해 주세요.';b.disabled=false;b.textContent='선물 3개 받기'}

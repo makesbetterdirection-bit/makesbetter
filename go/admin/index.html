@@ -70,7 +70,7 @@ textarea{width:100%;height:140px;margin-top:8px;border:1px solid var(--line);bor
   })}
   function csv(rows,name){var s='﻿'+rows.map(function(r){return r.map(function(v){v=String(v==null?'':v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}).join(',')}).join('\r\n');
     var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([s],{type:'text/csv;charset=utf-8'}));a.download=name;a.click()}
-  $('dlR').onclick=function(){var pm={};D.participants.forEach(function(p){pm[p.id]=p});csv([['등록 시각','이름','휴대폰','초대한 분','입력한 추천인','인정','제외 사유','기기']].concat(D.regs.map(function(r){return [dt(r.at),r.name,ph(r.phone),pm[r.ref]?pm[r.ref].name:'',r.refName,r.ok?'O':'X',r.ok?'':WHY[r.why]||r.why,r.dev]})),'초대이벤트_등록자.csv')};
+  $('dlR').onclick=function(){var pm={};D.participants.forEach(function(p){pm[p.id]=p});csv([['등록 시각','이름','휴대폰','초대한 분','입력한 추천인','인정','제외 사유','기기','소식 수신 동의']].concat(D.regs.map(function(r){return [dt(r.at),r.name,ph(r.phone),pm[r.ref]?pm[r.ref].name:'',r.refName,r.ok?'O':'X',r.ok?'':WHY[r.why]||r.why,r.dev,r.mk?'O':'']})),'초대이벤트_등록자.csv')};
   $('dlP').onclick=function(){var pm={};D.participants.forEach(function(p){pm[p.id]=p});var c=D.computed;csv([['순위','이름','휴대폰','인원','커피','3만원','3명 도달 시각']].concat(c.rows.map(function(r){return [r.rank,r.name,ph((pm[r.id]||{}).phone),r.count,'O',c.three.indexOf(r.id)>-1?'O':'',dt(r.t3)]})),'초대이벤트_순위.csv')};
   $('rf').onclick=function(){load().then(function(){toast('새로고침했어요')})};
   $('saveM').onclick=function(){post({op:'meta',meta:{start:$('ms').value.trim()||null,end:$('me').value.trim()||null}}).then(function(d){toast(d.ok?'기간을 저장했어요':d.msg);load()})};
