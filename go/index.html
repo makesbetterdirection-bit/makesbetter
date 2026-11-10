@@ -276,7 +276,9 @@
     if(env.classList.contains('gone'))startRv();
     var pg=$('prog').firstChild;window.addEventListener('scroll',function(){var a=$('A');if(a.classList.contains('hide')){$('prog').style.display='none';return}var h=a.offsetHeight-window.innerHeight;pg.style.transform='scaleX('+Math.max(0,Math.min(1,window.scrollY/Math.max(1,h)))+')'},{passive:true});
     $('qa').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;this.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});$('qaR').textContent=b.getAttribute('data-a')==='1'?'대부분 그래요. 그래서 이 도서관이 있어요.':'이미 흐름이 있으시네요. 더 단단하게 만드는 법을 함께 봐요.';$('qaR').classList.add('in');hit('go-qa'+b.getAttribute('data-a'))});
-    var counted=false;function count(){if(counted)return;counted=true;var el=$('amt'),v=+el.getAttribute('data-v'),t0=null;function st(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-k,3);el.textContent=Math.round(v*e).toLocaleString('ko-KR');if(k<1)requestAnimationFrame(st)}requestAnimationFrame(st)}
+    function fitAmt(){var b=$('amt'),box=b.parentNode;b.style.fontSize='';var n=0;while(box.scrollWidth>box.clientWidth+1&&n<30){b.style.fontSize=(parseFloat(getComputedStyle(b).fontSize)-2)+'px';n++}}
+    window.addEventListener('resize',fitAmt);setTimeout(fitAmt,60);
+    var counted=false;function count(){if(counted)return;counted=true;var el=$('amt'),v=+el.getAttribute('data-v'),t0=null;function st(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-k,3);el.textContent=Math.round(v*e).toLocaleString('ko-KR');if(k<1)requestAnimationFrame(st);else fitAmt()}requestAnimationFrame(st)}
     /* 음악: 직접 만든 피아노 선율 (Web Audio 합성, 음원 파일 없음) */
     var AC=null,out=null,on=false,nextT=0,bar=0,tm=null,beat=60/63;
     var CH=[[146.83,220,293.66,369.99,440],[123.47,185,246.94,293.66,369.99],[98,146.83,196,246.94,293.66],[110,164.81,220,277.18,329.63]];
