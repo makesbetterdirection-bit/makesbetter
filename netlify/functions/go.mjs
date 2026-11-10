@@ -8,7 +8,17 @@ export const config = { path: "/api/go/*" };
 const ADMIN_HASH = "4fac70b63fc7034f6813f1bfbc68d93c8bac5a1b18523993f471a4f37cc24bc9";
 const sha = (s) => createHash("sha256").update(String(s)).digest("hex");
 const store = () => getStore({ name: "go-event", consistency: "strong" });
-const EMPTY = { participants: [], regs: [], meta: { start: null, end: null, threeLimit: 10 } };
+const EMPTY = { participants: [], meta: { start: null, end: null, threeLimit: 10 } };
+// 등록은 번호별 키(r/01012345678)로 따로 저장 → 동시 등록이 서로 덮어쓰지 않고, 같은 번호는 한 번만 저장됨
+let cache = null;
+async function loadRegs(fresh) {
+  if (!fresh && cache && Date.now() - cache.t < 4000) return cache.regs;
+  const s = store();
+  const { blobs } = await s.list({ prefix: "r/" });
+  const regs = (await Promise.all(blobs.map((b) => s.get(b.key, { type: "json" })))).filter(Boolean);
+  cache = { t: Date.now(), regs };
+  return regs;
+}
 
 const json = (d, s = 200) =>
   new Response(JSON.stringify(d), {
@@ -16,13 +26,19 @@ const json = (d, s = 200) =>
     headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "access-control-allow-origin": "*" },
   });
 
-async function load() {
+async function loadState() {
   const r = await store().getWithMetadata("state", { type: "json" });
-  return r ? { data: { ...EMPTY, ...r.data }, etag: r.etag } : { data: structuredClone(EMPTY), etag: null };
+  const data = r ? { ...EMPTY, ...r.data } : structuredClone(EMPTY);
+  delete data.regs;
+  return { data, etag: r ? r.etag : null };
+}
+async function load(fresh) {
+  const [{ data, etag }, regs] = await Promise.all([loadState(), loadRegs(fresh)]);
+  return { data: { ...data, regs }, etag };
 }
 async function update(fn) {
   for (let i = 0; i < 6; i++) {
-    const { data, etag } = await load();
+    const { data, etag } = await loadState();
     const out = await fn(data);
     const opt = etag ? { onlyIfMatch: etag } : { onlyIfNew: true };
     const res = await store().setJSON("state", data, opt);
@@ -106,23 +122,24 @@ export default async (req) => {
       if (!body.agree) return json({ ok: false, code: "agree", msg: "개인정보 수집·이용에 동의해 주세요." }, 400);
       const ip = req.headers.get("x-nf-client-connection-ip") || "";
       const dev = sha(ip + "|" + (req.headers.get("user-agent") || "")).slice(0, 10);
-      const out = await update((d) => {
-        const now = Date.now();
-        if (d.regs.some((r) => r.phone === phone)) return { ok: false, code: "dup", msg: "이미 등록된 번호예요. 아래에서 바로 받아 보세요." };
-        let ref = d.participants.find((x) => x.id === body.r) ? body.r : null;
-        const refName = cleanName(body.refName);
-        if (!ref && refName) {
-          const m = d.participants.filter((x) => x.name === refName);
-          if (m.length === 1) ref = m[0].id;
-        }
-        const inviter = d.participants.find((x) => x.id === ref);
-        let why = "";
-        if (d.participants.some((x) => x.phone && x.phone === phone)) why = inviter && inviter.phone === phone ? "self" : "participant";
-        else if (!inPeriod(d.meta, now)) why = "period";
-        else if (!ref) why = "noref";
-        d.regs.push({ name, phone, ref, refName, at: now, dev, ok: !why, why });
-        return { ok: true, inviter: inviter ? inviter.name : null };
-      });
+      const { data: d } = await load(true);
+      const now = Date.now();
+      if (d.regs.some((r) => r.phone === phone)) return json({ ok: false, code: "dup", msg: "이미 등록된 번호예요. 아래에서 바로 받아 보세요." });
+      let ref = d.participants.find((x) => x.id === body.r) ? body.r : null;
+      const refName = cleanName(body.refName);
+      if (!ref && refName) {
+        const m = d.participants.filter((x) => x.name === refName);
+        if (m.length === 1) ref = m[0].id;
+      }
+      const inviter = d.participants.find((x) => x.id === ref);
+      let why = "";
+      if (d.participants.some((x) => x.phone && x.phone === phone)) why = inviter && inviter.phone === phone ? "self" : "participant";
+      else if (!inPeriod(d.meta, now)) why = "period";
+      else if (!ref) why = "noref";
+      const res = await store().setJSON("r/" + phone, { name, phone, ref, refName, at: now, dev, ok: !why, why }, { onlyIfNew: true });
+      if (res && res.modified === false) return json({ ok: false, code: "dup", msg: "이미 등록된 번호예요. 아래에서 바로 받아 보세요." });
+      cache = null;
+      const out = { ok: true, inviter: inviter ? inviter.name : null };
       return json(out);
     }
 
@@ -158,8 +175,22 @@ export default async (req) => {
       const key = req.method === "POST" ? body.key : url.searchParams.get("key");
       if (sha(key || "") !== ADMIN_HASH) return json({ ok: false, msg: "관리자 키가 맞지 않아요." }, 401);
       if (req.method === "GET") {
-        const { data } = await load();
+        const { data } = await load(true);
         return json({ ok: true, ...data, computed: compute(data) });
+      }
+      if (body.op === "set") {
+        const k = "r/" + digits(body.phone), r = await store().get(k, { type: "json" });
+        if (!r) return json({ ok: false, msg: "등록 기록 없음" });
+        if ("ok" in body) { r.ok = !!body.ok; r.why = body.ok ? "" : body.why || "admin"; }
+        if ("ref" in body) r.ref = body.ref || null;
+        await store().setJSON(k, r); cache = null;
+        return json({ ok: true, reg: r });
+      }
+      if (body.op === "delete") {
+        let removed = 0;
+        for (const p of body.phones || []) { await store().delete("r/" + digits(p)); removed++; }
+        cache = null;
+        return json({ ok: true, removed });
       }
       const out = await update((d) => {
         if (body.op === "participants") {
@@ -178,19 +209,6 @@ export default async (req) => {
           return { ok: true, participants: list.length };
         }
         if (body.op === "meta") { d.meta = { ...d.meta, ...body.meta }; return { ok: true, meta: d.meta }; }
-        if (body.op === "set") {
-          const r = d.regs.find((x) => x.phone === digits(body.phone));
-          if (!r) return { ok: false, msg: "등록 기록 없음" };
-          if ("ok" in body) { r.ok = !!body.ok; r.why = body.ok ? "" : body.why || "admin"; }
-          if ("ref" in body) r.ref = body.ref || null;
-          return { ok: true, reg: r };
-        }
-        if (body.op === "delete") {
-          const before = d.regs.length;
-          const set = new Set((body.phones || []).map(digits));
-          d.regs = d.regs.filter((r) => !set.has(r.phone));
-          return { ok: true, removed: before - d.regs.length };
-        }
         return { ok: false, msg: "unknown op" };
       });
       return json(out);
