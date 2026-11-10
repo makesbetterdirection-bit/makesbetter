@@ -2,6 +2,6 @@
   "name": "makesbetter",
   "private": true,
   "dependencies": {
-    "@netlify/blobs": "11.1.9"
+    "@netlify/blobs": "10.0.11"
   }
 }
