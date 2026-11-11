@@ -700,3 +700,13 @@ main.w .b-fin{margin-top:72px}
 .pz:last-child div{flex:1}
 .pz.pz1{height:auto}
 .w-hero h1{font-size:min(25px,6.3vw)!important}
+.pt{margin-top:22px;border-top:1px solid var(--ink);text-align:left}
+.pt-h{display:flex;justify-content:space-between;align-items:baseline;padding:14px 2px 6px}
+.pt-h b{font-size:15px}.pt-h span{font-size:11.5px;font-weight:700;color:var(--gold)}
+.pt-r{display:flex;align-items:center;gap:14px;padding:13px 14px;margin-top:8px;border-radius:14px;background:var(--card);box-shadow:0 1px 0 var(--line)}
+.pt-r em{flex:0 0 46px;height:46px;border-radius:12px;display:grid;place-items:center;font-style:normal;font-size:14px;font-weight:800;color:#E9CF8E;background:#17110F}
+.pt-r.g em{background:linear-gradient(180deg,#E9CF8E,#C29A4A);color:#15171C}
+.pt-r div{flex:1;min-width:0}
+.pt-r b{display:block;font-size:15.5px;line-height:1.38;letter-spacing:-.02em}
+.pt-r small{display:block;margin-top:3px;font-size:12px;color:var(--sub)}
+.pt-n{margin-top:12px;padding:12px 14px;border-radius:12px;background:#F1ECE0;font-size:12.5px;line-height:1.6;color:var(--sub)}
