@@ -52,6 +52,7 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
 .card .g{background:#e4ddd1;color:#221e19}
 .card .t{background:none;color:#7b7266;font-weight:500;font-size:14px;padding:10px}
 @media (prefers-reduced-motion:reduce){.top,.bot,.hint{transition:none}}
+.pgi{background:#F3EFE7;overflow:hidden}.pgi img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none;user-select:none;pointer-events:none}
 </style>
 </head>
 <body>
@@ -111,7 +112,8 @@ function build(){
   if(flip){flip.destroy();bookEl=document.createElement('div');bookEl.id='book';desk.insertBefore(bookEl,er);}
   desk.style.width=(d.spread?d.w*2:d.w)+'px';desk.style.height=d.h+'px';
   flip=new St.PageFlip(bookEl,{width:d.w,height:d.h,size:'fixed',showCover:true,usePortrait:!d.spread,maxShadowOpacity:.45,flippingTime:820,mobileScrollSupport:false,startPage:keep,drawShadow:true,autoSize:false,swipeDistance:24,showPageCorners:true});
-  flip.loadFromImages(urls);
+  var pgs=urls.map(function(u,k){var d=document.createElement('div');d.className='pgi';var im=new Image();im.src=u;im.alt='';im.decoding='async';d.appendChild(im);bookEl.appendChild(d);return d});
+  flip.loadFromHTML(pgs);
   flip.on('flip',function(e){sync(e.data)});
   flip.on('init',function(){sync(flip.getCurrentPageIndex());document.getElementById('load').classList.add('off')});
   flip.__spread=d.spread;
