@@ -47,6 +47,7 @@ jobs:
         # 장중 실행은 건너뜀: 미국 지표는 밤사이, 코스피는 15:30 마감 뒤에만 확정되므로 07:50·15:50 계열 실행에서만 갱신
         if: steps.upd.outputs.mode != 'intraday'
         continue-on-error: true
+        timeout-minutes: 6
         env:
           KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
           ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}

@@ -49,7 +49,8 @@ def yahoo(sym, rng="1y"):
 
 
 def fred(series):
-    txt = http_get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}", tries=3, timeout=60)
+    # FRED 는 브라우저 UA 요청을 끊는 경우가 있어 단순 UA 로 요청하고, 최근 구간만 받는다
+    txt = http_get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}&cosd=2025-01-01", tries=2, timeout=30, ua="curl/8.5.0")
     rows = []
     for line in txt.strip().splitlines()[1:]:
         d, v = line.split(",")[:2]

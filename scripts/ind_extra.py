@@ -15,6 +15,7 @@ stdlib 만 사용.
 import calendar
 import json
 import os
+import time
 import urllib.request
 from datetime import date, datetime, timedelta
 
@@ -43,7 +44,13 @@ def md(d):
     return f"{d.month}/{d.day}"
 
 
-def _get(url, headers=None, timeout=60):
+BUDGET = 150          # 9개 지표 전체에 쓰는 최대 시간(초). 넘으면 남은 지표는 실패 처리
+_T0 = [0.0]
+
+
+def _get(url, headers=None, timeout=20):
+    if _T0[0] and time.monotonic() - _T0[0] > BUDGET:
+        raise RuntimeError("시간 초과")
     req = urllib.request.Request(url, headers=dict({"User-Agent": "Mozilla/5.0"}, **(headers or {})))
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read().decode("utf-8", "ignore")
@@ -74,9 +81,20 @@ def ecos(stat, cycle, start, end, item, n=400):
     return [(r["TIME"], float(r["DATA_VALUE"])) for r in rows if r.get("DATA_VALUE") not in (None, "")]
 
 
-def extra(put, yahoo, fred, today):
+def extra(put, yahoo, fred, today):  # noqa: ARG001 (fred 는 쓰지 않음)
     """put(key, fn) 으로 9개 지표를 등록. key = 'TAG|고정이름', 표시 이름이 바뀌는 지표는 name 을 함께 준다."""
     memo = {}
+    _T0[0] = time.monotonic()
+
+    def nyfed():   # 뉴욕 연은 공식 API: 실효연방기금금리와 목표금리 범위(일별)
+        if "ny" not in memo:
+            a, b = today - timedelta(days=200), today
+            j = json.loads(_get(f"https://markets.newyorkfed.org/api/rates/unsecured/effr/search.json?startDate={a:%Y-%m-%d}&endDate={b:%Y-%m-%d}"))
+            rows = sorted((r["effectiveDate"], float(r["percentRate"]), float(r["targetRateFrom"]), float(r["targetRateTo"])) for r in j["refRates"])
+            if len(rows) < 70:
+                raise RuntimeError("뉴욕 연은 자료 부족")
+            memo["ny"] = rows
+        return memo["ny"]
 
     def vk():
         if "vk" not in memo:
@@ -150,13 +168,13 @@ def extra(put, yahoo, fred, today):
     put("TRADE|무역수지", trade)
 
     def krus():
-        up, lo = fred("DFEDTARU"), fred("DFEDTARL")
+        ny = nyfed()
         bok = ecos("722Y001", "D", f"{today - timedelta(days=150):%Y%m%d}", f"{today:%Y%m%d}", "0101000")
-        if len(bok) < 61 or len(up) < 91:
+        if len(bok) < 61:
             raise RuntimeError("기준금리 자료 부족")
-        g1, g0 = up[-1][1] - bok[-1][1], up[-91][1] - bok[-61][1]   # 약 3개월 전과 비교
-        return {"value": f"{lo[-1][1] - bok[-1][1]:.2f}~{g1:.2f}%p",
-                "chg": f"한은 {bok[-1][1]:.2f}% · 연준 {lo[-1][1]:.2f}~{up[-1][1]:.2f}%",
+        g1, g0 = ny[-1][3] - bok[-1][1], ny[-61][3] - bok[-61][1]   # 60거래일(약 3개월) 전과 비교
+        return {"value": f"{ny[-1][2] - bok[-1][1]:.2f}~{g1:.2f}%p",
+                "chg": f"한은 {bok[-1][1]:.2f}% · 연준 {ny[-1][2]:.2f}~{ny[-1][3]:.2f}%",
                 "state": r2(clip((g1 - g0) / 0.5)), "date": md(today)}
     put("KR-US|한미 기준금리차", krus)
 
@@ -167,7 +185,7 @@ def extra(put, yahoo, fred, today):
             raise RuntimeError("FOMC 일정 갱신 필요")
         m = nxt[0]
         ndays = calendar.monthrange(m.year, m.month)[1]
-        effr = fred("EFFR")
+        effr = [(r[0], r[1]) for r in nyfed()]
         bars = yahoo(f"ZQ{MC[m.month - 1]}{m.year % 100:02d}.CBT", "3mo")
         if len(bars) < 6:
             raise RuntimeError("금리선물 자료 부족")
@@ -186,7 +204,7 @@ def extra(put, yahoo, fred, today):
     put("FOMC|FOMC 인상 확률", fomc)
 
     def cpi():
-        j = json.loads(_get(NOWCAST, timeout=120))
+        j = json.loads(_get(NOWCAST, timeout=40))
         for x in reversed(j):
             ds = {d.get("seriesname"): [p.get("value") for p in d["data"]] for d in x["dataset"]}
             act = [(i, float(v)) for i, v in enumerate(ds.get("Actual CPI Inflation", [])) if v not in ("", None)]
