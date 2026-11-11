@@ -693,3 +693,8 @@ body.urgent .env-tm .pg{stroke:#E5707F}
 #stickyM{position:fixed;left:0;right:0;bottom:0;padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(rgba(245,243,238,0),var(--paper) 30%);z-index:5}
 #stickyM .btn{max-width:420px;margin:0 auto;background:linear-gradient(180deg,#E9CF8E,#C29A4A);color:#15171C}
 main.w .b-fin{margin-top:72px}
+.pz.top{display:block}
+.pz.top div{padding:18px 18px 20px}
+.pz:last-child{grid-column:1/-1;display:flex;align-items:center}
+.pz:last-child img{flex:0 0 42%;width:42%;aspect-ratio:1/1}
+.pz:last-child div{flex:1}
