@@ -661,3 +661,12 @@ body.urgent .env-tm .pg{stroke:#E5707F}
 .ex-l+.ex-b{margin-top:28px}
 .ex-n{margin-top:14px;font-size:12px;color:#8FA398}
 .env-v{width:128vw;max-width:600px;top:3svh}.env-t{margin-bottom:16px}
+
+/* 디렉터와 함께: 부드럽게 숨 쉬듯 */
+.w-vs .on{position:relative;animation:vsGlow 3.2s ease-in-out infinite}
+.w-vs .on p{animation:vsTxt 3.6s ease-in-out infinite}
+.w-vs .on p:nth-of-type(2){animation-delay:1.2s}
+.w-vs .on p:nth-of-type(3){animation-delay:2.4s}
+@keyframes vsGlow{0%,100%{box-shadow:0 0 0 1px rgba(233,207,142,.18),0 20px 36px -20px rgba(21,23,28,.7)}50%{box-shadow:0 0 0 1.5px rgba(233,207,142,.7),0 0 26px rgba(212,174,98,.38),0 20px 36px -20px rgba(21,23,28,.7)}}
+@keyframes vsTxt{0%,100%{opacity:.62}50%{opacity:1;text-shadow:0 0 12px rgba(243,224,174,.45)}}
+@media (prefers-reduced-motion:reduce){.w-vs .on,.w-vs .on p{animation:none}}
