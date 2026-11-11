@@ -723,11 +723,15 @@ main.w .b-fin{margin-top:72px}
 html.acc-lock,html.acc-lock body{overflow:hidden}
 .acc{position:fixed;inset:0;z-index:300;overflow:hidden;perspective:1400px}
 .acc.hide{display:none}
-.acc-d{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;overflow:clip;transition:transform 1.15s cubic-bezier(.75,0,.2,1),box-shadow 1.15s}
+.acc-d{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;overflow:clip;transition:transform 3.6s cubic-bezier(.42,.08,.3,1),box-shadow 3.6s}
+.acc-d:before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity 1.6s .2s;background:repeating-linear-gradient(90deg,rgba(0,0,0,0) 0,rgba(0,0,0,.22) 9%,rgba(255,255,255,.06) 14%,rgba(0,0,0,0) 20%)}
+.acc.open .acc-d:before{opacity:1}
+.acc-d .acc-c{transition:opacity 1.8s .6s,filter 1.8s .6s}
+.acc.open .acc-d .acc-c{opacity:0;filter:blur(2px)}
 .acc-d.l{left:0;background:#111214;color:#fff;transform-origin:left center}
 .acc-d.r{right:0;background:#F5F3EE;color:#15171C;transform-origin:right center}
-.acc.open .acc-d.l{transform:translateX(-100%);box-shadow:30px 0 60px rgba(0,0,0,.45)}
-.acc.open .acc-d.r{transform:translateX(100%);box-shadow:-30px 0 60px rgba(0,0,0,.25)}
+.acc.open .acc-d.l{transform:translateX(-100%) scaleX(.55);box-shadow:30px 0 60px rgba(0,0,0,.45)}
+.acc.open .acc-d.r{transform:translateX(100%) scaleX(.55);box-shadow:-30px 0 60px rgba(0,0,0,.25)}
 .acc-d.l:after,.acc-d.r:after{content:"";position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(transparent,rgba(212,174,98,.8),transparent);opacity:0;transition:opacity .4s}
 .acc-d.l:after{right:0}.acc-d.r:after{left:0}
 .acc.ok .acc-d:after{opacity:1}
@@ -749,8 +753,8 @@ html.acc-lock,html.acc-lock body{overflow:hidden}
 .acc.in .acc-dt{opacity:.7}
 .acc.ok .acc-y{transform:scale(.96)}
 @keyframes accPulse{0%,100%{box-shadow:0 14px 34px -12px rgba(176,138,62,.75)}50%{box-shadow:0 14px 34px -12px rgba(176,138,62,.75),0 0 0 8px rgba(233,207,142,.18)}}
-html.acc-lock .wrap{transform:scale(.94);opacity:.55;transition:transform 1.3s cubic-bezier(.2,.8,.2,1),opacity 1.1s}
-html.acc-rev .wrap{transform:none;opacity:1}
+html.acc-lock .wrap{transform:scale(.96);opacity:0;filter:blur(8px);transition:transform 3s cubic-bezier(.25,.6,.2,1) .3s,opacity 2.6s ease .3s,filter 2.6s ease .3s}
+html.acc-rev .wrap{transform:none;opacity:1;filter:none}
 
 /* ── 흑백 초대사: 도전 단계 ── */
 .rd{list-style:none;margin-top:26px;display:flex;flex-direction:column;gap:12px}

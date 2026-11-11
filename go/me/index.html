@@ -234,10 +234,10 @@
   var done=false;
   function open(){if(done)return;done=true;try{localStorage.setItem('mb-go-acc','1')}catch(e){}
     a.classList.add('open');document.documentElement.classList.add('acc-rev');
-    setTimeout(function(){a.classList.add('hide');document.documentElement.classList.remove('acc-lock','acc-rev')},1300)}
+    setTimeout(function(){a.classList.add('hide');document.documentElement.classList.remove('acc-lock','acc-rev')},3900)}
   function hit(e,sel){var r=L.querySelector(sel).getBoundingClientRect();return e.clientX>=r.left-6&&e.clientX<=r.right+6&&e.clientY>=r.top-6&&e.clientY<=r.bottom+6}
   a.addEventListener('click',function(e){if(done)return;
-    if(hit(e,'.acc-y')){a.querySelectorAll('.acc-y').forEach(function(x){x.textContent='도전 수락'});a.classList.add('ok');setTimeout(open,480)}
+    if(hit(e,'.acc-y')){a.querySelectorAll('.acc-y').forEach(function(x){x.textContent='도전 수락'});a.classList.add('ok');setTimeout(open,650)}
     else if(hit(e,'.acc-n'))open()});
 })();
 </script>
