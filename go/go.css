@@ -699,3 +699,4 @@ main.w .b-fin{margin-top:72px}
 .pz:last-child img{flex:0 0 42%;width:42%;aspect-ratio:1/1}
 .pz:last-child div{flex:1}
 .pz.pz1{height:auto}
+.w-hero h1{font-size:min(25px,6.3vw)!important}
