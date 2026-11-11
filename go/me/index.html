@@ -13,17 +13,17 @@
 <link rel="stylesheet" href="/go/go.css">
 </head>
 <body>
-<div id="acc" class="acc hide" role="dialog" aria-modal="true" aria-labelledby="accT">
-  <div class="acc-l"></div><div class="acc-r"></div>
-  <div class="acc-c">
+<div id="acc" class="acc hide" role="dialog" aria-modal="true" aria-label="흑백 초대사 2라운드 도전">
+  <div class="acc-d l"><div class="acc-c">
     <p class="acc-k">MAKESBETTER · 금융 서바이벌</p>
-    <h1 class="acc-t" id="accT"><span>흑백</span><span>초대사</span></h1>
+    <h1 class="acc-t"><span>흑백</span><span>초대사</span></h1>
     <p class="acc-p"><i>ROUND 1</i> 11월 금융 퀴즈 <b>통과</b></p>
     <p class="acc-q">2라운드에<br>도전하시겠습니까?</p>
-    <button class="acc-y" id="accY" type="button">도전하겠습니다</button>
-    <button class="acc-n" id="accN" type="button">규칙부터 볼게요</button>
-    <p class="acc-d" id="accD">11.16(월) ~ 11.29(일)</p>
-  </div>
+    <button class="acc-y" type="button">도전하겠습니다</button>
+    <button class="acc-n" type="button">규칙부터 볼게요</button>
+    <p class="acc-dt">11.16(월) ~ 11.29(일)</p>
+  </div></div>
+  <div class="acc-d r"></div>
 </div>
 <div class="prog" id="prog"><i></i></div>
 <div class="wrap">
@@ -226,12 +226,19 @@
   try{seen=!!(localStorage.getItem('mb-go-acc')||localStorage.getItem('mb-go-me'))}catch(e){}
   if(/[?&]acc=1/.test(q))seen=false;
   if(seen)return;
-  a.classList.remove('hide');document.documentElement.classList.add('acc-lock');
-  requestAnimationFrame(function(){a.classList.add('in')});
-  function close(go){try{localStorage.setItem('mb-go-acc','1')}catch(e){}
-    a.classList.add('open');setTimeout(function(){a.classList.add('hide');document.documentElement.classList.remove('acc-lock');if(go){var g=document.getElementById('go');g&&g.scrollIntoView({behavior:'smooth',block:'start'})}},go?1100:950)}
-  document.getElementById('accY').addEventListener('click',function(){this.textContent='도전 수락';a.classList.add('ok');setTimeout(function(){close(true)},450)});
-  document.getElementById('accN').addEventListener('click',function(){close(false)});
+  var L=a.querySelector('.acc-d.l'),R=a.querySelector('.acc-d.r');R.innerHTML=L.innerHTML;R.setAttribute('aria-hidden','true');
+  [L,R].forEach(function(d){d.addEventListener('scroll',function(){d.scrollLeft=0;d.scrollTop=0})});
+  a.querySelectorAll('button').forEach(function(x){x.addEventListener('mousedown',function(e){e.preventDefault()})});
+  a.classList.remove('hide');document.documentElement.classList.add('acc-lock');scrollTo(0,0);
+  requestAnimationFrame(function(){requestAnimationFrame(function(){a.classList.add('in')})});
+  var done=false;
+  function open(){if(done)return;done=true;try{localStorage.setItem('mb-go-acc','1')}catch(e){}
+    a.classList.add('open');document.documentElement.classList.add('acc-rev');
+    setTimeout(function(){a.classList.add('hide');document.documentElement.classList.remove('acc-lock','acc-rev')},1300)}
+  function hit(e,sel){var r=L.querySelector(sel).getBoundingClientRect();return e.clientX>=r.left-6&&e.clientX<=r.right+6&&e.clientY>=r.top-6&&e.clientY<=r.bottom+6}
+  a.addEventListener('click',function(e){if(done)return;
+    if(hit(e,'.acc-y')){a.querySelectorAll('.acc-y').forEach(function(x){x.textContent='도전 수락'});a.classList.add('ok');setTimeout(open,480)}
+    else if(hit(e,'.acc-n'))open()});
 })();
 </script>
 <script>
