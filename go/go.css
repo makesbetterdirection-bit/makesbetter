@@ -670,3 +670,26 @@ body.urgent .env-tm .pg{stroke:#E5707F}
 @keyframes vsGlow{0%,100%{box-shadow:0 0 0 1px rgba(233,207,142,.18),0 20px 36px -20px rgba(21,23,28,.7)}50%{box-shadow:0 0 0 1.5px rgba(233,207,142,.7),0 0 26px rgba(212,174,98,.38),0 20px 36px -20px rgba(21,23,28,.7)}}
 @keyframes vsTxt{0%,100%{opacity:.62}50%{opacity:1;text-shadow:0 0 12px rgba(243,224,174,.45)}}
 @media (prefers-reduced-motion:reduce){.w-vs .on,.w-vs .on p{animation:none}}
+
+/* ══ 참여자 페이지 ══ */
+.pzs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px;text-align:left}
+.pz{border-radius:20px;overflow:hidden;background:#FBF9F4;color:var(--ink);box-shadow:0 22px 40px -22px rgba(0,0,0,.8)}
+.pz img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:transform 6s ease-out;transform:scale(1.1)}
+.pz.in img{transform:scale(1)}
+.pz div{padding:14px 14px 16px}
+.pz span{display:block;font-size:11px;font-weight:800;color:var(--gold)}
+.pz b{display:block;margin-top:4px;font-size:15.5px;line-height:1.35;letter-spacing:-.02em}
+.pz p{margin-top:4px;font-size:12px;color:var(--sub);line-height:1.45}
+.pz.top{grid-column:1/-1;display:grid;grid-template-columns:1fr;position:relative;box-shadow:0 0 0 1.5px rgba(233,207,142,.7),0 26px 44px -20px rgba(0,0,0,.85)}
+.pz.top img{aspect-ratio:16/10}
+.pz.top b{font-size:21px;color:#15171C}
+.pz.top:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,240,205,.45) 50%,transparent 60%);transform:translateX(-130%);animation:sh 5.5s ease-in-out 1.5s infinite;pointer-events:none}
+.w-me .mebox{margin-top:24px;text-align:left;border-radius:24px;box-shadow:0 1px 0 var(--line),0 26px 50px -28px rgba(21,23,28,.4);border:1.5px solid rgba(176,138,62,.45)}
+.w-me .mebox h3{font-size:17px}
+.mb-s{margin-top:4px;font-size:13px;color:var(--sub)}
+.gbtn2{background:linear-gradient(180deg,#E9CF8E,#C29A4A)!important;color:#15171C!important}
+.w-me #mine{text-align:left}
+.me-card{background:linear-gradient(180deg,#FFFFFF,#FBF9F4)}
+#stickyM{position:fixed;left:0;right:0;bottom:0;padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(rgba(245,243,238,0),var(--paper) 30%);z-index:5}
+#stickyM .btn{max-width:420px;margin:0 auto;background:linear-gradient(180deg,#E9CF8E,#C29A4A);color:#15171C}
+main.w .b-fin{margin-top:72px}
