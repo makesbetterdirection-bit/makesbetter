@@ -710,3 +710,9 @@ main.w .b-fin{margin-top:72px}
 .pt-r b{display:block;font-size:15.5px;line-height:1.38;letter-spacing:-.02em}
 .pt-r small{display:block;margin-top:3px;font-size:12px;color:var(--sub)}
 .pt-n{margin-top:12px;padding:12px 14px;border-radius:12px;background:#F1ECE0;font-size:12.5px;line-height:1.6;color:var(--sub)}
+.wy{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:26px;text-align:left}
+.wy div{padding:18px 16px;border-radius:18px;background:var(--card);box-shadow:0 1px 0 var(--line),0 16px 30px -24px rgba(21,23,28,.35)}
+.wy small{font-size:12px;font-weight:800;color:var(--gold)}
+.wy b{display:block;margin-top:6px;font-size:15.5px;line-height:1.45;letter-spacing:-.02em}
+.wy .on{background:linear-gradient(135deg,#15171C,#2A2620);color:#fff;box-shadow:0 0 0 1.5px rgba(233,207,142,.55),0 20px 36px -20px rgba(21,23,28,.7)}
+.wy .on small{color:#E9CF8E}.wy .on b{color:#F3E0AE}
