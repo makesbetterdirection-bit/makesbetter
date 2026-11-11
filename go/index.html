@@ -428,5 +428,12 @@
   try{var x=new XMLHttpRequest();x.open('GET','https://abacus.jasoncameron.dev/get/mbkr.my/cashflow-basic');x.timeout=4000;x.onload=function(){try{var v=JSON.parse(x.responseText).value;if(v>=1347&&$('cnt2'))$('cnt2').textContent=v.toLocaleString('ko-KR')}catch(e){}};x.send()}catch(e){}
 })();
 </script>
+<script>
+/* 페이지 밖으로 나가는 링크는 항상 새 창으로 (채널 추가 버튼·페이지 안 이동은 제외) */
+(function(){var SKIP={ch:1,ch2:1,toF:1,midF:1};
+  function fix(a){var h=a.getAttribute('href')||'';if(!h||h.charAt(0)==='#'||/^(javascript|tel|mailto|sms):/i.test(h)||SKIP[a.id])return;a.target='_blank';var r=(a.rel||'').split(/\s+/);if(r.indexOf('noopener')<0)a.rel=(a.rel+' noopener').trim()}
+  document.querySelectorAll('a[href]').forEach(fix);
+  document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(a)fix(a)},true);})();
+</script>
 </body>
 </html>
