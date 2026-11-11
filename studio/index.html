@@ -816,7 +816,22 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
 .learn .ig.lit .mono{animation:igText 4.2s ease-in-out infinite,igOn 1.1s linear 1}
 .learn .ig.lit::before{animation:igDot 4.2s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.learn .ig.lit,.learn .ig.lit .mono,.learn .ig.lit::before{animation:none}.learn .ig.lit{box-shadow:0 0 0 1px rgba(255,255,255,.8),0 0 22px rgba(255,255,255,.14)}.learn .ig.lit .mono{text-shadow:0 0 6px rgba(255,255,255,.6),0 0 18px rgba(255,255,255,.2)}.learn .ig.lit::before{box-shadow:0 0 8px 2px rgba(255,90,31,.85),0 0 20px 5px rgba(255,90,31,.35)}}
-</style></head>
+</style>
+<style>
+/* ===== 오늘의 방향 카드 ===== */
+#todayCard .td-rows{margin:0;display:grid;gap:14px}
+#todayCard .td-rows div{display:grid;gap:2px}
+#todayCard .td-rows dt{font-size:13px;line-height:18px;color:var(--sub)}
+#todayCard .td-rows dd{margin:0;font-size:17px;line-height:26px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+#todayCard .td-rows dd small{font-size:13px;font-weight:400;color:var(--sub);margin-left:6px;letter-spacing:-.01em}
+#todayCard .td-rows dd b{color:#C2410C;font-weight:600}
+#todayCard .td-note{margin-top:16px;padding-top:14px;border-top:1px solid var(--rule);font-size:13px;line-height:20px;color:var(--sub)}
+.pk-st{margin-top:24px}
+.pk-st b{display:block;font-size:16px;line-height:24px;font-weight:600;letter-spacing:-.03em}
+.pk-st p{margin-top:6px;font-size:14px;line-height:22px;color:var(--sub)}
+.pk-st.stale b{color:#C2410C}
+</style>
+</head>
 <body>
 <header class="hdr" id="hdr">
   <div class="wrap">
@@ -866,8 +881,9 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
     <div class="wrap">
       <span class="eyebrow"><span id="sigAsof">10.15 장마감</span> 기준</span>
       <h2 class="h2 rv" id="sigTitle">11월<br>재투자 방향</h2>
-      <p class="lede rv">금리·시장심리·변동성·AI 사이클·금·신용·환율 7개 영역 24개 지표에, 기초지수의 25년 최대낙폭 대비 위치를 더해 판정합니다.</p>
+      <p class="lede rv">매월 받은 배당금을 재투자하실 때 참고하는 방향입니다. 24개 지표로 분석했으며, 최종 선택은 본인의 판단입니다.</p>
       <div class="sec-body">
+        <div class="card ins rv" id="todayCard"></div>
         <div class="card roll-card rv" id="rollCard">
           <div class="card-h"><span class="mono"><b class="num" id="indN">24</b> Indicators</span><span class="mono roll-cnt" id="rollCnt"></span></div>
           <div class="roll" id="roll" aria-label="지표 판정 목록"><ul id="rollList"></ul></div>
@@ -879,7 +895,7 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
           <div class="bar" id="sigBar" aria-hidden="true"></div>
           <ul class="sig" id="sigList"></ul>
         </div>
-        <a class="btn rv" href="#picks">이번 달 베러 추천 ETF</a>
+        <a class="btn rv" href="#picks">베러 추천 ETF</a>
       </div>
     </div>
   </section>
@@ -942,7 +958,7 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
     <span class="eyebrow mono">Contact</span>
     <h2 class="lines" id="footH"><span><i>Let’s make</i></span><span><i>money work.</i></span></h2>
     <div class="who rv"><div><b>MAKESBETTER</b><span>기존 고객은 담당 채널로 연락 주세요.</span></div><span class="mono">Seoul</span></div>
-    <a class="btn rv" href="#picks">이번 달 베러 추천 ETF</a>
+    <a class="btn rv" href="#picks">베러 추천 ETF</a>
     <div class="fine">
       <span>© 2026 MAKESBETTER DIRECTION</span>
       <span>금융 정보 제공 및 상담 안내 목적이며 특정 상품의 투자 권유가 아닙니다. 투자 상품은 원금 손실이 발생할 수 있습니다. 분배금은 1주당 세전 금액이며 운용사 공시 기준입니다.</span>
@@ -954,9 +970,11 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
 <div class="view" id="picks" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="pkTitle" aria-hidden="true">
   <div class="vh"><div class="wrap"><a class="back" href="#signal" aria-label="홈으로 돌아가기">←</a><span class="vh-t">베러 추천 ETF</span><span class="mono vh-d" id="pkAsof">10.15</span></div></div>
   <div class="wrap vbody">
-    <span class="eyebrow">Better.7, 10월</span>
-    <h1 class="h2" id="pkTitle">이번 달<br>베러 추천 ETF</h1>
+    <span class="eyebrow">Better.7</span>
+    <h1 class="h2" id="pkTitle">베러 추천 ETF</h1>
     <p class="lede">금액을 넣으면 11개 ETF를 몇 주씩 사면 되는지 계산합니다. 가격은 <span id="pxNote">10.15 종가</span> 기준입니다.</p>
+
+    <div class="card pk-st" id="pkState"></div>
 
     <div class="card amt-card">
       <label class="mono lab" for="amt">월배당 수령 금액</label>
@@ -998,7 +1016,7 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
         <summary><span>24개 지표 전체 보기</span><span class="mono" id="confN"></span></summary>
         <ul id="indAll"></ul>
       </details>
-      <p class="note">신호는 2026.10.15 장마감 기준으로 확정하고 다음 신호일에 다시 정합니다. 금리·지수·VIX·반도체·금·신용·환율처럼 시세로 계산되는 지표는 매일 자동 갱신(자동 표시)하고, 나머지는 신호일 값입니다. 잠정 표시 지표는 확정치 발표 후 다시 반영합니다. 분배 기준일 직전 매수는 피하고, 일반 계좌는 배당소득세 15.4%를 뗀 입금액으로 계산하세요. 투자 판단의 참고 자료이며 특정 상품의 투자 권유가 아닙니다.</p>
+      <p class="note">방향은 매일 장 마감 후 24개 지표를 공식 자료로 다시 계산해 정합니다. 같은 결과가 3거래일 이어질 때만 바꿉니다. 지표가 하나라도 확인되지 않은 날은 계산하지 않고 전날 방향을 유지합니다. 분배 기준일 직전 매수는 피하고, 일반 계좌는 배당소득세 15.4%를 뗀 입금액으로 계산하세요. 투자 판단의 참고 자료이며 특정 상품의 투자 권유가 아닙니다.</p>
     </div>
   </div>
 </div>
@@ -1052,9 +1070,12 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
 </div>
 
 <script src="indicators.js"></script>
+<script src="signal.js"></script>
 <script>
 // ===== Better.7 Signal v2 — 2026-10-15 장마감 기준 =====
-const ASOF="2026.10.15 장마감";
+const SIGNAL=window.SIGNAL||null;   // 매일 신호(scripts/update_signal.py). 없으면 10.15 스냅샷으로 표시
+const ASOF=SIGNAL?SIGNAL.asof.replace(/-/g,".")+" 장마감":"2026.10.15 장마감";
+const LKEY={CPI:"CPI|美 CPI",FOMC:"FOMC|FOMC 인상 확률",TRADE:"TRADE|무역수지"};
 const NEXT="다음 신호 11월 중순 신호일 장마감 뒤";
 const AXES={
   R:{name:"미국 금리",desc:"금리 하락·완화 기대면 우호"},
@@ -1099,7 +1120,7 @@ const SIG_IND=[
 ];
 // 표시용 지표: 시세로 계산되는 지표는 매일 자동 갱신(indicators.js). 신호(확대·기본·축소)는 신호일 스냅샷 SIG_IND로만 계산.
 const LIVE=window.LIVE||null;
-const INDICATORS=SIG_IND.map(i=>{const L=LIVE&&LIVE.ind&&LIVE.ind[i.tag+"|"+i.name];if(!L)return i;const s=L.state;const w=s<=-0.6?"경고 구간":s<=-0.2?"경고 쪽으로 기운 구간":s<0.2?"중립 구간":s<0.6?"긍정 쪽으로 기운 구간":"긍정 구간";return Object.assign({},i,L,{why:"자동 계산("+L.date+" 종가) · 판정 기준상 "+w+"이에요. 신호일 판단: "+i.why,note:"신호는 "+ASOF+" 값으로 확정",live:true})});
+const INDICATORS=SIG_IND.map(i=>{const L=LIVE&&LIVE.ind&&LIVE.ind[LKEY[i.tag]||i.tag+"|"+i.name];if(!L)return i;const s=L.state;const w=s<=-0.6?"경고 구간":s<=-0.2?"경고 쪽으로 기운 구간":s<0.2?"중립 구간":s<0.6?"긍정 쪽으로 기운 구간":"긍정 구간";return Object.assign({},i,L,{why:"자동 계산("+L.date+") · 판정 기준상 "+w+"이에요."+(SIGNAL?"":" 신호일 판단: "+i.why),note:SIGNAL?(L.note||""):"신호는 "+ASOF+" 값으로 확정",live:true})});
 // 5단계 표시
 function lvl(s){return s<=-0.6?['w','경고']:s<=-0.2?['wn','경고-중립']:s<0.2?['n','중립']:s<0.6?['np','중립-긍정']:['p','긍정']}
 const LV_ORDER=['w','wn','n','np','p'],LV_NAME={w:'경고',wn:'경고-중립',n:'중립',np:'중립-긍정',p:'긍정'};
@@ -1108,6 +1129,7 @@ function lvlCount(){const c={w:0,wn:0,n:0,np:0,p:0};INDICATORS.forEach(i=>c[lvl(
 const PX={"498400": {"close": 16075.0, "prev": 17505.0, "chg": -8.17, "ddKrw": -40.3, "dd": -40.3, "rsi": 23, "y12": 3235, "yld": 20.1, "since": "2024-12-03", "peak": "2026-06-22", "spark": [38.3, 40.4, 42.4, 41.7, 43.3, 40.8, 41.3, 42.2, 43.0, 42.2, 42.9, 46.4, 48.3, 50.7, 51.4, 51.5, 55.3, 59.0, 65.9, 58.3, 57.1, 60.5, 56.8, 56.4, 61.8, 65.0, 67.8, 72.9, 82.3, 77.9, 88.5, 94.2, 84.7, 98.9, 98.7, 84.4, 80.1, 74.3, 72.6, 72.1, 67.1, 74.7, 72.3, 73.4, 75.1, 72.0, 75.8, 74.6, 72.4, 59.7], "usd": false}, "494300": {"close": 8580.0, "prev": 8785.0, "chg": -2.33, "ddKrw": -18.4, "dd": -7.3, "rsi": 43, "y12": 2005, "yld": 23.4, "since": "2024-10-22", "peak": "2026-06-02", "spark": [78.1, 80.0, 82.4, 81.4, 82.0, 78.9, 81.6, 83.0, 83.5, 82.8, 83.9, 81.5, 83.4, 83.3, 82.0, 81.7, 82.3, 81.3, 80.9, 83.4, 83.6, 83.7, 84.0, 82.2, 83.3, 85.9, 87.7, 88.7, 92.5, 93.0, 97.1, 100.0, 95.5, 97.1, 97.6, 97.6, 93.2, 91.5, 87.2, 85.8, 86.0, 88.1, 83.4, 83.4, 81.9, 80.8, 85.4, 83.4, 84.7, 81.6], "usd": true}, "480030": {"close": 9275.0, "prev": 9380.0, "chg": -1.12, "ddKrw": -13.4, "dd": -2.5, "rsi": 46, "y12": 2003, "yld": 21.6, "since": "2024-10-15", "peak": "2026-10-13", "spark": [81.7, 83.3, 85.0, 84.2, 86.6, 84.2, 85.2, 86.2, 86.3, 85.0, 85.8, 85.9, 88.1, 87.0, 86.2, 86.7, 86.5, 84.6, 84.7, 85.4, 86.6, 85.7, 85.5, 86.9, 87.7, 89.8, 90.6, 91.0, 94.5, 94.9, 96.9, 100.0, 96.6, 97.4, 96.2, 98.5, 96.7, 94.0, 93.6, 91.6, 92.5, 91.4, 89.3, 88.9, 87.2, 86.7, 88.2, 87.7, 88.1, 86.6], "usd": true}, "441640": {"close": 12155.0, "prev": 12155.0, "chg": 0.0, "ddKrw": -8.8, "dd": -1.1, "rsi": 53, "y12": 1185, "yld": 9.7, "since": "2024-10-15", "peak": "2026-10-13", "spark": [83.8, 85.3, 86.8, 86.0, 88.6, 85.7, 87.9, 88.4, 88.2, 89.3, 88.7, 88.0, 89.9, 90.4, 88.6, 89.2, 92.7, 91.1, 89.5, 92.1, 91.2, 90.2, 90.7, 91.0, 91.9, 92.6, 92.7, 92.3, 93.2, 95.2, 96.5, 98.1, 96.8, 98.5, 98.8, 99.6, 97.6, 96.7, 94.9, 94.0, 95.8, 96.4, 93.8, 93.1, 91.7, 90.7, 92.9, 90.7, 90.0, 91.2], "usd": true}, "0022T0": {"close": 12025.0, "prev": 12015.0, "chg": 0.08, "ddKrw": -29.5, "dd": -25.1, "rsi": 41, "y12": 580, "yld": 4.8, "since": "2025-03-11", "peak": "2026-01-29", "spark": [75.8, 75.3, 72.0, 72.9, 76.5, 76.0, 77.1, 78.3, 78.4, 81.3, 82.7, 81.0, 85.1, 86.9, 92.3, 83.4, 92.7, 91.4, 93.1, 95.2, 95.9, 88.8, 84.9, 88.2, 89.0, 89.6, 87.5, 85.2, 88.3, 86.6, 85.2, 86.7, 79.3, 83.1, 78.0, 80.6, 78.6, 76.1, 75.3, 74.4, 77.2, 77.8, 81.3, 76.9, 74.7, 74.0, 76.1, 71.9, 69.8, 70.5], "usd": true}, "497570": {"close": 20675.0, "prev": 21585.0, "chg": -4.22, "ddKrw": -24.8, "dd": -13.6, "rsi": 41, "y12": 75, "yld": 0.4, "since": "2024-11-26", "peak": "2026-06-22", "spark": [54.3, 54.8, 59.2, 56.7, 57.6, 53.8, 55.5, 57.7, 59.4, 56.0, 56.3, 58.6, 59.3, 61.8, 60.7, 59.7, 60.8, 62.1, 63.5, 61.5, 61.0, 61.8, 61.4, 61.6, 66.4, 69.9, 74.5, 74.8, 81.8, 80.1, 87.7, 94.6, 87.0, 96.3, 96.8, 94.4, 89.9, 87.2, 84.7, 80.0, 82.3, 83.7, 76.2, 76.3, 76.1, 74.1, 79.8, 81.6, 83.2, 75.2], "usd": true}, "485690": {"close": 21275.0, "prev": 22535.0, "chg": -5.59, "ddKrw": -19.8, "dd": -9.8, "rsi": 43, "y12": 75, "yld": 0.4, "since": "2024-10-15", "peak": "2026-06-02", "spark": [65.9, 66.3, 71.5, 67.8, 68.8, 63.6, 63.8, 66.2, 67.6, 64.0, 65.2, 66.1, 66.1, 66.5, 65.8, 63.9, 63.2, 64.2, 63.6, 65.3, 66.2, 66.4, 63.5, 65.1, 67.7, 75.0, 78.7, 81.4, 86.7, 86.4, 92.1, 99.7, 89.1, 94.4, 92.6, 92.1, 89.1, 86.6, 81.6, 79.0, 84.7, 86.2, 80.7, 81.2, 81.1, 78.9, 85.2, 85.4, 86.9, 80.2], "usd": true}, "0036R0": {"close": 19105.0, "prev": 19705.0, "chg": -3.04, "ddKrw": -20.4, "dd": -8.3, "rsi": 46, "y12": 60, "yld": 0.3, "since": "2025-04-15", "peak": "2026-07-01", "spark": [60.2, 63.4, 66.2, 64.4, 66.8, 62.1, 65.0, 67.2, 68.2, 68.1, 67.2, 67.1, 69.7, 70.6, 69.9, 69.3, 71.7, 70.4, 70.2, 69.8, 68.1, 68.6, 67.6, 68.6, 72.5, 76.7, 81.1, 82.4, 90.6, 87.7, 94.3, 94.9, 88.0, 94.5, 96.6, 96.7, 90.3, 87.9, 82.7, 80.7, 82.7, 84.7, 78.9, 77.4, 77.7, 77.8, 82.8, 82.1, 82.5, 79.6], "usd": true}, "473330": {"close": 7580.0, "prev": 7420.0, "chg": 2.16, "ddKrw": -18.4, "dd": -7.8, "rsi": 53, "y12": 992, "yld": 13.1, "since": "2024-10-15", "peak": "2026-02-27", "spark": [91.2, 92.7, 93.0, 92.9, 93.7, 93.1, 94.4, 93.8, 93.2, 93.3, 91.9, 91.2, 92.8, 93.2, 91.9, 92.1, 92.3, 93.6, 93.1, 95.4, 94.6, 95.6, 95.0, 96.2, 94.7, 94.1, 94.6, 93.0, 93.7, 93.1, 94.6, 96.4, 96.4, 98.1, 99.4, 98.9, 94.6, 93.0, 90.8, 88.5, 87.3, 87.4, 85.1, 85.0, 82.7, 81.5, 84.8, 80.6, 78.0, 81.6], "usd": true}, "332610": {"close": 122365.0, "prev": 121160.0, "chg": 0.99, "ddKrw": -12.7, "dd": -0.4, "rsi": 53, "y12": 4737, "yld": 3.9, "since": "2024-10-15", "peak": "2026-09-15", "spark": [89.5, 90.2, 90.3, 91.4, 92.6, 92.4, 92.7, 93.0, 93.1, 93.7, 92.0, 91.7, 93.3, 93.6, 91.6, 93.1, 93.1, 92.5, 91.0, 94.2, 95.1, 95.6, 96.1, 96.1, 94.8, 94.9, 95.0, 93.8, 95.4, 96.6, 96.3, 98.2, 98.0, 98.2, 99.2, 100.0, 96.9, 95.3, 94.4, 92.0, 91.5, 91.5, 89.3, 88.5, 86.7, 87.0, 89.2, 87.4, 86.5, 87.3], "usd": true}, "488770": {"close": 105835.0, "prev": 105825.0, "chg": 0.01, "ddKrw": 0.0, "dd": 0.0, "rsi": 100, "y12": 1498, "yld": 1.4, "since": "2024-10-15", "peak": "2026-10-15", "spark": [96.9, 96.9, 97.0, 97.0, 97.1, 97.1, 97.1, 97.2, 97.2, 97.3, 97.4, 97.5, 97.6, 97.6, 97.7, 97.7, 97.8, 97.9, 97.9, 98.0, 98.1, 98.1, 98.2, 98.3, 98.3, 98.4, 98.4, 98.5, 98.6, 98.6, 98.7, 98.8, 98.8, 98.9, 98.9, 99.0, 99.1, 99.2, 99.2, 99.3, 99.4, 99.5, 99.5, 99.6, 99.6, 99.7, 99.8, 99.8, 100.0, 100.0], "usd": false}};
 const KRW={"last": 1344.3, "lo": 1334.1, "hi": 1554.5, "pos": 5, "avg": 1454.0, "date": "2026-10-15"};
 const IDX={"KOSPI": {"dd": -39.1, "mdd": -54.5, "ratio": 72, "pct": 2.4, "rsi": 23, "date": "2026-10-15", "bears": [["2011-05-02", -25.9], ["2018-01-29", -43.9], ["2021-07-06", -34.8], ["2026-02-26", -19.9], ["2026-06-22", -39.1]]}, "S&P500": {"dd": -1.3, "mdd": -56.8, "ratio": 2, "pct": 69.0, "rsi": 49, "date": "2026-10-14", "bears": [["2007-10-09", -56.8], ["2018-09-20", -19.8], ["2020-02-19", -33.9], ["2022-01-03", -25.4], ["2025-02-19", -18.9]]}, "NASDAQ100": {"dd": -4.1, "mdd": -53.7, "ratio": 8, "pct": 55.2, "rsi": 45, "date": "2026-10-14", "bears": [["2015-11-03", -16.3], ["2018-08-29", -23.0], ["2020-02-19", -28.0], ["2021-11-19", -35.6], ["2025-02-19", -22.9]]}, "SOX": {"dd": -20.2, "mdd": -73.1, "ratio": 28, "pct": 50.9, "rsi": 38, "date": "2026-10-14", "bears": [["2021-12-27", -46.5], ["2024-03-07", -16.6], ["2024-07-10", -39.7], ["2026-02-25", -15.6], ["2026-06-22", -28.6]]}, "TLT": {"dd": -54.0, "mdd": -55.1, "ratio": 98, "pct": 0.2, "rsi": 46, "date": "2026-10-14", "bears": [["2012-07-25", -23.0], ["2015-01-30", -16.7], ["2016-07-08", -22.0], ["2020-03-09", -15.7], ["2020-08-04", -55.1]]}, "GOLD": {"dd": -21.4, "mdd": -44.4, "ratio": 48, "pct": 27.2, "rsi": 43, "date": "2026-10-15", "bears": [["2006-05-11", -21.9], ["2008-03-18", -29.7], ["2011-08-22", -44.4], ["2020-08-06", -21.2], ["2026-01-29", -24.9]]}};
+if(SIGNAL&&SIGNAL.index)for(const k in SIGNAL.index)if(IDX[k])Object.assign(IDX[k],SIGNAL.index[k]);
 // ETF: exp = 축 노출 가중치, pr = 가격 판정 규칙 (KR: 낙폭≥15% / US·GOLD: 낙폭≥15% 또는 RSI≤30, 과열 RSI≥75 / NONE)
 const ETFS=[
   {code:"488770",brand:"KODEX",name:"머니마켓액티브",short:"머니마켓",group:"현금",cur:"원화",safe:true,idx:null,pr:"NONE",exp:{Q:1},why:"위험회피 국면의 대기 자금. 금리 수준이 곧 수익"},
@@ -1131,6 +1153,7 @@ const LAB={"강":"확대 매수","중립":"기본 매수","보류":"축소 매�
 const GRID={"유리":{"보통":"강","바닥권":"강","과열":"중립"},"중립":{"보통":"중립","바닥권":"강","과열":"보류"},"불리":{"보통":"보류","바닥권":"중립","과열":"보류"}};
 const clip=(v,a,b)=>Math.max(a,Math.min(b,v));
 function axisScores(){
+  if(SIGNAL&&SIGNAL.axis)return SIGNAL.axis;
   const ax={};
   for(const k of Object.keys(AXES)){ if(k==="Q")continue;
     const inds=SIG_IND.filter(i=>i.axis===k); let s=0,w=0;
@@ -1159,7 +1182,12 @@ function signals(ax){
     score=Math.round(score*100)/100;
     const wind=score>=1?"유리":(score<=-1?"불리":"중립");
     const ps=priceStage(e);
-    return {...e,score,parts,wind,ps,sig:GRID[wind][ps.stage==="해당 없음"?"보통":ps.stage]};
+    const raw=GRID[wind][ps.stage==="해당 없음"?"보통":ps.stage], S=SIGNAL&&SIGNAL.sig&&SIGNAL.sig[e.code];
+    let why=e.why;
+    if(SIGNAL){why="시장 환경 "+({"유리":"우호","중립":"중립","불리":"비우호"})[wind]+"(점수 "+(score>0?"+":"")+score+")"
+      +(ps.stage==="해당 없음"?". 채권과 현금은 가격 위치를 보지 않습니다.":", 가격 위치 "+ps.stage+(ps.reasons.length?"("+ps.reasons.join(", ")+")":"")+".")
+      +(S&&S!==raw?" 오늘 계산은 "+LAB[raw]+"이지만, 3거래일 이어질 때까지 "+LAB[S]+"를 유지합니다.":"");}
+    return {...e,why,score,parts,wind,ps,sig:S||raw};
   });
 }
 function allocate(rows,amount,fractional){
@@ -1210,6 +1238,7 @@ var MONTHS={
 }},
  '2026-11':{hol:{},note:'분배금은 운용사 공시 기준 1주당 세전 금액입니다. 11월 초 지급은 10.30 기준일분이고, KODEX 미국나스닥100커버드콜(146원)은 지급일 확인 후 표시합니다. 11월 중간·월말 일정은 공시 후 업데이트합니다.',ev:{2:{type:'pay',rec:'10.30',label:'지급',items:[['SOL 국제금커버드콜','39원'],['SOL 미국30년국채커버드콜','123원']]},3:{type:'pay',rec:'10.30',label:'지급',items:[['PLUS 미국단기회사채','354원']]}}}
 };
+window.__MONTHS=MONTHS;
 var MKEYS=Object.keys(MONTHS).sort(),o0=kst(),NOWK=o0.year+'-'+o0.month;
 var CK=MONTHS[NOWK]?NOWK:MKEYS[MKEYS.length-1];            // 홈 카드·티커 기준 달 (이번 달 데이터가 있으면 이번 달, 없으면 최근 달)
 var CY=+CK.slice(0,4),CM=+CK.slice(5),EV=MONTHS[CK].ev,HOL=MONTHS[CK].hol,DAYS=new Date(CY,CM,0).getDate();
@@ -1220,7 +1249,7 @@ var items=(function(){var td=today,ks=Object.keys(EV).map(Number),out=[];
   var np=ks.filter(function(d){return EV[d].type==='pay'&&d>=td})[0];if(np)out.push(MM(np)+' · 분배금 지급 '+EV[np].items.length+'건');
   var nb=ks.filter(function(d){return EV[d].type==='buy'&&d>=td})[0];if(nb)out.push(MM(nb)+' · '+(EV[nb].rec==='10.30'||/월말/.test(EV[nb].label)?'월말배당':'중간배당')+' 매수 마감');
   if(!np&&!nb)out.push(CM+'월 분배 일정 · 공시 전');
-  out.push('Signal · 머니마켓 확대','24 Indicators · 10.15 장마감');return out})();
+  out.push('Signal · 머니마켓 확대','24 Indicators · '+ASOF.slice(5,10)+' 장마감');return out})();
 var bars=document.getElementById('bars'),msg=document.getElementById('msg'),ki=0;
 bars.innerHTML=items.map(function(){return '<i><span></span></i>'}).join('');var bs=[].slice.call(bars.children);
 function show(n){msg.classList.add('fade');setTimeout(function(){msg.textContent=items[n];msg.classList.remove('fade')},250);bs.forEach(function(b,j){b.className=j<n?'done':'';var s=b.firstChild;s.style.animation='none';void s.offsetWidth;s.style.animation=''});bs[n].className='run'}
@@ -1290,12 +1319,66 @@ function getJ(path,local){var q='?t='+Date.now(),f=function(u){return fetch(u+q,
 var $=function(s){return document.querySelector(s)};
 var fmt=function(n){return Math.round(n).toLocaleString('ko-KR')};
 var ax=axisScores(),sig=signals(ax);
+
+/* ===== 오늘의 방향: 분석 기준일 · 다음 배당 입금 · 오늘의 방향 요약 ===== */
+(function(){
+  var MONTHS=window.__MONTHS||{};
+  var p2=function(n){return String(n).padStart(2,'0')},DW=['일','월','화','수','목','금','토'];
+  var FIXED={'2026-12-25':1,'2026-12-31':1,'2027-01-01':1};
+  function D(y,m,d){return new Date(Date.UTC(y,m-1,d))}
+  function key(x){return x.getUTCFullYear()+'-'+p2(x.getUTCMonth()+1)+'-'+p2(x.getUTCDate())}
+  function mdw(x){return (x.getUTCMonth()+1)+'.'+p2(x.getUTCDate())+'('+DW[x.getUTCDay()]+')'}
+  function isBiz(x){var w=x.getUTCDay();if(w===0||w===6)return false;var k=key(x),H=(MONTHS[k.slice(0,7)]&&MONTHS[k.slice(0,7)].hol)||{};return !(H[x.getUTCDate()]||FIXED[k])}
+  function addBiz(x,n){var y=new Date(x);while(n>0){y.setUTCDate(y.getUTCDate()+1);if(isBiz(y))n--}return y}
+  function onOrBefore(x){var y=new Date(x);while(!isBiz(y))y.setUTCDate(y.getUTCDate()-1);return y}
+  function days(a,b){return Math.round((b-a)/864e5)}
+  var q=new URLSearchParams(location.search).get('d'),T;
+  if(q&&/^\d{4}-\d{2}-\d{2}$/.test(q))T=D(+q.slice(0,4),+q.slice(5,7),+q.slice(8,10));
+  else{var k=new Date(Date.now()+9*36e5);T=D(k.getUTCFullYear(),k.getUTCMonth()+1,k.getUTCDate())}
+  var S=D(+ASOF.slice(0,4),+ASOF.slice(5,7),+ASOF.slice(8,10));
+  // 배당 입금일: 운용사 공지(MONTHS)에 있으면 그 날짜, 없으면 기준일 + 2영업일로 '예정'
+  var off=[];Object.keys(MONTHS).forEach(function(mk){var ev=MONTHS[mk].ev||{};Object.keys(ev).forEach(function(d){if(ev[d].type==='pay')off.push(D(+mk.slice(0,4),+mk.slice(5,7),+d))})});
+  var pays=[];
+  for(var i=-1;i<=2;i++){var y=T.getUTCFullYear(),m=T.getUTCMonth()+1+i;while(m>12){m-=12;y++}while(m<1){m+=12;y--}
+    [['중간배당',onOrBefore(D(y,m,15))],['월말배당',onOrBefore(D(y,m+1,0))]].forEach(function(r){
+      var exp=addBiz(r[1],2),hit=off.filter(function(x){return Math.abs(days(exp,x))<=4}).sort(function(a,b){return a-b});
+      pays.push({kind:r[0],day:hit.length?hit[0]:exp,end:addBiz(hit.length?hit[hit.length-1]:exp,2),official:!!hit.length})})}
+  pays.sort(function(a,b){return a.day-b.day});
+  var cur=pays.filter(function(w){return T>=w.day&&T<=w.end})[0],nxt=pays.filter(function(w){return w.day>T})[0];
+  var stale=days(S,T)>5;
+  var n={'강':0,'중립':0,'보류':0};sig.forEach(function(r){n[r.sig]++});
+  var sTxt=(S.getUTCMonth()+1)+'.'+p2(S.getUTCDate());
+  window.__RV={copyLine:'분석 '+sTxt+' 장 마감 기준 (매일 갱신)\n'};
+
+  var c=document.getElementById('todayCard');
+  if(c){
+    var R0=24,CC=2*Math.PI*R0,pr,rI,rB,tx=false;
+    if(cur){rI='배당 입금';rB='지금';tx=true;pr=1}
+    else{var prev=pays.filter(function(w){return w.end<T}).pop(),a=prev?prev.end:S;rI='배당까지';rB=String(days(T,nxt.day));pr=Math.max(.03,Math.min(1,days(a,T)/Math.max(1,days(a,nxt.day))))}
+    var ring='<div class="rw"><svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="'+R0+'" stroke="rgba(255,255,255,.14)" stroke-width="2.5" fill="none"/><circle cx="30" cy="30" r="'+R0+'" stroke="#FF5A1F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="'+(CC*pr).toFixed(1)+' '+CC.toFixed(1)+'" transform="rotate(-90 30 30)"/></svg><b'+(tx?' style="font-family:var(--text);font-size:15px;font-weight:600;letter-spacing:-.02em"':'')+'>'+rB+'</b></div>';
+    var payTxt=cur?mdw(cur.day)+' '+cur.kind+'<small>'+mdw(cur.end)+'까지 재투자 시점</small>':mdw(nxt.day)+' '+nxt.kind+'<small>'+(nxt.official?'운용사 공지':'예정')+'</small>';
+    c.innerHTML='<div class="card-h hM"><div class="l"><span class="lb">오늘의 방향</span><b>'+(stale?'분석 갱신이 늦어지고 있습니다':'확대 '+n['강']+'종, 기본 '+n['중립']+'종, 축소 '+n['보류']+'종')+'</b></div><div class="r rg"><i>'+rI+'</i>'+ring+'</div></div>'
+      +'<dl class="td-rows">'
+      +'<div><dt>'+(cur?'배당 입금':'다음 배당 입금')+'</dt><dd>'+payTxt+'</dd></div>'
+      +'<div><dt>분석 기준</dt><dd>'+sTxt+' 장 마감<small>매일 다시 계산</small></dd></div>'
+      +'</dl>'
+      +'<p class="td-note">방향은 같은 결과가 3거래일 이어질 때만 바뀝니다. 판단을 돕는 자료이며, 투자 결정과 결과는 본인에게 있습니다.</p>';
+  }
+  var p=document.getElementById('pkState');
+  if(p){
+    p.className='card pk-st'+(stale?' stale':'');
+    p.innerHTML=stale?'<b>분석 갱신이 늦어지고 있습니다</b><p>이 목록은 '+sTxt+' 장 마감 기준입니다. 갱신된 뒤 다시 확인하세요.</p>'
+      :'<b>'+sTxt+' 장 마감 기준 방향입니다</b><p>'+(cur?cur.kind+'이 들어왔습니다. '+mdw(cur.end)+'까지가 재투자 시점입니다. ':'다음 배당 입금은 '+mdw(nxt.day)+' '+nxt.kind+(nxt.official?'':'(예정)')+'입니다. ')+'받은 배당금을 재투자하실 때 참고하는 자료이며, 최종 선택은 본인의 판단입니다.</p>';
+  }
+  var pt=document.getElementById('pkTitle');if(pt)pt.innerHTML=(T.getUTCMonth()+1)+'월<br>베러 추천 ETF';
+})();
+
 var SHORTAX={R:'금리',SK:'국내 심리',SU:'미국 심리',A:'AI',VK:'국내 변동성',VU:'미국 변동성',G:'금',C:'신용',F:'환율',Q:'위험회피'};
 var WIND={'유리':'우호','중립':'중립','불리':'비우호'};
 var SIGC={'강':'var(--accent)','중립':'#1a1a1a','보류':'#CFCFCF'};
 var stOf=function(v){return lvl(v)};
 var asof=ASOF.replace('2026.','').replace(' 장마감','');
-(function(){var t=document.getElementById('sigTitle');if(t){var m=new Date(Date.now()+9*36e5).getUTCMonth()+1;t.innerHTML=m+'월<br>재투자 방향'}})();$('#sigAsof').textContent='신호 '+asof+' 장마감'+(LIVE?' · 지표 '+LIVE.asof+' 자동 갱신':'');$('#pkAsof').textContent=asof;
+(function(){var t=document.getElementById('sigTitle');if(t){var m=new Date(Date.now()+9*36e5).getUTCMonth()+1;t.innerHTML=m+'월<br>재투자 방향'}})();$('#sigAsof').textContent=asof+' 장 마감';$('#pkAsof').textContent=asof;
 
 // ---------- indicator roll
 var N=INDICATORS.length;$('#indN').textContent=N;
@@ -1371,7 +1454,7 @@ function render(){
   }).join('');
   var ol=list.filter(function(r){return r.qty>0});
   var won=function(v){return v%10000===0?fmt(v/10000)+'만원':fmt(v)+'원'};
-  render.text='[베러 추천 ETF · '+PXLABEL+' 기준]\n\n* 월배당 수령 '+won(amount)+'\n\n'+ol.map(function(r){return r.brand+' '+DN[r.code]+'\n'+r.code+' | '+r.qty+'주'}).join('\n\n')+'\n\n매수 '+fmt(spent)+'원 · 남는 돈 '+fmt(left)+'원';
+  render.text='[베러 추천 ETF]\n'+(window.__RV?window.__RV.copyLine:'')+'가격 '+PXLABEL+' 기준\n\n* 월배당 수령 '+won(amount)+'\n\n'+ol.map(function(r){return r.brand+' '+DN[r.code]+'\n'+r.code+' | '+r.qty+'주'}).join('\n\n')+'\n\n매수 '+fmt(spent)+'원 · 남는 돈 '+fmt(left)+'원';
 }
 render();
 // ---------- 성과 기록 (Key facts) — 홈 카드와 #verify 공용

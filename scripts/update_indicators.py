@@ -199,6 +199,12 @@ def build():
         return {"value": f"{c:.2f}", "chg": f"20일 {sgn(ch)}%", "state": r2(st), "date": md(b[-1][0])}
     put("DXY|달러인덱스", dxy)
 
+    try:
+        from ind_extra import extra
+        extra(put, yahoo, fred, datetime.now(KST).date())
+    except Exception as e:  # noqa: BLE001
+        log("ind_extra 실패", e)
+
     for v in ind.values():
         v.pop("_auto", None)
         v["conf"] = "자동"
@@ -221,11 +227,16 @@ def main():
             old = json.loads(txt[txt.index("{"):txt.rindex("}") + 1])
         except Exception:  # noqa: BLE001
             old = None
-    if old and old.get("ind") == ind:
+    # 이번에 조회하지 못한 지표는 직전 값을 그대로 둔다(날짜도 직전 그대로). failed 에 남아 있으면 신호는 계산하지 않는다.
+    if old:
+        for k, v in (old.get("ind") or {}).items():
+            if k in failed and k not in ind:
+                ind[k] = v
+    if old and old.get("ind") == ind and old.get("failed") == failed:
         print("changed=false")
         return
     with open(OUT, "w", encoding="utf-8") as f:
-        f.write("/* 자동 생성: scripts/update_indicators.py — 시세로 계산되는 지표(표시용). 신호는 신호일 값 사용 */\n")
+        f.write("/* 자동 생성: scripts/update_indicators.py — 24개 지표 매일 갱신 */\n")
         f.write("window.LIVE=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n")
     print("changed=true")
     print(f"asof={data['asof']}")

@@ -47,9 +47,21 @@ jobs:
         # 장중 실행은 건너뜀: 미국 지표는 밤사이, 코스피는 15:30 마감 뒤에만 확정되므로 07:50·15:50 계열 실행에서만 갱신
         if: steps.upd.outputs.mode != 'intraday'
         continue-on-error: true
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
         run: |
           set -o pipefail
           python3 scripts/update_indicators.py | tee -a "$GITHUB_OUTPUT"
+
+      - name: Update daily signal (studio/signal.json, studio/signal.js)
+        id: sig
+        # 24개 지표가 모두 있을 때만 계산. 같은 결과가 3거래일 이어질 때만 화면 신호가 바뀜
+        if: steps.upd.outputs.mode != 'intraday'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python3 scripts/update_signal.py | tee -a "$GITHUB_OUTPUT"
 
       - name: Update judgment board prices (studio/board/prices.json)
         id: brd
@@ -60,11 +72,11 @@ jobs:
           python3 scripts/board_prices.py | tee -a "$GITHUB_OUTPUT"
 
       - name: Commit and push if changed
-        if: steps.upd.outputs.changed == 'true' || steps.trk.outputs.changed == 'true' || steps.ind.outputs.changed == 'true' || steps.brd.outputs.changed == 'true'
+        if: steps.upd.outputs.changed == 'true' || steps.trk.outputs.changed == 'true' || steps.ind.outputs.changed == 'true' || steps.brd.outputs.changed == 'true' || steps.sig.outputs.signal_changed == 'true'
         run: |
           git config user.name "better7-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add better7_prices.json studio/track.json studio/indicators.js studio/board/prices.json
+          git add better7_prices.json studio/track.json studio/indicators.js studio/signal.json studio/signal.js studio/board/prices.json
           if [ "${{ steps.upd.outputs.changed }}" = "true" ]; then
             MODE="${{ steps.upd.outputs.mode }}"
             if [ "$MODE" = "intraday" ]; then LABEL="intraday"; else LABEL="closing price"; fi
