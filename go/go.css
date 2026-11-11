@@ -718,3 +718,46 @@ main.w .b-fin{margin-top:72px}
 .wy .on small{color:#E9CF8E}.wy .on b{color:#F3E0AE}
 
 .pt-all{display:inline-block;margin-left:6px;padding:3px 8px;border-radius:99px;background:#17110F;color:#E9CF8E;font-style:normal;font-size:11px;font-weight:800;vertical-align:2px;letter-spacing:-.01em}
+
+/* ── 흑백 초대사: 도전 수락 화면 ── */
+html.acc-lock,html.acc-lock body{overflow:hidden}
+.acc{position:fixed;inset:0;z-index:300;overflow:hidden}
+.acc.hide{display:none}
+.acc-l,.acc-r{position:absolute;top:0;bottom:0;width:50.5%;transition:transform 1s cubic-bezier(.7,0,.2,1)}
+.acc-l{left:0;background:#111214}
+.acc-r{right:0;background:#F5F3EE}
+.acc.open .acc-l{transform:translateX(-101%)}
+.acc.open .acc-r{transform:translateX(101%)}
+.acc-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px calc(24px + env(safe-area-inset-bottom));text-align:center;transition:opacity .45s}
+.acc.open .acc-c{opacity:0}
+.acc-k,.acc-t,.acc-p,.acc-q,.acc-d{color:#fff;mix-blend-mode:difference}
+.acc-k{font-size:11px;font-weight:700;letter-spacing:.3em;opacity:0;transform:translateY(10px);transition:.7s .2s}
+.acc-t{margin-top:22px;font-size:64px;line-height:1.02;font-weight:900;letter-spacing:-.05em;display:flex;flex-direction:column}
+.acc-t span{opacity:0;transform:translateY(24px) scale(.96);transition:.9s cubic-bezier(.2,.8,.2,1)}
+.acc-t span:nth-child(1){transition-delay:.45s}.acc-t span:nth-child(2){transition-delay:.65s}
+.acc-p{margin-top:26px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;opacity:0;transition:.7s 1.05s}
+.acc-p i{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.14em;border:1px solid currentColor;border-radius:99px;padding:3px 9px}
+.acc-p b{font-weight:800;border-bottom:2px solid currentColor}
+.acc-q{margin-top:30px;font-size:24px;line-height:1.4;font-weight:800;letter-spacing:-.03em;opacity:0;transform:translateY(12px);transition:.8s 1.35s}
+.acc-y{margin-top:30px;width:min(300px,86vw);height:58px;border:0;border-radius:99px;background:linear-gradient(135deg,#E9CF8E,#B08A3E);color:#15171C;font:inherit;font-size:17px;font-weight:800;letter-spacing:-.01em;box-shadow:0 14px 34px -12px rgba(176,138,62,.75);opacity:0;transform:translateY(12px);transition:opacity .8s 1.7s,transform .8s 1.7s,background .3s;animation:accPulse 2.4s 2.6s infinite}
+.acc.ok .acc-y{background:#15171C;color:#E9CF8E;animation:none;transform:scale(.96)}
+.acc-n{margin-top:12px;border:0;background:none;font:inherit;font-size:13px;font-weight:600;color:#9A958A;text-decoration:underline;text-underline-offset:3px;opacity:0;transition:.8s 1.9s}
+.acc-d{position:absolute;bottom:calc(22px + env(safe-area-inset-bottom));font-size:12px;font-weight:600;letter-spacing:.12em;opacity:0;transition:.8s 2s}
+.acc.in .acc-k,.acc.in .acc-t span,.acc.in .acc-p,.acc.in .acc-q,.acc.in .acc-y,.acc.in .acc-n{opacity:1;transform:none}
+.acc.in .acc-d{opacity:.7}
+@keyframes accPulse{0%,100%{box-shadow:0 14px 34px -12px rgba(176,138,62,.75)}50%{box-shadow:0 14px 34px -12px rgba(176,138,62,.75),0 0 0 8px rgba(233,207,142,.18)}}
+
+/* ── 흑백 초대사: 도전 단계 ── */
+.rd{list-style:none;margin-top:26px;display:flex;flex-direction:column;gap:12px}
+.rd li{position:relative;text-align:left;display:flex;gap:14px;align-items:flex-start;padding:20px 18px;border-radius:18px;background:#fff;border:1px solid var(--line)}
+.rd li em{flex:0 0 74px;margin-top:1px;font-style:normal;font-size:11px;font-weight:800;letter-spacing:.12em;color:#fff;background:#15171C;border-radius:8px;padding:6px 0;text-align:center}
+.rd li:nth-child(odd) em{background:#fff;color:#15171C;box-shadow:inset 0 0 0 1.5px #15171C}
+.rd li b{display:block;font-size:16px;font-weight:800;letter-spacing:-.02em;line-height:1.35}
+.rd li p{margin-top:5px;font-size:13.5px;line-height:1.55;color:var(--sub)}
+.rd li.done{background:#F5F3EE;border-style:dashed}
+.rd li.done b,.rd li.done p{color:var(--faint)}
+.rd li.done div{padding-right:62px}
+.rd-s{position:absolute;right:16px;top:50%;transform:translateY(-50%) rotate(-8deg);font-size:13px;font-weight:900;letter-spacing:.06em;color:var(--gold);border:2px solid var(--gold);border-radius:8px;padding:4px 10px}
+.rd li.fin{background:linear-gradient(135deg,#15171C,#2A2620);border:0;box-shadow:0 0 0 1.5px rgba(233,207,142,.55),0 22px 36px -24px rgba(21,23,28,.7)}
+.rd li.fin em{background:linear-gradient(135deg,#E9CF8E,#B08A3E);color:#15171C;box-shadow:none}
+.rd li.fin b{color:#fff}.rd li.fin p{color:#C9C3B6}
