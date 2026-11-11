@@ -716,3 +716,5 @@ main.w .b-fin{margin-top:72px}
 .wy b{display:block;margin-top:6px;font-size:15.5px;line-height:1.45;letter-spacing:-.02em}
 .wy .on{background:linear-gradient(135deg,#15171C,#2A2620);color:#fff;box-shadow:0 0 0 1.5px rgba(233,207,142,.55),0 20px 36px -20px rgba(21,23,28,.7)}
 .wy .on small{color:#E9CF8E}.wy .on b{color:#F3E0AE}
+
+.pt-all{display:inline-block;margin-left:6px;padding:3px 8px;border-radius:99px;background:#17110F;color:#E9CF8E;font-style:normal;font-size:11px;font-weight:800;vertical-align:2px;letter-spacing:-.01em}
