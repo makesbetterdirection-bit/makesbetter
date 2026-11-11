@@ -192,7 +192,7 @@
   $('stickyM').classList.add('hide');
   $('toGo').addEventListener('click',function(e){e.preventDefault();$('go').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){var v=$('vn');if(v&&!$('vf').classList.contains('hide'))v.focus()},600)});
   function kd(t){var d=new Date(t);return (d.getMonth()+1)+'월 '+d.getDate()+'일('+'일월화수목금토'[d.getDay()]+')'}
-  fetch('/api/go/board').then(function(x){return x.json()}).then(function(d){if(d.start&&d.end){var t='이벤트 기간 · '+kd(d.start)+' ~ '+kd(d.end);$('per').textContent=t;$('per2').textContent=kd(d.start)+'부터 '+kd(d.end)+'까지예요. 결과는 마감 후 카카오톡 채널로 발표해요.'}}).catch(function(){});
+  fetch('/api/go/board').then(function(x){return x.json()}).then(function(d){if(d.start&&d.end){var t='이벤트 기간 · '+kd(d.start)+' ~ '+kd(d.end);$('per').textContent=t;$('per2').textContent=kd(d.start)+' 0시부터 '+kd(d.end)+' 밤 11시 59분까지예요. 이 시간 안에 들어온 등록만 인원에 들어가요. 결과는 12월 1일(화) 카카오톡 채널로 발표해요.'}}).catch(function(){});
   var f=$('fin'),cs=f.querySelectorAll('.ch'),ran=false;cs.forEach(function(c,i){c.style.transitionDelay=(i*55)+'ms'});
   function go(){if(ran)return;ran=true;f.classList.add('go');cs.forEach(function(c,i){setTimeout(function(){c.classList.add('hit');setTimeout(function(){c.classList.add('ink');c.classList.remove('hit')},150)},900+i*70)});setTimeout(function(){f.classList.add('ul-on')},900+cs.length*70+250);setTimeout(function(){f.classList.add('end')},900+cs.length*70+1000)}
   if(io)new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)go()})},{threshold:.45}).observe(f);else go();
