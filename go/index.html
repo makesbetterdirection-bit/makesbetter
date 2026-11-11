@@ -17,8 +17,21 @@
   <div class="env-in">
     <div class="env-v" aria-hidden="true"><img class="bgi" src="/go/img/inv-bg.webp" alt=""><img class="cd" src="/go/img/inv-card.webp" alt=""></div>
     <div class="env-t"><small>To.</small><b>소중한 당신에게</b><small class="fr" id="envFrom">From. MAKESBETTER</small></div>
+    <div class="env-tm" id="envTm"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" class="tr"/><circle cx="20" cy="20" r="17" class="pg" id="envRing"/></svg><div><small>이 초대장은 24시간 동안만 열려 있어요</small><b><span class="tmv">24:00:00</span> 남음</b></div></div>
     <button class="btn" id="openEnv" type="button">초대장 열기</button>
     <p class="env-n">♪ 잔잔한 피아노 음악이 함께 나와요</p>
+  </div>
+</div>
+<div class="exp hide" id="exp" role="dialog" aria-label="초대장 마감">
+  <div class="exp-in">
+    <div class="top"><b>MAKESBETTER</b><span id="expFrom">초대장</span></div>
+    <div class="ex-d"><svg viewBox="0 0 216 216" aria-hidden="true"><circle cx="108" cy="108" r="98" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="6" stroke-dasharray="3 9"/><g stroke="rgba(255,255,255,.25)" stroke-width="1.5"><line x1="108" y1="22" x2="108" y2="30"/><line x1="194" y1="108" x2="186" y2="108"/><line x1="108" y1="194" x2="108" y2="186"/><line x1="22" y1="108" x2="30" y2="108"/></g><g stroke="#7C867F" stroke-width="5" stroke-linecap="round"><line x1="108" y1="108" x2="108" y2="62"/><line x1="108" y1="108" x2="138" y2="124"/></g><circle cx="108" cy="108" r="5" fill="#7C867F"/></svg><span class="ex-s"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#F3E0AE" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span></div>
+    <p class="ex-k">TIME OVER</p>
+    <h1>초대장 등록 시간이<br>지났어요.</h1>
+    <p class="ex-p"><span id="expAt"></span>까지 등록하지 않아<br>초대장이 자동으로 닫혔어요.</p>
+    <div class="ex-l"><div>1:1 코칭 2시간<span>마감</span></div><div>전자책 2권<span>마감</span></div><div>내 돈 진단 2가지<span>마감</span></div></div>
+    <a class="btn ex-b" href="https://pf.kakao.com/_eETXxj/chat">채널로 문의하기</a>
+    <p class="ex-n">초대장은 처음 연 순간부터 24시간 동안만 열려 있어요.</p>
   </div>
 </div>
 <div class="prog" id="prog"><i></i></div>
@@ -38,7 +51,7 @@
         <li><b><i id="cnt2">1,347</i><small>명</small></b><span>현금흐름 진단</span></li>
         <li><b>100<small>장</small></b><span>코칭권 한정</span></li>
       </ul>
-      <div class="w-bar rvl"><span>코칭권 100장 한정 · 12월 31일까지</span><b>0원</b></div>
+      <div class="w-bar w-tm rvl"><span><small>이 초대장 마감까지</small><em class="tmd"></em></span><b class="tmv">24:00:00</b></div>
     </section>
 
     <!-- 편지 -->
@@ -275,7 +288,7 @@
   </main>
 </div>
 <div class="sticky hide" id="sticky"><a class="btn kakao" href="https://pf.kakao.com/_eETXxj/friend" id="ch2">채널 추가하고 선물 열기</a></div>
-<div class="sticky" id="stickyA"><a class="btn" href="#f" id="toF">선물 3개 받기</a></div>
+<div class="sticky" id="stickyA"><a class="btn" href="#f" id="toF">선물 3개 받기 · <span class="tmv">24:00:00</span></a></div>
 <canvas id="gold" aria-hidden="true"></canvas>
 <div class="toast" id="toast"></div>
 <script>
@@ -293,7 +306,27 @@
     var opened=false;try{opened=localStorage.getItem('mb-go-ch')==='1'}catch(e){}
     if(opened)unlock(true);else watchSticky();
   }
-  if(q.get('reset')){try{localStorage.removeItem('mb-go');localStorage.removeItem('mb-go-ch')}catch(e){}history.replaceState(null,'',location.pathname+(r?'?r='+encodeURIComponent(r):''))}
+  if(q.get('reset')){try{localStorage.removeItem('mb-go');localStorage.removeItem('mb-go-ch');localStorage.removeItem('mb-go-t'+r)}catch(e){}history.replaceState(null,'',location.pathname+(r?'?r='+encodeURIComponent(r):''))}
+  /* 24시간 마감: 처음 연 순간부터 */
+  var DUR=864e5,T0=null,regd=false;
+  try{var s0=JSON.parse(localStorage.getItem('mb-go')||'null');regd=!!(s0&&s0.name)}catch(e){}
+  try{T0=+localStorage.getItem('mb-go-t'+r)||null}catch(e){}
+  var lf=q.get('left');if(lf!=null&&/^\d+$/.test(lf)){T0=Date.now()-DUR+lf*1000}
+  if(!T0)T0=Date.now();
+  try{localStorage.setItem('mb-go-t'+r,String(T0))}catch(e){}
+  var DL=T0+DUR,expired=false;
+  function kday(t){var d=new Date(t),w='일월화수목금토'[d.getDay()],h=d.getHours(),m=('0'+d.getMinutes()).slice(-2);return (d.getMonth()+1)+'월 '+d.getDate()+'일 ('+w+') '+(h<12?'오전 ':'오후 ')+((h%12)||12)+':'+m}
+  document.querySelectorAll('.tmd').forEach(function(e){e.textContent=kday(DL)+'까지'});
+  function pad(n){return ('0'+n).slice(-2)}
+  function showExp(){if(expired)return;expired=true;$('expAt').textContent=kday(DL);$('exp').classList.remove('hide');document.body.classList.add('noscroll');try{$('env').classList.add('gone')}catch(e){}hit('go-expired')}
+  function tick(){if(regd)return;var L=DL-Date.now();
+    if(L<=0){showExp();return}
+    var h=Math.floor(L/36e5),m=Math.floor(L%36e5/6e4),sec=Math.floor(L%6e4/1e3),t=pad(h)+':'+pad(m)+':'+pad(sec);
+    document.querySelectorAll('.tmv').forEach(function(e){e.textContent=t});
+    document.body.classList.toggle('urgent',L<36e5);
+    var ring=$('envRing');if(ring)ring.style.strokeDashoffset=(106.8*(1-L/DUR)).toFixed(2);
+    setTimeout(tick,1000-(Date.now()%1000))}
+  if(!regd)tick();
   try{var s=JSON.parse(localStorage.getItem('mb-go')||'null');if(s&&s.name){showB(s.name,s.inv)}}catch(e){}
 
   function setInv(n){inviter=n;var e='<em>'+esc(n)+'</em>';
@@ -348,10 +381,12 @@
     if(name.length<2){err.textContent='이름을 입력해 주세요.';return}
     if(!/^01\d{8,9}$/.test(phone)){err.textContent='휴대폰 번호를 확인해 주세요.';return}
     if(!$('ag').checked){err.textContent='개인정보 수집·이용에 동의해 주세요.';return}
+    if(Date.now()>DL){showExp();return}
     var b=$('go');b.disabled=true;b.textContent='등록 중…';
-    fetch('/api/go/reg',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:name,phone:phone,r:r,refName:$('rf').value.trim(),agree:true,mk:$('mk').checked})})
+    fetch('/api/go/reg',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:name,phone:phone,r:r,refName:$('rf').value.trim(),agree:true,mk:$('mk').checked,t:T0})})
       .then(function(x){return x.json()}).then(function(d){
         if(d.ok||d.code==='dup'){var inv=d.inviter||inviter;try{localStorage.setItem('mb-go',JSON.stringify({name:name,inv:inv}))}catch(e){}hit('go-reg');showB(name,inv);goldRain(3200);if(d.code==='dup')toast('이미 등록된 번호예요. 선물은 그대로 받으실 수 있어요.')}
+        else if(d.code==='expired'){showExp()}
         else{err.textContent=d.msg||'다시 시도해 주세요.';b.disabled=false;b.textContent='선물 3개 받기'}
       }).catch(function(){err.textContent='연결이 불안정해요. 잠시 후 다시 눌러 주세요.';b.disabled=false;b.textContent='선물 3개 받기'});
   });

@@ -136,6 +136,9 @@ export default async (req) => {
       if (name.length < 2) return json({ ok: false, code: "name", msg: "이름을 확인해 주세요." }, 400);
       if (!/^01[016789]\d{7,8}$/.test(phone)) return json({ ok: false, code: "phone", msg: "휴대폰 번호를 확인해 주세요." }, 400);
       if (!body.agree) return json({ ok: false, code: "agree", msg: "개인정보 수집·이용에 동의해 주세요." }, 400);
+      // 초대장은 처음 연 순간부터 24시간 (10분 여유)
+      const t0 = Number(body.t);
+      if (t0 && t0 < Date.now() && Date.now() - t0 > 864e5 + 6e5) return json({ ok: false, code: "expired", msg: "초대장 등록 시간이 지났어요." }, 410);
       const ip = req.headers.get("x-nf-client-connection-ip") || "";
       const dev = sha(ip + "|" + (req.headers.get("user-agent") || "")).slice(0, 10);
       const { data: d } = await load(true);
