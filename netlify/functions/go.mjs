@@ -62,17 +62,22 @@ function compute(d) {
   const per = new Map(d.participants.map((p) => [p.id, { p, list: [] }]));
   const valid = d.regs.filter((r) => r.ok && r.ref && per.has(r.ref)).sort((a, b) => a.at - b.at);
   for (const r of valid) per.get(r.ref).list.push(r);
-  const rows = [...per.values()]
+  const all = [...per.values()]
     .map(({ p, list }) => ({
-      id: p.id, name: p.name, count: list.length,
+      id: p.id, name: p.name, team: p.team === "w" ? "w" : "b", count: list.length,
       t1: list[0]?.at || null, t3: list[2]?.at || null, tN: list.at(-1)?.at || null,
     }))
-    .filter((x) => x.count > 0)
-    .sort((a, b) => b.count - a.count || a.tN - b.tN);
+    .filter((x) => x.count > 0);
+  // 흑백 팀전: 백 = 디렉터(개인 경품 제외), 흑 = 퀴즈 참여자. 승부는 팀 등록 인원 합계
+  const teams = { b: 0, w: 0, bPlayers: 0, wPlayers: 0 };
+  for (const x of all) { teams[x.team] += x.count; teams[x.team + "Players"]++; }
+  teams.bSize = d.participants.filter((p) => p.team !== "w").length;
+  teams.wSize = d.participants.filter((p) => p.team === "w").length;
+  const rows = all.filter((x) => x.team === "b").sort((a, b) => b.count - a.count || a.tN - b.tN);
   rows.forEach((x, i) => (x.rank = i + 1));
   const limit = d.meta.threeLimit || 10;
   const three = rows.filter((x) => x.count >= 3).sort((a, b) => a.t3 - b.t3).slice(0, limit).map((x) => x.id);
-  return { rows, three, limit, valid: valid.length };
+  return { rows, all, teams, three, limit, valid: valid.length };
 }
 
 function inPeriod(meta, t) {
@@ -86,7 +91,9 @@ function meView(d, id) {
   if (!p) return null;
   const c = compute(d);
   const row = c.rows.find((x) => x.id === id);
-  const count = row ? row.count : 0;
+  const any = c.all.find((x) => x.id === id);
+  const count = any ? any.count : 0;
+  const team = p.team === "w" ? "w" : "b";
   const got3 = c.three.includes(id);
   const recent = d.regs
     .filter((r) => r.ref === id)
@@ -95,8 +102,8 @@ function meView(d, id) {
     .map((r) => ({ name: mask(r.name), at: r.at, ok: r.ok, why: r.ok ? "" : r.why }));
   return {
     id, name: p.name, count, rank: row ? row.rank : null, players: c.rows.length,
-    coffee: count >= 1, three: got3, threeLeft: Math.max(0, c.limit - c.three.length),
-    recent, end: d.meta.end,
+    coffee: team === "b" && count >= 1, three: got3, threeLeft: Math.max(0, c.limit - c.three.length),
+    recent, end: d.meta.end, team, teams: { b: c.teams.b, w: c.teams.w },
   };
 }
 
@@ -186,6 +193,7 @@ export default async (req) => {
         total: c.valid, today, coffee: c.rows.length, threeGiven: c.three.length, threeLimit: c.limit,
         top: c.rows.slice(0, 10).map((x) => ({ name: mask(x.name), count: x.count, rank: x.rank })),
         start: data.meta.start, end: data.meta.end,
+        teams: c.teams,
       });
     }
 
@@ -222,7 +230,7 @@ export default async (req) => {
             const k = name + "|" + phone;
             if (seen.has(k)) continue;
             seen.add(k);
-            list.push({ id: old.get(k) || newId(), name, phone, last4: phone.slice(-4) });
+            list.push({ id: old.get(k) || newId(), name, phone, last4: phone.slice(-4), ...(x.team === "w" ? { team: "w" } : {}) });
           }
           d.participants = list;
           return { ok: true, participants: list.length };

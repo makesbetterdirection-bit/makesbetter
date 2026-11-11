@@ -63,7 +63,21 @@
         <li class="rvl"><em>ROUND 2</em><div><b>첫 초대 · 1명 등록</b><p>스타벅스 아메리카노 전원 증정<br>초대받은 지인도 함께</p></div></li>
         <li class="rvl"><em>ROUND 3</em><div><b>세 명의 초대 · 3명 등록</b><p>배달의민족 상품권 3만원<br>먼저 채운 10명 · 선착순</p></div></li>
         <li class="rvl fin"><em>FINAL</em><div><b>흑백 결승 · 등록 인원 TOP 2</b><p>1위 일본 여행 경비 현금 50만원<br>2위 조 말론 런던 코롱 100ml 또는 현금 30만원</p></div></li>
+        <li class="rvl tm"><em>TEAM</em><div><b>흑백 대결 · 최후의 승자팀</b><p>흑 초대사가 이기면<br>커피 한 잔 더</p></div></li>
       </ol>
+    </section>
+
+    <section class="w-sec hb">
+      <span class="w-pt rvl">흑백 대결 · TEAM</span>
+      <h2 class="rvl">흑 초대사 vs 백 초대사<br><mark>최후의 승자팀</mark>은?</h2>
+      <div class="hb-v rvl">
+        <div class="hb-b"><small>흑 초대사</small><b>금융 퀴즈<br>참여자</b><span>바로 당신의 팀</span></div>
+        <i>VS</i>
+        <div class="hb-w"><small>백 초대사</small><b>메이크스베러<br>디렉터</b><span>금융 코칭 전문가 팀</span></div>
+      </div>
+      <p class="hb-r rvl">두 팀이 모은 <b>등록 인원 합계</b>로 승부해요.</p>
+      <div class="hb-g rvl"><small>흑 초대사가 이기면</small><b>1명 이상 등록한 흑 초대사 전원에게<br>스타벅스 아메리카노 한 잔 더</b></div>
+      <p class="hb-n rvl">백 초대사(디렉터)는 팀 대결에만 참여하고, 개인 순위 경품은 받지 않아요.</p>
     </section>
 
     <section class="w-sec w-dark c-c">
@@ -114,6 +128,7 @@
 
       <section id="mine" class="hide">
         <div class="box mebox me-card">
+          <p class="me-tm" id="mTeam"></p>
           <div class="me-h"><div><span id="mName"></span><br><b id="mCnt">0<small>명</small></b></div><span id="mRank"></span></div>
           <div class="bar"><i id="mBar" style="width:0"></i></div>
           <div class="steps"><span id="s1">R2 · 1명</span><span id="s3">R3 · 3명</span><span id="sT">FINAL · TOP 2</span></div>
@@ -134,6 +149,7 @@
       <div class="w-faq rvl">
         <details open><summary>어떤 등록이 인정되나요?</summary><p>내 초대장 링크로 들어온 분이, 초대장을 연 뒤 24시간 안에 이름과 휴대폰 번호로 등록하면 1명으로 인정돼요.</p></details>
         <details><summary>인원에서 빠지는 경우는요?</summary><p>본인 번호, 퀴즈에 이미 참여한 분의 번호, 같은 번호의 중복 등록은 인원에서 빠져요.</p></details>
+        <details><summary>흑백 대결은 어떻게 정해지나요?</summary><p>흑 초대사(퀴즈 참여자)와 백 초대사(메이크스베러 디렉터)가 각자 모은 등록 인원 합계를 비교해요. 흑 초대사가 이기면 1명 이상 등록한 흑 초대사 모두에게 커피를 한 잔 더 드려요.</p></details>
         <details><summary>순위가 같으면요?</summary><p>같은 인원이면 그 인원에 먼저 도달한 분이 앞 순위예요.</p></details>
         <details><summary>기간과 발표는 언제인가요?</summary><p id="per2">기간과 발표일은 곧 카카오톡 채널로 안내해 드려요.</p></details>
         <details><summary>경품은 어떻게 받나요?</summary><p>마감 후 집계해서 카카오톡으로 보내 드려요. 3만원 상품권은 3명을 채운 순서대로 보내 드려요.</p></details>
@@ -166,12 +182,16 @@
     $('mRank').textContent=d.rank?'현재 '+d.rank+'위 / '+d.players+'명':'';
     $('mBar').style.width=Math.min(100,d.count/5*100)+'%';
     $('s1').classList.toggle('on',d.count>=1);$('s3').classList.toggle('on',d.three);$('sT').classList.toggle('on',d.rank&&d.rank<=2);
+    var W=d.team==='w';$('mTeam').textContent=W?'백 초대사 · 메이크스베러 디렉터':'흑 초대사';$('mTeam').className='me-tm '+(W?'w':'b');
+    document.querySelector('#mine .steps').style.display=W?'none':'';
+    if(W){$('mRank').textContent='';$('mNext').textContent='내 인원은 백 초대사 팀 합계에 더해져요. 흑 초대사에게 지지 마세요!'}
     var n;
-    if(d.count<1)n='1명만 등록하면 스타벅스 커피를 받아요.';
+    if(W)n=null;
+    else if(d.count<1)n='1명만 등록하면 스타벅스 커피를 받아요.';
     else if(d.count<3)n=(3-d.count)+'명 더 등록하면 3만원 상품권 도전 (남은 자리 '+d.threeLeft+'개)';
     else if(d.three)n='3만원 상품권 확정! 이제 TOP 2에 도전해 보세요.';
     else n='3만원 상품권 10자리는 마감됐어요. TOP 2에 도전해 보세요.';
-    $('mNext').textContent=n;
+    if(n)$('mNext').textContent=n;
     $('mList').innerHTML=d.recent.length?d.recent.map(function(x){return '<li><b>'+esc(x.name)+'</b><span>'+(x.ok?hhmm(x.at):WHY[x.why]||'제외')+'</span></li>'}).join(''):'<li><span>아직 없어요. 첫 초대장을 보내 보세요.</span></li>';
     $('mUpd').textContent='방금 갱신';
   }
