@@ -660,3 +660,4 @@ body.urgent .env-tm .pg{stroke:#E5707F}
 .ex-b{margin-top:auto;background:rgba(255,255,255,.08)!important;color:#fff!important;border:1px solid rgba(255,255,255,.18)}
 .ex-l+.ex-b{margin-top:28px}
 .ex-n{margin-top:14px;font-size:12px;color:#8FA398}
+.env-v{width:128vw;max-width:600px;top:3svh}.env-t{margin-bottom:16px}
