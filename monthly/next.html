@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>월배당 안내 | MAKESBETTER</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --ink:#000; --coal:#131313; --line:#2b2b2b; --paper:#f3f2ee; --dim:#8d8c86; --faint:#5a5955;
+  --pay:#ff6a00;   /* 돈·입금에만 */
+  --act:#1c8a8f;   /* 누르는 것에만 */
+  --pad:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--ink);-webkit-text-size-adjust:100%}
+body{font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;color:var(--paper);background:var(--ink);font-feature-settings:"tnum" 1,"ss06" 1;letter-spacing:-.01em;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit;border-radius:0}
+:focus-visible{outline:2px solid var(--act);outline-offset:3px}
+.page{max-width:520px;margin:0 auto;padding-bottom:150px}
+
+/* 상단 */
+.top{display:flex;align-items:center;justify-content:space-between;padding:18px var(--pad) 0}
+.wm{font-size:15px;font-weight:600;letter-spacing:0}
+.wm i{font-style:normal;color:var(--pay)}
+.top a{font-size:13px;color:var(--dim);padding:6px 0}
+
+/* 회차 전환 */
+.seg{display:grid;grid-template-columns:1fr 1fr;margin:22px var(--pad) 0;border-bottom:1px solid var(--line)}
+.seg button{background:none;border:0;padding:12px 0 13px;text-align:left;cursor:pointer;color:var(--faint);position:relative}
+.seg b{display:block;font-size:17px;font-weight:600}
+.seg span{font-size:12.5px;font-weight:400}
+.seg button[aria-selected=true]{color:var(--paper)}
+.seg button[aria-selected=true]:after{content:"";position:absolute;left:0;right:14px;bottom:-1px;height:2px;background:var(--paper)}
+
+/* 첫 문장 + 일정 레일 */
+.lead{padding:38px var(--pad) 0}
+.lead p.k{font-size:14px;color:var(--dim)}
+.lead h1{font-size:clamp(34px,10.4vw,46px);font-weight:250;line-height:1.16;letter-spacing:-.035em;margin-top:8px;word-break:keep-all}
+.lead h1 em{font-style:normal;font-weight:600}
+.lead p.s{margin-top:14px;font-size:15px;color:var(--dim);word-break:keep-all}
+.lead p.s b{color:var(--paper);font-weight:600}
+
+.rail{position:relative;margin:44px var(--pad) 0;height:92px}
+.rail .bar{position:absolute;left:0;right:0;top:9px;height:1px;background:var(--line)}
+.rail .fill{position:absolute;left:0;top:8px;height:3px;background:var(--pay);width:0;transition:width 1.1s cubic-bezier(.3,.7,.2,1)}
+.rail .st{position:absolute;top:0;width:120px}
+.rail .st:before{content:"";display:block;width:19px;height:19px;border:1px solid var(--faint);background:var(--ink);border-radius:50%}
+.rail .st.on:before{border-color:var(--pay);background:var(--pay)}
+.rail .st d{display:block;font-size:19px;font-weight:600;margin-top:12px;letter-spacing:-.02em}
+.rail .st l{display:block;font-size:12.5px;color:var(--dim)}
+.rail .st.s1{left:0}
+.rail .st.s2{left:50%;margin-left:-60px;text-align:center}.rail .st.s2:before{margin:0 auto}
+.rail .st.s3{right:0;text-align:right}.rail .st.s3:before{margin-left:auto}
+.rail .now{position:absolute;top:-22px;font-size:11.5px;font-weight:600;color:var(--pay);transform:translateX(-50%);white-space:nowrap;opacity:0;transition:left 1.1s cubic-bezier(.3,.7,.2,1),opacity .4s .6s}
+.rail .now.e0{transform:none}.rail .now.e1{transform:translateX(-100%)}
+
+/* 구역 */
+.sec{margin-top:58px;padding:0 var(--pad)}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--paper)}
+.sec-h h2{font-size:19px;font-weight:600;letter-spacing:-.02em}
+.sec-h .ver{display:flex;gap:14px;font-size:13px}
+.sec-h .ver button{background:none;border:0;color:var(--faint);cursor:pointer;padding:4px 0}
+.sec-h .ver button[aria-pressed=true]{color:var(--paper);box-shadow:0 1px 0 var(--paper)}
+
+/* 종목 행 */
+.row{border-bottom:1px solid var(--line);padding:18px 0 16px}
+.row-top{display:grid;grid-template-columns:1fr 104px;gap:14px;align-items:start}
+.nm{font-size:15.5px;font-weight:500;line-height:1.35;word-break:keep-all}
+.nm small{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim);font-weight:400;margin-bottom:5px}
+.amt{margin-top:9px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.amt b{font-size:25px;font-weight:600;letter-spacing:-.03em}
+.amt b u{text-decoration:none;font-size:13px;font-weight:400;color:var(--dim);margin-left:2px}
+.amt .rt{font-size:13.5px;color:var(--dim)}
+.tag{font-size:11px;padding:1px 6px;border:1px solid var(--line);color:var(--dim)}
+.tag.ok{border-color:var(--pay);color:var(--pay)}
+.qty{display:block}
+.qty span{display:block;font-size:11.5px;color:var(--dim);text-align:right;margin-bottom:4px}
+.qty input{width:100%;height:46px;background:var(--coal);border:1px solid var(--line);text-align:right;padding:0 12px;font-size:18px;font-weight:600;-moz-appearance:textfield;appearance:textfield}
+.qty input::-webkit-outer-spin-button,.qty input::-webkit-inner-spin-button{-webkit-appearance:none}
+.qty input::placeholder{color:var(--faint);font-weight:400}
+.qty input:focus{border-color:var(--act);outline:0}
+.mine{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;font-size:13px;color:var(--dim);min-height:22px}
+.mine button{background:none;border:0;color:var(--dim);cursor:pointer;font-size:13px;padding:2px 0;display:flex;align-items:center;gap:8px}
+.mine button svg{transition:transform .25s}
+.row.open .mine button svg{transform:rotate(180deg)}
+.mine output{font-size:16px;font-weight:600;color:var(--pay)}
+.spark{display:inline-flex;align-items:flex-end;gap:3px;height:16px}
+.spark i{width:5px;background:var(--faint);display:block}
+.spark i:last-child{background:var(--paper)}
+.more{display:none;margin-top:12px;background:var(--coal);padding:14px 14px 12px}
+.row.open .more{display:block}
+.more table{width:100%;border-collapse:collapse;font-size:13.5px}
+.more td{padding:5px 0;color:var(--dim)}
+.more td:nth-child(2),.more td:nth-child(3){text-align:right;color:var(--paper)}
+.more td:nth-child(3){width:64px;color:var(--dim)}
+.more a{display:inline-block;margin-top:10px;font-size:13px;color:var(--act);border-bottom:1px solid currentColor;filter:brightness(1.45)}
+.note{margin-top:14px;font-size:12.5px;color:var(--faint);word-break:keep-all}
+
+/* 다음 일정 */
+.cal{width:100%;border-collapse:collapse;font-size:14px}
+.cal th{font-weight:400;font-size:12px;color:var(--dim);text-align:right;padding:12px 0 6px}
+.cal th:first-child,.cal td:first-child{text-align:left}
+.cal td{padding:13px 0;border-top:1px solid var(--line);text-align:right;font-weight:500}
+.cal td:first-child{font-weight:400;color:var(--dim)}
+.cal td:last-child{color:var(--pay);font-weight:600}
+.cal tr.cur td:first-child{color:var(--paper)}
+
+/* 링크 목록 */
+.links a{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);font-size:15px}
+.links a span{color:var(--dim);font-size:13px}
+.brands{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-left:1px solid var(--line);margin-top:0}
+.brands a{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 12px 13px;font-size:15px;font-weight:600}
+.brands a span{display:block;font-size:11.5px;font-weight:400;color:var(--dim);margin-top:1px}
+
+/* 맺음 */
+.end{margin-top:58px;padding:0 var(--pad)}
+.end .cta{display:flex;align-items:center;justify-content:space-between;background:var(--act);padding:19px 20px;font-size:16px;font-weight:600}
+.end .ig{display:flex;justify-content:space-between;padding:17px 0;border-bottom:1px solid var(--line);font-size:14.5px;margin-top:6px}
+.end .ig span{color:var(--dim)}
+.fine{margin-top:22px;font-size:12px;color:var(--faint);line-height:1.65;word-break:keep-all}
+
+/* 합계 바 */
+.sum{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(10,10,10,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .35s cubic-bezier(.3,.7,.2,1)}
+.sum.on{transform:none}
+.sum-in{max-width:520px;margin:0 auto;padding:13px var(--pad) calc(13px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+.sum small{display:block;font-size:12px;color:var(--dim)}
+.sum strong{display:block;font-size:26px;font-weight:600;letter-spacing:-.03em;color:var(--pay);line-height:1.15}
+.sum em{display:block;font-style:normal;font-size:11.5px;color:var(--dim);margin-top:2px}
+.sum button{background:var(--act);border:0;height:48px;padding:0 16px;font-size:14.5px;font-weight:600;cursor:pointer;color:#fff}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <div class="wm">MakesBetter<i>.</i> 월배당</div>
+    <a href="https://mbkr.my/etf" target="_blank" rel="noopener">상담 신청</a>
+  </header>
+
+  <nav class="seg" role="tablist" aria-label="배당 회차">
+    <button role="tab" data-t="mid"><b>중간 배당</b><span>매월 15일 기준</span></button>
+    <button role="tab" data-t="end"><b>월말 배당</b><span>매월 말일 기준</span></button>
+  </nav>
+
+  <section class="lead" aria-live="polite">
+    <p class="k" id="kick"></p>
+    <h1 id="head"></h1>
+    <p class="s" id="sub"></p>
+  </section>
+
+  <div class="rail" id="rail" aria-hidden="true">
+    <div class="bar"></div><div class="fill" id="fill"></div><div class="now" id="now">오늘</div>
+    <div class="st s1"><d id="d1"></d><l>매수 마감</l></div>
+    <div class="st s2"><d id="d2"></d><l>분배 기준일</l></div>
+    <div class="st s3"><d id="d3"></d><l>입금</l></div>
+  </div>
+
+  <section class="sec">
+    <div class="sec-h">
+      <h2>1좌당 얼마, 나는 얼마</h2>
+      <div class="ver" role="group" aria-label="포트폴리오 버전">
+        <button data-v="7">ver.7</button><button data-v="6">ver.6</button>
+      </div>
+    </div>
+    <div id="rows"></div>
+    <p class="note" id="rowsNote"></p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>다음 일정</h2></div>
+    <table class="cal"><thead><tr><th>회차</th><th>매수 마감</th><th>기준일</th><th>입금</th></tr></thead><tbody id="cal"></tbody></table>
+    <p class="note">공시 전 일정은 거래소 영업일 기준으로 계산한 예상일이며, 운용사 공시가 나오면 자동으로 바뀝니다.</p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>운용사 공지 원문</h2></div>
+    <div class="brands" id="brands"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>지난 분배금 안내</h2></div>
+    <div class="links">
+      <a href="https://pf.kakao.com/_eETXxj/115114851" target="_blank" rel="noopener">10월 분배금 <span>카카오 채널 글</span></a>
+      <a href="http://pf.kakao.com/_eETXxj/114834975" target="_blank" rel="noopener">9월 분배금 <span>카카오 채널 글</span></a>
+      <a href="http://pf.kakao.com/_eETXxj/114294314" target="_blank" rel="noopener">7월 분배금 <span>카카오 채널 글</span></a>
+      <a href="http://pf.kakao.com/_eETXxj/113957067" target="_blank" rel="noopener">6월 분배금 <span>카카오 채널 글</span></a>
+    </div>
+  </section>
+
+  <section class="end">
+    <a class="cta" href="https://mbkr.my/etf" target="_blank" rel="noopener">월배당 상담 신청하기
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a>
+    <a class="ig" href="https://www.instagram.com/makesbetter.one/" target="_blank" rel="noopener">인스타그램 @makesbetter.one <span>정보가 곧 MONEY</span></a>
+    <p class="fine">분배금은 운용사 공시를 자동으로 모아 보여 드립니다. 금액은 세전 기준이며, 배당소득세(15.4%)와 계좌 유형(연금·ISA 등)에 따라 실제 입금액은 달라집니다. 이 화면은 정보 제공용이며 투자 권유가 아닙니다. 투자 판단과 그 결과는 투자자 본인에게 있습니다.<br><span id="upd"></span></p>
+  </section>
+</div>
+
+<div class="sum" id="sum" aria-live="polite">
+  <div class="sum-in">
+    <div><small id="sumL"></small><strong id="sumV">0원</strong><em id="sumM"></em></div>
+    <button id="share">카카오톡으로 보내기</button>
+  </div>
+</div>
+
+<script src="/studio/dividends.js"></script>
+<script>
+(function(){
+var V=window.__DIV||{etf:{},ev:[]};
+var DOW=['일','월','화','수','목','금','토'];
+var today=new Date(Date.now()+9*36e5).toISOString().slice(0,10);
+var q=/[?&]today=(\d{4}-\d\d-\d\d)/.exec(location.search); if(q) today=q[1];
+var PORT={7:{mid:['498400','480030','441640'],end:['494300','0022T0','332610','473330']},
+          6:{mid:['498400','480030','481060'],end:['494300','0022T0','475080']}};
+var LIST={KODEX:['삼성자산운용','https://www.samsungfund.com/etf/lounge/notice.do?category=DIVIDEND'],ACE:['한국투자신탁운용','https://www.aceetf.co.kr/cs/notice'],SOL:['신한자산운용','https://www.soletf.com/ko/cs/notice'],PLUS:['한화자산운용','https://www.plusetf.co.kr/customer/notice'],TIGER:['미래에셋자산운용','https://investments.miraeasset.com/tigeretf/ko/customer/notice/list.do'],RISE:['KB자산운용','https://www.riseetf.co.kr/cust/notice']};
+var st={t:(/monthly2/.test(location.pathname)||/[?&]t=2/.test(location.search))?'end':'mid',v:7,qty:{}};
+try{var s=JSON.parse(localStorage.getItem('mb-monthly')||'{}');st.qty=s.qty||{};st.v=s.v===6?6:7}catch(e){}
+function save(){try{localStorage.setItem('mb-monthly',JSON.stringify({qty:st.qty,v:st.v}))}catch(e){}}
+function $(id){return document.getElementById(id)}
+function won(n){return Math.round(n).toLocaleString('ko-KR')}
+function md(d){return (+d.slice(5,7))+'.'+(+d.slice(8))}
+function kd(d){return (+d.slice(5,7))+'월 '+(+d.slice(8))+'일'}
+function dw(d){return DOW[new Date(d+'T00:00:00Z').getUTCDay()]}
+function diff(a,b){return Math.round((Date.parse(b)-Date.parse(a))/864e5)}
+function evs(t){return V.ev.filter(function(e){return e.cyc===t})}
+function cycle(t,codes){ // 지급 전인 가장 가까운 회차, 없으면 가장 최근
+  var a=evs(t).filter(function(e){return codes.indexOf(e.code)>=0});
+  var yms=a.map(function(e){return e.ym}).filter(function(v,i,x){return x.indexOf(v)===i}).sort();
+  var up=yms.filter(function(ym){return a.some(function(e){return e.ym===ym&&e.pay>=today})})[0];
+  var ym=up||yms[yms.length-1];
+  return {ym:ym,ev:a.filter(function(e){return e.ym===ym})};
+}
+function hist(code){return V.ev.filter(function(e){return e.code===code&&e.amt!=null}).sort(function(a,b){return a.ym<b.ym?-1:1})}
+function view(code,ym){ // 이번 회차 금액(공시 전이면 직전 금액으로 예상)
+  var h=hist(code),cur=h.filter(function(e){return e.ym===ym})[0];
+  if(cur) return {amt:cur.amt,rate:cur.rate,fixed:true,src:cur.src,h:h};
+  var last=h.filter(function(e){return e.ym<ym}).pop();
+  return {amt:last?last.amt:null,rate:last?last.rate:null,fixed:false,src:'',h:h,from:last&&last.ym};
+}
+function total(t){var c=cycle(t,PORT[st.v][t]),sum=0,n=0;PORT[st.v][t].forEach(function(code){var v=view(code,c.ym),k=+st.qty[code]||0;if(k&&v.amt){sum+=k*v.amt;n++}});return {sum:sum,n:n,ym:c.ym}}
+
+function render(){
+  var codes=PORT[st.v][st.t],c=cycle(st.t,codes),ev=c.ev;
+  [].forEach.call(document.querySelectorAll('.seg button'),function(b){b.setAttribute('aria-selected',b.dataset.t===st.t)});
+  [].forEach.call(document.querySelectorAll('.ver button'),function(b){b.setAttribute('aria-pressed',+b.dataset.v===st.v)});
+  if(!ev.length){$('head').textContent='분배 일정을 불러오지 못했습니다';return}
+  var mo=+c.ym.slice(5),name=mo+'월 '+(st.t==='mid'?'중간':'월말')+' 배당';
+  var buy=ev[0].buy,rec=ev[0].rec;
+  var pays=ev.map(function(e){return e.pay}).filter(function(v,i,x){return x.indexOf(v)===i}).sort(),p0=pays[0],p1=pays[pays.length-1];
+  var payK=kd(p0)+(p1!==p0?'~'+(p1.slice(0,7)===p0.slice(0,7)?(+p1.slice(8))+'일':kd(p1)):' '+dw(p0)+'요일');
+  var allFixed=codes.every(function(code){return view(code,c.ym).fixed});
+  $('kick').textContent=name+(allFixed?'':' (일부 공시 전)');
+  var h,s;
+  if(today<=buy){var n=diff(today,buy);h='<em>'+kd(buy)+'</em>까지 사면<br>'+kd(p0)+' 입금';s=(n===0?'<b>오늘이 매수 마감일</b>입니다.':'매수 마감까지 <b>'+n+'일</b> 남았습니다.')+' 장 마감 전에 체결돼야 이번 분배금을 받습니다.'}
+  else if(today<p0){h='<em>'+payK+'</em>,<br>통장에 들어옵니다';s='입금까지 <b>'+diff(today,p0)+'일</b>. '+kd(buy)+'까지 보유한 좌수만큼 받습니다. 지금 사면 다음 회차부터입니다.'}
+  else if(today<=p1){h='<em>'+(today===p0&&p1===p0?'오늘':payK)+'</em>,<br>통장에 들어옵니다';s='증권사에 따라 오후에 입금되기도 합니다.'}
+  else{h='<em>'+payK+'</em>에<br>지급됐습니다';s='다음 회차 일정은 아래 표에서 확인하세요.'}
+  $('head').innerHTML=h;$('sub').innerHTML=s;
+  $('d1').textContent=md(buy);$('d2').textContent=md(rec);$('d3').textContent=md(p0)+(p1!==p0?'~'+(+p1.slice(8)):'');
+  // 레일: 정거장은 0 / 50 / 100%, 오늘은 구간별 비례
+  var pos;
+  if(today<=buy)pos=Math.max(0,4-diff(today,buy))*0; else pos=0;
+  if(today<buy)pos=0; else if(today<=rec)pos=50*diff(buy,today)/Math.max(1,diff(buy,rec)); else if(today<p0)pos=50+50*diff(rec,today)/Math.max(1,diff(rec,p0)); else pos=100;
+  var S=document.querySelectorAll('.rail .st');
+  S[0].classList.toggle('on',today>=buy);S[1].classList.toggle('on',today>=rec);S[2].classList.toggle('on',today>=p0);
+  var now=$('now');now.className='now'+(pos<8?' e0':pos>92?' e1':'');
+  now.textContent=today<buy?'오늘 · 마감 전':today>p1?'지급 완료':'오늘 '+md(today);
+  requestAnimationFrame(function(){$('fill').style.width=pos+'%';now.style.left=pos+'%';now.style.opacity=1});
+
+  // 종목 행
+  var html='';
+  codes.forEach(function(code){
+    var e=V.etf[code]||{name:code,brand:''},v=view(code,c.ym),k=st.qty[code]||'';
+    var nm=e.name.replace(e.brand+' ','');
+    var hh=v.h.slice(-5),mx=Math.max.apply(null,hh.map(function(x){return x.amt}).concat([1]));
+    var sp=hh.map(function(x){return '<i style="height:'+Math.max(3,Math.round(16*x.amt/mx))+'px"></i>'}).join('');
+    var tb=v.h.slice(-5).reverse().map(function(x){return '<tr><td>'+(+x.ym.slice(5))+'월</td><td>'+won(x.amt)+'원</td><td>'+(x.rate!=null?x.rate.toFixed(2)+'%':'')+'</td></tr>'}).join('');
+    var ok=v.src&&!/yahoo|distribution\.do/.test(v.src);
+    html+='<div class="row" data-c="'+code+'"><div class="row-top"><div><div class="nm"><small>'+e.brand+'<span class="tag'+(v.fixed?' ok':'')+'">'+(v.fixed?'공시 확정':'공시 전 · '+(v.from?(+v.from.slice(5))+'월 금액 기준':'미정'))+'</span></small>'+nm+'</div>'+
+      '<div class="amt"><b>'+(v.amt!=null?won(v.amt):'–')+'<u>원 / 1좌</u></b>'+(v.rate!=null?'<span class="rt">분배율 '+v.rate.toFixed(2)+'%</span>':'')+'</div></div>'+
+      '<label class="qty"><span>보유 좌수</span><input type="number" inputmode="numeric" min="0" placeholder="0" value="'+k+'" aria-label="'+e.name+' 보유 좌수"></label></div>'+
+      '<div class="mine"><button type="button" aria-expanded="false"><span class="spark">'+sp+'</span>최근 분배금<svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 1l4 4 4-4"/></svg></button><output></output></div>'+
+      '<div class="more"><table>'+tb+'</table>'+(ok?'<a href="'+v.src+'" target="_blank" rel="noopener">이번 회차 공시 원문 보기</a>':'')+'</div></div>';
+  });
+  $('rows').innerHTML=html;
+  $('rowsNote').textContent=st.v===7?'ver.7의 나머지 4종목(성장형 3종목·머니마켓)은 월 분배금이 없습니다.':'ver.6의 ACE 미국10년국채액티브는 자동 수집 준비 중이라 목록에서 빠져 있습니다.';
+  // 다음 일정
+  var rowsC=[];['mid','end'].forEach(function(t){var a=evs(t).filter(function(e){return PORT[st.v][t].indexOf(e.code)>=0&&e.pay>=today});
+    var seen={};a.forEach(function(e){if(seen[e.ym])return void(seen[e.ym].p1=e.pay>seen[e.ym].p1?e.pay:seen[e.ym].p1,seen[e.ym].p0=e.pay<seen[e.ym].p0?e.pay:seen[e.ym].p0);seen[e.ym]={t:t,ym:e.ym,buy:e.buy,rec:e.rec,p0:e.pay,p1:e.pay};rowsC.push(seen[e.ym])})});
+  rowsC.sort(function(a,b){return a.rec<b.rec?-1:1});
+  $('cal').innerHTML=rowsC.slice(0,4).map(function(r){return '<tr class="'+(r.t===st.t&&r.ym===c.ym?'cur':'')+'"><td>'+(+r.ym.slice(5))+'월 '+(r.t==='mid'?'중간':'월말')+'</td><td>'+md(r.buy)+' '+dw(r.buy)+'</td><td>'+md(r.rec)+' '+dw(r.rec)+'</td><td>'+md(r.p0)+(r.p1!==r.p0?'~'+(+r.p1.slice(8)):' '+dw(r.p0))+'</td></tr>'}).join('');
+  // 운용사 공지
+  $('brands').innerHTML=Object.keys(LIST).map(function(br){var hit=V.ev.filter(function(e){return e.cyc===st.t&&V.etf[e.code]&&V.etf[e.code].brand===br&&e.src&&!/yahoo|distribution\.do/.test(e.src)}).pop();
+    return '<a href="'+(hit?hit.src:LIST[br][1])+'" target="_blank" rel="noopener">'+br+'<span>'+LIST[br][0]+'</span></a>'}).join('');
+  $('upd').textContent=V.updated?'공시 자동 수집 '+V.updated+' 기준':'';
+  calc();
+}
+function calc(){
+  var c=cycle(st.t,PORT[st.v][st.t]);
+  [].forEach.call(document.querySelectorAll('.row'),function(r){var code=r.dataset.c,v=view(code,c.ym),k=+st.qty[code]||0;
+    r.querySelector('output').textContent=(k&&v.amt)?won(k*v.amt)+'원':''});
+  var me=total(st.t),other=total(st.t==='mid'?'end':'mid');
+  $('sum').classList.toggle('on',me.n>0);
+  if(me.n){var mo=+me.ym.slice(5);
+    $('sumL').textContent=mo+'월 '+(st.t==='mid'?'중간':'월말')+' 배당 예상 입금액 (세전)';
+    $('sumV').textContent=won(me.sum)+'원';
+    $('sumM').textContent=other.n?(st.t==='mid'?'월말':'중간')+' 배당 '+won(other.sum)+'원 포함 시 한 달 '+won(me.sum+other.sum)+'원':'';}
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.seg button');if(b){st.t=b.dataset.t;render();return}
+  b=e.target.closest('.ver button');if(b){st.v=+b.dataset.v;save();render();return}
+  b=e.target.closest('.mine button');if(b){var r=b.closest('.row');b.setAttribute('aria-expanded',r.classList.toggle('open'));return}
+});
+document.addEventListener('input',function(e){var r=e.target.closest&&e.target.closest('.row');if(!r)return;var n=Math.max(0,Math.floor(+e.target.value||0));if(n)st.qty[r.dataset.c]=n;else delete st.qty[r.dataset.c];save();calc()});
+$('share').addEventListener('click',function(){var me=total(st.t);var txt='MAKESBETTER 월배당 · '+$('sumL').textContent+' '+won(me.sum)+'원';
+  if(navigator.share)navigator.share({title:'월배당 안내',text:txt,url:location.origin+(st.t==='mid'?'/monthly1':'/monthly2')}).catch(function(){})});
+render();
+})();
+</script>
+</body>
+</html>
