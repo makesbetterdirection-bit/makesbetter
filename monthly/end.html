@@ -4,7 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#FFFFFF">
-<meta name="robots" content="noindex">
+<meta name="description" content="Better.7 월배당 입금일과 1좌당 분배금, 내가 받을 금액 계산">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MAKESBETTER 월말배당 입금 안내">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/monthly/og2.png?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://calc.makesbetter.co.kr/monthly2">
+<meta property="og:description" content="Better.7 Ver.7.2 · 입금일과 1좌당 분배금, 내가 받을 금액">
 <title>배당 입금 안내 | MAKESBETTER</title>
 <link rel="icon" href="/studio/icon-32.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -203,7 +210,7 @@ h2{font-size:26px;line-height:1.38;font-weight:700;letter-spacing:-.035em}
 var V=window.__DIV||{etf:{},ev:[]},DOW=['일','월','화','수','목','금','토'];
 var today=new Date(Date.now()+9*36e5).toISOString().slice(0,10);
 var m=/[?&]today=(\d{4}-\d\d-\d\d)/.exec(location.search);if(m)today=m[1];
-var T=(/monthly2/.test(location.pathname)||/[?&]t=2/.test(location.search))?'end':'mid',TN=T==='mid'?'중간배당':'월말배당';
+var T=(/monthly2|end\.html/.test(location.pathname)||/[?&]t=2/.test(location.search))?'end':'mid',TN=T==='mid'?'중간배당':'월말배당';
 var CODES={mid:['498400','480030','441640'],end:['494300','0022T0','332610','473330']}[T];   // Better.7 ver.7
 var NOTICE={KODEX:['삼성자산운용','https://www.samsungfund.com/etf/lounge/notice.do?category=DIVIDEND'],ACE:['한국투자신탁운용','https://www.aceetf.co.kr/cs/notice'],SOL:['신한자산운용','https://www.soletf.com/ko/cs/notice'],PLUS:['한화자산운용','https://www.plusetf.co.kr/customer/notice']};
 var ARROW='<svg viewBox="0 0 20 20"><path d="M7 4l6 6-6 6"/></svg>';
@@ -258,7 +265,37 @@ var nf=CODES.filter(function(c){return !view(c).fixed}).length;$('scope').innerH
 function sum(){var t=0;CODES.forEach(function(c){var v=view(c);if(qty[c]&&v.amt)t+=qty[c]*v.amt});$('tot').textContent=won(t)+'원';$('tot').classList.toggle('zero',!t);$('share').disabled=!t;return t}
 $('calc').addEventListener('input',function(e){var c=e.target.dataset.c,n=Math.max(0,Math.floor(+e.target.value||0));if(n)qty[c]=n;else delete qty[c];try{localStorage.setItem('mb-monthly-qty',JSON.stringify(qty))}catch(x){}sum()});
 sum();
-$('share').addEventListener('click',function(){var t=sum();if(navigator.share)navigator.share({title:title+' 입금 안내',text:'MAKESBETTER '+title+' 예상 입금액(세전) '+won(t)+'원',url:location.origin+(T==='mid'?'/monthly1':'/monthly2')}).catch(function(){})});
+// 결과 이미지 만들어 카카오톡으로 보내기 (실패하면 기기 공유창 → 글자 공유)
+var KAKAO_JS_KEY='0a279b9b4b8b42510bb101f27cbce89c',PAGE='https://mbkr.my/'+(T==='mid'?'monthly1':'monthly2');
+function shareImage(){var c=document.createElement('canvas');c.width=1080;c.height=1350;var x=c.getContext('2d'),F='Pretendard Variable,Pretendard,Apple SD Gothic Neo,sans-serif';
+  function t(txt,X,Y,font,color,al){x.font=font;x.fillStyle=color;x.textAlign=al||'left';x.textBaseline='alphabetic';x.fillText(txt,X,Y)}
+  var main=T==='mid'?'#E35F22':'#16898A';
+  x.fillStyle='#fff';x.fillRect(0,0,1080,1350);x.fillStyle=main;x.fillRect(0,0,1080,250);
+  t('MAKESBETTER',72,120,'800 46px '+F,'#fff');t(title+' 입금 안내',72,182,'400 34px '+F,'#fff');
+  t('Better.7 Ver.7.2 포트폴리오 기준',72,330,'600 28px '+F,'#4E5968');
+  var y=420,tot=0;CODES.forEach(function(code){var e=V.etf[code]||{name:code,brand:''},v=view(code),k=qty[code]||0;if(!k||!v.amt)return;tot+=k*v.amt;
+    t(e.name.replace(e.brand+' ',''),72,y,'600 32px '+F,'#191F28');t(e.brand+' · '+won(k)+'좌 × '+won(v.amt)+'원'+(v.fixed?'':' (공시 전)'),72,y+44,'400 26px '+F,'#8B95A1');
+    t(won(k*v.amt)+'원',1008,y+20,'700 38px '+F,'#191F28','right');x.fillStyle='#E5E8EB';x.fillRect(72,y+78,936,2);y+=140});
+  y=Math.max(y+40,1010);t('예상 입금액 (세전)',72,y,'400 30px '+F,'#4E5968');t(won(tot)+'원',72,y+120,'800 112px '+F,T==='mid'?'#C2410C':'#0B7F82');
+  t('입금 예정 '+payK,72,y+190,'600 30px '+F,'#191F28');
+  t('연금·ISA 등 계좌에 따라 실제 입금액은 달라집니다 · 투자 권유가 아닌 참고 자료',72,1300,'400 22px '+F,'#8B95A1');
+  return new Promise(function(r){c.toBlob(r,'image/png',1)})}
+window.__mbShareImage=shareImage;
+function loadKakao(){return new Promise(function(res,rej){if(window.Kakao&&Kakao.Share){if(!Kakao.isInitialized())Kakao.init(KAKAO_JS_KEY);return res(Kakao)}
+  var sc=document.createElement('script');sc.src='https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js';sc.async=true;
+  sc.onload=function(){try{if(!Kakao.isInitialized())Kakao.init(KAKAO_JS_KEY);res(Kakao)}catch(e){rej(e)}};sc.onerror=function(){sc.remove();rej(new Error('kakao-sdk'))};document.head.appendChild(sc)})}
+function fileList(f){try{var dt=new DataTransfer();dt.items.add(f);return dt.files}catch(e){return [f]}}
+$('share').addEventListener('click',async function(){var btn=this,orig='카카오톡으로 결과 보내기',tot=sum();if(!tot)return;btn.disabled=true;btn.textContent='이미지 준비 중…';
+  var text='MAKESBETTER '+title+' 예상 입금액(세전) '+won(tot)+'원';
+  try{var blob=await shareImage(),file=new File([blob],'MAKESBETTER_'+title.replace(' ','_')+'.png',{type:'image/png'});
+    try{var K=await loadKakao();btn.textContent='카카오톡으로 보내는 중…';var up=await K.Share.uploadImage({file:fileList(file)}),url=up&&up.infos&&up.infos.original&&up.infos.original.url;if(!url)throw new Error('upload');
+      await K.Share.sendDefault({objectType:'feed',content:{title:title+' 예상 입금액 '+won(tot)+'원',description:'입금 예정 '+payK+' · 세전 기준',imageUrl:url,imageWidth:1080,imageHeight:1350,link:{mobileWebUrl:PAGE,webUrl:PAGE}},buttons:[{title:'나도 계산해 보기',link:{mobileWebUrl:PAGE,webUrl:PAGE}}]});
+      btn.textContent='보냈습니다'}
+    catch(k){ if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:title+' 입금 안내',text:text,files:[file]});btn.textContent='보냈습니다'}
+      else if(navigator.share){await navigator.share({title:title+' 입금 안내',text:text,url:PAGE});btn.textContent='보냈습니다'}
+      else{var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=file.name;a.click();btn.textContent='이미지를 저장했습니다'}}
+  }catch(e){btn.textContent=(e&&e.name==='AbortError')?orig:'보내지 못했습니다. 다시 눌러 주세요'}
+  setTimeout(function(){btn.textContent=orig;btn.disabled=!sum()},1800)});
 
 // 5. 다음 회차
 var nx=yms.filter(function(y){return y>ym})[0];
