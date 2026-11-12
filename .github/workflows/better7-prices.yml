@@ -80,12 +80,21 @@ jobs:
           set -o pipefail
           python3 scripts/update_dividends.py | tee -a "$GITHUB_OUTPUT"
 
+      - name: Refresh monthly dividend page thumbnail for the current cycle (monthly/og1.png, og2.png)
+        id: mog
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          set -o pipefail
+          pip install -q pillow
+          python3 scripts/update_monthly_og.py | tee -a "$GITHUB_OUTPUT"
+
       - name: Commit and push if changed
-        if: steps.upd.outputs.changed == 'true' || steps.trk.outputs.changed == 'true' || steps.ind.outputs.changed == 'true' || steps.brd.outputs.changed == 'true' || steps.sig.outputs.signal_changed == 'true' || steps.dvd.outputs.div_changed == 'true'
+        if: steps.upd.outputs.changed == 'true' || steps.trk.outputs.changed == 'true' || steps.ind.outputs.changed == 'true' || steps.brd.outputs.changed == 'true' || steps.sig.outputs.signal_changed == 'true' || steps.dvd.outputs.div_changed == 'true' || steps.mog.outputs.og_changed == 'true'
         run: |
           git config user.name "better7-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add better7_prices.json studio/track.json studio/indicators.js studio/signal.json studio/signal.js studio/board/prices.json studio/dividends.json studio/dividends.js
+          git add better7_prices.json studio/track.json studio/indicators.js studio/signal.json studio/signal.js studio/board/prices.json studio/dividends.json studio/dividends.js monthly/index.html monthly/end.html monthly/og1.png monthly/og2.png
           if [ "${{ steps.upd.outputs.changed }}" = "true" ]; then
             MODE="${{ steps.upd.outputs.mode }}"
             if [ "$MODE" = "intraday" ]; then LABEL="intraday"; else LABEL="closing price"; fi
