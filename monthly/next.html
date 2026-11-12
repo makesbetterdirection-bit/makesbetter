@@ -164,6 +164,7 @@ h2{font-size:26px;line-height:1.38;font-weight:700;letter-spacing:-.035em}
 
   <section><div class="wrap">
     <h2>다음 회차</h2>
+    <p class="desc" id="nextDesc"></p>
     <div class="next" id="next" style="background:var(--gray)"></div>
   </div></section>
 
@@ -242,6 +243,7 @@ $('share').addEventListener('click',function(){var t=sum();if(navigator.share)na
 var nx=yms.filter(function(y){return y>ym})[0];
 if(nx){var ne=mine.filter(function(e){return e.ym===nx}),np=ne.map(function(e){return e.pay}).sort();
   $('next').innerHTML='<div>매수 마감<b>'+kd(ne[0].buy)+' '+dw(ne[0].buy)+'요일</b></div><div>분배 기준일<b>'+kd(ne[0].rec)+' '+dw(ne[0].rec)+'요일</b></div><div>입금<b>'+kd(np[0])+(np[np.length-1]!==np[0]?'~'+(+np[np.length-1].slice(8))+'일':' '+dw(np[0])+'요일')+'</b></div>'}
+if(nx){var nest=mine.filter(function(e){return e.ym===nx}).some(function(e){return e.est&&!e.src});$('nextDesc').textContent=nest?'아직 공시 전인 예상 일정입니다. 운용사 공시가 나오면 확정 일정으로 자동 변경됩니다.':'운용사 공시로 확정된 일정입니다.';if(nest)[].forEach.call(document.querySelectorAll('#next b'),function(b){b.insertAdjacentHTML('beforeend',' <span class="tag wait" style="margin-left:6px;vertical-align:2px">예상</span>')})}
 else $('next').parentNode.parentNode.style.display='none';
 
 // 6. 링크
