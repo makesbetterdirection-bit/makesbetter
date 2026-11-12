@@ -265,7 +265,7 @@ else $('next').parentNode.parentNode.style.display='none';
 
 // 6. 다른 ETF: 반대 회차 + 운용사 공지 목록
 NOTICE.TIGER=['미래에셋자산운용','https://investments.miraeasset.com/tigeretf/ko/customer/notice/list.do'];NOTICE.RISE=['KB자산운용','https://www.riseetf.co.kr/cust/notice'];
-var L='<a href="'+(T==='mid'?'/monthly2':'/monthly1')+'"><span>Better.7 '+(T==='mid'?'월말배당':'중간배당')+' 종목<small>'+(T==='mid'?'매월 말일 기준 4종목':'매월 15일 기준 3종목')+'</small></span>'+ARROW+'</a>';
+var L='';
 L+=['KODEX','ACE','TIGER','RISE','SOL','PLUS'].map(function(br){return '<a href="'+NOTICE[br][1]+'" target="_blank" rel="noopener"><span>'+br+' ETF<small>'+NOTICE[br][0]+' 분배금 공지</small></span>'+ARROW+'</a>'}).join('');
 $('links').innerHTML=L;$('upd').textContent=V.updated?'공시 자동 수집 '+V.updated+' 기준':'';
 
