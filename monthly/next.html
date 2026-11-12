@@ -55,6 +55,9 @@ h2{font-size:26px;line-height:1.38;font-weight:700;letter-spacing:-.035em}
 /* 1. 답 */
 .hero{padding:36px 0 72px}
 .dday{display:inline-block;font-size:15px;font-weight:700;color:var(--orange-ink);background:var(--orange-soft);border-radius:999px;padding:7px 14px}
+.basis{font-size:15px;font-weight:600;color:var(--sub);margin-bottom:18px}.basis b{color:var(--ink);font-weight:800}
+.scope{margin-top:26px!important;padding:18px 20px;border-radius:16px;background:var(--gray);font-size:15.5px!important;line-height:1.6}
+.scope b{color:var(--ink)}
 .hero h1{margin-top:22px;font-size:clamp(36px,10.6vw,46px);line-height:1.24;font-weight:800;letter-spacing:-.045em}
 .hero p{margin-top:18px;font-size:17px;color:var(--sub)}
 
@@ -115,10 +118,15 @@ h2{font-size:26px;line-height:1.38;font-weight:700;letter-spacing:-.035em}
 .next div{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;font-size:16px;color:var(--sub)}
 .next div+div{border-top:1px solid var(--line)}
 .next b{font-size:19px;font-weight:700;color:var(--ink)}
+.cta{padding-bottom:20px}.cta a{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:16px;font-weight:700;text-align:center}
+.cta .b1{margin-top:28px;height:62px;background:var(--teal);color:#fff;font-size:18px}
+.cta .b2{margin-top:12px;padding:16px 12px;border:2px solid var(--teal);color:var(--teal-ink);font-size:18px}
+.cta .b2 small{font-size:13.5px;font-weight:500;color:var(--sub);margin-top:3px}
 .fine{padding:40px 0 28px;font-size:13px;line-height:1.7;color:var(--faint)}
 
 /* 하단 고정 버튼 */
-.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.bar.hide{transform:translateY(110%)}
+.bar{transition:transform .3s;position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
 .bar .wrap{padding-top:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
 .bar a{display:flex;align-items:center;justify-content:center;height:58px;border-radius:14px;background:var(--teal);color:#fff;font-size:18px;font-weight:700}
 @media (prefers-reduced-motion:reduce){.cover,.cover *{transition-duration:.01s!important;animation:none!important}}
@@ -138,9 +146,11 @@ h2{font-size:26px;line-height:1.38;font-weight:700;letter-spacing:-.035em}
 
 <main>
   <section class="hero"><div class="wrap">
+    <p class="basis">Better.7 <b>Ver.7.2</b> 포트폴리오 기준</p>
     <span class="dday" id="dday"></span>
     <h1 id="head"></h1>
     <p id="sub"></p>
+    <p class="scope" id="scope"></p>
   </div></section>
 
   <section class="gray"><div class="wrap">
@@ -149,7 +159,7 @@ h2{font-size:26px;line-height:1.38;font-weight:700;letter-spacing:-.035em}
   </div></section>
 
   <section><div class="wrap">
-    <h2>1좌당 분배금</h2>
+    <h2>Better.7 종목별<br>1좌당 분배금</h2>
     <p class="desc" id="amtDesc"></p>
   </div>
   <div class="wrap"><div class="cards" id="cards"></div></div></section>
@@ -169,13 +179,20 @@ h2{font-size:26px;line-height:1.38;font-weight:700;letter-spacing:-.035em}
   </div></section>
 
   <section class="gray"><div class="wrap">
-    <h2>더 확인하기</h2>
+    <h2>다른 ETF 분배금<br>확인하기</h2>
+    <p class="desc">Better.7 밖의 ETF는 운용사 공지에서 확인할 수 있습니다.</p>
     <div class="list" id="links"></div>
+    </div></section>
+
+  <section class="cta" id="cta"><div class="wrap">
+    <h2>내 계좌에 맞는 방법이<br>궁금하다면</h2>
+    <a class="b1" href="https://mbkr.my/etf" target="_blank" rel="noopener">월배당 상담 신청하기</a>
+    <a class="b2" href="https://report.makesbetter.co.kr/check" target="_blank" rel="noopener">내 포트폴리오 무료 점검 받기<small>배당 화면 캡처만 보내면 담당 디렉터가 1:1로 분석해 드려요</small></a>
     <p class="fine">분배금과 일정은 운용사 공시를 자동으로 모아 보여 드립니다. 공시 전 일정은 영업일 기준 예상일입니다. 이 화면은 정보 제공용이며 투자 권유가 아닙니다. 투자 판단과 결과의 책임은 투자자 본인에게 있습니다.<br><span id="upd"></span></p>
   </div></section>
 </main>
 
-<div class="bar"><div class="wrap"><a href="https://mbkr.my/etf" target="_blank" rel="noopener">월배당 상담 신청하기</a></div></div>
+<div class="bar" id="bar"><div class="wrap"><a href="https://mbkr.my/etf" target="_blank" rel="noopener">월배당 상담 신청하기</a></div></div>
 
 <script src="/studio/dividends.js"></script>
 <script>
@@ -233,7 +250,7 @@ CODES.forEach(function(code){var e=V.etf[code]||{name:code,brand:''},v=view(code
     '<div class="c-m"><span>'+(pv||'')+'</span><span class="tag'+(v.fixed?'':' wait')+'">'+(v.fixed?'공시 확정':'공시 전 · '+(+v.from.slice(5))+'월 금액')+'</span></div></div>';
   calc+='<div class="q"><label for="q'+code+'">'+nm+'<small>'+e.brand+' · 1좌 '+(v.amt!=null?won(v.amt):'–')+'원</small></label><div class="in"><input id="q'+code+'" data-c="'+code+'" type="number" inputmode="numeric" min="0" placeholder="0" value="'+(qty[code]||'')+'"></div></div>';
 });
-var nf=CODES.filter(function(c){return !view(c).fixed}).length;$('amtDesc').textContent=!nf?'운용사가 공시한 확정 금액입니다. 세전 기준.':nf===CODES.length?'아직 공시 전이라 지난달 금액을 보여 드립니다. 공시가 나오면 자동으로 바뀝니다.':'공시 전 종목은 지난달 금액을 보여 드립니다. 세전 기준.';$('cards').innerHTML=cards;$('calc').innerHTML=calc;$('totL').textContent=title+' 예상 입금액';
+var nf=CODES.filter(function(c){return !view(c).fixed}).length;$('scope').innerHTML='메이크스베러 <b>Better.7 Ver.7.2</b>에 담긴 11개 ETF 중 <b>'+TN+' '+CODES.length+'종목</b>만 안내합니다. '+(T==='mid'?'월말배당 4종목':'중간배당 3종목')+'은 따로 안내해 드립니다.';$('amtDesc').textContent=!nf?'운용사가 공시한 확정 금액입니다. 세전 기준.':nf===CODES.length?'아직 공시 전이라 지난달 금액을 보여 드립니다. 공시가 나오면 자동으로 바뀝니다.':'공시 전 종목은 지난달 금액을 보여 드립니다. 세전 기준.';$('cards').innerHTML=cards;$('calc').innerHTML=calc;$('totL').textContent=title+' 예상 입금액';
 function sum(){var t=0;CODES.forEach(function(c){var v=view(c);if(qty[c]&&v.amt)t+=qty[c]*v.amt});$('tot').textContent=won(t)+'원';$('tot').classList.toggle('zero',!t);$('share').disabled=!t;return t}
 $('calc').addEventListener('input',function(e){var c=e.target.dataset.c,n=Math.max(0,Math.floor(+e.target.value||0));if(n)qty[c]=n;else delete qty[c];try{localStorage.setItem('mb-monthly-qty',JSON.stringify(qty))}catch(x){}sum()});
 sum();
@@ -246,14 +263,13 @@ if(nx){var ne=mine.filter(function(e){return e.ym===nx}),np=ne.map(function(e){r
 if(nx){var nest=mine.filter(function(e){return e.ym===nx}).some(function(e){return e.est&&!e.src});$('nextDesc').textContent=nest?'아직 공시 전인 예상 일정입니다. 운용사 공시가 나오면 확정 일정으로 자동 변경됩니다.':'운용사 공시로 확정된 일정입니다.';if(nest)[].forEach.call(document.querySelectorAll('#next b'),function(b){b.insertAdjacentHTML('beforeend',' <span class="tag wait" style="margin-left:6px;vertical-align:2px">예상</span>')})}
 else $('next').parentNode.parentNode.style.display='none';
 
-// 6. 링크
-var brands=CODES.map(function(c){return (V.etf[c]||{}).brand}).filter(function(v,i,a){return v&&a.indexOf(v)===i});
-var L=brands.map(function(br){var hit=V.ev.filter(function(e){return e.cyc===T&&V.etf[e.code]&&V.etf[e.code].brand===br&&e.src&&!/yahoo|distribution\.do/.test(e.src)}).pop();
-  return '<a href="'+(hit?hit.src:NOTICE[br][1])+'" target="_blank" rel="noopener"><span>'+br+' 공시 원문<small>'+NOTICE[br][0]+'</small></span>'+ARROW+'</a>'}).join('');
-L+='<a href="https://pf.kakao.com/_eETXxj/115114851" target="_blank" rel="noopener"><span>지난달 분배금 안내<small>카카오톡 채널 글</small></span>'+ARROW+'</a>';
-L+='<a href="'+(T==='mid'?'/monthly2':'/monthly1')+'"><span>'+(T==='mid'?'월말배당':'중간배당')+' 안내 보기<small>'+(T==='mid'?'매월 말일 기준 종목':'매월 15일 기준 종목')+'</small></span>'+ARROW+'</a>';
+// 6. 다른 ETF: 반대 회차 + 운용사 공지 목록
+NOTICE.TIGER=['미래에셋자산운용','https://investments.miraeasset.com/tigeretf/ko/customer/notice/list.do'];NOTICE.RISE=['KB자산운용','https://www.riseetf.co.kr/cust/notice'];
+var L='<a href="'+(T==='mid'?'/monthly2':'/monthly1')+'"><span>Better.7 '+(T==='mid'?'월말배당':'중간배당')+' 종목<small>'+(T==='mid'?'매월 말일 기준 4종목':'매월 15일 기준 3종목')+'</small></span>'+ARROW+'</a>';
+L+=['KODEX','ACE','TIGER','RISE','SOL','PLUS'].map(function(br){return '<a href="'+NOTICE[br][1]+'" target="_blank" rel="noopener"><span>'+br+' ETF<small>'+NOTICE[br][0]+' 분배금 공지</small></span>'+ARROW+'</a>'}).join('');
 $('links').innerHTML=L;$('upd').textContent=V.updated?'공시 자동 수집 '+V.updated+' 기준':'';
 
+if('IntersectionObserver' in window)new IntersectionObserver(function(x){$('bar').classList.toggle('hide',x[0].isIntersecting)},{threshold:.15}).observe($('cta'));
 // 시작 화면
 var cover=$('cover');
 if(/[?&]nocover=1/.test(location.search)){cover.remove();document.body.classList.remove('lock')}
