@@ -80,13 +80,12 @@ jobs:
           set -o pipefail
           python3 scripts/update_dividends.py | tee -a "$GITHUB_OUTPUT"
 
-      - name: Refresh monthly dividend page thumbnail for the current cycle (monthly/og1.png, og2.png)
+      - name: Refresh monthly dividend page card title for the current cycle
         id: mog
         continue-on-error: true
         timeout-minutes: 3
         run: |
           set -o pipefail
-          pip install -q pillow
           python3 scripts/update_monthly_og.py | tee -a "$GITHUB_OUTPUT"
 
       - name: Commit and push if changed
@@ -94,7 +93,7 @@ jobs:
         run: |
           git config user.name "better7-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add better7_prices.json studio/track.json studio/indicators.js studio/signal.json studio/signal.js studio/board/prices.json studio/dividends.json studio/dividends.js monthly/index.html monthly/end.html monthly/og1.png monthly/og2.png
+          git add better7_prices.json studio/track.json studio/indicators.js studio/signal.json studio/signal.js studio/board/prices.json studio/dividends.json studio/dividends.js monthly/index.html monthly/end.html
           if [ "${{ steps.upd.outputs.changed }}" = "true" ]; then
             MODE="${{ steps.upd.outputs.mode }}"
             if [ "$MODE" = "intraday" ]; then LABEL="intraday"; else LABEL="closing price"; fi
