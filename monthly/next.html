@@ -27,6 +27,9 @@ body.lock{overflow:hidden;height:100dvh}
 /* 시작 화면 (초대장과 같은 형식) */
 .cover{position:fixed;inset:0;z-index:60;background:linear-gradient(170deg,#EF7336 0%,#E35F22 60%,#D4561E 100%);color:#fff;padding:0 var(--g);transition:transform .95s cubic-bezier(.76,0,.24,1);cursor:pointer}
 .cover:before{content:"";position:absolute;inset:0;opacity:.12;background-image:radial-gradient(rgba(255,255,255,.9) .7px,transparent .8px);background-size:7px 7px;mix-blend-mode:overlay;pointer-events:none}
+body.end .cover{background:linear-gradient(170deg,#1FA3A0 0%,#16898A 55%,#0F6F74 100%)}
+body.end .chip,body.end .dday{background:var(--teal-soft);color:var(--teal-ink)}
+body.end .now .dot{border-color:var(--teal);box-shadow:0 0 0 6px var(--teal-soft)}
 .cover.off{transform:translateY(-102%);pointer-events:none}
 .cv-mid{position:absolute;left:var(--g);right:var(--g);top:50%;transform:translateY(-50%)}
 .cv-wrap{display:block;overflow:hidden;padding-bottom:.1em}
@@ -220,6 +223,7 @@ function view(code){var h=hist(code),cur=h.filter(function(e){return e.ym===ym})
   if(cur)return {amt:cur.amt,rate:cur.rate,fixed:true,prev:prev};var last=prev[prev.length-1];
   return {amt:last?last.amt:null,rate:last?last.rate:null,fixed:false,prev:prev,from:last&&last.ym}}
 
+if(T==='end'){document.body.classList.add('end');var tc=document.querySelector('meta[name=theme-color]');}
 var mo=+ym.slice(5),title=mo+'월 '+TN;
 $('cvLow').textContent=title+' 입금 안내';$('chip').textContent=title;document.title=title+' 입금 안내 | MAKESBETTER';
 if(!ev.length){$('head').textContent='일정을 불러오지 못했습니다';return}
