@@ -72,18 +72,28 @@ jobs:
           set -o pipefail
           python3 scripts/board_prices.py | tee -a "$GITHUB_OUTPUT"
 
+      - name: Update dividend schedule from issuer notices (studio/dividends.json, studio/dividends.js)
+        id: dvd
+        continue-on-error: true
+        timeout-minutes: 5
+        run: |
+          set -o pipefail
+          python3 scripts/update_dividends.py | tee -a "$GITHUB_OUTPUT"
+
       - name: Commit and push if changed
-        if: steps.upd.outputs.changed == 'true' || steps.trk.outputs.changed == 'true' || steps.ind.outputs.changed == 'true' || steps.brd.outputs.changed == 'true' || steps.sig.outputs.signal_changed == 'true'
+        if: steps.upd.outputs.changed == 'true' || steps.trk.outputs.changed == 'true' || steps.ind.outputs.changed == 'true' || steps.brd.outputs.changed == 'true' || steps.sig.outputs.signal_changed == 'true' || steps.dvd.outputs.div_changed == 'true'
         run: |
           git config user.name "better7-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add better7_prices.json studio/track.json studio/indicators.js studio/signal.json studio/signal.js studio/board/prices.json
+          git add better7_prices.json studio/track.json studio/indicators.js studio/signal.json studio/signal.js studio/board/prices.json studio/dividends.json studio/dividends.js
           if [ "${{ steps.upd.outputs.changed }}" = "true" ]; then
             MODE="${{ steps.upd.outputs.mode }}"
             if [ "$MODE" = "intraday" ]; then LABEL="intraday"; else LABEL="closing price"; fi
             PENDING="${{ steps.upd.outputs.pending }}"
             MSG="Update Better.7 ETF prices — ${{ steps.upd.outputs.date }} ${LABEL}"
             if [ "$PENDING" != "none" ]; then MSG="$MSG (pending: $PENDING)"; fi
+          elif [ "${{ steps.dvd.outputs.div_changed }}" = "true" ]; then
+            MSG="Update dividend schedule (issuer notices)"
           elif [ "${{ steps.trk.outputs.changed }}" = "true" ]; then
             MSG="Update studio track record"
           else

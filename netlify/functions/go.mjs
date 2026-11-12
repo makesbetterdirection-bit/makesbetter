@@ -130,20 +130,6 @@ export default async (req) => {
   const body = req.method === "POST" ? await req.json().catch(() => ({})) : {};
 
   try {
-    // 임시 보관함: 외부 페이지의 코드 사본을 받아 두고(쓰기는 키 없이, 3칸·각 400KB), 읽기는 관리자 키
-    if (op === "drop") {
-      const slot = String(url.searchParams.get("s") || "a").replace(/[^a-z0-9]/gi, "").slice(0, 8) || "a";
-      if (!["a", "b", "c"].includes(slot)) return json({ ok: false }, 400);
-      if (req.method === "POST") {
-        const text = String(body.text || "").slice(0, 400000);
-        await store().set("drop/" + slot, JSON.stringify({ at: Date.now(), from: String(body.from || "").slice(0, 200), text }));
-        return json({ ok: true, len: text.length });
-      }
-      if (sha(url.searchParams.get("key") || "") !== ADMIN_HASH) return json({ ok: false }, 401);
-      const v = await store().get("drop/" + slot);
-      return json(v ? { ok: true, ...JSON.parse(v) } : { ok: false });
-    }
-
     // 초대한 사람 이름 (받는 사람 화면 상단)
     if (op === "who") {
       const { data } = await load();
