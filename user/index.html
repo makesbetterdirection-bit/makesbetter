@@ -99,7 +99,7 @@ footer{padding-block:24px 72px;font-size:13px;color:var(--sub);border-top:1px so
 </main>
 
 <script>
-// 디렉터별 개인 링크: /guide/?d=oh 처럼 열면 그 디렉터의 주소(mbkr.my/oh)로 바뀜. 기본은 lee.
+// 디렉터별 개인 링크: /user/?d=oh 처럼 열면 그 디렉터의 주소(mbkr.my/oh)로 바뀜. 기본은 lee.
 var DK=["lee","oh","byun","hong","kang","kimdh","kimsy"],dk="lee";
 try{var q=(new URLSearchParams(location.search).get("d")||"").trim();if(DK.indexOf(q)>-1)dk=q}catch(e){}
 const L={
