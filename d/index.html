@@ -12,6 +12,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="/go/go.css">
 <style>
+/* 보내는 사람(기계약자) 화면 */
+.sd{position:fixed;inset:0;z-index:40;overflow-y:auto;background:radial-gradient(120% 70% at 50% 0,#2A241A 0,#15171C 60%,#0D0908 100%);color:#fff}
+.sd-in{max-width:460px;margin:0 auto;padding:0 26px calc(40px + env(safe-area-inset-bottom));text-align:center}
+.sd-top{display:flex;justify-content:space-between;align-items:center;padding:20px 0;font-size:13px}
+.sd-top b{letter-spacing:.24em;font-weight:800}.sd-top span{color:#C9B07A}
+.sd-card{display:block;width:150px;margin:18px auto 0;filter:drop-shadow(0 18px 26px rgba(0,0,0,.5))}
+.sd-k{margin-top:26px;font-size:13px;font-weight:700;color:#E9CF8E}
+.sd h1{margin-top:10px;font-size:min(27px,7vw);line-height:1.38;letter-spacing:-.04em;font-weight:800}
+.sd-p{margin-top:14px;font-size:15.5px;line-height:1.65;color:#CFC8BA}.sd-p b{color:#fff}
+.sd-g{list-style:none;margin:24px 0 0;padding:0;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(233,207,142,.28);text-align:left}
+.sd-g li{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.1)}.sd-g li:last-child{border:0}
+.sd-g b{display:block;font-size:16px;letter-spacing:-.02em}.sd-g span{display:block;margin-top:3px;font-size:13px;color:#CFC8BA}.sd-g s{color:#9A958A}
+.sd-f{margin-top:22px;padding:20px 18px;border-radius:18px;background:#fff;color:#15171C;text-align:left}
+.sd-f label{display:block;font-size:14px;font-weight:600;color:#5F5F5F;margin-bottom:6px}
+.sd-f input{width:100%;box-sizing:border-box;font:inherit;font-size:17px;border:1.5px solid #E2E2E2;border-radius:14px;padding:15px 14px;background:#fff;color:#0A0A0A;outline:none}
+.sd-f input:focus{border-color:#0A0A0A}
+.sd-f .btn{margin-top:12px;background:#FEE500;color:#15171C}
+.sd-m{margin:10px 0 0;min-height:20px;font-size:14px;color:#B23A0C;word-break:break-all}
+.sd-v{display:block;margin-top:6px;text-align:center;font-size:14px;color:#5F5F5F;text-decoration:underline;text-underline-offset:3px}
+.sd-n{margin-top:18px;font-size:13px;color:#8E8A80}
 /* 경력·좌우명 줄바꿈 */
 .dx-c li{white-space:nowrap;line-height:1.5}
 .dx-c li.dx-m{font-size:clamp(12.5px,3.7vw,14.5px);letter-spacing:-.03em}
@@ -110,6 +130,27 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     <div class="env-t"><small>To.</small><b>소중한 당신에게</b><small class="fr">From. <span data-by="from">MAKESBETTER</span></small></div>
     <div class="env-tm" id="envTm"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" class="tr"/><circle cx="20" cy="20" r="17" class="pg" id="envRing"/></svg><div><small>이 초대장은 24시간 동안만 열려 있어요</small><b><span class="tmv">24:00:00</span> 남음</b></div></div>
     <button class="btn" id="openEnv" type="button">초대장 열기</button>
+  </div>
+</div>
+<div class="sd hide" id="sd">
+  <div class="sd-in">
+    <div class="sd-top"><b>MAKESBETTER</b><span>초대장 보내기</span></div>
+    <img class="sd-card" src="/go/img/inv-card.webp" alt="">
+    <p class="sd-k">소중한 분께만 드리는 부탁</p>
+    <h1>떠오르는 그 사람에게<br>초대장을 전해 주세요</h1>
+    <p class="sd-p"><b data-d="name">이종호</b> 디렉터를 먼저 만나 본<br>당신의 이름으로 초대장이 전달돼요.</p>
+    <ul class="sd-g">
+      <li><b>디렉터 1:1 머니 코칭 2시간</b><span><s>25만원</s> 면제</span></li>
+      <li><b>선물 3가지</b><span>금융 I.Q 테스트 · 전자책 2권 · 현금흐름 진단</span></li>
+    </ul>
+    <div class="sd-f">
+      <label for="sdName">보내는 사람</label>
+      <input id="sdName" type="text" maxlength="10" placeholder="내 이름" autocomplete="name">
+      <button type="button" class="btn" id="sdBtn">카카오톡으로 초대장 보내기</button>
+      <p class="sd-m" id="sdMsg" aria-live="polite"></p>
+      <a class="sd-v" id="sdView" href="/d/lee" target="_blank" rel="noopener">받는 분이 보게 될 초대장 미리 보기</a>
+    </div>
+    <p class="sd-n">초대장을 받은 분이 코칭을 신청하면, 추천인에 당신의 이름이 적혀요.</p>
   </div>
 </div>
 <div class="exp hide" id="exp" role="dialog" aria-label="초대장 마감">
@@ -276,7 +317,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     kimsy:{name:'김상윤',role:'디렉터',quote:'“제가 과한 욕심을 내려고 할 때는 오히려 브레이크를 걸어 주셨어요.”',who:'함께한 고객',rv:'173300869'},
     kimdh:{name:'김다희',role:'디렉터',quote:'현금흐름 진단부터 포트폴리오까지, 1:1로 함께해요.',who:'후기 게시판',rv:''}
   };
-  var m=/\/d\/([a-z]+)/.exec(location.pathname),q=/[?&]d=([a-z]+)/.exec(location.search),k=(m&&D[m[1]]?m[1]:q&&D[q[1]]?q[1]:'lee'),d=D[k];
+  var m=/\/(?:d|s)\/([a-z]+)/.exec(location.pathname),q=/[?&]d=([a-z]+)/.exec(location.search),k=(m&&D[m[1]]?m[1]:q&&D[q[1]]?q[1]:'lee'),d=D[k];
   function all(s,f){[].forEach.call(document.querySelectorAll(s),f)}
   all('[data-d=name]',function(e){e.textContent=d.name});all('[data-d=role]',function(e){e.textContent=d.role});
   all('[data-d=mono]',function(e){e.textContent=d.name.charAt(0)});all('[data-d=quote]',function(e){e.textContent=d.quote});
@@ -317,6 +358,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     all('[data-by=why]',function(e){e.textContent=by+' 님이 먼저 만나 본 디렉터를, 당신에게도 소개하고 싶어서 보낸 초대장이에요.'})}
   /* 24시간 마감: 처음 연 순간부터. 채널을 추가해 선물을 열면 멈춤 */
   (function(){
+    if(/^\/s\//.test(location.pathname)||/[?&]send=1/.test(location.search))return; // 보내는 사람 화면에는 마감 없음
     var DUR=864e5,T0=null,KEY='mb-d-t-'+k,qs=new URLSearchParams(location.search),expired=false;
     if(qs.get('reset')){try{localStorage.removeItem(KEY);localStorage.removeItem('mb-d-ch')}catch(e){}}
     try{T0=+localStorage.getItem(KEY)||null}catch(e){}
@@ -338,6 +380,27 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
       var ring=document.getElementById('envRing');if(ring)ring.style.strokeDashoffset=(106.8*(1-L/DUR)).toFixed(2);
       setTimeout(tick,1000-(Date.now()%1000))}
     tick();
+  })();
+  // 보내는 사람(기계약자) 화면: /s/<디렉터> 또는 ?send=1 — 이름을 넣어 /d/<디렉터>?by=이름 을 공유
+  var SEND=/^\/s\//.test(location.pathname)||/[?&]send=1/.test(location.search);
+  if(SEND)(function(){
+    var sd=document.getElementById('sd'),inp=document.getElementById('sdName'),msg=document.getElementById('sdMsg');
+    sd.classList.remove('hide');try{document.getElementById('env').classList.add('gone')}catch(e){}
+    document.title=d.name+' 디렉터 초대장 보내기 | MAKESBETTER';
+    document.getElementById('sdView').href='/d/'+k;
+    try{var me=localStorage.getItem('mb_me');if(me)inp.value=me.slice(0,10)}catch(e){}
+    hit('d-'+k+'-send-open');
+    document.getElementById('sdBtn').addEventListener('click',function(){
+      var n=inp.value.replace(/\s+/g,'').slice(0,10);
+      if(n.length<2){msg.textContent='이름을 적어 주세요.';inp.focus();return}
+      try{localStorage.setItem('mb_me',n)}catch(e){}
+      var url=location.origin+'/d/'+k+'?by='+encodeURIComponent(n);
+      var text=n+' 님이 보낸 초대장이에요.';
+      document.getElementById('sdView').href='/d/'+k+'?by='+encodeURIComponent(n);
+      hit('d-'+k+'-send');msg.textContent='';
+      if(navigator.share){navigator.share({title:n+' 님이 보낸 초대장',text:text,url:url}).then(function(){msg.style.color='#1E7A3C';msg.textContent='보냈어요. 한 분 더 보내려면 다시 눌러 주세요.'}).catch(function(){});return}
+      try{navigator.clipboard.writeText(text+'\n'+url).then(function(){msg.textContent='초대장 링크를 복사했어요. 카카오톡에 붙여 넣어 보내 주세요.'},function(){msg.textContent=url})}catch(e){msg.textContent=url}
+    });
   })();
   var env=document.getElementById('env');
   document.getElementById('openEnv').addEventListener('click',function(){hit('d-'+k+'-open');env.classList.add('open');setTimeout(function(){env.classList.add('gone');document.body.classList.remove('noscroll')},1100)});
