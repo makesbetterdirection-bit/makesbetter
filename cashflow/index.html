@@ -7,15 +7,11 @@
 <meta name="description" content="소득·고정지출·변동지출·저축, 네 칸으로 보는 내 돈의 흐름">
 <meta property="og:type" content="website">
 <meta property="og:title" content="MONEY 4 SQUARE 현금흐름 진단">
-<meta property="og:description" content="소득을 자산화하는 첫걸음, 현재 현금흐름부터 확인해요">
-<meta name="theme-color" content="#F5F3EE">
+<meta property="og:description" content="내 돈의 흐름, 네 칸으로 확인합니다 · 3분">
+<meta name="theme-color" content="#F2F2F2">
 <link rel="icon" href="/studio/icon-32.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:#F5F3EE;min-height:100vh}
-.cf-top{max-width:640px;margin:0 auto;padding:22px 20px 14px;font:800 13px/1 -apple-system,"Malgun Gothic",sans-serif;letter-spacing:.24em;color:#15171C}
-.cf-wrap{padding:0 14px 60px}
-@media (min-width:700px){.cf-top{padding-top:44px}.cf-wrap{padding-bottom:90px}}
 #mb-cashflow-root, #mb-cashflow-root * { box-sizing: border-box; }
   #mb-cashflow-root {
     font-family: "Malgun Gothic","맑은 고딕",-apple-system,sans-serif;
@@ -34,17 +30,17 @@ body{margin:0;background:#F5F3EE;min-height:100vh}
     padding: 32px 30px;
   }
   .mbc-header { border-bottom: 1px solid #eee; padding-bottom: 18px; margin-bottom: 22px; }
-  .mbc-logo { font-weight: 800; font-size: 21px; color: #1B6B63; letter-spacing: -0.3px; margin-bottom: 6px; }
-  .mbc-flow-tag { font-size: 12.5px; font-weight: 700; color: #5c8f89; letter-spacing: 0.5px; text-transform: uppercase; }
+  .mbc-logo { font-weight: 800; font-size: 21px; color: #0A0A0A; letter-spacing: -0.3px; margin-bottom: 6px; }
+  .mbc-flow-tag { font-size: 12.5px; font-weight: 700; color: #5E5E5E; letter-spacing: 0.5px; text-transform: uppercase; }
   .mbc-flow-tag small { font-weight: 500; color: #999; letter-spacing: 0; text-transform: none; margin-left: 3px; font-size: 12px; }
   .mbc-title { font-weight: 800; font-size: 20px; margin-bottom: 6px; letter-spacing: -0.3px; }
   .mbc-sub { font-size: 13px; color: #888; margin-bottom: 22px; line-height: 1.6; }
 
   .mbc-progress { display:flex; gap:6px; margin-bottom: 24px; }
   .mbc-progress i { flex:1; height:4px; border-radius:2px; background:#eee; display:block; }
-  .mbc-progress i.on { background:#1B6B63; }
+  .mbc-progress i.on { background:#0A0A0A; }
 
-  .mbc-step-label { font-size: 12px; font-weight:700; color:#1B6B63; letter-spacing:0.5px; margin-bottom:6px; text-transform:uppercase; }
+  .mbc-step-label { font-size: 12px; font-weight:700; color:#0A0A0A; letter-spacing:0.5px; margin-bottom:6px; text-transform:uppercase; }
   .mbc-step-title { font-size: 18px; font-weight: 800; margin-bottom: 22px; line-height:1.4; }
 
   .mbc-field { margin-bottom: 16px; }
@@ -54,7 +50,7 @@ body{margin:0;background:#F5F3EE;min-height:100vh}
     width:100%; padding:12px 14px; border:1px solid #ddd; border-radius:10px; font-size:15px;
     font-family: inherit; background:#fff;
   }
-  .mbc-field input:focus, .mbc-field select:focus { outline:none; border-color:#1B6B63; }
+  .mbc-field input:focus, .mbc-field select:focus { outline:none; border-color:#0A0A0A; }
   .mbc-field-unit { position:relative; }
   .mbc-field-unit input { padding-right: 46px; text-align:right; }
   .mbc-field-unit span { position:absolute; right:14px; top:50%; transform:translateY(-50%); font-size:13px; color:#999; }
@@ -68,8 +64,8 @@ body{margin:0;background:#F5F3EE;min-height:100vh}
     border:1px solid #ddd; border-radius:10px; padding:12px 10px; text-align:center;
     font-size:13.5px; cursor:pointer; flex:1 1 calc(50% - 8px); min-width: 120px;
   }
-  .mbc-choice:hover { border-color:#1B6B63; }
-  .mbc-choice.selected { background:#1B6B63; color:#fff; border-color:#1B6B63; }
+  .mbc-choice:hover { border-color:#0A0A0A; }
+  .mbc-choice.selected { background:#0A0A0A; color:#fff; border-color:#0A0A0A; }
 
   .mbc-self-grid { display:flex; gap:6px; }
   .mbc-self {
@@ -78,26 +74,26 @@ body{margin:0;background:#F5F3EE;min-height:100vh}
   }
   .mbc-self b { display:block; font-size:16px; }
   .mbc-self span { display:block; font-size:11px; color:#999; margin-top:2px; white-space:nowrap; }
-  .mbc-self:hover { border-color:#1B6B63; }
-  .mbc-self.selected { background:#1B6B63; color:#fff; border-color:#1B6B63; }
-  .mbc-self.selected span { color:#dcefec; }
+  .mbc-self:hover { border-color:#0A0A0A; }
+  .mbc-self.selected { background:#0A0A0A; color:#fff; border-color:#0A0A0A; }
+  .mbc-self.selected span { color:#E8E8E8; }
 
   .mbc-btn-row { display:flex; gap:10px; margin-top:26px; }
   .mbc-btn {
-    flex:1; display:inline-block; background:#1B6B63; color:#fff; border:none;
+    flex:1; display:inline-block; background:#0A0A0A; color:#fff; border:none;
     padding:14px 20px; border-radius:10px; font-size:14.5px; font-weight:700;
     cursor:pointer; text-align:center;
   }
   .mbc-btn:disabled { background:#ccc; cursor:not-allowed; }
-  .mbc-btn.ghost { background:none; color:#1B6B63; border:1px solid #1B6B63; flex: 0 0 96px; }
+  .mbc-btn.ghost { background:none; color:#0A0A0A; border:1px solid #0A0A0A; flex: 0 0 96px; }
 
   .mbc-result-grid { display:flex; flex-wrap:wrap; gap:10px; margin-bottom: 20px; }
   .mbc-result-card {
-    flex:1 1 calc(50% - 10px); min-width: 130px; background:#F7FAF9; border:1px solid #E0EEEC;
+    flex:1 1 calc(50% - 10px); min-width: 130px; background:#F6F6F6; border:1px solid #E2E2E2;
     border-radius:12px; padding:16px 14px;
   }
-  .mbc-result-card .lbl { font-size:11.5px; color:#5c8f89; font-weight:700; margin-bottom:6px; }
-  .mbc-result-card .val { font-size:22px; font-weight:800; color:#1B6B63; letter-spacing:-0.5px; }
+  .mbc-result-card .lbl { font-size:11.5px; color:#5E5E5E; font-weight:700; margin-bottom:6px; }
+  .mbc-result-card .val { font-size:22px; font-weight:800; color:#0A0A0A; letter-spacing:-0.5px; }
   .mbc-result-card .val.warn { color:#c0392b; }
   .mbc-result-note { font-size:12.5px; color:#777; line-height:1.7; background:#fafafa; border-radius:10px; padding:14px 16px; margin-bottom:6px; }
 
@@ -105,10 +101,10 @@ body{margin:0;background:#F5F3EE;min-height:100vh}
   .mbc-done .mbc-check { font-size: 40px; margin-bottom: 10px; }
 
   .mbc-roadmap { margin: 28px 0 18px; text-align:left; }
-  .mbc-roadmap-title { font-size: 16px; font-weight:800; color:#1B6B63; letter-spacing:0.3px; margin-bottom:16px; }
+  .mbc-roadmap-title { font-size: 16px; font-weight:800; color:#0A0A0A; letter-spacing:0.3px; margin-bottom:16px; }
   .mbc-rm-step { display:flex; gap:12px; align-items:flex-start; margin-bottom:16px; }
   .mbc-rm-dot {
-    flex:0 0 26px; width:26px; height:26px; border-radius:50%; background:#1B6B63; color:#fff;
+    flex:0 0 26px; width:26px; height:26px; border-radius:50%; background:#0A0A0A; color:#fff;
     font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center;
   }
   .mbc-rm-step.todo .mbc-rm-dot { background:#eee; color:#999; }
@@ -124,10 +120,77 @@ body{margin:0;background:#F5F3EE;min-height:100vh}
     .mbc-self b { font-size: 14px; }
     .mbc-self span { font-size: 9.5px; }
   }
+/* ===== 새 입력 화면 (Studio 문법: 회색 종이 + 검정 잉크, 주황은 선택 표시에만) ===== */
+:root{--paper:#F2F2F2;--card:#fff;--ink:#0A0A0A;--sub:#5E5E5E;--faint:#8A8A8A;--rule:#E2E2E2;--accent:#FF5A1F;--accent-ink:#B83A0B;--accent-soft:#FFEDE5;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .075 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+html{-webkit-text-size-adjust:100%;background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;word-break:keep-all}
+body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--grain);background-size:180px 180px;pointer-events:none;z-index:0;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+.cf-top{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:22px 20px 0;font-weight:700;font-size:16px;letter-spacing:-.01em}
+.cf-wrap{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:0 20px 140px}
+#mb-cashflow-root{font-family:inherit!important;max-width:none!important;overflow:visible!important}
+#mb-cashflow-root .mbc-card{margin-top:22px;border:0;box-shadow:none;border-radius:20px}
+#mb-cashflow-root .mbc-btn{border-radius:14px}
+.cf-hero-s{padding-top:min(15svh,130px)}
+.cf-lines{margin:0;font-weight:400;font-size:clamp(52px,13.6vw,84px);line-height:.94;letter-spacing:-.045em;text-shadow:0 1px 0 #fff,0 -1px 1px rgba(0,0,0,.28),2px 4px 6px rgba(0,0,0,.14)}
+.cf-lines span{display:block;overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em}
+.cf-lines span:first-child{font-weight:700;letter-spacing:-.035em}
+.cf-lines i{display:block;font-style:normal}
+.cf-lines .lt{font-weight:300;color:#6E6E6E}
+@media (prefers-reduced-motion:no-preference){.cf-lines i{transform:translateY(105%);transition:transform 1s cubic-bezier(.2,.7,.2,1)}.cf-lines.in i{transform:none}.cf-lines span:nth-child(2) i{transition-delay:.07s}.cf-lines span:nth-child(3) i{transition-delay:.14s}}
+.cf-tag{margin:24px 0 0;display:flex;align-items:center;gap:12px;font-size:16px}
+.cf-tag::before{content:"";width:28px;height:1px;background:#000;flex:none}
+.cf-facts{list-style:none;margin:44px 0 0;padding:0;border-top:1px solid var(--ink)}
+.cf-facts li{padding:15px 0;border-bottom:1px solid var(--rule);font-size:16px;color:var(--sub)}
+.cf-facts b{color:var(--ink);font-weight:700}
+.cq-top{display:flex;align-items:center;gap:12px;padding:14px 0 0;margin-left:-8px}
+.cq-back{width:44px;height:44px;border:0;background:none;color:var(--ink);cursor:pointer;display:grid;place-items:center;border-radius:12px}
+.cq-bar{flex:1;height:4px;border-radius:4px;background:#DCDCDC;overflow:hidden}
+.cq-bar i{display:block;height:100%;background:var(--ink);border-radius:4px;transition:width .4s}
+.cq-n{font-size:13px;font-weight:600;color:var(--sub);min-width:38px;text-align:right}
+.cq-body{padding-top:30px}
+@media (prefers-reduced-motion:no-preference){.cq-body{animation:cqin .35s ease-out}@keyframes cqin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}}
+.cq-h{margin:0;font-size:30px;line-height:1.3;font-weight:800;letter-spacing:-.035em}
+.cq-p{margin:12px 0 0;font-size:15.5px;line-height:1.6;color:var(--sub)}
+.cq-t,.cq-m{display:block;margin-top:22px}
+.cq-l{display:block;font-size:15px;font-weight:700;margin-bottom:8px}
+.cq-l small{display:block;font-size:13px;font-weight:400;color:var(--faint);margin-top:1px}
+.cq-t input{width:100%;height:64px;border:2px solid transparent;border-radius:16px;background:var(--card);padding:0 20px;font:inherit;font-size:22px;font-weight:600;color:var(--ink)}
+.cq-in{display:flex;align-items:center;gap:8px;height:68px;border:2px solid transparent;border-radius:16px;background:var(--card);padding:0 20px}
+.cq-in input{flex:1;min-width:0;border:0;background:none;text-align:right;font:inherit;font-size:28px;font-weight:600;letter-spacing:-.02em;color:var(--ink);padding:0}
+.cq-in i{font-style:normal;font-size:17px;color:var(--sub);flex:none}
+.cq-t input::placeholder,.cq-in input::placeholder{color:#C9C9C9;font-weight:500}
+.cq-t input:focus,.cq-in:focus-within{border-color:var(--ink);outline:0}
+.cq-in input:focus{outline:0}
+.cq-won{display:block;min-height:20px;margin-top:6px;text-align:right;font-style:normal;font-size:13.5px;font-weight:600;color:var(--accent-ink)}
+.cq-opts{display:grid;gap:10px;margin-top:26px}
+.cq-opts.two{grid-template-columns:1fr 1fr}
+.cq-o{min-height:62px;border:2px solid transparent;border-radius:16px;background:var(--card);font:inherit;font-size:18px;font-weight:600;color:var(--ink);cursor:pointer;padding:12px 18px;text-align:center}
+.cq-o.row{display:flex;justify-content:space-between;align-items:center;text-align:left;gap:12px}
+.cq-o.row small{font-size:13.5px;font-weight:400;color:var(--sub);text-align:right}
+.cq-o.on{border-color:var(--ink);background:var(--ink);color:#fff}
+.cq-o.on small{color:#CFCFCF}
+.cq-o:focus-visible,.cq-next:focus-visible,.cq-back:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.cq-sqs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:22px}
+.cq-sq{background:#E8E8E8;border-radius:14px;padding:12px 14px 11px;min-height:74px;position:relative}
+.cq-sq small{position:absolute;right:12px;top:10px;font-size:11px;font-weight:700;color:#A8A8A8}
+.cq-sq b{display:block;font-size:12.5px;font-weight:600;color:var(--sub)}
+.cq-sq span{display:block;margin-top:4px;font-size:21px;font-weight:700;letter-spacing:-.02em;color:#B5B5B5}
+.cq-sq span u{text-decoration:none;font-size:12px;font-weight:500;margin-left:2px}
+.cq-sq.on{background:var(--ink)}.cq-sq.on b{color:#A9A9A9}.cq-sq.on span{color:#fff}.cq-sq.on small{color:#6A6A6A}
+.cq-net{display:flex;justify-content:space-between;align-items:baseline;margin-top:24px;padding-top:18px;border-top:1px solid var(--ink);font-size:15px;color:var(--sub)}
+.cq-net b{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+.cq-link{display:inline-block;margin-top:14px;font-size:14px;font-weight:600;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.cq-err{display:none;margin:18px 0 0;padding:12px 14px;border-radius:12px;background:var(--accent-soft);color:var(--accent-ink);font-size:14.5px;font-weight:600}
+.cq-err.on{display:block}
+.cq-foot{position:fixed;left:0;right:0;bottom:0;z-index:5;padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(rgba(242,242,242,0),var(--paper) 26%)}
+.cq-next{display:block;width:100%;max-width:480px;margin:0 auto;height:60px;border:0;border-radius:16px;background:var(--ink);color:#fff;font:inherit;font-size:18px;font-weight:700;cursor:pointer}
+.cq-priv{max-width:480px;margin:10px auto 0;text-align:center;font-size:12.5px;color:var(--faint)}
+
 </style>
 </head>
-<body>
-<!-- 아임웹 CASHFLOW(베이직) 코드 위젯을 그대로 옮긴 것. PC·모바일 공용. 원본 사본: cashflow/_imweb_backup/ -->
+<body class="cf-hero">
+<!-- 베이직(현금흐름 진단). 입력 화면은 새로 만들고, 계산·결과 리포트·메일 전송은 아임웹 위젯 로직 그대로. 원본: cashflow/_imweb_backup/ -->
 <div class="cf-top">MAKESBETTER</div>
 <div class="cf-wrap"><div id="mb-cashflow-root"></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -175,8 +238,6 @@ body{margin:0;background:#F5F3EE;min-height:100vh}
     self: ""
   };
   try{ var __cp=new URLSearchParams(location.search); var __cv=__cp.get("coupon")||__cp.get("coupon_no")||__cp.get("couponNumber")||__cp.get("coupon_number"); if(__cv) state.coupon=__cv; var __ch=(__cp.get("ch")||__cp.get("from")||"").toLowerCase(); state.kakao = !!state.coupon || !!__cv || __ch==="kakao"; }catch(e){}
-  // 디렉터 링크에서 넘어오면 담당 디렉터 미리 선택 (?d=이름)
-  try{ var __d=(new URLSearchParams(location.search).get("d")||"").trim(); if(__d && CONFIG.directors.some(function(x){return x.name===__d;})) state.director=__d; }catch(e){}
 
   function num(v){ var n = parseFloat(String(v).replace(/,/g,"")); return isNaN(n) ? 0 : n; }
   function fmt(n){ return Math.round(n).toLocaleString("ko-KR"); }
@@ -206,124 +267,117 @@ body{margin:0;background:#F5F3EE;min-height:100vh}
       '<div class="mbc-field-unit"><input inputmode="numeric" id="'+id+'" value="'+val+'" placeholder="0"><span>만원</span></div></div>';
   }
 
-  function renderBasic(){
-    var directorOptions = '<option value="" disabled'+(state.director?'':' selected')+'>선택해주세요</option>' +
-      CONFIG.directors.map(function(d){return '<option value="'+d.name+'"'+(state.director===d.name?' selected':'')+'>'+d.name+'</option>';}).join('');
-    root.innerHTML = '<div class="mbc-card">'+
-      headerHtml("소득을 자산화하는 첫걸음,<br>현재 현금흐름부터 확인해요")+
-      '<div class="mbc-field"><label>성함 *</label><input id="mbc-name" type="text" placeholder="홍길동" value="'+state.name+'"></div>'+
-      (state.kakao?'<div class="mbc-field"><label>연락처 *</label><input id="mbc-phone" type="tel" inputmode="tel" placeholder="010-0000-0000" value="'+state.phone+'"></div>':'')+
-      (state.kakao?'<div class="mbc-field"><label>쿠폰번호 <span style="font-weight:400;opacity:.6">(선택 · 카카오 쿠폰 12자리)</span></label><input id="mbc-coupon" type="text" inputmode="numeric" placeholder="카카오에서 받은 쿠폰번호" value="'+state.coupon+'"><a href="https://pf.kakao.com/_eETXxj/coupons" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;font-size:13px;font-weight:600;color:#2f6b62;text-decoration:none">카카오 채널에서 쿠폰 받기 →</a></div>':'')+
-      '<div class="mbc-field"><label>담당 디렉터 *</label><select id="mbc-director">'+directorOptions+'</select></div>'+
-      '<div class="mbc-btn-row"><button class="mbc-btn" id="mbc-next">다음</button></div>'+
-    '</div>';
 
-    root.querySelector("#mbc-next").onclick = function(){
-      state.name = root.querySelector("#mbc-name").value.trim();
-      var __pe = root.querySelector("#mbc-phone"); if(__pe) state.phone = (__pe.value||"").trim();
-      var __ce=root.querySelector("#mbc-coupon"); if(__ce) state.coupon=(__ce.value||"").trim();
-      state.director = root.querySelector("#mbc-director").value;
-      if (!state.name){ alert("성함을 입력해 주세요."); return; }
-      if (state.kakao && state.phone.replace(/\D/g,"").length < 10){ alert("연락처를 정확히 입력해 주세요."); return; }
-      if (!state.director){ alert("담당 디렉터를 선택해 주세요."); return; }
-      state.step = "income";
-      render();
-    };
+  /* ===== 새 입력 화면: Studio 오프닝 + 한 화면에 질문 하나 (계산·리포트·메일 전송은 기존 그대로) ===== */
+  try{ var __d=(new URLSearchParams(location.search).get("d")||"").trim(); if(__d && CONFIG.directors.some(function(x){return x.name===__d;})){ state.director=__d; state.dLock=true; } }catch(e){}
+  state.q = 0;
+  var QALL = ["hero","name","director","type","income","fixed","invest","asset","self"];
+  function qList(){ return QALL.filter(function(k){ return !(k==="director" && state.dLock); }); }
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+  function kor(v){ v=Math.round(v); if(!v) return ""; var s=v<0?"-":""; v=Math.abs(v); var e=Math.floor(v/10000), r=v%10000; return s+(e?e.toLocaleString("ko-KR")+"억 ":"")+(r?r.toLocaleString("ko-KR")+"만":"")+"원"; }
+  function money(key,label,hint,ph){
+    var v=state[key]?num(state[key]).toLocaleString("ko-KR"):"";
+    return '<label class="cq-m"><span class="cq-l">'+label+(hint?'<small>'+hint+'</small>':'')+'</span>'+
+      '<span class="cq-in"><input inputmode="numeric" autocomplete="off" data-k="'+key+'" value="'+v+'" placeholder="'+(ph||"0")+'"><i>만원</i></span>'+
+      '<em class="cq-won" data-w="'+key+'">'+(v?"= "+kor(num(state[key])):"")+'</em></label>';
   }
-
-  function renderIncome(){
-    var typeChoices = CONFIG.incomeTypes.map(function(t){
-      return '<div class="mbc-choice'+(state.incomeType===t?' selected':'')+'" data-type="'+t+'">'+t+'</div>';
-    }).join('');
-
-    root.innerHTML = '<div class="mbc-card">'+
-      headerHtml("현재의 소득과 지출을 알아야<br>현금흐름을 정확히 볼 수 있어요")+
-      '<div class="mbc-field"><label>소득 구조 *</label><div class="mbc-choice-grid" id="mbc-income-type">'+typeChoices+'</div></div>'+
-      numberField("mbc-last-income","작년 소득(세전)","· 홈텍스 원천징수영수증 기준", state.lastYearIncome)+
-      numberField("mbc-monthly-income","체감 평균 소득(월)","· 최근 3~6개월 급여명세서 기준", state.monthlyIncome)+
-      numberField("mbc-monthly-fixed","체감 평균 고정지출(월)","· 뱅크샐러드·토스 등 참고", state.monthlyFixed)+
-      '<div class="mbc-btn-row"><button class="mbc-btn ghost" id="mbc-back">‹ 뒤로</button><button class="mbc-btn" id="mbc-next">다음</button></div>'+
-    '</div>';
-
-    root.querySelectorAll("#mbc-income-type .mbc-choice").forEach(function(el){
-      el.onclick = function(){
-        state.incomeType = el.getAttribute("data-type");
-        root.querySelectorAll("#mbc-income-type .mbc-choice").forEach(function(c){ c.classList.remove("selected"); });
-        el.classList.add("selected");
-      };
+  function squares(){
+    var r=calc(), has=function(k){ return String(state[k]||"").trim()!==""; };
+    var inv=has("bank")||has("securities")||has("insurance");
+    var rest=(has("monthlyIncome")&&has("monthlyFixed")&&inv)?r.surplus:null;
+    function cell(n,l,v,on){ return '<div class="cq-sq'+(on?" on":"")+'"><small>'+n+'</small><b>'+l+'</b><span>'+(on?fmt(v)+'<u>만원</u>':"–")+'</span></div>'; }
+    return '<div class="cq-sqs" aria-label="내 돈의 네 칸">'+
+      cell("1","소득",r.income,has("monthlyIncome"))+cell("2","고정지출",r.fixed,has("monthlyFixed"))+
+      cell("4","저축·투자",r.invest,inv)+cell("3","남는 돈",rest,rest!==null)+'</div>';
+  }
+  function renderWizard(){
+    var L=qList(); if(state.q<0) state.q=0; if(state.q>L.length-1) state.q=L.length-1;
+    var k=L[state.q], n=state.q, total=L.length-1, h="", nextTxt="다음";
+    document.body.classList.toggle("cf-hero", k==="hero");
+    if(k==="hero"){
+      root.innerHTML='<section class="cf-hero-s">'+
+        '<h1 class="cf-lines" aria-label="Money 4 Square Basic"><span aria-hidden="true"><i>Money 4</i></span><span aria-hidden="true"><i>Square</i></span><span aria-hidden="true"><i class="lt">Basic</i></span></h1>'+
+        '<p class="cf-tag">내 돈의 흐름, 네 칸으로 확인합니다</p>'+
+        '<ul class="cf-facts"><li><b>3분</b>이면 끝나요</li><li><b>질문 '+total+'개</b>, 한 화면에 하나씩</li><li>정확하지 않아도 돼요. <b>기억나는 대로</b></li></ul>'+
+        '</section>'+
+        '<div class="cq-foot"><button class="cq-next" id="cq-next">시작하기</button><p class="cq-priv">적은 내용은 담당 디렉터에게만 전달됩니다</p></div>';
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ var l=root.querySelector(".cf-lines"); if(l) l.classList.add("in"); }); });
+    } else {
+      if(k==="name"){
+        h='<h2 class="cq-h">먼저, 성함을<br>알려 주세요</h2>'+
+          '<label class="cq-t"><input id="cq-name" type="text" autocomplete="name" placeholder="홍길동" maxlength="20" value="'+esc(state.name)+'"></label>'+
+          (state.kakao?'<label class="cq-t"><span class="cq-l">연락처</span><input id="cq-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" value="'+esc(state.phone)+'"></label>'+
+            '<label class="cq-t"><span class="cq-l">쿠폰번호<small>선택 · 카카오 쿠폰 12자리</small></span><input id="cq-coupon" type="text" inputmode="numeric" placeholder="카카오에서 받은 쿠폰번호" value="'+esc(state.coupon)+'"></label>'+
+            '<a class="cq-link" href="https://pf.kakao.com/_eETXxj/coupons" target="_blank" rel="noopener">카카오 채널에서 쿠폰 받기</a>':'');
+      } else if(k==="director"){
+        h='<h2 class="cq-h">담당 디렉터를<br>골라 주세요</h2><p class="cq-p">결과는 고른 디렉터에게 전달됩니다.</p>'+
+          '<div class="cq-opts two" data-set="director">'+CONFIG.directors.map(function(d){ return '<button type="button" class="cq-o'+(state.director===d.name?" on":"")+'" data-v="'+d.name+'">'+d.name+'</button>'; }).join("")+'</div>';
+      } else if(k==="type"){
+        h='<h2 class="cq-h">소득은 어떤<br>형태인가요?</h2>'+
+          '<div class="cq-opts" data-set="incomeType">'+CONFIG.incomeTypes.map(function(t){ return '<button type="button" class="cq-o'+(state.incomeType===t?" on":"")+'" data-v="'+esc(t)+'">'+esc(t)+'</button>'; }).join("")+'</div>';
+      } else if(k==="income"){
+        h='<h2 class="cq-h">소득을<br>알려 주세요</h2>'+squares()+
+          money("monthlyIncome","한 달에 들어오는 돈","최근 3~6개월 통장에 들어온 평균","350")+
+          money("lastYearIncome","작년 소득 (세전)","원천징수영수증 기준 · 모르면 비워 두세요","5,000");
+      } else if(k==="fixed"){
+        h='<h2 class="cq-h">매달 꼭 나가는 돈은<br>얼마인가요?</h2><p class="cq-p">월세·대출 상환, 보험료, 통신비, 관리비, 교육비처럼 매달 정해져 나가는 돈을 더해 주세요.</p>'+squares()+
+          money("monthlyFixed","한 달 고정지출","뱅크샐러드·토스를 보면 쉬워요","150");
+      } else if(k==="invest"){
+        h='<h2 class="cq-h">매달 모으는 돈은<br>어디에 넣고 있나요?</h2><p class="cq-p">없는 곳은 비워 두세요.</p>'+squares()+
+          money("bank","은행","예금·적금·청약")+money("securities","증권사","주식·펀드·ETF·연금")+money("insurance","보험사","저축·연금 보험");
+      } else if(k==="asset"){
+        var r0=calc();
+        h='<h2 class="cq-h">지금 가진 것과<br>갚을 것</h2><p class="cq-p">대략의 금액이면 충분해요.</p>'+
+          money("totalFinancial","금융자산","은행·증권사·보험사에 있는 돈 합계")+money("totalRealEstate","부동산","보유 주택·전월세 보증금")+money("totalDebt","부채","담보·신용·카드론 등")+
+          '<div class="cq-net" id="cq-net"><span>순자산</span><b>'+(String(state.totalFinancial+state.totalRealEstate+state.totalDebt).trim()?kor(r0.netAssets)||"0원":"–")+'</b></div>';
+      } else if(k==="self"){
+        var so=[["A",5,"매우 정확","가계부·앱으로 매달 확인해요"],["B",4,"정확한 편","대부분 알고 있어요"],["C",3,"보통","큰 금액만 알아요"],["D",2,"부족한 편","짐작으로 적었어요"],["E",1,"매우 부족","거의 몰라요"]];
+        h='<h2 class="cq-h">방금 적은 숫자,<br>얼마나 정확한가요?</h2><p class="cq-p">스스로 매기는 점수예요. 솔직할수록 진단이 정확해집니다.</p>'+
+          '<div class="cq-opts" data-set="self">'+so.map(function(o){ return '<button type="button" class="cq-o row'+(state.self===o[0]?" on":"")+'" data-v="'+o[0]+'" data-s="'+o[1]+'"><b>'+o[2]+'</b><small>'+o[3]+'</small></button>'; }).join("")+'</div>';
+        nextTxt="결과 확인하기";
+      }
+      root.innerHTML='<header class="cq-top"><button type="button" class="cq-back" id="cq-back" aria-label="이전"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>'+
+        '<div class="cq-bar"><i style="width:'+Math.round(n/total*100)+'%"></i></div><span class="cq-n">'+n+' / '+total+'</span></header>'+
+        '<main class="cq-body">'+h+'<p class="cq-err" id="cq-err" role="alert"></p></main>'+
+        '<div class="cq-foot"><button class="cq-next" id="cq-next">'+nextTxt+'</button></div>';
+      window.scrollTo(0,0);
+    }
+    function err(m){ var e=root.querySelector("#cq-err"); if(e){ e.textContent=m; e.classList.add("on"); } }
+    function collect(){
+      [].forEach.call(root.querySelectorAll("input[data-k]"),function(i){ state[i.getAttribute("data-k")]=i.value.replace(/[^\d]/g,""); });
+      var a=root.querySelector("#cq-name"); if(a) state.name=a.value.trim();
+      var p=root.querySelector("#cq-phone"); if(p) state.phone=p.value.trim();
+      var c=root.querySelector("#cq-coupon"); if(c) state.coupon=c.value.trim();
+    }
+    function go(d){
+      collect();
+      if(d>0){
+        if(k==="name"){ if(!state.name) return err("성함을 적어 주세요."); if(state.kakao && state.phone.replace(/\D/g,"").length<10) return err("연락처를 정확히 적어 주세요."); }
+        if(k==="director" && !state.director) return err("담당 디렉터를 골라 주세요.");
+        if(k==="type" && !state.incomeType) return err("소득 형태를 골라 주세요.");
+        if(k==="income" && !num(state.monthlyIncome) && !state._nudged){ state._nudged=true; return err("한 달 소득을 적어야 저축률이 계산돼요. 모르면 한 번 더 누르면 넘어갑니다."); }
+        if(k==="self"){ if(!state.self) return err("하나를 골라 주세요."); state.step="result"; document.body.classList.remove("cf-hero"); return render(); }
+      }
+      state.q+=d; renderWizard();
+    }
+    root.querySelector("#cq-next").onclick=function(){ go(1); };
+    var bk=root.querySelector("#cq-back"); if(bk) bk.onclick=function(){ go(-1); };
+    [].forEach.call(root.querySelectorAll(".cq-opts"),function(g){
+      g.addEventListener("click",function(e){ var b=e.target.closest(".cq-o"); if(!b) return;
+        var set=g.getAttribute("data-set"); state[set]=b.getAttribute("data-v"); if(set==="self") state.selfScore=b.getAttribute("data-s");
+        [].forEach.call(g.querySelectorAll(".cq-o"),function(x){ x.classList.toggle("on",x===b); });
+        setTimeout(function(){ go(1); },220);
+      });
     });
-    root.querySelector("#mbc-back").onclick = function(){ state.step="basic"; render(); };
-    root.querySelector("#mbc-next").onclick = function(){
-      state.lastYearIncome = root.querySelector("#mbc-last-income").value.trim();
-      state.monthlyIncome = root.querySelector("#mbc-monthly-income").value.trim();
-      state.monthlyFixed = root.querySelector("#mbc-monthly-fixed").value.trim();
-      if (!state.incomeType){ alert("소득 구조를 선택해 주세요."); return; }
-      state.step = "asset";
-      render();
-    };
-  }
-
-  function renderAsset(){
-    root.innerHTML = '<div class="mbc-card">'+
-      headerHtml("보유 자산을 확인하면<br>자산 규모의 적정성을 함께 볼 수 있어요")+
-      '<div class="mbc-field"><label>금융사 투입 금액 (월)</label>'+
-        '<div class="mbc-row3">'+
-          '<div class="mbc-row3-col"><label class="mbc-row3-label">은행</label><div class="mbc-field-unit"><input inputmode="numeric" id="mbc-bank" value="'+state.bank+'" placeholder="0"><span>만원</span></div></div>'+
-          '<div class="mbc-row3-col"><label class="mbc-row3-label">증권사</label><div class="mbc-field-unit"><input inputmode="numeric" id="mbc-securities" value="'+state.securities+'" placeholder="0"><span>만원</span></div></div>'+
-          '<div class="mbc-row3-col"><label class="mbc-row3-label">보험사</label><div class="mbc-field-unit"><input inputmode="numeric" id="mbc-insurance" value="'+state.insurance+'" placeholder="0"><span>만원</span></div></div>'+
-        '</div>'+
-      '</div>'+
-      numberField("mbc-total-financial","총 금융자산","· 은행·증권사·보험사 기타 합계", state.totalFinancial)+
-      numberField("mbc-total-realestate","총 부동산자산","· 보유주택·보증금·임대 기타", state.totalRealEstate)+
-      numberField("mbc-total-debt","총 부채","· 담보·신용·캐피탈 기타", state.totalDebt)+
-      '<div class="mbc-btn-row"><button class="mbc-btn ghost" id="mbc-back">‹ 뒤로</button><button class="mbc-btn" id="mbc-next">다음</button></div>'+
-    '</div>';
-
-    root.querySelector("#mbc-back").onclick = function(){ state.step="income"; render(); };
-    root.querySelector("#mbc-next").onclick = function(){
-      state.bank = root.querySelector("#mbc-bank").value.trim();
-      state.securities = root.querySelector("#mbc-securities").value.trim();
-      state.insurance = root.querySelector("#mbc-insurance").value.trim();
-      state.totalFinancial = root.querySelector("#mbc-total-financial").value.trim();
-      state.totalRealEstate = root.querySelector("#mbc-total-realestate").value.trim();
-      state.totalDebt = root.querySelector("#mbc-total-debt").value.trim();
-      state.step = "self";
-      render();
-    };
-  }
-
-  function renderSelf(){
-    var opts = [
-      {k:"A", v:5, t:"매우 정확"},
-      {k:"B", v:4, t:"정확한 편"},
-      {k:"C", v:3, t:"보통"},
-      {k:"D", v:2, t:"부족한 편"},
-      {k:"E", v:1, t:"매우 부족"}
-    ];
-    var cells = opts.map(function(o){
-      return '<div class="mbc-self'+(state.self===o.k?' selected':'')+'" data-k="'+o.k+'" data-v="'+o.v+'"><b>'+o.k+'</b><span>'+o.t+'</span></div>';
-    }).join('');
-
-    root.innerHTML = '<div class="mbc-card">'+
-      headerHtml("마지막으로, 본인의 현금흐름<br>'정확도'를 스스로 평가해 주세요")+
-      '<div class="mbc-self-grid">'+cells+'</div>'+
-      '<div class="mbc-btn-row"><button class="mbc-btn ghost" id="mbc-back">‹ 뒤로</button><button class="mbc-btn" id="mbc-next">결과 확인하기</button></div>'+
-    '</div>';
-
-    root.querySelectorAll(".mbc-self").forEach(function(el){
-      el.onclick = function(){
-        state.self = el.getAttribute("data-k");
-        state.selfScore = el.getAttribute("data-v");
-        root.querySelectorAll(".mbc-self").forEach(function(c){ c.classList.remove("selected"); });
-        el.classList.add("selected");
-      };
+    [].forEach.call(root.querySelectorAll("input[data-k]"),function(i){
+      i.addEventListener("input",function(){ var d=i.value.replace(/[^\d]/g,"").slice(0,9); i.value=d?Number(d).toLocaleString("ko-KR"):""; state[i.getAttribute("data-k")]=d;
+        var w=root.querySelector('[data-w="'+i.getAttribute("data-k")+'"]'); if(w) w.textContent=d?"= "+kor(Number(d)):"";
+        var sq=root.querySelector(".cq-sqs"); if(sq) sq.outerHTML=squares();
+        var nt=root.querySelector("#cq-net b"); if(nt){ var rr=calc(); nt.textContent=kor(rr.netAssets)||"0원"; }
+      });
     });
-    root.querySelector("#mbc-back").onclick = function(){ state.step="asset"; render(); };
-    root.querySelector("#mbc-next").onclick = function(){
-      if (!state.self){ alert("셀프 평가를 선택해 주세요."); return; }
-      state.step = "result";
-      render();
-    };
+    [].forEach.call(root.querySelectorAll("input"),function(i){ i.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); var all=[].slice.call(root.querySelectorAll("input")), ix=all.indexOf(i); if(ix<all.length-1) all[ix+1].focus(); else go(1); } }); });
+    var f=root.querySelector(".cq-body input"); if(f && k!=="hero" && !/Mobi|Android/i.test(navigator.userAgent)) f.focus();
   }
 
   function calc(){
@@ -365,7 +419,7 @@ body{margin:0;background:#F5F3EE;min-height:100vh}
       '<div class="mbc-btn-row"><button class="mbc-btn ghost" id="mbc-back">‹ 뒤로</button><button class="mbc-btn" id="mbc-submit">담당 디렉터에게 보내기</button></div>'+
     '</div>';
 
-    root.querySelector("#mbc-back").onclick = function(){ state.step="self"; render(); };
+    root.querySelector("#mbc-back").onclick = function(){ state.step="self"; state.q=qList().length-1; render(); };
     root.querySelector("#mbc-submit").onclick = onSubmit;
   }
 
@@ -757,10 +811,7 @@ body{margin:0;background:#F5F3EE;min-height:100vh}
   function onSubmit(){ sendMail(); }
 
   function render(){
-    if (state.step==="basic") renderBasic();
-    else if (state.step==="income") renderIncome();
-    else if (state.step==="asset") renderAsset();
-    else if (state.step==="self") renderSelf();
+    if (state.step==="basic"||state.step==="income"||state.step==="asset"||state.step==="self") renderWizard();
     else if (state.step==="result") renderResult();
     else if (state.step==="done") renderDone(false);
   }
