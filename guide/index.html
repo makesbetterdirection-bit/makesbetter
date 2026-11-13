@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MAKESBETTER 컨설팅 사용법</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="메이크스베러 컨설팅 사용법 · 디렉터용">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MAKESBETTER 컨설팅 사용법">
+<meta property="og:description" content="Better Consulting Guide · 디렉터용">
+<link rel="icon" href="/studio/icon-32.png">
+<link rel="apple-touch-icon" href="/studio/icon-180.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* Studio 계열: 연회색 바탕, 흰 카드, 검정 글자, 좁은 한 줄 칼럼. 영문 큰 제목은 굵기 혼합. 색은 주황 점 하나만(고객에게 보내는 링크). */
+:root{
+  --bg:#F2F2F2; --card:#FFFFFF; --ink:#000000; --sub:#8A8A8A; --line:#EBEBEB; --chip:#F4F4F4; --dot:#FF5A1F;
+  --display:"Inter Tight","Noto Sans KR",system-ui,sans-serif;
+  --text:"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111111;--card:#1B1B1B;--ink:#F2F2F2;--sub:#8F8F8F;--line:#2A2A2A;--chip:#242424;--dot:#FF7A45;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111111;--card:#1B1B1B;--ink:#F2F2F2;--sub:#8F8F8F;--line:#2A2A2A;--chip:#242424;--dot:#FF7A45;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);background:var(--bg);color:var(--ink);font-family:var(--text);font-size:17px;line-height:1.6;letter-spacing:-.02em;word-break:keep-all}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.col{max-width:560px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header .col{display:flex;align-items:center;gap:10px;padding-block:16px}
+header b{font-family:var(--display);font-size:15px;font-weight:700;letter-spacing:-.01em}
+header span{font-size:14px;color:var(--sub)}
+#prog{position:absolute;left:0;bottom:-1px;height:1px;width:0;background:var(--ink)}
+
+.hero{padding-block:96px 72px}
+.hero h1{margin:0;font-family:var(--display);font-size:clamp(56px,15vw,88px);line-height:.95;letter-spacing:-.055em;font-weight:300}
+.hero h1 b{font-weight:700;letter-spacing:-.035em}
+.hero h1 u{text-decoration-thickness:2px;text-underline-offset:8px}
+.hero p{margin:28px 0 0;font-size:19px;font-weight:500}
+
+h2{margin:0 0 16px;font-size:24px;font-weight:700;letter-spacing:-.04em}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:56px}
+.pick button{background:var(--card);border:1.5px solid transparent;border-radius:16px;padding:18px 18px 20px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.pick button small{font-size:13px;color:var(--sub)}
+.pick button strong{font-size:20px;font-weight:700;letter-spacing:-.04em;line-height:1.3}
+.pick button[aria-pressed="true"]{border-color:var(--ink)}
+.pick button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+.course{display:flex;flex-direction:column;gap:10px;padding-bottom:40px}
+.course[hidden]{display:none}
+.card{background:var(--card);border-radius:16px;padding:18px 18px 8px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.top small{display:block;font-size:13px;color:var(--sub)}
+.top strong{display:block;font-size:19px;font-weight:700;letter-spacing:-.04em;line-height:1.35}
+.n{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-family:var(--display);font-size:15px}
+.big{display:flex;align-items:baseline;gap:8px;padding:14px 0 12px;border-bottom:1px solid var(--line)}
+.big b{font-family:var(--display);font-weight:300;font-size:48px;line-height:1;letter-spacing:-.05em}
+.big span{font-size:15px;color:var(--sub)}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 0;border-bottom:1px solid var(--line);font-size:17px}
+li:last-child{border-bottom:0}
+li a{flex:none;text-decoration:none;font-size:14px;color:var(--sub);background:var(--chip);border-radius:99px;padding:5px 12px;white-space:nowrap}
+li a:hover,li a:focus-visible{color:var(--ink);outline:none}
+li a.send::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--dot);margin-right:6px;vertical-align:2px}
+li em{flex:none;font-style:normal;font-size:14px;color:var(--sub)}
+.gap{display:flex;align-items:center;gap:10px;color:var(--sub);font-size:14px;padding:6px 4px}
+.gap::before{content:"";width:1px;height:22px;background:var(--sub);margin-left:12px}
+
+.legend{display:flex;gap:16px;font-size:13px;color:var(--sub);padding:8px 2px 0}
+.legend span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--sub);margin-right:6px;vertical-align:2px}
+.legend span.s::before{background:var(--dot)}
+footer{padding-block:24px 72px;font-size:13px;color:var(--sub);border-top:1px solid var(--line);margin-top:24px}
+</style>
+</head>
+<body>
+<header><div class="col"><b>MAKESBETTER</b><span id="hdr">컨설팅 사용법</span></div><i id="prog"></i></header>
+
+<main class="col">
+  <section class="hero">
+    <h1><b>Better</b><br>Consulting<br><u>Guide</u></h1>
+    <p>메이크스베러 컨설팅 사용법</p>
+  </section>
+
+  <h2>고객이 누구인가요</h2>
+  <div class="pick" role="group" aria-label="과정 선택">
+    <button id="bA" aria-pressed="true" data-c="A"><small>직접 아는 고객</small><strong>기계약자 · 지인 과정</strong></button>
+    <button id="bB" aria-pressed="false" data-c="B"><small>소개받은 고객</small><strong>소개자 과정</strong></button>
+  </div>
+
+  <section class="course" id="A"></section>
+  <section class="course" id="B" hidden></section>
+
+  <div class="legend"><span class="s">고객에게 보내는 링크</span></div>
+  <footer>MAKESBETTER Consulting Guide · 링크는 누르면 새 창으로 열립니다.</footer>
+</main>
+
+<script>
+// 디렉터별 개인 링크: /guide/?d=oh 처럼 열면 그 디렉터의 주소(mbkr.my/oh)로 바뀜. 기본은 lee.
+var DK=["lee","oh","byun","hong","kang","kimdh","kimsy"],dk="lee";
+try{var q=(new URLSearchParams(location.search).get("d")||"").trim();if(DK.indexOf(q)>-1)dk=q}catch(e){}
+const L={
+  basic:["베이직","mbkr.my/cashflow",1],
+  iq:["금융 IQ","mbkr.my/meta",1],
+  pro:["프로","mbkr.my/cashflowpro",1],
+  report:["월배당 리포트","mbkr.my/report",1],
+  me:["개인 링크","mbkr.my/"+dk,1]
+};
+const C={
+A:{name:"기계약자 · 지인 과정",steps:[
+ {lb:"시작",t:"약속을 잡는다",big:"약속",items:[["고객과 관심 미팅 약속 잡기"]]},
+ {lb:"관심 미팅",t:"니즈를 올린다",big:"관심",sub:"미팅",items:[["달러 계산기로 보여주기","화면으로만"],["플랫폼 보여주며 진행"],["1차 PT 약속 잡기"]]},
+ {lb:"1차 PT",t:"1차 PT 자료로 진행한다",big:"1차",sub:"PT",items:[["1차 PT 자료로 진행"],["플랫폼 유입 링크로 등록시키기"]]},
+ {lb:"2차 진행 전",t:"진단 두 가지를 하게 한다",big:"준비",items:[["머니4스퀘어 베이직 작성",L.basic],["금융 IQ 진행",L.iq]]},
+ {lb:"2차 PT",t:"진단을 함께 보고 재무목표를 확인한다",big:"2차",sub:"PT",items:[["머니4스퀘어 베이직 리뷰"],["금융 IQ 리포트 보기"],["재무목표 확인"],["원천징수영수증 요청"]]},
+ {lb:"3차 PT",t:"합의하고 포트폴리오를 정한다",big:"3차",sub:"PT",items:[["머니4스퀘어 프로 리뷰",L.pro],["3agree 합의 (소득 · 지출 · 저축)"],["포트폴리오 진행"]]},
+ {lb:"클로징 이후",t:"개인 링크를 주고 소개를 요청한다",big:"소개",items:[["개인화 링크 고객에게 전달",L.me],["소개 요청"]]},
+ {lb:"클로징 후 2개월",t:"중간 피드백",big:"2",sub:"개월",items:[["중간 피드백 진행",L.report]]},
+ {lb:"클로징 후 6개월",t:"정규 피드백",big:"6",sub:"개월",items:[["정규 피드백 진행",L.report]]}
+]},
+B:{name:"소개자 과정",steps:[
+ {lb:"시작",t:"개인 링크로 들어와 진단까지 한다",big:"유입",items:[["개인 링크로 플랫폼 유입",L.me],["설문 작성"],["머니4스퀘어 베이직 작성",L.basic],["금융 IQ 진행",L.iq]]},
+ {lb:"1차 PT",t:"진단 결과를 함께 본다",big:"1차",sub:"PT",items:[["머니4스퀘어 베이직 리뷰"],["금융 IQ 결과 리뷰"],["원천징수영수증 요청"]]},
+ {lb:"2차 미팅 전",t:"프로와 재무목표를 준비한다",big:"준비",items:[["머니4스퀘어 프로 작성",L.pro],["재무목표 확인"]]},
+ {lb:"2차 PT",t:"합의하고 계좌를 연다",big:"2차",sub:"PT",items:[["머니4스퀘어 프로 리뷰"],["3agree 합의 (소득 · 지출 · 저축)"],["계좌 개설 진행"]]},
+ {lb:"3차 PT",t:"포트폴리오를 정한다",big:"3차",sub:"PT",items:[["포트폴리오 진행"]]},
+ {lb:"클로징 이후",t:"개인 링크를 주고 소개를 요청한다",big:"소개",items:[["개인화 링크 고객에게 전달",L.me],["소개 요청"]]},
+ {lb:"클로징 후 2개월",t:"중간 피드백",big:"2",sub:"개월",items:[["중간 피드백 진행",L.report]]},
+ {lb:"클로징 후 6개월",t:"정규 피드백",big:"6",sub:"개월",items:[["정규 피드백 진행",L.report]]}
+]}};
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+for(const k in C){
+  document.getElementById(k).innerHTML=C[k].steps.map((s,i)=>`${i?'<div class="gap" aria-hidden="true"></div>':''}<article class="card">
+  <div class="top"><div><small>${esc(s.lb)}</small><strong>${esc(s.t)}</strong></div><span class="n">${i+1}</span></div>
+  <div class="big"><b>${esc(s.big)}</b>${s.sub?`<span>${esc(s.sub)}</span>`:""}</div>
+  <ul>${s.items.map(([t,l])=>`<li><span>${esc(t)}</span>${Array.isArray(l)?`<a class="${l[2]?"send":""}" href="https://${esc(l[1])}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`:l?`<em>${esc(l)}</em>`:""}</li>`).join("")}</ul></article>`).join("");
+}
+function show(k){
+  for(const x of ["A","B"]){document.getElementById(x).hidden=x!==k;document.getElementById("b"+x).setAttribute("aria-pressed",x===k)}
+  document.getElementById("hdr").textContent=C[k].name;
+  try{localStorage.setItem("mb-guide-course",k)}catch(e){}
+}
+document.querySelectorAll(".pick button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.c)));
+let saved="A";try{saved=localStorage.getItem("mb-guide-course")||"A"}catch(e){}
+show(saved==="B"?"B":"A");
+const prog=document.getElementById("prog");
+addEventListener("scroll",()=>{const h=document.documentElement;prog.style.width=(h.scrollTop/((h.scrollHeight-h.clientHeight)||1)*100)+"%"},{passive:true});
+</script>
+</body>
+</html>
