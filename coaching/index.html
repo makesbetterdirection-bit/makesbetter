@@ -298,7 +298,10 @@ h1,h2,h3,p{margin:0}
   // 완료 화면: 신청자 이름으로 초대장 공유
   document.getElementById('passBtn').addEventListener('click',function(){
     var n=document.getElementById('nm').value.trim().slice(0,10);
-    var url='https://calc.makesbetter.co.kr/join/'+(n?'?by='+encodeURIComponent(n):'');
+    var DK={'이종호':'lee','오수현':'oh','변보라':'byun','홍민아':'hong','강소리':'kang','김다희':'kimdh','김상윤':'kimsy'};
+    // 디렉터 페이지에서 온 신청은 그 디렉터 페이지를, 그 밖(쿠폰·이벤트)은 초대장을 보냄
+    var url=(!LITE&&DK[pre])?location.origin+'/d/'+DK[pre]+(n?'?by='+encodeURIComponent(n):''):'https://calc.makesbetter.co.kr/join/'+(n?'?by='+encodeURIComponent(n):'');
+    try{if(n)localStorage.setItem('mb_me',n)}catch(e){}
     var text='좋은 걸 알게 되면 가장 먼저 떠오르는 사람이 있어요. 그게 당신이었어요.';
     var msg=document.getElementById('passMsg');
     if(navigator.share){navigator.share({title:'MAKESBETTER 초대장',text:text,url:url}).catch(function(){});return}

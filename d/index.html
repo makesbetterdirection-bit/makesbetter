@@ -12,6 +12,15 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="/go/go.css">
 <style>
+.snd-p{margin-top:10px;font-size:16px;color:#5F5F5F}
+.snd{text-align:left;margin-top:22px;background:#fff;border:1px solid #E6E6E6;border-radius:18px;padding:20px 18px;box-sizing:border-box}
+.snd label{display:block;font-size:14px;font-weight:600;color:#5F5F5F;margin-bottom:6px}
+.snd input{width:100%;box-sizing:border-box;font:inherit;font-size:17px;border:1.5px solid #E2E2E2;border-radius:14px;padding:15px 14px;background:#fff;color:#0A0A0A;outline:none}
+.snd input:focus{border-color:#0A0A0A}
+.snd .btn{margin-top:12px;width:100%;box-sizing:border-box;border:0;cursor:pointer;font:inherit;font-weight:700}
+.snd-m{margin:10px 0 0;min-height:20px;font-size:14px;color:#B23A0C;word-break:break-all}
+</style>
+<style>
 .dh{text-align:center}.dh .w-pt{margin-bottom:26px}.dh .dh-p{margin-bottom:18px}
 .dh-p{width:176px;height:176px;margin:0 auto 22px;position:relative}
 .dh-p .dc-m{width:176px;height:176px;font-size:64px}
@@ -212,6 +221,18 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
       <a class="btn rvl" data-d="coach" href="/coaching/?d=이종호" style="margin-top:26px">코칭 신청하기</a>
     </section>
 
+    <section class="w-sec w-send" id="send">
+      <span class="w-pt rvl">이 초대, 전하고 싶은 사람이 있나요?</span>
+      <h2 class="w-h rvl">당신의 이름으로<br>보내 보세요</h2>
+      <p class="snd-p rvl">받는 분의 초대장에 당신의 이름이 적혀요.</p>
+      <div class="snd rvl">
+        <label for="sndName">보내는 사람</label>
+        <input id="sndName" type="text" maxlength="10" placeholder="내 이름" autocomplete="name">
+        <button type="button" class="btn" id="sndBtn">소중한 사람에게 보내기</button>
+        <p class="snd-m" id="sndMsg" aria-live="polite"></p>
+      </div>
+    </section>
+
     <section class="w-sec w-end">
       <span class="w-pt rvl">자주 묻는 질문</span>
       <div class="w-faq rvl">
@@ -278,6 +299,21 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   // 보낸 사람(고객) 이름: ?by=이름
     if(by){all('[data-by=from]',function(e){e.textContent=by});all('[data-by=who]',function(e){e.textContent=by+' 님'});
     all('[data-by=why]',function(e){e.textContent=by+' 님이 먼저 만나 본 디렉터를, 당신에게도 소개하고 싶어서 보낸 초대장이에요.'})}
+  // 내 이름으로 보내기: 이름을 넣으면 /d/<디렉터>?by=이름 링크를 만들어 공유
+  (function(){
+    var inp=document.getElementById('sndName'),msg=document.getElementById('sndMsg');
+    try{var me=localStorage.getItem('mb_me');if(me)inp.value=me.slice(0,10)}catch(e){}
+    document.getElementById('sndBtn').addEventListener('click',function(){
+      var n=inp.value.replace(/\s+/g,'').slice(0,10);
+      if(n.length<2){msg.textContent='이름을 적어 주세요.';inp.focus();return}
+      try{localStorage.setItem('mb_me',n)}catch(e){}
+      var url=location.origin+'/d/'+k+'?by='+encodeURIComponent(n);
+      var text=n+' 님이 보낸 초대장이에요. '+d.name+' 디렉터의 1:1 금융 코칭 2시간과 선물이 들어 있어요.';
+      hit('d-'+k+'-send');msg.textContent='';
+      if(navigator.share){navigator.share({title:n+' 님이 보낸 초대장',text:text,url:url}).catch(function(){});return}
+      try{navigator.clipboard.writeText(text+'\n'+url).then(function(){msg.textContent='링크를 복사했어요. 카카오톡에 붙여 넣어 보내 주세요.'},function(){msg.textContent=url})}catch(e){msg.textContent=url}
+    });
+  })();
   var env=document.getElementById('env');
   document.getElementById('openEnv').addEventListener('click',function(){hit('d-'+k+'-open');env.classList.add('open');setTimeout(function(){env.classList.add('gone');document.body.classList.remove('noscroll')},1100)});
   document.getElementById('qa').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;all('#qa button',function(x){x.classList.toggle('on',x===b)});var r=document.getElementById('qaR');r.textContent=b.getAttribute('data-a')==='1'?'대부분 그래요. 그래서 흐름부터 같이 봅니다.':'이미 흐름이 있으시네요. 더 단단하게 만드는 법을 함께 봐요.';r.classList.add('in')});
