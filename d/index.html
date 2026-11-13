@@ -197,7 +197,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     </section>
 
     <section class="w-sec dh">
-      <span class="w-pt rvl">당신을 만날 디렉터</span>
+      <span class="w-pt rvl" data-by="pt">메이크스베러 디렉터</span>
       <div class="dh-p rvl" data-d="photo"><span class="dc-m" data-d="mono">이</span></div>
       <p class="dh-n rvl"><b data-d="name">이종호</b><span data-d="role">대표 디렉터</span></p>
     </section>
@@ -354,7 +354,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12}):null;
   all('.rvl',function(el){var n=0,pv=el.previousElementSibling;while(pv&&pv.classList.contains('rvl')&&n<5){n++;pv=pv.previousElementSibling}el.style.transitionDelay=(n*110)+'ms';if(io)io.observe(el);else el.classList.add('in')});
   // 보낸 사람(고객) 이름: ?by=이름
-    if(by){all('[data-by=from]',function(e){e.textContent=by});all('[data-by=who]',function(e){e.textContent=by+' 님'});
+    if(by){all('[data-by=from]',function(e){e.textContent=by});all('[data-by=pt]',function(e){e.textContent='믿고 소개하는 자산관리 디렉터'});all('[data-by=who]',function(e){e.textContent=by+' 님'});
     all('[data-by=why]',function(e){e.textContent=by+' 님이 먼저 만나 본 디렉터를, 당신에게도 소개하고 싶어서 보낸 초대장이에요.'})}
   /* 24시간 마감: 처음 연 순간부터. 채널을 추가해 선물을 열면 멈춤 */
   (function(){
