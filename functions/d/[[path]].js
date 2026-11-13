@@ -12,6 +12,7 @@ export async function onRequest({ request, env, next }) {
   const title = `${esc(by)} 님이 보낸 초대장`;
   return new HTMLRewriter()
     .on('meta[property="og:title"]', { element(e) { e.setAttribute("content", title); } })
+    .on('meta[property="og:description"]', { element(e) { e.setAttribute("content", "메이크스베러 디렉터의 초대장"); } })
     .on("title", { element(e) { e.setInnerContent(title); } })
     .transform(res);
 }
