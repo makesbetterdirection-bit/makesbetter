@@ -62,15 +62,19 @@ a.w-rw{display:block}
 .gate-ok{display:none;margin-top:22px;padding:13px;border-radius:14px;background:#EEF4EC;color:#2E5A3A;font-size:14.5px;font-weight:700;text-align:center}
 body.open .gate{display:none}body.open .gate-ok{display:block}
 #gifts a.w-rw{position:relative;overflow:hidden}
-#gifts .w-rf{position:relative}
-#gifts .lk{position:absolute;left:-18px;right:-18px;top:-1px;bottom:-20px;z-index:2;display:flex;align-items:center;justify-content:center;gap:9px;font-size:13.5px;font-weight:700;color:#F3E0AE;background:repeating-linear-gradient(135deg,#15171C 0 14px,#1E2026 14px 28px);box-shadow:inset 0 1px 0 rgba(233,207,142,.55);transform-origin:50% 0;transition:transform .8s cubic-bezier(.7,0,.2,1),opacity .5s ease .25s}
-#gifts .lk svg{width:17px;height:17px;flex:none}
-#gifts .lk .sh{transform-origin:50% 100%;transition:transform .35s ease}
-#gifts a.w-rw.pop .lk .sh{transform:translateY(-3px) rotate(-28deg)}
-#gifts a.w-rw.pop .lk{transform:translateY(105%);opacity:0;transition-delay:.3s,.5s}
+#gifts a.w-rw>*:not(.lkc){transition:filter .8s ease,opacity .8s ease}
+body:not(.open) #gifts a.w-rw>*:not(.lkc),body.opening #gifts a.w-rw:not(.pop)>*:not(.lkc){filter:blur(10px);opacity:.45;user-select:none}
+#gifts .lkc{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;transition:opacity .6s ease .2s,transform .8s cubic-bezier(.2,.8,.2,1)}
+#gifts .lkc svg{width:30px;height:30px}
+#gifts .lkc .sh{transform-origin:50% 100%;transition:transform .35s ease}
+#gifts .lkc b{font-size:17px;font-weight:800;letter-spacing:-.02em;margin:0;color:var(--ink)}
+#gifts .lkc small{font-size:13px;color:var(--sub)}
+#gifts a.w-rw.best .lkc b,#gifts a.w-rw.best .lkc svg{color:#F3E0AE}#gifts a.w-rw.best .lkc small{color:#CFC8BA}
+#gifts a.w-rw.pop .lkc .sh{transform:translateY(-4px) rotate(-28deg)}
+#gifts a.w-rw.pop .lkc{opacity:0;transform:scale(1.25);pointer-events:none}
 #gifts a.w-rw.pop{animation:gpop .7s cubic-bezier(.2,.9,.25,1.3)}
 @keyframes gpop{0%{transform:scale(1)}35%{transform:scale(1.035)}100%{transform:scale(1)}}
-body.open:not(.opening) #gifts a.w-rw:not(.pop) .lk{display:none}
+body.open:not(.opening) #gifts .lkc{display:none}
 body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
 .w-bar:not(.w-tm){display:flex}
 </style>
@@ -166,10 +170,10 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
         <small class="gate-n">추가한 뒤 이 화면으로 돌아오면 바로 열려요 · 무료</small>
       </div>
       <p class="gate-ok rvl" id="gateOk">✓ 채널 추가 완료 · 선물이 열렸어요</p>
-      <a class="w-rw rvl" href="https://mbkr.my/meta" target="_blank" rel="noopener"><span class="w-rn">선물 01 · 3분</span><b>금융 I.Q 테스트</b><p>내 금융 감각 확인 + 결과 리포트</p><div class="w-rf"><span class="lk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>채널 추가 후 열려요</span><span>휴대폰으로 바로</span><em>시작하기</em></div></a>
-      <a class="w-rw rvl" href="https://calc.makesbetter.co.kr/books" target="_blank" rel="noopener"><span class="w-rn">선물 02 · 읽을거리</span><b>전자책 2권</b><p>현금흐름은 산소다 · 공포·탐욕 지수 읽는 법</p><div class="w-rf"><span class="lk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>채널 추가 후 열려요</span><span>책장 넘기며 읽기 · 다운로드</span><em>읽기</em></div></a>
-      <a class="w-rw rvl" data-d="cf" href="/cashflow/" target="_blank" rel="noopener"><span class="w-rn">선물 03 · 진단</span><b>MONEY 4 SQUARE 현금흐름 진단</b><p>소득·고정지출·변동지출·저축, 네 칸으로 보는 내 돈</p><div class="w-rf"><span class="lk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>채널 추가 후 열려요</span><span>작성 후 디렉터가 확인</span><em>진단하기</em></div></a>
-      <a class="w-rw best rvl" data-d="coach" href="/coaching/?d=이종호"><span class="w-rn">가장 큰 선물</span><b><span data-d="name">이종호</span> 디렉터 1:1 코칭 2시간</b><p>현금흐름 점검 · 보유자산 평가 · 돈 모으는 툴</p><div class="w-rf"><span class="lk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>채널 추가 후 열려요</span><span>신청하면 디렉터가 직접 연락</span><em>신청하기</em></div></a>
+      <a class="w-rw rvl" href="https://mbkr.my/meta" target="_blank" rel="noopener"><span class="lkc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>선물 01</b><small>채널 추가 후 공개</small></span><span class="w-rn">선물 01 · 3분</span><b>금융 I.Q 테스트</b><p>내 금융 감각 확인 + 결과 리포트</p><div class="w-rf"><span>휴대폰으로 바로</span><em>시작하기</em></div></a>
+      <a class="w-rw rvl" href="https://calc.makesbetter.co.kr/books" target="_blank" rel="noopener"><span class="lkc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>선물 02</b><small>채널 추가 후 공개</small></span><span class="w-rn">선물 02 · 읽을거리</span><b>전자책 2권</b><p>현금흐름은 산소다 · 공포·탐욕 지수 읽는 법</p><div class="w-rf"><span>책장 넘기며 읽기 · 다운로드</span><em>읽기</em></div></a>
+      <a class="w-rw rvl" data-d="cf" href="/cashflow/" target="_blank" rel="noopener"><span class="lkc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>선물 03</b><small>채널 추가 후 공개</small></span><span class="w-rn">선물 03 · 진단</span><b>MONEY 4 SQUARE 현금흐름 진단</b><p>소득·고정지출·변동지출·저축, 네 칸으로 보는 내 돈</p><div class="w-rf"><span>작성 후 디렉터가 확인</span><em>진단하기</em></div></a>
+      <a class="w-rw best rvl" data-d="coach" href="/coaching/?d=이종호"><span class="lkc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>가장 큰 선물</b><small>채널 추가 후 공개</small></span><span class="w-rn">가장 큰 선물</span><b><span data-d="name">이종호</span> 디렉터 1:1 코칭 2시간</b><p>현금흐름 점검 · 보유자산 평가 · 돈 모으는 툴</p><div class="w-rf"><span>신청하면 디렉터가 직접 연락</span><em>신청하기</em></div></a>
     </section>
 
     <section class="w-sec c-p">
@@ -250,7 +254,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     (function f(t){var e=t-t0,a=e>ms-900?Math.max(0,(ms-e)/900):1;x.clearRect(0,0,W,H);x.globalAlpha=a;P.forEach(function(p){p.y+=p.v;p.x+=p.d+Math.sin((e/400)+p.r)*1.6;p.r+=p.w;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;if(p.k){x.beginPath();x.arc(0,0,p.s*.45,0,6.3);x.fill()}else x.fillRect(-p.s/2,-p.s*.22*Math.abs(Math.cos(p.r*2)+.3),p.s,p.s*.44*Math.abs(Math.cos(p.r*2)+.3));x.restore()});
       if(e<ms)requestAnimationFrame(f);else{x.clearRect(0,0,W,H);c.style.display='none'}})(t0)}
   function burst(c){var n=14;for(var i=0;i<n;i++){var sp=document.createElement('i');sp.className='spark';var a=Math.PI*2*i/n+Math.random()*.4,d=60+Math.random()*70;sp.style.setProperty('--x',Math.cos(a)*d+'px');sp.style.setProperty('--y',Math.sin(a)*d+'px');sp.style.top='78%';sp.style.background=i%3?'#D4AE62':'#F5E3B3';c.appendChild(sp);setTimeout(function(e){e.remove()},1100,sp)}}
-  function unlock(q){if(opened)return;opened=true;document.body.classList.add('open');document.getElementById('giftH').innerHTML='가벼운 것부터,<br>하나씩 열어 보세요.';try{localStorage.setItem('mb-go-ch','1')}catch(e){}
+  function unlock(q){if(opened)return;opened=true;document.body.classList.add('open');document.getElementById('giftH').innerHTML='가벼운 것부터,<br>하나씩 열어 보세요.';try{localStorage.setItem('mb-d-ch','1')}catch(e){}
     if(q)return;
     var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches,cs=document.querySelectorAll('#gifts a.w-rw');
     if(rm)return;
@@ -259,7 +263,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     setTimeout(function(){document.getElementById('gifts').scrollIntoView({behavior:'smooth',block:'start'})},250);
     setTimeout(function(){goldRain(3400)},500);
     [].forEach.call(cs,function(c,i){setTimeout(function(){c.classList.add('pop');burst(c)},900+i*420)})}
-  try{if(localStorage.getItem('mb-go-ch')==='1')unlock(true)}catch(e){}
+  try{if(localStorage.getItem('mb-d-ch')==='1')unlock(true)}catch(e){}
   ['chBtn','chBtn2'].forEach(function(id){document.getElementById(id).addEventListener('click',function(){clicked=true;hit('d-'+k+'-channel')})});
   document.addEventListener('visibilitychange',function(){if(!document.hidden&&clicked)unlock()});
   window.addEventListener('focus',function(){if(clicked)setTimeout(unlock,400)});
