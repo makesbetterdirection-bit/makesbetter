@@ -1069,9 +1069,8 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
   </div>
 </div>
 
-<script src="indicators.js"></script>
-<script src="signal.js"></script>
-<script src="dividends.js"></script>
+<script>/* 자동 갱신 파일은 GitHub(raw)에서 바로 읽음 — 봇 커밋마다 배포하지 않아도 최신 값 반영. 실패하면 배포본 사용 */function mbRaw(p,l){try{var x=new XMLHttpRequest();x.open("GET","https://raw.githubusercontent.com/makesbetterdirection-bit/makesbetter/main/"+p+"?t="+Date.now(),false);x.send();if(x.status===200&&x.responseText.length>20){var s=document.createElement("script");s.text=x.responseText;document.head.appendChild(s);return}}catch(e){}document.write('<script src="'+l+'"><\/script>')}</script>
+<script>mbRaw("studio/indicators.js","indicators.js");mbRaw("studio/signal.js","signal.js");mbRaw("studio/dividends.js","dividends.js")</script>
 <script>
 // ===== Better.7 Signal v2 — 2026-10-15 장마감 기준 =====
 const SIGNAL=window.SIGNAL||null;   // 매일 신호(scripts/update_signal.py). 없으면 10.15 스냅샷으로 표시

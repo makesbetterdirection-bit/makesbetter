@@ -1,5 +1,9 @@
-# 시세 봇 커밋(better7_prices.json · studio/track.json만 바뀐 경우)은 Netlify 배포를 건너뜀.
-# 페이지는 시세를 GitHub(raw)에서 직접 읽으므로 배포 없이도 최신 값이 반영된다.
+# 자동 갱신 데이터만 바뀐 커밋(시세 봇 · 일일 판단 기록)은 Netlify 배포를 건너뜀.
+# 페이지들은 이 파일들을 GitHub(raw)에서 직접 읽으므로 배포 없이도 최신 값이 반영된다.
+#   - 재무계산기·Studio: better7_prices.json, studio/track.json (fetch)
+#   - Studio·월배당 페이지: studio/indicators.js, signal.js, dividends.js (mbRaw 로더)
+#   - 판단 보드: studio/board/log.json, prices.json (fetch)
+# monthly/index.html·end.html(카톡 카드 제목)은 페이지 자체라 바뀌면 배포함.
 # exit 0 = 배포 건너뜀, exit 1 = 배포 진행
 [build]
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)better7_prices.json' ':(exclude)studio/track.json'"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)better7_prices.json' ':(exclude)studio/track.json' ':(exclude)studio/track/**' ':(exclude)studio/indicators.js' ':(exclude)studio/signal.js' ':(exclude)studio/signal.json' ':(exclude)studio/dividends.js' ':(exclude)studio/dividends.json' ':(exclude)studio/board/prices.json' ':(exclude)studio/board/log.json'"

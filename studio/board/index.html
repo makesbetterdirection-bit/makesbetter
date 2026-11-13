@@ -174,7 +174,8 @@ function drawChart(done){
   el.querySelector('svg').addEventListener('mouseleave',function(){tip.style.opacity=0});
 }
 [].slice.call(document.querySelectorAll('.tabs button')).forEach(function(bt){bt.onclick=function(){H=+bt.dataset.h;[].slice.call(document.querySelectorAll('.tabs button')).forEach(function(x){x.setAttribute('aria-pressed',x===bt)});render()}});
-Promise.all([fetch('log.json?t='+Date.now()).then(function(r){return r.json()}),fetch('prices.json?t='+Date.now()).then(function(r){return r.json()})]).then(function(a){LOG=a[0];PX=a[1];render();window.addEventListener('resize',render)}).catch(function(e){$('meta').textContent='데이터를 불러오지 못했어요: '+e});
+function gj(n){var q='?t='+Date.now(),f=function(u){return fetch(u+q,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()})};return f('https://raw.githubusercontent.com/makesbetterdirection-bit/makesbetter/main/studio/board/'+n).catch(function(){return f(n)})}
+Promise.all([gj('log.json'),gj('prices.json')]).then(function(a){LOG=a[0];PX=a[1];render();window.addEventListener('resize',render)}).catch(function(e){$('meta').textContent='데이터를 불러오지 못했어요: '+e});
 })();
 </script>
 </body>
