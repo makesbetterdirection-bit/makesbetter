@@ -191,13 +191,16 @@ h1,h2,h3,p{margin:0}
   var TEST=q.get('test')==='1';
   var MAILTEST=q.get('mailtest')==='1';
   var CPV=q.get('coupon')||q.get('coupon_no')||q.get('couponNumber')||q.get('coupon_number')||'';
-  // 카카오 쿠폰(초대 이벤트)으로 온 경우: 커피·추가 질문 없이 짧은 신청서. 이벤트 목표는 플랫폼 유입이고 커피는 이벤트에서 따로 드림
-  var LITE=!!CPV&&!q.get('d')||q.get('lite')==='1';
-  var S={sip:'',worry:'',method:[],goal:[],income:'',accounts:[],need:'',director:''};
+  // 디렉터 페이지(?d=)에서 온 경우만 새 신청서(첫 인사 커피 + Sip 질문).
+  // 그 밖(카카오 쿠폰·초대 이벤트 등)은 기존 신청서 그대로 — 이벤트용 개편은 이벤트 배포 때 따로.
+  var LITE=!(q.get('d')&&!CPV);
+  var S={rate:'',mgoal:'',sip:'',worry:'',method:[],goal:[],income:'',accounts:[],need:'',director:''};
 
   // 탭 → 바텀시트에서 선택
   var Q=[
     {k:'worry',l:'가장 불편한 재정 고민',t:'요즘 돈 때문에 가장 불편한 건?',h:'하나만 골라 주세요',o:['늘어나는 고정지출','대출 상환 부담','교육비 & 노후준비','소득 대비 낮은 저축','자산 성장의 정체','낮은 금융 지식','기타']},
+    {k:'rate',ev:1,l:'희망 수익률',t:'희망 수익률은?',two:1,o:['연 3%','연 5%','연 10%','잘 모르겠어요']},
+    {k:'mgoal',ev:1,l:'월배당 목표',t:'제2의 월급, 월배당 목표는?',two:1,o:['월 30만원','월 50만원','월 100만원','월 200만원 이상']},
     {k:'method',full:1,l:'지금 자산 운용 방법',t:'지금 자산은 주로 어떻게 운용하세요?',h:'해당하는 것을 모두 골라 주세요',multi:1,o:['예·적금 중심의 운용','국내 주식 투자','해외 주식 투자','펀드 중심의 간접투자','부동산 중심의 운용(임대,투자)','기타','아직 명확한 계획 없음']},
     {k:'goal',full:1,l:'모으는 목적',t:'무엇을 위해 모으고 계세요?',h:'해당하는 것을 모두 골라 주세요',multi:1,o:['종자돈 만들기','은퇴자금 만들기','주택마련 & 대출상환','교육자금 & 창업자금','구체적인 목적 없음']},
     {k:'income',full:1,l:'더 만들고 싶은 소득',t:'월급 말고, 어떤 소득을 더 만들고 싶으세요?',h:'하나만 골라 주세요',o:['임대 소득','월배당 소득','N JOB','디지털 콘텐츠 수익','기타']},
@@ -205,8 +208,8 @@ h1,h2,h3,p{margin:0}
     {k:'need',full:1,l:'꼭 필요한 금융 정보·상식',t:'꼭 알아야 할 금융 정보와 상식이 필요하신가요?',h:'필요하시면 코칭 때 함께 챙겨 드려요',two:1,o:['YES','NO']},
     {k:'director',l:'담당 디렉터',t:'담당 디렉터',h:"소개받은 디렉터가 없으면 '배정 요청'을 골라 주세요",two:1,o:CONFIG.directors.map(function(d){return d.name}).concat(['배정 요청']),lab:function(v){return v==='배정 요청'?v:v+' 디렉터'}}
   ];
-  var QD=Q[6];
-  if(LITE)Q=Q.filter(function(qq){return !qq.full});
+  var QD=Q.filter(function(qq){return qq.k==='director'})[0];
+  Q=Q.filter(function(qq){return LITE?!qq.full:!qq.ev});
   function has(k){var v=S[k];return Array.isArray(v)?v.length>0:!!v}
   var rows=document.getElementById('rows'),sheet=document.getElementById('sheet'),shOpts=document.getElementById('shOpts'),cur=null;
   function lab(qq,v){if(Array.isArray(v))return v.length?(v[0]+(v.length>1?' 외 '+(v.length-1):'')):'선택';return qq.lab?qq.lab(v):v}
@@ -274,7 +277,7 @@ h1,h2,h3,p{margin:0}
     var now=new Date();
     var memo=['[전문가 1:1 코칭 쿠폰 신청 · 2시간 코칭(FREE)]','유입: '+(cp?'카카오 채널 쿠폰':pre?'디렉터 페이지':'코칭 신청서'),'쿠폰번호: '+(cp||'없음'),'추천인: '+byv,'',
       ].concat(LITE?[]:['첫 인사 커피: '+S.sip+'  ← 만나기 전에 먼저 보내 주세요','']).concat([
-      '가장 불편한 재정 고민: '+S.worry]).concat(LITE?[]:['자산 운용 방법: '+S.method.join(', '),'모으는 목적: '+S.goal.join(', '),'더 만들고 싶은 소득: '+S.income,'점검받을 계좌: '+(S.accounts.join(', ')||'없음'),'금융 정보·상식 필요: '+S.need]).concat(['담당 디렉터: '+S.director,'',
+      '가장 불편한 재정 고민: '+S.worry]).concat(LITE?['희망 수익률: '+S.rate,'월배당 목표: '+S.mgoal]:['자산 운용 방법: '+S.method.join(', '),'모으는 목적: '+S.goal.join(', '),'더 만들고 싶은 소득: '+S.income,'점검받을 계좌: '+(S.accounts.join(', ')||'없음'),'금융 정보·상식 필요: '+S.need]).concat(['담당 디렉터: '+S.director,'',
       '※ 디렉터 일정이 되는 시점에 차례로 연락해 2시간 코칭을 잡아 주세요. 쿠폰은 받은 날부터 7일 안에 등록하는 조건이며, 코칭 후 파트너센터에서 쿠폰 사용 처리.']).join('\n');
     var params={site_label:' · 코칭 쿠폰',consult_type:'전문가 1:1 코칭 (쿠폰 · 2시간 코칭 FREE)',
       date:now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate()),time:pad(now.getHours())+':'+pad(now.getMinutes()),
@@ -282,7 +285,7 @@ h1,h2,h3,p{margin:0}
     function finish(ok){
       if(!ok){go.disabled=false;go.textContent='코칭 신청하기';err.textContent='전송에 실패했습니다. 잠시 후 다시 눌러 주세요.';return}
       document.getElementById('f').style.display='none';
-      document.getElementById('sum').innerHTML=(LITE?[['추천인',byv+' 님'],['재정 고민',S.worry],['담당 디렉터',S.director]]:[['추천인',byv+' 님'],['첫 인사 커피',S.sip],['재정 고민',S.worry],['자산 운용',S.method.join(', ')],['모으는 목적',S.goal.join(', ')],['더 만들고 싶은 소득',S.income],['점검받을 계좌',S.accounts.join(', ')||'없음'],['금융 정보 필요',S.need],['담당 디렉터',S.director]]).map(function(r){return '<div><span>'+r[0]+'</span><b>'+r[1].replace(/</g,'&lt;')+'</b></div>'}).join('');
+      document.getElementById('sum').innerHTML=(LITE?[['추천인',byv+' 님'],['재정 고민',S.worry],['희망 수익률',S.rate],['월배당 목표',S.mgoal],['담당 디렉터',S.director]]:[['추천인',byv+' 님'],['첫 인사 커피',S.sip],['재정 고민',S.worry],['자산 운용',S.method.join(', ')],['모으는 목적',S.goal.join(', ')],['더 만들고 싶은 소득',S.income],['점검받을 계좌',S.accounts.join(', ')||'없음'],['금융 정보 필요',S.need],['담당 디렉터',S.director]]).map(function(r){return '<div><span>'+r[0]+'</span><b>'+r[1].replace(/</g,'&lt;')+'</b></div>'}).join('');
       document.getElementById('doneBy').textContent=byv+' 님의 ';if(LITE)document.getElementById('doneTx').innerHTML='담당 디렉터의 일정이 허락하는 때에<br>맞춰 차례로 연락드립니다.';document.getElementById('done').classList.add('on');scrollTo(0,0);
     }
     if(MAILTEST){params.to_email=CONFIG.monitorEmail;params.consult_type='[발송 시험] '+params.consult_type;}
