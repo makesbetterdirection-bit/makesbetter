@@ -1,0 +1,108 @@
+#mb-cashflow-root, #mb-cashflow-root * { box-sizing: border-box; }
+  #mb-cashflow-root {
+    font-family: "Malgun Gothic","맑은 고딕",-apple-system,sans-serif;
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    color: #222;
+    overflow-x: hidden;
+  }
+  .mbc-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    background: #fff;
+    padding: 32px 30px;
+  }
+  .mbc-header { border-bottom: 1px solid #eee; padding-bottom: 18px; margin-bottom: 22px; }
+  .mbc-logo { font-weight: 800; font-size: 21px; color: #1B6B63; letter-spacing: -0.3px; margin-bottom: 6px; }
+  .mbc-flow-tag { font-size: 12.5px; font-weight: 700; color: #5c8f89; letter-spacing: 0.5px; text-transform: uppercase; }
+  .mbc-flow-tag small { font-weight: 500; color: #999; letter-spacing: 0; text-transform: none; margin-left: 3px; font-size: 12px; }
+  .mbc-title { font-weight: 800; font-size: 20px; margin-bottom: 6px; letter-spacing: -0.3px; }
+  .mbc-sub { font-size: 13px; color: #888; margin-bottom: 22px; line-height: 1.6; }
+
+  .mbc-progress { display:flex; gap:6px; margin-bottom: 24px; }
+  .mbc-progress i { flex:1; height:4px; border-radius:2px; background:#eee; display:block; }
+  .mbc-progress i.on { background:#1B6B63; }
+
+  .mbc-step-label { font-size: 12px; font-weight:700; color:#1B6B63; letter-spacing:0.5px; margin-bottom:6px; text-transform:uppercase; }
+  .mbc-step-title { font-size: 18px; font-weight: 800; margin-bottom: 22px; line-height:1.4; }
+
+  .mbc-field { margin-bottom: 16px; }
+  .mbc-field label { display:block; font-size:12.5px; color:#555; margin-bottom:6px; }
+  .mbc-field .mbc-hint { color:#aaa; font-size:11.5px; margin-left:4px; }
+  .mbc-field input, .mbc-field select {
+    width:100%; padding:12px 14px; border:1px solid #ddd; border-radius:10px; font-size:15px;
+    font-family: inherit; background:#fff;
+  }
+  .mbc-field input:focus, .mbc-field select:focus { outline:none; border-color:#1B6B63; }
+  .mbc-field-unit { position:relative; }
+  .mbc-field-unit input { padding-right: 46px; text-align:right; }
+  .mbc-field-unit span { position:absolute; right:14px; top:50%; transform:translateY(-50%); font-size:13px; color:#999; }
+
+  .mbc-row3 { display:flex; gap:10px; }
+  .mbc-row3-col { flex:1; min-width: 0; }
+  .mbc-row3-label { display:block; font-size:11.5px; color:#888; margin-bottom:5px; text-align:center; }
+
+  .mbc-choice-grid { display:flex; flex-wrap:wrap; gap:8px; }
+  .mbc-choice {
+    border:1px solid #ddd; border-radius:10px; padding:12px 10px; text-align:center;
+    font-size:13.5px; cursor:pointer; flex:1 1 calc(50% - 8px); min-width: 120px;
+  }
+  .mbc-choice:hover { border-color:#1B6B63; }
+  .mbc-choice.selected { background:#1B6B63; color:#fff; border-color:#1B6B63; }
+
+  .mbc-self-grid { display:flex; gap:6px; }
+  .mbc-self {
+    flex:1; min-width:0; border:1px solid #ddd; border-radius:10px; padding:14px 2px; text-align:center;
+    cursor:pointer;
+  }
+  .mbc-self b { display:block; font-size:16px; }
+  .mbc-self span { display:block; font-size:11px; color:#999; margin-top:2px; white-space:nowrap; }
+  .mbc-self:hover { border-color:#1B6B63; }
+  .mbc-self.selected { background:#1B6B63; color:#fff; border-color:#1B6B63; }
+  .mbc-self.selected span { color:#dcefec; }
+
+  .mbc-btn-row { display:flex; gap:10px; margin-top:26px; }
+  .mbc-btn {
+    flex:1; display:inline-block; background:#1B6B63; color:#fff; border:none;
+    padding:14px 20px; border-radius:10px; font-size:14.5px; font-weight:700;
+    cursor:pointer; text-align:center;
+  }
+  .mbc-btn:disabled { background:#ccc; cursor:not-allowed; }
+  .mbc-btn.ghost { background:none; color:#1B6B63; border:1px solid #1B6B63; flex: 0 0 96px; }
+
+  .mbc-result-grid { display:flex; flex-wrap:wrap; gap:10px; margin-bottom: 20px; }
+  .mbc-result-card {
+    flex:1 1 calc(50% - 10px); min-width: 130px; background:#F7FAF9; border:1px solid #E0EEEC;
+    border-radius:12px; padding:16px 14px;
+  }
+  .mbc-result-card .lbl { font-size:11.5px; color:#5c8f89; font-weight:700; margin-bottom:6px; }
+  .mbc-result-card .val { font-size:22px; font-weight:800; color:#1B6B63; letter-spacing:-0.5px; }
+  .mbc-result-card .val.warn { color:#c0392b; }
+  .mbc-result-note { font-size:12.5px; color:#777; line-height:1.7; background:#fafafa; border-radius:10px; padding:14px 16px; margin-bottom:6px; }
+
+  .mbc-done { text-align:center; padding: 20px 6px; }
+  .mbc-done .mbc-check { font-size: 40px; margin-bottom: 10px; }
+
+  .mbc-roadmap { margin: 28px 0 18px; text-align:left; }
+  .mbc-roadmap-title { font-size: 16px; font-weight:800; color:#1B6B63; letter-spacing:0.3px; margin-bottom:16px; }
+  .mbc-rm-step { display:flex; gap:12px; align-items:flex-start; margin-bottom:16px; }
+  .mbc-rm-dot {
+    flex:0 0 26px; width:26px; height:26px; border-radius:50%; background:#1B6B63; color:#fff;
+    font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center;
+  }
+  .mbc-rm-step.todo .mbc-rm-dot { background:#eee; color:#999; }
+  .mbc-rm-step b { display:block; font-size:14px; font-weight:700; }
+  .mbc-rm-step.todo b { color:#666; }
+  .mbc-rm-step span { display:block; font-size:12px; color:#999; margin-top:2px; }
+
+  @media (max-width: 640px) {
+    .mbc-card { padding: 24px 18px; }
+    .mbc-choice { flex: 1 1 100%; }
+    .mbc-result-card { flex: 1 1 100%; }
+    .mbc-self { padding: 12px 1px; }
+    .mbc-self b { font-size: 14px; }
+    .mbc-self span { font-size: 9.5px; }
+  }

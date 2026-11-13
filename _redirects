@@ -11,3 +11,25 @@ https://report.makesbetter.co.kr/:month  /report/:month/  200!
 http://report.makesbetter.co.kr/:month  /report/:month/  200!
 /monthly1  /monthly/  200
 /monthly2  /monthly/end  200
+# 디렉터 페이지 · 디렉터별 짧은 주소 (주소는 그대로 두고 같은 페이지를 보여 줌)
+/d/lee  /d/  200
+/d/oh  /d/  200
+/d/byun  /d/  200
+/d/hong  /d/  200
+/d/kang  /d/  200
+/d/kimdh  /d/  200
+/d/kimsy  /d/  200
+/cashlee  /cashflow/  200
+/cashoh  /cashflow/  200
+/cashbyun  /cashflow/  200
+/cashhong  /cashflow/  200
+/cashkang  /cashflow/  200
+/cashkimdh  /cashflow/  200
+/cashkimsy  /cashflow/  200
+/siplee  /sip/  200
+/sipoh  /sip/  200
+/sipbyun  /sip/  200
+/siphong  /sip/  200
+/sipkang  /sip/  200
+/sipkimdh  /sip/  200
+/sipkimsy  /sip/  200
