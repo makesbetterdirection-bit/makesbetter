@@ -269,7 +269,10 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
 
 
   /* ===== 새 입력 화면: Studio 오프닝 + 한 화면에 질문 하나 (계산·리포트·메일 전송은 기존 그대로) ===== */
-  try{ var __d=(new URLSearchParams(location.search).get("d")||"").trim(); if(__d && CONFIG.directors.some(function(x){return x.name===__d;})){ state.director=__d; state.dLock=true; } }catch(e){}
+  try{ var __short={lee:"이종호",oh:"오수현",byun:"변보라",hong:"홍민아",kang:"강소리",kimdh:"김다희",kimsy:"김상윤"};
+    var __m=/\/cash([a-z]+)\/?$/.exec(location.pathname), __d=(new URLSearchParams(location.search).get("d")||"").trim();
+    if(__m && __short[__m[1]]) __d=__short[__m[1]];            // 디렉터 전용 주소: /cashlee, /cashoh …
+    if(__d && CONFIG.directors.some(function(x){return x.name===__d;})){ state.director=__d; state.dLock=true; } }catch(e){}
   state.q = 0;
   var QALL = ["hero","name","director","type","income","fixed","invest","asset","self"];
   function qList(){ return QALL.filter(function(k){ return !(k==="director" && state.dLock); }); }

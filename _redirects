@@ -10,3 +10,10 @@ http://report.makesbetter.co.kr/:month  /report/:month/  200!
 /monthly1  /monthly/index.html  200
 /monthly2  /monthly/end.html  200
 /d/*  /d/index.html  200
+/cashlee  /cashflow/index.html  200
+/cashoh  /cashflow/index.html  200
+/cashbyun  /cashflow/index.html  200
+/cashhong  /cashflow/index.html  200
+/cashkang  /cashflow/index.html  200
+/cashkimdh  /cashflow/index.html  200
+/cashkimsy  /cashflow/index.html  200
