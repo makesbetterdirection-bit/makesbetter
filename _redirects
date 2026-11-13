@@ -1,3 +1,5 @@
+# Cloudflare Pages · Netlify 공용. 도메인이 들어간 줄(netlify.app 차단, report 도메인)은 Netlify 전용이며 Cloudflare는 무시함.
+# report.makesbetter.co.kr 은 Cloudflare에서 별도 프로젝트(makesbetter-report, 루트=report 폴더)로 운영.
 https://harmonious-rolypoly-8184da.netlify.app/* /404.html 404!
 http://harmonious-rolypoly-8184da.netlify.app/* /404.html 404!
 /ebook  /ebook/market-mood.pdf  200
@@ -7,5 +9,5 @@ https://report.makesbetter.co.kr/  /report/  200!
 http://report.makesbetter.co.kr/  /report/  200!
 https://report.makesbetter.co.kr/:month  /report/:month/  200!
 http://report.makesbetter.co.kr/:month  /report/:month/  200!
-/monthly1  /monthly/index.html  200
-/monthly2  /monthly/end.html  200
+/monthly1  /monthly/  200
+/monthly2  /monthly/end  200

@@ -207,7 +207,9 @@ F.addEventListener('submit',async ev=>{
   for(let n=0;n<5;n++)F['q'+(n+1)].value=ans[n]||'';
   $('send').disabled=true;$('msg').style.color='#9CA3AF';$('msg').textContent='등록 중…';
   try{
-    const r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(F)).toString()});
+    const bd=new URLSearchParams(new FormData(F)).toString(),hd={'Content-Type':'application/x-www-form-urlencoded'};
+    let r=await fetch('/api/quiz',{method:'POST',headers:hd,body:bd}).catch(()=>null);
+    if(!r||r.status===404||r.status===405)r=await fetch('/',{method:'POST',headers:hd,body:bd}); /* Cloudflare(/api/quiz) 우선, 없으면 Netlify Forms */
     if(!r.ok)throw 0;
     try{localStorage.setItem('mb-quiz-1109','1')}catch(e){}
     lock(nm);
