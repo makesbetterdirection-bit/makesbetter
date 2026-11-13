@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>THE OPENING SIP | MAKESBETTER</title>
-<meta name="description" content="첫 만남은 커피 한 잔에서 시작합니다 · 디렉터 1:1 코칭 신청">
+<meta name="description" content="만나기 전에 웰컴 드링크부터 보내 드려요 · 디렉터 1:1 코칭 신청">
 <meta property="og:type" content="website">
 <meta property="og:title" content="THE OPENING SIP">
-<meta property="og:description" content="첫 만남은 커피 한 잔에서 시작합니다">
+<meta property="og:description" content="만나기 전에 웰컴 드링크부터 보내 드려요">
 <meta name="theme-color" content="#F2F2F2">
 <link rel="icon" href="/studio/icon-32.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -133,13 +133,13 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
     document.body.classList.toggle("cf-hero",k==="hero");
     if(k==="hero"){
       root.innerHTML='<section class="cf-hero-s"><h1 class="cf-lines" aria-label="The Opening Sip"><span aria-hidden="true"><i>The</i></span><span aria-hidden="true"><i>Opening</i></span><span aria-hidden="true"><i class="lt">Sip</i></span></h1>'+
-        '<p class="cf-tag">첫 만남은 커피 한 잔에서 시작합니다</p>'+
+        '<p class="cf-tag">만나기 전에 웰컴 드링크부터 보내 드려요</p>'+
         '<ul class="cf-facts"><li>'+(S.dLock?'<b>'+esc(S.director)+' 디렉터</b>가 직접 연락드려요':'<b>담당 디렉터</b>가 직접 연락드려요')+'</li><li><b>2분</b>, 한 화면에 질문 하나씩</li><li>우리에게 매직은 필요 없습니다. <b>당신의 답변</b>, 그걸로 충분합니다</li></ul></section>'+
         '<div class="cq-foot"><button class="cq-next" id="cq-next">시작하기</button><p class="cq-priv">적은 내용은 담당 디렉터에게만 전달됩니다</p></div>';
       requestAnimationFrame(function(){requestAnimationFrame(function(){var l=root.querySelector(".cf-lines");if(l)l.classList.add("in")})});
     } else {
       if(k==="director"){h='<h2 class="cq-h">어느 디렉터와<br>만나시나요?</h2>'+opts("director",CONFIG.directors.map(function(x){return x.name}),false,"two")}
-      else if(k==="sip"){h='<h2 class="cq-h">만나는 날,<br>어떤 커피로 준비할까요?</h2><p class="cq-p">'+esc(S.director||"디렉터")+' 디렉터가 미리 준비해 둘게요.</p>'+opts("sip",SIP,false,"two big")}
+      else if(k==="sip"){h='<h2 class="cq-h">웰컴 드링크,<br>어떤 커피로 보내 드릴까요?</h2><p class="cq-p">상담 전에 '+esc(S.director||"디렉터")+' 디렉터가 먼저 보내 드려요.</p>'+opts("sip",SIP,false,"two big")}
       else if(k==="name"){h='<h2 class="cq-h">누구를 기다리면<br>될까요?</h2>'+
         '<label class="cq-t"><span class="cq-l">성함</span><input id="s-name" type="text" autocomplete="name" placeholder="홍길동" maxlength="20" value="'+esc(S.name)+'"></label>'+
         '<label class="cq-t"><span class="cq-l">휴대폰 번호</span><input id="s-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" maxlength="13" value="'+esc(S.phone)+'"></label>'+
@@ -151,7 +151,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
       else if(k==="accounts"){multi=true;h='<h2 class="cq-h">점검받고 싶은<br>계좌가 있나요?</h2><p class="cq-p">가지고 있는 계좌를 모두 골라 주세요. 없으면 그냥 다음으로.</p>'+opts("accounts",ACCT,true,"two")}
       else if(k==="need"){h='<h2 class="cq-h">꼭 알아야 할 금융 정보와<br>상식이 필요하신가요?</h2><p class="cq-p">필요하시면 코칭 때 함께 챙겨 드려요.</p>'+opts("needInfo",["YES","NO"],false,"two big")}
       else if(k==="review"){next="신청하기";h='<h2 class="cq-h">이대로 신청할게요</h2><p class="cq-p">'+esc(S.director)+' 디렉터에게 전달되고, 디렉터가 직접 연락드려요.</p>'+
-        '<div class="sv">'+row("담당 디렉터",S.director)+row("커피",S.sip)+row("성함",S.name)+row("연락처",S.phone)+row("추천인",S.referrer)+row("가장 불편한 고민",S.worry)+row("자산 운용",S.assetMethod)+row("운용 목적",S.assetGoal)+row("더 만들고 싶은 소득",S.incomeType)+row("점검받을 계좌",S.accounts)+row("금융 정보 필요",S.needInfo)+'</div>'+
+        '<div class="sv">'+row("담당 디렉터",S.director)+row("웰컴 드링크",S.sip)+row("성함",S.name)+row("연락처",S.phone)+row("추천인",S.referrer)+row("가장 불편한 고민",S.worry)+row("자산 운용",S.assetMethod)+row("운용 목적",S.assetGoal)+row("더 만들고 싶은 소득",S.incomeType)+row("점검받을 계좌",S.accounts)+row("금융 정보 필요",S.needInfo)+'</div>'+
         '<p class="cq-p sv-n">신청 후 카카오톡 채널 추가 화면으로 넘어가요. 채널을 추가해야 접수가 완료됩니다.</p>'}
       root.innerHTML='<header class="cq-top"><button type="button" class="cq-back" id="cq-back" aria-label="이전"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>'+
         '<div class="cq-bar"><i style="width:'+Math.round(n/total*100)+'%"></i></div><span class="cq-n">'+n+' / '+total+'</span></header>'+
@@ -186,7 +186,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
     qa("희망하는 추가 소득 형태",S.incomeType),"",qa("보유 계좌 점검",S.accounts.join(", ")),"",qa("필수 금융 정보 & 상식 필요",S.needInfo),"","유입: 디렉터 페이지 (calc.makesbetter.co.kr/sip)"].join("\n")}
   function done(fail){document.body.classList.remove("cf-hero");
     root.innerHTML='<main class="cq-body sd"><div class="sd-cup" aria-hidden="true">'+(S.sip.indexOf("ICE")===0?"🧊":"☕")+'</div><h2 class="cq-h">'+(fail?'전송이 잠깐 막혔어요':'신청이 접수됐어요')+'</h2>'+
-      '<p class="cq-p">'+(fail?'신청 내용은 이 화면에 남아 있어요. 아래 버튼으로 다시 보내 주세요.':esc(S.director)+' 디렉터가 '+esc(S.sip)+'를 준비하고 연락드릴게요.<br>마지막으로 카카오톡 채널을 추가하면 접수가 완료됩니다.')+'</p></main>'+
+      '<p class="cq-p">'+(fail?'신청 내용은 이 화면에 남아 있어요. 아래 버튼으로 다시 보내 주세요.':esc(S.director)+' 디렉터가 웰컴 드링크('+esc(S.sip)+')를 먼저 보내고 연락드릴게요.<br>마지막으로 카카오톡 채널을 추가하면 접수가 완료됩니다.')+'</p></main>'+
       '<div class="cq-foot">'+(fail?'<button class="cq-next" id="sd-retry">다시 보내기</button>':'<a class="cq-next kk" href="'+CONFIG.channelUrl+'">카카오톡 채널 추가하고 완료하기</a>')+'</div>';
     if(fail)root.querySelector("#sd-retry").onclick=send;
     else{try{fetch("https://abacus.jasoncameron.dev/hit/mbkr.my/sip-apply",{keepalive:true,mode:"no-cors"})}catch(e){}}}
