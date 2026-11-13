@@ -22,6 +22,7 @@
 .dx-c{list-style:none;margin-top:18px;display:grid;gap:8px;text-align:left}
 .dx-c li{padding:11px 14px;border-radius:12px;background:#fff;font-size:14.5px;font-weight:600}
 .dx-todo{font-style:normal;font-size:12px!important;font-weight:600!important;color:#A0522D!important;background:#FFF1E6!important;border:1px dashed #E0A070;border-radius:8px;padding:3px 8px}
+.dx-c li.dx-m{background:var(--ink);color:#F3E0AE;font-size:16px;font-weight:700;text-align:center;padding:16px 14px;letter-spacing:-.02em}
 .dx-c li.dx-todo{padding:10px 14px}
 .dx blockquote{margin-top:20px;padding-top:20px;border-top:1px solid #DDD5C3;font-size:16px;line-height:1.7;font-weight:500;text-align:left}
 .dx>a{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;font-size:13px;font-weight:700}
@@ -197,7 +198,7 @@ a.w-rw{display:block}
 (function(){
   // 디렉터별 내용: 주소(/d/lee 또는 ?d=lee)만 다르고 페이지는 하나
   var D={
-    lee:{name:'이종호',role:'대표 디렉터',quote:'“현금 흐름도 엉망이고 빚도 많았는데, 현금 흐름부터 잡아서 매달 모으는 돈을 늘렸어요.”',who:'5년째 함께한 고객',rv:'174960813'},
+    lee:{name:'이종호',role:'대표 디렉터',career:['한국투자증권 Financial Advisor ㅣ 286개월','금융세미나 · 자산관리 · 플랫폼 매니지먼트'],motto:'현상은 복잡하지만 본질은 단순하다',quote:'“현금 흐름도 엉망이고 빚도 많았는데, 현금 흐름부터 잡아서 매달 모으는 돈을 늘렸어요.”',who:'5년째 함께한 고객',rv:'174960813'},
     oh:{name:'오수현',role:'디렉터',quote:'“잘못된 투자로 손해를 보고 마음을 닫았던 저에게, 인생의 경제적 길잡이가 되어 주셨어요.”',who:'10년 가까이 함께한 고객',rv:'173082766'},
     byun:{name:'변보라',role:'디렉터',quote:'“결혼 준비부터 노후 대비까지 꼼꼼하게 챙겨 주셨어요.”',who:'7년째 함께한 고객',rv:'175296898'},
     hong:{name:'홍민아',role:'디렉터',quote:'“예·적금밖에 모르던 저에게 새로운 세계가 열린 것 같았어요.”',who:'함께한 고객',rv:'175279693'},
@@ -209,6 +210,7 @@ a.w-rw{display:block}
   function all(s,f){[].forEach.call(document.querySelectorAll(s),f)}
   all('[data-d=name]',function(e){e.textContent=d.name});all('[data-d=role]',function(e){e.textContent=d.role});
   all('[data-d=mono]',function(e){e.textContent=d.name.charAt(0)});all('[data-d=quote]',function(e){e.textContent=d.quote});
+  if(d.career){all('[data-d=career]',function(e){e.innerHTML=d.career.map(function(c){return '<li>'+c+'</li>'}).join('')+(d.motto?'<li class="dx-m">“'+d.motto+'”</li>':'')})}
   all('[data-d=rvwho]',function(e){e.textContent=d.who});all('[data-d=rv]',function(e){e.href=d.rv?'https://mbkr.my/review/?bmode=view&idx='+d.rv:'https://mbkr.my/review'});
   all('[data-d=coach]',function(e){e.href='/coaching/?d='+encodeURIComponent(d.name)});
   document.title=d.name+' '+d.role+' | MAKESBETTER';
