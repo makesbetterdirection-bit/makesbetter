@@ -174,6 +174,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
       <a class="w-rw rvl" href="https://calc.makesbetter.co.kr/books" target="_blank" rel="noopener"><span class="lkc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>선물 02</b><small>채널 추가 후 공개</small></span><span class="w-rn">선물 02 · 읽을거리</span><b>전자책 2권</b><p>현금흐름은 산소다 · 공포·탐욕 지수 읽는 법</p><div class="w-rf"><span>책장 넘기며 읽기 · 다운로드</span><em>읽기</em></div></a>
       <a class="w-rw rvl" data-d="cf" href="/cashflow/" target="_blank" rel="noopener"><span class="lkc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>선물 03</b><small>채널 추가 후 공개</small></span><span class="w-rn">선물 03 · 진단</span><b>MONEY 4 SQUARE 현금흐름 진단</b><p>소득·고정지출·변동지출·저축, 네 칸으로 보는 내 돈</p><div class="w-rf"><span>작성 후 디렉터가 확인</span><em>진단하기</em></div></a>
       <a class="w-rw best rvl" data-d="coach" href="/coaching/?d=이종호"><span class="lkc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>가장 큰 선물</b><small>채널 추가 후 공개</small></span><span class="w-rn">가장 큰 선물</span><b><span data-d="name">이종호</span> 디렉터 1:1 코칭 2시간</b><p>현금흐름 점검 · 보유자산 평가 · 돈 모으는 툴</p><div class="w-rf"><span>신청하면 디렉터가 직접 연락</span><em>신청하기</em></div></a>
+      <a class="w-rw rvl" data-d="sip" href="/sip/" target="_blank" rel="noopener"><span class="lkc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="sh" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>첫 만남 신청</b><small>채널 추가 후 공개</small></span><span class="w-rn">코칭 신청 · 2분</span><b>THE OPENING SIP</b><p>만나는 날 마실 커피와 요즘 고민을 미리 알려 주세요</p><div class="w-rf"><span><u data-d="name" style="text-decoration:none">이종호</u> 디렉터가 직접 연락</span><em>신청하기</em></div></a>
     </section>
 
     <section class="w-sec c-p">
@@ -246,7 +247,8 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   if(d.photo){all('[data-d=photo]',function(e){e.innerHTML='<img src="'+d.photo+'" alt="'+d.name+' '+d.role+'">'})}
   if(d.career){all('[data-d=career]',function(e){e.innerHTML=d.career.map(function(c){return '<li>'+c+'</li>'}).join('')+(d.motto?'<li class="dx-m">“'+d.motto+'”</li>':'')})}
   all('[data-d=rvwho]',function(e){e.textContent=d.who});all('[data-d=rv]',function(e){e.href=d.rv?'https://mbkr.my/review/?bmode=view&idx='+d.rv:'https://mbkr.my/review'});
-  all('[data-d=coach]',function(e){e.href='/coaching/?d='+encodeURIComponent(d.name)});all('[data-d=cf]',function(e){e.href='/cash'+k});
+  var by='';try{by=(new URLSearchParams(location.search).get('by')||'').trim().slice(0,10)}catch(e){}
+  all('[data-d=coach]',function(e){e.href='/coaching/?d='+encodeURIComponent(d.name)});all('[data-d=cf]',function(e){e.href='/cash'+k});all('[data-d=sip]',function(e){e.href='/sip'+k+(by?'?by='+encodeURIComponent(by):'')});
   document.title=d.name+' '+d.role+' | MAKESBETTER';
   var opened=false,clicked=false;
   function goldRain(ms){var c=document.getElementById('gold');if(!c||!c.getContext)return;var x=c.getContext('2d'),W=c.width=innerWidth*2,H=c.height=innerHeight*2,t0=performance.now(),P=[];c.style.display='block';
@@ -275,8 +277,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12}):null;
   all('.rvl',function(el){var n=0,pv=el.previousElementSibling;while(pv&&pv.classList.contains('rvl')&&n<5){n++;pv=pv.previousElementSibling}el.style.transitionDelay=(n*110)+'ms';if(io)io.observe(el);else el.classList.add('in')});
   // 보낸 사람(고객) 이름: ?by=이름
-  var by='';try{by=(new URLSearchParams(location.search).get('by')||'').trim().slice(0,10)}catch(e){}
-  if(by){all('[data-by=from]',function(e){e.textContent=by});all('[data-by=who]',function(e){e.textContent=by+' 님'});
+    if(by){all('[data-by=from]',function(e){e.textContent=by});all('[data-by=who]',function(e){e.textContent=by+' 님'});
     all('[data-by=why]',function(e){e.textContent=by+' 님이 먼저 만나 본 디렉터를, 당신에게도 소개하고 싶어서 보낸 초대장이에요.'})}
   var env=document.getElementById('env');
   document.getElementById('openEnv').addEventListener('click',function(){hit('d-'+k+'-open');env.classList.add('open');setTimeout(function(){env.classList.add('gone');document.body.classList.remove('noscroll')},1100)});

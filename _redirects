@@ -17,3 +17,10 @@ http://report.makesbetter.co.kr/:month  /report/:month/  200!
 /cashkang  /cashflow/index.html  200
 /cashkimdh  /cashflow/index.html  200
 /cashkimsy  /cashflow/index.html  200
+/siplee  /sip/index.html  200
+/sipoh  /sip/index.html  200
+/sipbyun  /sip/index.html  200
+/siphong  /sip/index.html  200
+/sipkang  /sip/index.html  200
+/sipkimdh  /sip/index.html  200
+/sipkimsy  /sip/index.html  200
