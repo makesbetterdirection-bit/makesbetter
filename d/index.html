@@ -38,6 +38,20 @@
 .pl span{font-size:13px;color:var(--sub)}
 .pl i{font-style:normal;font-size:12px;font-weight:700;color:var(--gold)}
 a.w-rw{display:block}
+.gate{margin-top:26px;padding:26px 22px 20px;border-radius:22px;background:var(--card);border:2px solid var(--ink);text-align:center}
+.gate-s{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.06em;color:#fff;background:var(--ink);border-radius:999px;padding:5px 12px}
+.gate-t{display:block;margin-top:14px;font-size:22px;font-weight:800;letter-spacing:-.03em}
+.gate-p{margin-top:8px;font-size:14.5px;color:var(--sub)}
+.gate .btn{margin-top:18px}
+.gate-n{display:block;margin-top:12px;font-size:12.5px;color:var(--faint)}
+.gate.shake{animation:gsh .5s}
+@keyframes gsh{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.gate-ok{display:none;margin-top:22px;padding:13px;border-radius:14px;background:#EEF4EC;color:#2E5A3A;font-size:14.5px;font-weight:700;text-align:center}
+body.open .gate{display:none}body.open .gate-ok{display:block}
+body:not(.open) #gifts a.w-rw{position:relative;opacity:.55}
+body:not(.open) #gifts a.w-rw .w-rf em{font-size:0}
+body:not(.open) #gifts a.w-rw .w-rf em:after{content:"채널 추가 후 열림";font-size:12px}
+body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
 .w-bar:not(.w-tm){display:flex}
 </style>
 </head>
@@ -99,7 +113,7 @@ a.w-rw{display:block}
         <b class="dx-n"><span data-d="name">이종호</span></b>
         <small class="dx-r"><span data-d="role">대표 디렉터</span> · MAKESBETTER</small>
         <ul class="dx-c" data-d="career"><li class="dx-todo">경력 한 줄 자리 (받으면 교체)</li><li class="dx-todo">전문 분야 자리</li><li class="dx-todo">함께한 고객 수·기간 자리</li></ul>
-        <blockquote data-d="quote">“현금 흐름도 엉망이고 빚도 많았는데, 현금 흐름부터 잡아서 매달 모으는 돈을 늘렸어요.”</blockquote>
+        <blockquote data-d="quote">“대표님을 만나지 않았다면 금전적으로 빚 걱정, 미래 걱정이 없는 저는 없었을 거 같았습니다. 늘 감사합니다!”</blockquote>
         <a data-d="rv" href="https://mbkr.my/review/?bmode=view&idx=174960813" target="_blank" rel="noopener"><span data-d="rvwho">5년째 함께한 고객</span>후기 읽기 →</a>
       </article>
     </section>
@@ -160,7 +174,15 @@ a.w-rw{display:block}
     <!-- 리워드 구성 -->
     <section class="w-sec c-g" id="gifts">
       <span class="w-pt rvl">지금 받을 수 있는 것</span>
-      <h2 class="rvl">가벼운 것부터,<br>하나씩 열어 보세요.</h2>
+      <h2 class="rvl" id="giftH">채널을 추가하면<br>선물 4가지가 열려요.</h2>
+      <div class="gate rvl" id="gate">
+        <span class="gate-s">STEP 1 · 필수</span>
+        <b class="gate-t">카카오톡 채널 추가</b>
+        <p class="gate-p">선물 전달, 코칭 일정 안내, 매달 소식이<br>모두 메이크스베러 채널로 가요.</p>
+        <a class="btn kakao" id="chBtn" href="https://pf.kakao.com/_eETXxj/friend" target="_blank" rel="noopener">카카오톡 채널 추가하기</a>
+        <small class="gate-n">추가한 뒤 이 화면으로 돌아오면 바로 열려요 · 무료</small>
+      </div>
+      <p class="gate-ok rvl" id="gateOk">✓ 채널 추가 완료 · 선물이 열렸어요</p>
       <a class="w-rw rvl" href="https://mbkr.my/meta" target="_blank" rel="noopener"><span class="w-rn">선물 01 · 3분</span><b>금융 I.Q 테스트</b><p>내 금융 감각 확인 + 결과 리포트</p><div class="w-rf"><span>휴대폰으로 바로</span><em>시작하기</em></div></a>
       <a class="w-rw rvl" href="https://calc.makesbetter.co.kr/books" target="_blank" rel="noopener"><span class="w-rn">선물 02 · 읽을거리</span><b>전자책 2권</b><p>현금흐름은 산소다 · 공포·탐욕 지수 읽는 법</p><div class="w-rf"><span>책장 넘기며 읽기 · 다운로드</span><em>읽기</em></div></a>
       <a class="w-rw rvl" href="https://mbkr.my/cashflow" target="_blank" rel="noopener"><span class="w-rn">선물 03 · 진단</span><b>MONEY 4 SQUARE 현금흐름 진단</b><p>소득·고정지출·변동지출·저축, 네 칸으로 보는 내 돈</p><div class="w-rf"><span>작성 후 디렉터가 확인</span><em>진단하기</em></div></a>
@@ -171,13 +193,12 @@ a.w-rw{display:block}
     <section class="w-sec w-flow">
       <span class="w-pt rvl">받는 순서</span>
       <ol class="w-tl">
-        <li class="rvl"><b>코칭 신청서 작성</b><span>1분 · 가입비 없음</span></li>
+        <li class="rvl"><b>카카오톡 채널 추가</b><span>필수 · 선물과 일정 안내를 받는 곳</span></li>
+        <li class="rvl"><b>선물 열기 · 코칭 신청서 작성</b><span>1분 · 가입비 없음</span></li>
         <li class="rvl"><b><u data-d="name" style="text-decoration:none">이종호</u> 디렉터가 직접 연락</b><span>서로 가능한 일정으로 잡아요</span></li>
         <li class="rvl"><b>2시간 1:1 코칭</b><span>현금흐름 점검 · 보유자산 평가 · 툴 제공</span></li>
-        <li class="rvl"><b>카카오톡 채널에서 매달 함께</b><span>리포트 · 매수 방향 · 배당 알림</span></li>
       </ol>
       <a class="btn rvl" data-d="coach" href="/coaching/?d=이종호" style="margin-top:26px">코칭 신청하기</a>
-      <a class="btn kakao rvl" href="https://pf.kakao.com/_eETXxj/friend" target="_blank" rel="noopener" style="margin-top:10px">카카오톡 채널 추가</a>
     </section>
 
     
@@ -185,6 +206,7 @@ a.w-rw{display:block}
     <section class="w-sec w-end">
       <span class="w-pt rvl">자주 묻는 질문</span>
       <div class="w-faq rvl">
+        <details><summary>왜 카카오톡 채널을 추가해야 하나요?</summary><p>선물 전달, 코칭 일정 안내, 코칭 이후 매달 소식이 모두 채널로 가기 때문이에요. 무료이고, 언제든 차단할 수 있어요.</p></details>
         <details><summary>정말 무료인가요?</summary><p>네. 가입비도, 코칭 비용도 없어요. 코칭권은 100장 한정으로 12월 31일까지 드려요.</p></details>
         <details><summary>코칭을 받으면 뭔가 가입해야 하나요?</summary><p>가입 의무는 없어요. 코칭은 현금흐름 점검, 보유자산 평가, 돈 모으는 툴 제공으로 진행돼요.</p></details>
         <details><summary>코칭은 언제, 어떻게 하나요?</summary><p>코칭권을 등록하면 담당 디렉터가 연락드리고, 서로 가능한 일정에 맞춰 진행해요.</p></details>
@@ -194,12 +216,12 @@ a.w-rw{display:block}
 
   </main>
 </div>
-<div class="sticky" id="sticky"><a class="btn" data-d="coach" href="/coaching/?d=이종호"><span data-d="name">이종호</span> 디렉터에게 코칭 신청</a></div>
+<div class="sticky" id="sticky"><a class="btn kakao" id="chBtn2" href="https://pf.kakao.com/_eETXxj/friend" target="_blank" rel="noopener">채널 추가하고 선물 열기</a><a class="btn" id="coachBtn" data-d="coach" href="/coaching/?d=이종호"><span><span data-d="name">이종호</span> 디렉터에게 코칭 신청</span></a></div>
 <script>
 (function(){
   // 디렉터별 내용: 주소(/d/lee 또는 ?d=lee)만 다르고 페이지는 하나
   var D={
-    lee:{name:'이종호',role:'대표 디렉터',photo:'/d/img/lee.webp',career:['한국투자증권 Financial Advisor ㅣ 24년 차','금융세미나 · 자산관리 · 플랫폼 매니지먼트'],motto:'현상은 복잡하지만 본질은 단순하다',quote:'“현금 흐름도 엉망이고 빚도 많았는데, 현금 흐름부터 잡아서 매달 모으는 돈을 늘렸어요.”',who:'5년째 함께한 고객',rv:'174960813'},
+    lee:{name:'이종호',role:'대표 디렉터',photo:'/d/img/lee.webp',career:['한국투자증권 Financial Advisor ㅣ 24년 차','금융세미나 · 자산관리 · 플랫폼 매니지먼트'],motto:'현상은 복잡하지만 본질은 단순하다',quote:'“대표님을 만나지 않았다면 금전적으로 빚 걱정, 미래 걱정이 없는 저는 없었을 거 같았습니다. 늘 감사합니다!”',who:'5년째 함께한 고객',rv:'174960813'},
     oh:{name:'오수현',role:'디렉터',quote:'“잘못된 투자로 손해를 보고 마음을 닫았던 저에게, 인생의 경제적 길잡이가 되어 주셨어요.”',who:'10년 가까이 함께한 고객',rv:'173082766'},
     byun:{name:'변보라',role:'디렉터',quote:'“결혼 준비부터 노후 대비까지 꼼꼼하게 챙겨 주셨어요.”',who:'7년째 함께한 고객',rv:'175296898'},
     hong:{name:'홍민아',role:'디렉터',quote:'“예·적금밖에 모르던 저에게 새로운 세계가 열린 것 같았어요.”',who:'함께한 고객',rv:'175279693'},
@@ -216,6 +238,14 @@ a.w-rw{display:block}
   all('[data-d=rvwho]',function(e){e.textContent=d.who});all('[data-d=rv]',function(e){e.href=d.rv?'https://mbkr.my/review/?bmode=view&idx='+d.rv:'https://mbkr.my/review'});
   all('[data-d=coach]',function(e){e.href='/coaching/?d='+encodeURIComponent(d.name)});
   document.title=d.name+' '+d.role+' | MAKESBETTER';
+  var opened=false,clicked=false;
+  function unlock(q){if(opened)return;opened=true;document.body.classList.add('open');document.getElementById('giftH').innerHTML='가벼운 것부터,<br>하나씩 열어 보세요.';try{localStorage.setItem('mb-go-ch','1')}catch(e){}if(!q)setTimeout(function(){document.getElementById('gifts').scrollIntoView({behavior:'smooth',block:'start'})},300)}
+  try{if(localStorage.getItem('mb-go-ch')==='1')unlock(true)}catch(e){}
+  ['chBtn','chBtn2'].forEach(function(id){document.getElementById(id).addEventListener('click',function(){clicked=true;hit('d-'+k+'-channel')})});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden&&clicked)unlock()});
+  window.addEventListener('focus',function(){if(clicked)setTimeout(unlock,400)});
+  // 채널 추가 전에는 선물·코칭 신청이 열리지 않고, 채널 추가 안내로 이동
+  document.addEventListener('click',function(e){if(opened)return;var a=e.target.closest('#gifts a.w-rw,[data-d=coach]');if(!a)return;e.preventDefault();var g=document.getElementById('gate');g.scrollIntoView({behavior:'smooth',block:'center'});g.classList.remove('shake');void g.offsetWidth;g.classList.add('shake')},true);
   function hit(x){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/'+x,{keepalive:true,mode:'no-cors'})}catch(e){}}
   hit('d-'+k);
   all('[data-d=coach]',function(e){e.addEventListener('click',function(){hit('d-'+k+'-coach')})});
