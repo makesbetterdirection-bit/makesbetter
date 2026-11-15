@@ -8,7 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="전문가 1:1 코칭 2시간(FREE) · MAKESBETTER">
 <meta property="og:description" content="현금흐름 점검, 보유자산 평가, 돈 모으는 툴까지. 채널 친구 전용 쿠폰으로 신청하세요.">
-<meta property="og:image" content="https://calc.makesbetter.co.kr/coaching/og.png">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/coaching/og-card.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <link rel="icon" href="/studio/icon-32.png">
@@ -95,7 +95,12 @@ h1,h2,h3,p{margin:0}
 .drink .opt small{display:block;margin-top:2px;font-size:13px;font-weight:500;color:var(--faint)}
 .drink .opt.on small{color:#B23A0C}
 /* 쿠폰 적용 표시 */
-.tk-cp{display:none;margin-top:10px;font-size:14px;font-weight:600;color:#E8E8E8}
+.tkimg{position:relative;container-type:inline-size;border-radius:6%;filter:drop-shadow(0 14px 30px rgba(0,0,0,.18))}
+.tkimg img{display:block;width:100%;height:auto}
+/* 이미지 속 'FROM 추천해 주신 분' 자리에 실제 추천인 이름을 덮어 씀 (이름이 있을 때만) */
+.tkimg-from{position:absolute;left:25.4%;top:82%;width:64.5%;height:7.4%;display:none;align-items:center;background:linear-gradient(90deg,#161616,#1A1A1A 60%,#1E1E1E);color:#fff;font-size:5.1cqw;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden}
+.tkimg-from.on{display:flex}
+.tk-cp{display:none;margin-top:10px;font-size:14px;font-weight:600;color:var(--sub,#5E5E5E)}
 .tk-cp.on{display:block}
 .tk-cp i{font-style:normal;color:var(--gold);letter-spacing:.04em}
 .field input:focus{border-color:var(--ink)}
@@ -129,13 +134,11 @@ h1,h2,h3,p{margin:0}
 <body>
 <div class="wrap">
   <header class="head">
-    <div class="ticket">
-      <span class="tk-label">INVITATION · COACHING</span>
-      <h1>전문가 1:1 맞춤 코칭<br>신청서</h1>
-      <div class="tk-time"><b class="nw">2시간 코칭</b><span class="nw free">FREE</span></div>
-      <div class="tk-inc"><i>현금흐름 점검</i><i>보유자산 평가</i><i>돈 모으는 툴 제공</i></div>
-      <div class="tk-from"><span>FROM</span><b id="fromName">추천해 주신 분</b></div>
-      <p class="tk-cp" id="tkCp">✓ 코칭 쿠폰 적용됨 <i id="tkCpNo"></i></p>
+    <div class="tkimg">
+      <img src="/coaching/card.webp" width="692" height="694" alt="MAKES BETTER INVITATION · 프라이빗 자산 코칭 2시간 FREE · 현금흐름 점검, 보유자산 평가, 돈 모으는 툴 제공">
+      <b class="tkimg-from" id="fromName" aria-label="추천해 주신 분"></b>
+    </div>
+    <p class="tk-cp" id="tkCp">✓ 코칭 쿠폰 적용됨 <i id="tkCpNo"></i></p>
     </div>
   </header>
 
@@ -280,7 +283,7 @@ h1,h2,h3,p{margin:0}
   var byIn=document.getElementById('by'),fromName=document.getElementById('fromName');
   var bv=(q.get('by')||'').trim();try{if(!bv)bv=localStorage.getItem('mb_by')||''}catch(e){}
   bv=bv.slice(0,10);if(bv)byIn.value=bv;
-  function syncFrom(){var v=byIn.value.trim();fromName.textContent=v?v+' 님':'추천해 주신 분';try{if(v)localStorage.setItem('mb_by',v)}catch(e){}}
+  function syncFrom(){var v=byIn.value.trim();fromName.textContent=v?v+' 님':'';fromName.classList.toggle('on',!!v);try{if(v)localStorage.setItem('mb_by',v)}catch(e){}}
   byIn.addEventListener('input',syncFrom);syncFrom();
   // 쿠폰번호 자동 입력 (cashflow와 같은 이름의 주소값을 모두 받음)
   var cv=q.get('coupon')||q.get('coupon_no')||q.get('couponNumber')||q.get('coupon_number')||'';
