@@ -61,6 +61,21 @@ h1,h2,h3,p{margin:0}
 .row .rv{flex:0 0 auto;font-size:17px;font-weight:700;color:var(--faint);white-space:nowrap}
 .row.set .rv{color:var(--accent)}
 .row.need .rl{color:#D23B1F}
+.rows.fx .row{gap:14px;padding:15px 2px}
+.rows.fx .no{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:#F1F1F1;color:var(--sub);font-size:14px;font-weight:700;font-style:normal;display:flex;align-items:center;justify-content:center}
+.rows.fx .row.set .no{background:var(--accent);color:#fff}
+.rows.fx .rl{color:var(--ink);font-size:17px}
+.rows.fx .rl small{display:block;margin-top:2px;font-size:13px;font-weight:500;color:var(--faint)}
+.rows.fx .rv{font-size:15px;color:var(--accent);border:1.5px solid var(--accent);border-radius:99px;padding:7px 14px}
+.rows.fx .row.nx .rv{background:var(--accent);color:#fff}
+.rows.fx .row.set .rv{border-color:var(--rule);color:var(--faint);font-size:14px;padding:6px 12px}
+.rows.fx .row.set .rl small{color:var(--accent);font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rows.fx .row.need .rv{border-color:#D23B1F;color:#D23B1F}
+.rows.fx .row::after{display:none}
+.qprog{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:14px;font-weight:700;color:var(--sub)}
+.qprog i{flex:1;height:6px;border-radius:3px;background:#EFEFEF;overflow:hidden}
+.qprog i b{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+.qprog.ok{color:var(--accent)}
 .row::after{content:"";flex:0 0 auto;width:8px;height:8px;border-right:2px solid #BDBDBD;border-bottom:2px solid #BDBDBD;transform:rotate(-45deg);margin-right:4px}
 /* 바텀시트 */
 .dim{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
@@ -139,7 +154,8 @@ h1,h2,h3,p{margin:0}
 
     <section class="q">
       <h2>코칭 전에 알려 주세요<small>필수</small></h2>
-      <p class="hint">눌러서 골라 주세요. 여러 개 고를 수 있는 항목도 있어요</p>
+      <p class="hint" id="rowsHint">눌러서 골라 주세요. 여러 개 고를 수 있는 항목도 있어요</p>
+      <div class="qprog" id="qprog" hidden><span id="qprogT"></span><i><b id="qprogB"></b></i></div>
       <div class="rows" id="rows"></div>
     </section>
 
@@ -213,31 +229,46 @@ h1,h2,h3,p{margin:0}
   function has(k){var v=S[k];return Array.isArray(v)?v.length>0:!!v}
   var rows=document.getElementById('rows'),sheet=document.getElementById('sheet'),shOpts=document.getElementById('shOpts'),cur=null;
   function lab(qq,v){if(Array.isArray(v))return v.length?(v[0]+(v.length>1?' 외 '+(v.length-1):'')):'선택';return qq.lab?qq.lab(v):v}
+  // 디렉터 페이지에서 온 신청서(FX): 번호 + '고르기' 버튼 + 진행 표시 + 고르면 다음 질문 자동으로 열기
+  var FX=!LITE;if(FX)rows.classList.add('fx');
   Q.forEach(function(qq){
-    var r=document.createElement('button');r.type='button';r.className='row';r.innerHTML='<span class="rl"></span><span class="rv">선택</span>';
-    r.querySelector('.rl').textContent=qq.l;qq.el=r;r.addEventListener('click',function(){openSheet(qq)});rows.appendChild(r);
+    var r=document.createElement('button');r.type='button';r.className='row';r.innerHTML=FX?'<span class="no"></span><span class="rl"></span><span class="rv">고르기</span>':'<span class="rl"></span><span class="rv">선택</span>';
+    r.querySelector('.rl').textContent=qq.l;
+    if(FX){var sm=document.createElement('small');sm.textContent=qq.opt?'없으면 건너뛰어도 돼요':qq.multi?'여러 개 골라도 돼요':'하나만 골라요';r.querySelector('.rl').appendChild(sm)}
+    qq.el=r;r.addEventListener('click',function(){openSheet(qq)});rows.appendChild(r);
   });
-  function paint(qq){var on=has(qq.k);qq.el.classList.toggle('set',on);if(on)qq.el.classList.remove('need');qq.el.querySelector('.rv').textContent=on?lab(qq,S[qq.k]):(qq.opt?'선택(없으면 비움)':'선택')}
+  function done(qq){return has(qq.k)||(qq.opt&&qq.seen)}
+  function vis(){return Q.filter(function(qq){return qq.el.style.display!=='none'})}
+  function prog(){if(!FX)return;var v=vis(),n=v.filter(done).length,nx=v.filter(function(qq){return !done(qq)})[0];
+    v.forEach(function(qq,i){qq.el.querySelector('.no').textContent=done(qq)?'✓':String(i+1);qq.el.classList.toggle('nx',qq===nx)});
+    var pg=document.getElementById('qprog');pg.hidden=false;pg.classList.toggle('ok',n===v.length);
+    document.getElementById('qprogT').textContent=n===v.length?'모두 답했어요':v.length+'개 중 '+n+'개 답했어요';document.getElementById('qprogB').style.width=(n/v.length*100)+'%'}
+  function openNext(){if(!FX)return;var nx=vis().filter(function(qq){return !done(qq)})[0];if(nx)setTimeout(function(){openSheet(nx)},280)}
+  function paint(qq){var on=!!(has(qq.k)||(FX&&qq.opt&&qq.seen));qq.el.classList.toggle('set',on);if(on)qq.el.classList.remove('need');
+    if(FX){var val=has(qq.k)?(Array.isArray(S[qq.k])?S[qq.k].join(', '):lab(qq,S[qq.k])):'없음';qq.el.querySelector('.rl small').textContent=on?val:(qq.opt?'없으면 건너뛰어도 돼요':qq.multi?'여러 개 골라도 돼요':'하나만 골라요');qq.el.querySelector('.rv').textContent=on?'바꾸기':'고르기';prog();return}
+    qq.el.querySelector('.rv').textContent=on?lab(qq,S[qq.k]):(qq.opt?'선택(없으면 비움)':'선택')}
   function setVal(qq,v){S[qq.k]=v;paint(qq);if(qq.k==='director')syncDir()}
   function openSheet(qq){
-    cur=qq;document.getElementById('shTitle').textContent=qq.t;document.getElementById('shHint').textContent=qq.h||'';
+    cur=qq;var vv=vis();document.getElementById('shTitle').textContent=(FX?'질문 '+(vv.indexOf(qq)+1)+'/'+vv.length+' · ':'')+qq.t;document.getElementById('shHint').textContent=qq.h||'';
     shOpts.className='opts'+(qq.two?' two':'')+(qq.multi?' multi':'');shOpts.innerHTML='';sheet.classList.toggle('multi',!!qq.multi);
     qq.o.forEach(function(v){var b=document.createElement('button');b.type='button';var on=qq.multi?S[qq.k].indexOf(v)>-1:S[qq.k]===v;b.className='opt'+(on?' on':'');b.textContent=qq.lab?qq.lab(v):v;
       b.addEventListener('click',function(){
-        if(!qq.multi){setVal(qq,v);closeSheet();return}
-        var a=S[qq.k],i=a.indexOf(v);if(i>-1)a.splice(i,1);else a.push(v);b.classList.toggle('on',i<0);paint(qq);
+        if(!qq.multi){setVal(qq,v);closeSheet();openNext();return}
+        var a=S[qq.k],i=a.indexOf(v);if(i>-1)a.splice(i,1);else a.push(v);b.classList.toggle('on',i<0);paint(qq);doneLab();
       });shOpts.appendChild(b)});
-    document.body.classList.add('sheet-on');
+    document.body.classList.add('sheet-on');doneLab();
   }
+  function doneLab(){if(!cur)return;document.getElementById('shDone').textContent=FX&&cur.opt&&!has(cur.k)?'없어요, 다음으로':'선택 완료'}
   function closeSheet(){document.body.classList.remove('sheet-on');cur=null}
   document.getElementById('dim').addEventListener('click',closeSheet);
-  document.getElementById('shDone').addEventListener('click',closeSheet);
+  document.getElementById('shDone').addEventListener('click',function(){var qq=cur;if(qq&&qq.opt){qq.seen=1;paint(qq)}closeSheet();if(qq&&done(qq))openNext()});
   Q.forEach(paint);
   // 디렉터 링크(?d=이름)로 들어오면 미리 선택
   var pre=(q.get('d')||'').trim();
   // 디렉터 페이지에서 온 경우 디렉터는 정해져 있으므로 행을 숨김
   function syncDir(){document.getElementById('drDir').textContent=S.director&&S.director!=='배정 요청'?S.director+' 디렉터':'담당 디렉터'}
   if(pre&&QD.o.indexOf(pre)>-1){setVal(QD,pre);QD.el.style.display='none'}
+  if(FX){document.getElementById('rowsHint').textContent='질문 '+vis().length+'개예요. 하나 고르면 다음 질문이 바로 열려요.';prog()}
   if(LITE){document.getElementById('drinkQ').style.display='none';S.sip='-';document.querySelector('#drinkQ+section .hint').textContent='눌러서 골라 주세요'}
   // 웰컴 드링크
   var drink=document.getElementById('drink');
