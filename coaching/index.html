@@ -210,7 +210,7 @@ h1,h2,h3,p{margin:0}
   // 디렉터 페이지(?d=)에서 온 경우만 새 신청서(첫 인사 커피 + Sip 질문).
   // 그 밖(카카오 쿠폰·초대 이벤트 등)은 기존 신청서 그대로 — 이벤트용 개편은 이벤트 배포 때 따로.
   var LITE=!(q.get('d')&&!CPV);
-  var S={rate:'',mgoal:'',sip:'',worry:'',method:[],goal:[],income:'',accounts:[],need:'',director:''};
+  var S={rate:'',mgoal:'',sip:'',worry:'',method:[],goal:[],income:'',accounts:[],need:[],director:''};
 
   // 탭 → 바텀시트에서 선택
   var Q=[
@@ -221,7 +221,7 @@ h1,h2,h3,p{margin:0}
     {k:'goal',full:1,l:'모으는 목적',t:'무엇을 위해 모으고 계세요?',h:'해당하는 것을 모두 골라 주세요',multi:1,o:['종자돈 만들기','은퇴자금 만들기','주택마련 & 대출상환','교육자금 & 창업자금','구체적인 목적 없음']},
     {k:'income',full:1,l:'더 만들고 싶은 소득',t:'월급 말고, 어떤 소득을 더 만들고 싶으세요?',h:'하나만 골라 주세요',o:['임대 소득','월배당 소득','N JOB','디지털 콘텐츠 수익','기타']},
     {k:'accounts',full:1,l:'점검받을 계좌',opt:1,t:'점검받고 싶은 계좌가 있나요?',h:'가지고 있는 계좌를 모두 골라 주세요. 없으면 비워 두셔도 돼요',multi:1,two:1,o:['주택청약','은행 예적금','청년저축','증권계좌','퇴직연금계좌','개인형 IRP(세액공제)','연금저축계좌(세액공제)','비과세 계좌','중개형 ISA','기타']},
-    {k:'need',full:1,l:'꼭 필요한 금융 정보·상식',t:'꼭 알아야 할 금융 정보와 상식이 필요하신가요?',h:'필요하시면 코칭 때 함께 챙겨 드려요',two:1,o:['YES','NO']},
+    {k:'need',full:1,l:'코칭 때 꼭 받고 싶은 정보',t:'코칭 때 꼭 챙겨 받고 싶은 건?',h:'고른 것 위주로 디렉터가 미리 준비해 가요',multi:1,o:['월배당으로 제2의 월급 만들기','연금(IRP·연금저축) 제대로 굴리기','달러·환율, 언제 어떻게 담을지','대출 상환 vs 투자, 무엇부터 할지','세금 덜 내는 계좌(ISA·비과세) 활용','지금 가진 금융상품 점검']},
     {k:'director',l:'담당 디렉터',t:'담당 디렉터',h:"소개받은 디렉터가 없으면 '배정 요청'을 골라 주세요",two:1,o:CONFIG.directors.map(function(d){return d.name}).concat(['배정 요청']),lab:function(v){return v==='배정 요청'?v:v+' 디렉터'}}
   ];
   var QD=Q.filter(function(qq){return qq.k==='director'})[0];
@@ -308,7 +308,7 @@ h1,h2,h3,p{margin:0}
     var now=new Date();
     var memo=['[전문가 1:1 코칭 쿠폰 신청 · 2시간 코칭(FREE)]','유입: '+(cp?'카카오 채널 쿠폰':pre?'디렉터 페이지':'코칭 신청서'),'쿠폰번호: '+(cp||'없음'),'추천인: '+byv,'',
       ].concat(LITE?[]:['첫 인사 커피: '+S.sip+'  ← 만나기 전에 먼저 보내 주세요','']).concat([
-      '가장 불편한 재정 고민: '+S.worry]).concat(LITE?['희망 수익률: '+S.rate,'월배당 목표: '+S.mgoal]:['자산 운용 방법: '+S.method.join(', '),'모으는 목적: '+S.goal.join(', '),'더 만들고 싶은 소득: '+S.income,'점검받을 계좌: '+(S.accounts.join(', ')||'없음'),'금융 정보·상식 필요: '+S.need]).concat(['담당 디렉터: '+S.director,'',
+      '가장 불편한 재정 고민: '+S.worry]).concat(LITE?['희망 수익률: '+S.rate,'월배당 목표: '+S.mgoal]:['자산 운용 방법: '+S.method.join(', '),'모으는 목적: '+S.goal.join(', '),'더 만들고 싶은 소득: '+S.income,'점검받을 계좌: '+(S.accounts.join(', ')||'없음'),'코칭 때 받고 싶은 정보: '+S.need.join(', ')]).concat(['담당 디렉터: '+S.director,'',
       '※ 디렉터 일정이 되는 시점에 차례로 연락해 2시간 코칭을 잡아 주세요. 쿠폰은 받은 날부터 7일 안에 등록하는 조건이며, 코칭 후 파트너센터에서 쿠폰 사용 처리.']).join('\n');
     var params={site_label:' · 코칭 쿠폰',consult_type:'전문가 1:1 코칭 (쿠폰 · 2시간 코칭 FREE)',
       date:now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate()),time:pad(now.getHours())+':'+pad(now.getMinutes()),
@@ -316,7 +316,7 @@ h1,h2,h3,p{margin:0}
     function finish(ok){
       if(!ok){go.disabled=false;go.textContent='코칭 신청하기';err.textContent='전송에 실패했습니다. 잠시 후 다시 눌러 주세요.';return}
       document.getElementById('f').style.display='none';
-      document.getElementById('sum').innerHTML=(LITE?[['추천인',byv+' 님'],['재정 고민',S.worry],['희망 수익률',S.rate],['월배당 목표',S.mgoal],['담당 디렉터',S.director]]:[['추천인',byv+' 님'],['첫 인사 커피',S.sip],['재정 고민',S.worry],['자산 운용',S.method.join(', ')],['모으는 목적',S.goal.join(', ')],['더 만들고 싶은 소득',S.income],['점검받을 계좌',S.accounts.join(', ')||'없음'],['금융 정보 필요',S.need],['담당 디렉터',S.director]]).map(function(r){return '<div><span>'+r[0]+'</span><b>'+r[1].replace(/</g,'&lt;')+'</b></div>'}).join('');
+      document.getElementById('sum').innerHTML=(LITE?[['추천인',byv+' 님'],['재정 고민',S.worry],['희망 수익률',S.rate],['월배당 목표',S.mgoal],['담당 디렉터',S.director]]:[['추천인',byv+' 님'],['첫 인사 커피',S.sip],['재정 고민',S.worry],['자산 운용',S.method.join(', ')],['모으는 목적',S.goal.join(', ')],['더 만들고 싶은 소득',S.income],['점검받을 계좌',S.accounts.join(', ')||'없음'],['받고 싶은 정보',S.need.join(', ')],['담당 디렉터',S.director]]).map(function(r){return '<div><span>'+r[0]+'</span><b>'+r[1].replace(/</g,'&lt;')+'</b></div>'}).join('');
       document.getElementById('doneBy').textContent=byv+' 님의 ';if(LITE)document.getElementById('doneTx').innerHTML='담당 디렉터의 일정이 허락하는 때에<br>맞춰 차례로 연락드립니다.';document.getElementById('done').classList.add('on');scrollTo(0,0);
     }
     if(MAILTEST){params.to_email=CONFIG.monitorEmail;params.consult_type='[발송 시험] '+params.consult_type;}
