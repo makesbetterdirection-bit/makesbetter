@@ -41,6 +41,8 @@ a{color:inherit;text-decoration:none}
 .hero h1{font-size:min(29px,7.5vw);line-height:1.34;font-weight:400;letter-spacing:-.045em}
 .hero h1 b{font-weight:800}
 .hero .btn{margin-top:20px}
+.who{position:absolute;left:28px;top:calc(20px + env(safe-area-inset-top,0px));z-index:1;font-size:13px;color:var(--g1)}.who b{color:#fff;font-weight:700}
+.mgr{margin-top:22px;font-size:14px;color:rgba(255,255,255,.85)}.mgr b{color:#fff;font-weight:800}
 .scr{position:absolute;right:28px;top:calc(22px + env(safe-area-inset-top,0px));z-index:1}
 /* 구간 공통 */
 .sec{padding-top:96px;padding-bottom:8px}
@@ -183,6 +185,7 @@ body.open .sticky{display:none}
   <section class="hero">
     <img src="/open/hero.webp" alt="CASH FLOW DESIGN STUDIO. MAKESBETTER DIRECTION">
     <span class="scr en">PLATFORM</span>
+    <span class="who" hidden>담당 <b data-pl></b></span>
     <div class="hero-b pad">
       <h1>돈의 흐름에도<br><b>디자인이 필요합니다<span class="dot">.</span></b></h1>
       <a class="btn" href="#what">메이크스베러 플랫폼 보기</a>
@@ -293,6 +296,7 @@ body.open .sticky{display:none}
         <p class="p">등록됐습니다. 진단부터 차례로 열어 보세요.<br>다음 계좌 공개는 12월 10일, 채널로 먼저 알려 드립니다.</p>
         <a class="btn" href="#what">01 진단부터 시작하기</a>
       </div>
+      <p class="mgr" hidden>담당 · <b data-pl></b></p>
       <p class="sig">MAKESBETTER<small>DIRECTION</small></p>
     </div>
   </section>
@@ -307,18 +311,23 @@ body.open .sticky{display:none}
   function all(s,f){[].forEach.call(document.querySelectorAll(s),f)}
   function hit(x){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/'+x,{keepalive:true,mode:'no-cors'})}catch(e){}}
   var qs=new URLSearchParams(location.search),opened=false,clicked=false,KEY='mb-open-ch';
+  // 플래너별 주소: /p/lee 처럼 들어오면 그 플래너 이름을 표시하고, 방문·채널 추가·등록 수를 플래너별로 따로 센다
+  var P={lee:'이종호',oh:'오수현',byun:'변보라',hong:'홍민아',kang:'강소리',kimdh:'김다희',kimsy:'김상윤'};
+  var pm=/^\/p\/([a-z]+)/.exec(location.pathname),pk=pm&&P[pm[1]]?pm[1]:'';
+  var TAG=pk?'open-'+pk:'open';
+  if(pk){all('[data-pl]',function(e){e.textContent=P[pk]+' 디렉터';e.parentNode.hidden=false});try{localStorage.setItem('mb-open-p',pk)}catch(e){}}
   if(qs.get('reset')){try{localStorage.removeItem(KEY)}catch(e){}}
-  hit('open');
+  hit(TAG);
   function count(){var el=document.getElementById('amt'),v=+el.getAttribute('data-v'),t0=null;
     if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;
     requestAnimationFrame(function f(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-p,3);el.textContent=Math.round(v*e).toLocaleString('ko-KR');if(p<1)requestAnimationFrame(f)})}
   function unlock(quiet){if(opened)return;opened=true;document.body.classList.add('open');try{localStorage.setItem(KEY,'1')}catch(e){}
     all('[data-st]',function(e){e.textContent='열기 →'});
-    if(quiet)return;hit('open-done');
+    if(quiet)return;hit(TAG+'-done');
     document.getElementById('book').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(count,600)}
   // 이미 채널을 추가한 기기(이 페이지 또는 디렉터 초대장)는 바로 열림
   try{if(localStorage.getItem(KEY)==='1'||(!qs.get('reset')&&localStorage.getItem('mb-d-ch')==='1'))unlock(true)}catch(e){}
-  ['chBtn2','chBtn3'].forEach(function(id){document.getElementById(id).addEventListener('click',function(){clicked=true;hit('open-channel')})});
+  ['chBtn2','chBtn3'].forEach(function(id){document.getElementById(id).addEventListener('click',function(){clicked=true;hit(TAG+'-channel')})});
   document.addEventListener('visibilitychange',function(){if(!document.hidden&&clicked)unlock()});
   window.addEventListener('focus',function(){if(clicked)setTimeout(unlock,400)});
   // 등록 전에는 잠긴 도구를 누르면 등록 칸으로
