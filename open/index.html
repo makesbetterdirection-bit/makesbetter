@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;500;700&display=swap">
 <style>
 /* CASH FLOW DESIGN STUDIO: 흑백 + 빨강 한 점. 얇은 글자와 굵은 글자의 대비, 가는 선, 넓은 여백. 둥근 카드·그림자·금색 없음. */
-:root{--bk:#0A0A0B;--bk2:#141416;--wh:#F4F4F2;--g1:#B9B9B6;--g2:#77777A;--ln:rgba(255,255,255,.14);--red:#D11010;--red2:#C80000;
+:root{--bk:#0A0A0B;--bk2:#141416;--wh:#F4F4F2;--g1:#DADAD6;--g2:#A0A0A3;--ln:rgba(255,255,255,.14);--red:#D11010;--red2:#C80000;
 --en:"Inter Tight","Pretendard Variable",system-ui,sans-serif;--ko:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo",system-ui,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
@@ -22,7 +22,7 @@ body{background:var(--bk);color:var(--wh);font-family:var(--ko);font-size:16px;l
 a{color:inherit;text-decoration:none}
 .col{max-width:480px;margin:0 auto;position:relative;background:var(--bk)}
 .pad{padding-left:28px;padding-right:28px}
-.en{font-family:var(--en);letter-spacing:.24em;font-size:11px;font-weight:500;color:var(--g1)}
+.en{font-family:var(--en);letter-spacing:.22em;font-size:12px;font-weight:700;color:#fff}
 .dot{color:var(--red)}
 .rvl{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
 .rvl.in{opacity:1;transform:none}
@@ -38,48 +38,72 @@ a{color:inherit;text-decoration:none}
 
 .hero-b{position:absolute;left:0;right:0;bottom:0;z-index:1;padding-top:22px;padding-bottom:calc(26px + env(safe-area-inset-bottom,0px));background:#0A0A0B}
 .hero-b:before{content:"";position:absolute;left:0;right:0;bottom:100%;height:70px;background:linear-gradient(180deg,rgba(10,10,11,0),#0A0A0B)}
-.hero h1{font-size:min(27px,7vw);line-height:1.36;font-weight:300;letter-spacing:-.045em}
-.hero h1 b{font-weight:700}
+.hero h1{font-size:min(29px,7.5vw);line-height:1.34;font-weight:400;letter-spacing:-.045em}
+.hero h1 b{font-weight:800}
 .hero .btn{margin-top:20px}
 .scr{position:absolute;right:28px;top:calc(22px + env(safe-area-inset-top,0px));z-index:1}
 /* 구간 공통 */
 .sec{padding-top:96px;padding-bottom:8px}
 .no{display:flex;align-items:center;gap:12px}
 .no:before{content:"";width:28px;height:2px;background:var(--red)}
-.sec h2{margin-top:22px;font-size:min(34px,8.8vw);line-height:1.28;font-weight:300;letter-spacing:-.05em}
-.sec h2 b{font-weight:700}
-.sec .p{margin-top:22px;font-size:16px;line-height:1.85;color:var(--g1)}
+.sec h2{margin-top:22px;font-size:min(35px,9vw);line-height:1.28;font-weight:400;letter-spacing:-.05em}
+.sec h2 b{font-weight:800}
+.sec .p{margin-top:22px;font-size:17px;line-height:1.8;color:var(--g1)}
 .sec .p b{color:var(--wh);font-weight:600}
 /* 질문 */
-.ask li{list-style:none;padding:20px 0;border-top:1px solid var(--ln);font-size:17px;font-weight:300;letter-spacing:-.03em;display:flex;gap:16px}
+.ask li{list-style:none;padding:20px 0;border-top:1px solid var(--ln);font-size:17.5px;font-weight:500;letter-spacing:-.03em;display:flex;gap:16px;align-items:baseline}
 .ask li:last-child{border-bottom:1px solid var(--ln)}
-.ask li i{font-family:var(--en);font-style:normal;font-size:12px;color:var(--g2);padding-top:5px}
+.ask li i{flex:none;font-family:var(--en);font-style:normal;font-size:13px;font-weight:700;color:var(--red)}
+.concl{margin-top:34px;padding:22px 22px;background:var(--wh);color:#0A0A0B;font-size:17px;line-height:1.65}
+.concl b{display:block;font-weight:800;font-size:19px;letter-spacing:-.04em}
 .ask{margin-top:34px}
 /* 정의 */
-.def{font-size:min(23px,6vw)!important;line-height:1.62!important;font-weight:300;color:var(--wh)!important;letter-spacing:-.04em}
-.def b{font-weight:700!important;box-shadow:inset 0 -2px 0 var(--red)}
+.what{margin-top:96px;padding-top:72px;padding-bottom:72px;background:#17171A}
+.frame{position:relative;margin-top:26px;padding:34px 22px 34px;border-top:1px solid rgba(255,255,255,.4);border-bottom:1px solid rgba(255,255,255,.4)}
+.frame:before,.frame:after{content:"";position:absolute;top:-5px;width:9px;height:9px;border-radius:50%;background:#fff}
+.frame:before{left:-4px}.frame:after{right:-4px;background:var(--red)}
+.frame i{position:absolute;top:-22px;bottom:-22px;width:1px;background:rgba(255,255,255,.22)}.frame i.l{left:0}.frame i.r{right:0}
+.def{margin:0!important;font-size:min(22px,5.7vw)!important;line-height:1.66!important;font-weight:400;color:var(--wh)!important;letter-spacing:-.04em}
+.def b{font-weight:800!important;box-shadow:inset 0 -3px 0 var(--red)}
 /* 과정 4단계 */
-.step{margin-top:40px;border-top:1px solid var(--wh)}
-.step article{padding:30px 0 26px;border-bottom:1px solid var(--ln)}
-.step header{display:flex;align-items:baseline;gap:14px}
-.step header i{font-family:var(--en);font-style:normal;font-size:13px;font-weight:500;color:var(--red)}
-.step header b{font-size:30px;font-weight:700;letter-spacing:-.05em;line-height:1.2}
-.step header span{margin-left:auto;font-family:var(--en);font-size:11px;letter-spacing:.24em;color:var(--g2)}
-.step article>p{margin-top:10px;font-size:15.5px;color:var(--g1)}
-.tool{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:14px;padding:16px 16px;background:var(--bk2);border-left:2px solid var(--g2)}
-.tool b{display:block;font-size:16px;font-weight:600;letter-spacing:-.03em}
-.tool small{display:block;margin-top:1px;font-size:13px;color:var(--g2)}
-.tool em{flex:none;display:flex;align-items:center;gap:6px;font-style:normal;font-size:12.5px;color:var(--g2);white-space:nowrap}
-.tool .lk{width:14px;height:14px}
+/* 과정 4단계: 스크롤하면 숫자가 차오르고, 선이 그어지고, 도구가 밀려 들어옴 */
+.flow{padding-top:56px}
+.fnav{position:sticky;top:0;z-index:5;display:flex;background:rgba(10,10,11,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--ln)}
+.fnav a{flex:1;position:relative;padding:14px 0 13px;text-align:center;font-size:15px;font-weight:600;color:var(--g2);transition:color .3s}
+.fnav a small{display:block;font-family:var(--en);font-size:10.5px;font-weight:700;letter-spacing:.1em;margin-bottom:1px}
+.fnav a:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.fnav a.cur{color:#fff}.fnav a.cur:after{transform:none}
+.fnav a.done{color:#fff}
+.st{position:relative;padding:54px 0 46px;border-bottom:1px solid var(--ln);scroll-margin-top:60px}
+.st:last-child{border-bottom:0}
+.st .big{display:inline-block;padding-right:10px;font-family:var(--en);font-size:104px;font-weight:700;line-height:.86;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.5);background:linear-gradient(#fff,#fff) no-repeat left bottom/100% 0%;-webkit-background-clip:text;background-clip:text;transition:background-size 1s cubic-bezier(.3,.7,.2,1),-webkit-text-stroke-color .6s}
+.st.on .big{background-size:100% 100%;-webkit-text-stroke-color:#fff}
+.st .tt{display:flex;align-items:baseline;gap:12px;margin-top:20px}
+.st .tt b{font-size:38px;font-weight:800;letter-spacing:-.05em;line-height:1.15}
+.st .tt span{font-family:var(--en);font-size:12px;font-weight:700;letter-spacing:.22em;color:var(--red)}
+.st .bar{display:block;height:3px;margin-top:14px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.2,.7,.2,1) .25s}
+.st.on .bar{transform:none}
+.st>p{margin-top:16px;font-size:17.5px;font-weight:500;line-height:1.6;color:#fff;opacity:0;transform:translateY(12px);transition:opacity .6s .35s,transform .6s .35s}
+.st.on>p{opacity:1;transform:none}
+.st .tool{opacity:0;transform:translateX(34px);transition:opacity .6s,transform .6s cubic-bezier(.2,.7,.2,1),border-color .3s}
+.st.on .tool{opacity:1;transform:none;transition-delay:.55s}
+.st.on .tool+.tool{transition-delay:.72s}
+.st:nth-of-type(even){margin:0 -28px;padding-left:28px;padding-right:28px;background:#17171A}
+.tool{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:18px;padding:17px 16px;background:#222226;border-left:3px solid #fff}
+.st .tool+.tool{margin-top:8px}
+.tool b{display:block;font-size:17px;font-weight:700;letter-spacing:-.03em}
+.tool small{display:block;margin-top:2px;font-size:13.5px;color:var(--g1)}
+.tool em{flex:none;display:flex;align-items:center;gap:6px;font-style:normal;font-size:13px;font-weight:600;color:var(--g1);white-space:nowrap}
+.tool .lk{width:14px;height:14px}.tool em i{font-style:normal}
 body.open .tool{border-left-color:var(--red)}body.open .tool em{color:var(--wh)}body.open .tool .lk{display:none}
 .tool.shake{animation:sh .45s}
 @keyframes sh{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
 /* 흰 구간: 실제 계좌 */
-.inv{margin-top:96px;padding-top:84px;padding-bottom:84px;background:var(--wh);color:#0A0A0B}
-.inv .en{color:#5E5E60}
-.inv h2{margin-top:22px;font-size:min(34px,8.8vw);line-height:1.28;font-weight:300;letter-spacing:-.05em}
-.inv h2 b{font-weight:700}
-.inv .p{margin-top:22px;font-size:16px;line-height:1.85;color:#4A4A4C}
+.inv{margin-top:0;padding-top:84px;padding-bottom:84px;background:var(--wh);color:#0A0A0B}
+.inv .en{color:#0A0A0B}
+.inv h2{margin-top:22px;font-size:min(35px,9vw);line-height:1.28;font-weight:400;letter-spacing:-.05em}
+.inv h2 b{font-weight:800}
+.inv .p{margin-top:22px;font-size:17px;line-height:1.8;color:#2E2E30}
 .acc{margin-top:38px;padding-top:22px;border-top:1px solid #0A0A0B}
 .acc small{display:block;font-size:12.5px;color:#5E5E60}
 .acc .amt{position:relative;margin-top:6px;display:flex;align-items:baseline;gap:6px;white-space:nowrap}
@@ -104,14 +128,20 @@ body.open .chip{display:none}
 .stat{display:flex;margin-top:38px;border-top:1px solid var(--wh);border-bottom:1px solid var(--ln)}
 .stat div{flex:1;padding:22px 0}
 .stat div+div{padding-left:22px;border-left:1px solid var(--ln)}
-.stat b{display:block;font-family:var(--en);font-size:44px;font-weight:300;letter-spacing:-.05em;line-height:1.1}
-.stat span{font-size:13px;color:var(--g2)}
-.voice{display:block;padding:24px 0;border-bottom:1px solid var(--ln);font-size:17px;line-height:1.65;font-weight:300;letter-spacing:-.03em}
-.voice small{display:block;margin-top:10px;font-family:var(--en);font-size:11px;letter-spacing:.2em;color:var(--g2)}
+.stat b{display:block;font-family:var(--en);font-size:50px;font-weight:700;letter-spacing:-.05em;line-height:1.1}
+.stat span{font-size:14px;color:var(--g1)}
+.vo{margin-top:96px;padding-top:72px;padding-bottom:72px;background:#17171A}
+.vo h2{margin-top:22px;font-size:min(35px,9vw);line-height:1.28;font-weight:400;letter-spacing:-.05em}.vo h2 b{font-weight:800}
+.rail{display:flex;gap:12px;margin:30px -28px 0;padding:0 28px 6px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.voice{flex:0 0 78%;scroll-snap-align:center;display:flex;flex-direction:column;justify-content:space-between;min-height:230px;padding:26px 22px 22px;background:var(--wh);color:#0A0A0B;font-size:18px;line-height:1.6;font-weight:600;letter-spacing:-.035em}
+.voice:before{content:"“";display:block;font-family:Georgia,serif;font-size:54px;line-height:.6;color:var(--red);margin-bottom:6px}
+.voice small{display:block;margin-top:18px;font-family:var(--en);font-size:11px;font-weight:700;letter-spacing:.2em;color:#0A0A0B}
+.swipe{margin-top:14px;font-size:13px;color:var(--g2)}
 .all{display:inline-block;margin-top:22px;font-size:14px;font-weight:600;border-bottom:1px solid var(--wh);padding-bottom:2px}
 /* 등록 */
 /* 등록: 사진 위에 빨간 판이 올라오는 포스터 */
-.poster{margin:96px 14px 0;border-radius:22px;overflow:hidden;position:relative;background:var(--red2)}
+.poster{margin:72px 14px 0;border-radius:22px;overflow:hidden;position:relative;background:var(--red2)}
 .poster>img{display:block;width:100%;height:auto}
 .panel{position:relative;background:var(--red2);padding:86px 26px 34px}
 .mark{position:absolute;left:26px;top:-52px;width:132px;height:104px}
@@ -136,15 +166,16 @@ body.open .pre{display:none}.post{display:none}body.open .post{display:block}
 .faq summary:after{content:"+";position:absolute;right:2px;top:15px;font-family:var(--en);font-size:22px;font-weight:300;color:var(--g1)}
 .faq details[open] summary:after{content:"–"}
 .faq p{padding:0 0 19px;font-size:14.5px;line-height:1.75;color:var(--g1)}
-.dis{margin-top:34px;font-size:12px;line-height:1.7;color:var(--g2)}
+.dis{margin-top:0;font-size:12px;line-height:1.7;color:var(--g2)}
 .foot{padding:44px 28px calc(120px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-between;align-items:flex-end}
+.foot .en{font-size:10px;letter-spacing:.18em;font-weight:500;color:var(--g2);white-space:nowrap}
 .foot b{font-family:var(--en);font-size:13px;letter-spacing:.2em;font-weight:700}
 /* 하단 고정 */
 .sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;transform:translateY(110%);transition:transform .3s}
 .sticky.on{transform:none}
 .sticky div{max-width:480px;margin:0 auto;padding:10px 28px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,rgba(10,10,11,0),#0A0A0B 36%)}
 body.open .sticky{display:none}
-@media (prefers-reduced-motion:reduce){.rvl{transition:none;opacity:1;transform:none}.acc .amt b,.acc .ans{transition:none}}
+@media (prefers-reduced-motion:reduce){.st .big,.st .bar,.st>p,.st .tool{transition:none}.rvl{transition:none;opacity:1;transform:none}.acc .amt b,.acc .ans{transition:none}}
 </style>
 </head>
 <body>
@@ -167,33 +198,46 @@ body.open .sticky{display:none}
       <li class="rvl"><i>C</i>내 계좌가 잘 굴러가는지 물어볼 사람이 없다</li>
       <li class="rvl"><i>D</i>월급 말고, 매달 들어오는 돈을 만들고 싶다</li>
     </ul>
-    <p class="p rvl">노력이 부족해서가 아닙니다.<br><b>돈이 흐르는 길을 설계한 적이 없어서입니다.</b></p>
+    <p class="concl rvl">노력이 부족해서가 아닙니다.<b>돈이 흐르는 길을 설계한 적이 없어서입니다.</b></p>
   </section>
 
-  <section class="sec pad" id="what">
+  <section class="what pad" id="what">
     <p class="no en rvl">WHAT WE DO</p>
-    <p class="p def rvl" style="margin-top:26px">메이크스베러 플랫폼은 고객의 재정 상태를 <b>진단</b>하고, 금융 <b>지식</b>을 높이며, 개인의 목표에 맞는 자산관리 방향을 <b>설계</b>하고 <b>실행</b>을 돕는 금융 코칭 플랫폼입니다.</p>
+    <div class="frame rvl"><i class="l"></i><i class="r"></i>
+      <p class="p def">메이크스베러 플랫폼은 고객의 재정 상태를 <b>진단</b>하고, 금융 <b>지식</b>을 높이며, 개인의 목표에 맞는 자산관리 방향을 <b>설계</b>하고 <b>실행</b>을 돕는 금융 코칭 플랫폼입니다.</p>
+    </div>
+  </section>
 
-    <div class="step">
-      <article class="rvl">
-        <header><i>01</i><b>진단</b><span>DIAGNOSE</span></header>
+  <section class="flow" id="flow">
+    <nav class="fnav" aria-label="과정 4단계"><a href="#s1"><small>01</small>진단</a><a href="#s2"><small>02</small>지식</a><a href="#s3"><small>03</small>설계</a><a href="#s4"><small>04</small>실행</a></nav>
+    <div class="pad">
+      <article class="st" id="s1" data-i="0">
+        <span class="big">01</span>
+        <div class="tt"><b>진단</b><span>DIAGNOSE</span></div>
+        <i class="bar"></i>
         <p>지금 내 돈이 어디로 흐르는지부터 봅니다.</p>
         <a class="tool" data-lock href="https://mbkr.my/cashflow" target="_blank" rel="noopener"><span><b>현금흐름 진단</b><small>소득·고정지출·변동지출·저축, 네 칸으로</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
         <a class="tool" data-lock href="https://mbkr.my/meta" target="_blank" rel="noopener"><span><b>금융 I.Q 테스트</b><small>3분 · 내 금융 감각과 결과 리포트</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
       </article>
-      <article class="rvl">
-        <header><i>02</i><b>지식</b><span>LEARN</span></header>
+      <article class="st" id="s2" data-i="1">
+        <span class="big">02</span>
+        <div class="tt"><b>지식</b><span>LEARN</span></div>
+        <i class="bar"></i>
         <p>아는 만큼 지킬 수 있습니다.</p>
         <a class="tool" data-lock href="https://calc.makesbetter.co.kr/books" target="_blank" rel="noopener"><span><b>전자책 2권</b><small>현금흐름 · 공포·탐욕 지수 읽는 법</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
       </article>
-      <article class="rvl">
-        <header><i>03</i><b>설계</b><span>DESIGN</span></header>
+      <article class="st" id="s3" data-i="2">
+        <span class="big">03</span>
+        <div class="tt"><b>설계</b><span>DESIGN</span></div>
+        <i class="bar"></i>
         <p>뉴스 100개 대신, 지표 24개로 방향을 잡습니다.</p>
         <a class="tool" data-lock href="https://mbkr.my/studio" target="_blank" rel="noopener"><span><b>시장 환경 분석</b><small>7개 영역 24개 지표 · 매일 갱신</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
         <a class="tool" data-lock href="https://mbkr.my/report" target="_blank" rel="noopener"><span><b>실제 계좌 월배당 리포트</b><small>계좌 4개 실수령액 · 매달 10일</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
       </article>
-      <article class="rvl">
-        <header><i>04</i><b>실행</b><span>EXECUTE</span></header>
+      <article class="st" id="s4" data-i="3">
+        <span class="big">04</span>
+        <div class="tt"><b>실행</b><span>EXECUTE</span></div>
+        <i class="bar"></i>
         <p>보고 끝나지 않게, 내 계좌까지 함께 봅니다.</p>
         <a class="tool" data-lock href="https://report.makesbetter.co.kr/check" target="_blank" rel="noopener"><span><b>내 포트폴리오 1:1 점검</b><small>배당 화면 캡처만 보내면 디렉터가 분석</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
       </article>
@@ -219,13 +263,16 @@ body.open .sticky{display:none}
     <p class="p rvl">한 번 알려 드리고 끝내지 않습니다.<br>아는 만큼 지킬 수 있고,<br>아는 만큼 더 멀리 갈 수 있으니까요.</p>
   </section>
 
-  <section class="sec pad">
+  <section class="vo pad">
     <p class="no en rvl">VOICES</p>
     <h2 class="rvl">먼저 시작한 분들의<br><b>달라진 이야기<span class="dot">.</span></b></h2>
-    <div class="stat rvl"><div><b>946</b><span>고객 후기</span></div><div><b id="cnt2">1,347</b><span>현금흐름 진단</span></div></div>
-    <a class="voice rvl" href="https://mbkr.my/review/?bmode=view&idx=175279693" target="_blank" rel="noopener">“예·적금밖에 모르던 저에게 새로운 세계가 열린 것 같았어요.”<small>READ REVIEW →</small></a>
-    <a class="voice rvl" href="https://mbkr.my/review/?bmode=view&idx=175530941" target="_blank" rel="noopener">“버는 대로 쓰던 제가 하나하나 나눠서 돈을 모으는 습관을 만들게 됐어요.”<small>READ REVIEW →</small></a>
-    <a class="voice rvl" href="https://mbkr.my/review/?bmode=view&idx=174960813" target="_blank" rel="noopener">“현금 흐름부터 잡아서 매달 모으는 돈을 늘렸고, 그렇게 투자금이 생겼어요.”<small>READ REVIEW →</small></a>
+    <div class="stat rvl"><div><b data-n="946">946</b><span>고객 후기</span></div><div><b id="cnt2">1,347</b><span>현금흐름 진단</span></div></div>
+    <div class="rail rvl">
+    <a class="voice" href="https://mbkr.my/review/?bmode=view&idx=175279693" target="_blank" rel="noopener">예·적금밖에 모르던 저에게 새로운 세계가 열린 것 같았어요.<small>READ REVIEW →</small></a>
+    <a class="voice" href="https://mbkr.my/review/?bmode=view&idx=175530941" target="_blank" rel="noopener">버는 대로 쓰던 제가 하나하나 나눠서 돈을 모으는 습관을 만들게 됐어요.<small>READ REVIEW →</small></a>
+    <a class="voice" href="https://mbkr.my/review/?bmode=view&idx=174960813" target="_blank" rel="noopener">현금 흐름부터 잡아서 매달 모으는 돈을 늘렸고, 그렇게 투자금이 생겼어요.<small>READ REVIEW →</small></a>
+    </div>
+    <p class="swipe">옆으로 넘겨 보세요 →</p>
     <a class="all rvl" href="https://mbkr.my/review" target="_blank" rel="noopener">후기 946건 모두 보기</a>
   </section>
 
@@ -250,12 +297,6 @@ body.open .sticky{display:none}
     </div>
   </section>
   <section class="join pad">
-    <div class="faq">
-      <details><summary>정말 무료인가요?</summary><p>네. 등록도, 위에 소개한 도구들도 모두 무료입니다.</p></details>
-      <details><summary>등록은 어떻게 하나요?</summary><p>메이크스베러 카카오톡 채널을 추가하면 끝입니다. 회원가입이나 앱 설치는 없습니다.</p></details>
-      <details><summary>등록하면 투자 상품에 가입해야 하나요?</summary><p>아니요. 가입 의무는 없습니다. 리포트와 분석은 정보 제공이 목적입니다.</p></details>
-      <details><summary>연락이 자주 오나요?</summary><p>리포트와 새 소식이 있을 때 채널 메시지로만 갑니다. 언제든 차단할 수 있습니다.</p></details>
-    </div>
     <p class="dis">실제 사례를 그대로 공개한 자료이며, 수익을 보장하거나 투자를 권유하는 내용이 아닙니다. 분배금은 달마다 달라지고, 투자 원금은 손실이 날 수 있습니다.</p>
   </section>
   <footer class="foot"><b>MAKESBETTER</b><span class="en">CASH FLOW DESIGN STUDIO</span></footer>
@@ -285,6 +326,13 @@ body.open .sticky{display:none}
     setTimeout(function(){document.getElementById('gate').scrollIntoView({behavior:'smooth',block:'start'})},360)},true);
   var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12}):null;
   all('.rvl',function(el){if(io)io.observe(el);else el.classList.add('in')});
+  // 과정 4단계: 화면 가운데에 들어온 단계를 켜고, 위쪽 탭에 표시
+  var sts=document.querySelectorAll('.st'),tabs=document.querySelectorAll('.fnav a');
+  if('IntersectionObserver' in window){var so=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var i=+e.target.getAttribute('data-i');e.target.classList.add('on');
+    [].forEach.call(tabs,function(t,j){t.classList.toggle('cur',j===i);t.classList.toggle('done',j<i)})})},{rootMargin:'-30% 0px -50% 0px'});[].forEach.call(sts,function(x){so.observe(x)})}
+  else all('.st',function(x){x.classList.add('on')});
+  // 후기 수 올라가는 효과
+  var n9=document.querySelector('[data-n]');if(n9&&'IntersectionObserver' in window){new IntersectionObserver(function(es,o){if(!es[0].isIntersecting)return;o.disconnect();var v=+n9.getAttribute('data-n'),t0=null;requestAnimationFrame(function f(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1100);n9.textContent=Math.round(v*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})}).observe(n9)}
   // 하단 고정 버튼: 첫 화면을 지나면 보이고, 등록 칸에서는 숨김
   var st=document.getElementById('sticky'),past=false,atGate=false;
   function sy(){st.classList.toggle('on',past&&!atGate)}
