@@ -191,12 +191,35 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
       '<p class="cq-p">'+(fail?'신청 내용은 이 화면에 남아 있어요. 아래 버튼으로 다시 보내 주세요.':esc(S.director)+' 디렉터가 웰컴 드링크('+esc(S.sip)+')를 먼저 보내고 연락드릴게요.<br>마지막으로 카카오톡 채널을 추가하면 접수가 완료됩니다.')+'</p></main>'+
       '<div class="cq-foot">'+(fail?'<button class="cq-next" id="sd-retry">다시 보내기</button>':'<a class="cq-next kk" href="'+CONFIG.channelUrl+'">카카오톡 채널 추가하고 완료하기</a>')+'</div>';
     if(fail)root.querySelector("#sd-retry").onclick=send;
-    else{try{fetch("https://abacus.jasoncameron.dev/hit/mbkr.my/sip-apply",{keepalive:true,mode:"no-cors"})}catch(e){}}}
+    else if(!TEST){try{fetch("https://abacus.jasoncameron.dev/hit/mbkr.my/sip-apply",{keepalive:true,mode:"no-cors"})}catch(e){}}}
+  /* ── 신청 리포트 PDF (금융 IQ 테스트와 같은 방식: 브라우저에서 PDF를 만들어 메일에 첨부) ──
+     지금은 기초 양식(글자만). 디자인은 REPORT_DRAW 안만 바꾸면 된다. */
+  var TEST=/[?&]test=1/.test(location.search);
+  function reportRows(){return [["신청일",today()],["담당 디렉터",S.director],["성함",S.name],["연락처",S.phone],["추천인",S.referrer||"-"],["웰컴 드링크",S.sip],
+    ["가장 불편한 재정 고민",S.worry.join(", ")],["현재 자산 운용 방법",S.assetMethod.join(", ")],["자산 운용 목적",S.assetGoal.join(", ")],
+    ["더 만들고 싶은 소득",S.incomeType],["점검받을 계좌",S.accounts.join(", ")||"없음"],["코칭 때 받고 싶은 정보",S.needInfo.join(", ")]]}
+  function loadJsPdf(){if(window.jspdf)return Promise.resolve(window.jspdf.jsPDF);return new Promise(function(ok,no){var t=document.createElement("script");t.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";t.onload=function(){window.jspdf?ok(window.jspdf.jsPDF):no(new Error("jspdf"))};t.onerror=no;document.head.appendChild(t)})}
+  function REPORT_DRAW(cv){var W=cv.width,x=cv.getContext("2d"),F='"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif',y=130,M=110;
+    x.fillStyle="#fff";x.fillRect(0,0,W,cv.height);x.fillStyle="#111";x.textBaseline="top";
+    x.font="700 54px "+F;x.fillText("코칭 신청 리포트",M,y);y+=86;
+    x.font="400 30px "+F;x.fillStyle="#666";x.fillText("MAKESBETTER · "+(S.name||"고객")+"님",M,y);y+=90;
+    reportRows().forEach(function(r){x.fillStyle="#888";x.font="600 26px "+F;x.fillText(r[0],M,y);y+=42;x.fillStyle="#111";x.font="500 32px "+F;
+      var words=String(r[1]||"-").split(" "),line="";words.forEach(function(w){var t=line?line+" "+w:w;if(x.measureText(t).width>W-M*2&&line){x.fillText(line,M,y);y+=46;line=w}else line=t});x.fillText(line,M,y);y+=72})}
+  function buildReport(){return loadJsPdf().then(function(JsPDF){var cv=document.createElement("canvas");cv.width=1240;cv.height=1754;REPORT_DRAW(cv);
+    var pw=595.28,ph=pw*cv.height/cv.width,out="",qs=[0.8,0.65,0.5,0.38];
+    for(var i=0;i<qs.length;i++){var doc=new JsPDF({unit:"pt",format:[pw,ph],orientation:"portrait",compress:true});doc.addImage(cv.toDataURL("image/jpeg",qs[i]),"JPEG",0,0,pw,ph,"p1","NONE");out="data:application/pdf;base64,"+btoa(doc.output());if(out.length<=450000)break}
+    return out})}
   function send(){var b=root.querySelector("#cq-next")||root.querySelector("#sd-retry");if(b){b.disabled=true;b.textContent="보내는 중…"}
     var dEmail=(CONFIG.directors.filter(function(x){return x.name===S.director})[0]||{}).email;
-    var params={site_label:" · 금융 코칭 등록",consult_type:"The Opening Sip 신청",date:today(),time:"-",name:S.name,phone:S.phone,email:"-",memo:memo(),director:S.director,to_email:(dEmail?dEmail+",":"")+CONFIG.monitorEmail};
-    if(!window.emailjs)return done(true);
-    emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,params).then(function(){done(false)}).catch(function(e){console.error(e);done(true)})}
+    var params={site_label:" · 금융 코칭 등록",consult_type:"The Opening Sip 신청",date:today(),time:"-",name:S.name,phone:S.phone,email:"-",memo:memo(),director:S.director,to_email:(dEmail?dEmail+",":"")+CONFIG.monitorEmail,
+      report_pdf:"",report_name:"코칭신청_리포트_"+(S.name||"고객").replace(/[\\/:*?"<>|\s]/g,"")+".pdf"};
+    buildReport().then(function(pdf){params.report_pdf=pdf},function(e){console.warn("리포트 PDF 생성 실패",e)}).then(function(){
+      if(TEST){window.__sipParams=params;return done(false)}
+      if(!window.emailjs)return done(true);
+      emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,params).then(function(){done(false)},function(e){
+        console.warn("첨부 발송 실패, 첨부 없이 재발송",e);if(!params.report_pdf)return done(true);
+        var p2={};for(var k in params)p2[k]=params[k];p2.report_pdf="";
+        emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,p2).then(function(){done(false)},function(e2){console.error(e2);done(true)})})})}
   draw();
 })();
 </script>
