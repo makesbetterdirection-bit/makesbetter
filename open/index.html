@@ -362,8 +362,8 @@ body.open .sticky{display:none}
       </div>
       <div class="post">
         <h2>WELCOME <b>YOU ARE IN</b></h2>
-        <p class="p">등록됐습니다. 진단부터 차례로 열어 보세요.<br>다음 계좌 공개는 12월 10일, 채널로 먼저 알려 드립니다.</p>
-        <a class="btn" href="#what">01 진단부터 시작하기</a>
+        <p class="p">등록됐습니다. 이제 1:1 금융 코칭을 신청해 보세요.<br>다음 계좌 공개는 12월 10일, 채널로 먼저 알려 드립니다.</p>
+        <a class="btn" id="coachBtn" href="/coaching/">코칭 신청하기</a>
       </div>
       <div class="pf"><p class="mgr" hidden>담당 · <b data-pl></b></p><p class="sig">MAKESBETTER<small>DIRECTION</small></p></div>
     </div>
@@ -383,7 +383,7 @@ body.open .sticky{display:none}
   var P={lee:'이종호',oh:'오수현',byun:'변보라',hong:'홍민아',kang:'강소리',kimdh:'김다희',kimsy:'김상윤'};
   var pm=/^\/p\/([a-z]+)/.exec(location.pathname),pk=pm&&P[pm[1]]?pm[1]:'';
   var TAG=pk?'open-'+pk:'open';
-  if(pk){all('[data-pl]',function(e){e.textContent=P[pk]+' 디렉터';e.parentNode.hidden=false});try{localStorage.setItem('mb-open-p',pk)}catch(e){}}
+  if(pk){var cb=document.getElementById('coachBtn');if(cb)cb.href='/coaching/?d='+encodeURIComponent(P[pk]);all('[data-pl]',function(e){e.textContent=P[pk]+' 디렉터';e.parentNode.hidden=false});try{localStorage.setItem('mb-open-p',pk)}catch(e){}}
   if(qs.get('reset')){try{localStorage.removeItem(KEY)}catch(e){}}
   hit(TAG);
   function count(){var el=document.getElementById('amt'),v=+el.getAttribute('data-v'),t0=null;
