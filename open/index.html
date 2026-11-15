@@ -60,16 +60,29 @@ a{color:inherit;text-decoration:none}
 .concl b{display:block;font-weight:800;font-size:19px;letter-spacing:-.04em}
 .ask{margin-top:34px}
 /* 정의 */
-.what{margin-top:96px;padding-top:72px;padding-bottom:72px;background:#17171A}
+.only{margin-top:96px;padding-top:72px;padding-bottom:72px;background:#17171A}
+.only h2{margin-top:22px;font-size:min(35px,9vw);line-height:1.28;font-weight:400;letter-spacing:-.05em}.only h2 b{font-weight:800}
+.cmp{margin-top:34px}
+.cmp div{padding:20px 0;border-top:1px solid var(--ln)}
+.cmp small{display:block;font-size:13px;font-weight:700;color:var(--g2)}
+.cmp p{margin-top:6px;font-size:16.5px;line-height:1.6;color:var(--g1)}
+.cmp div:not(.us) small:before{content:"✕";margin-right:8px;color:var(--red);font-weight:800}
+.cmp .us{margin-top:8px;padding:24px 22px;border:0;background:var(--wh)}
+.cmp .us small{font-family:var(--en);letter-spacing:.18em;font-size:11px;color:var(--red)}
+.cmp .us p{font-size:19px;line-height:1.55;font-weight:500;color:#0A0A0B;text-decoration:none;letter-spacing:-.04em}.cmp .us b{font-weight:800}
+.only .frame{margin-top:56px}
 .frame{position:relative;margin-top:26px;padding:34px 22px 34px;border-top:1px solid rgba(255,255,255,.4);border-bottom:1px solid rgba(255,255,255,.4)}
 .frame:before,.frame:after{content:"";position:absolute;top:-5px;width:9px;height:9px;border-radius:50%;background:#fff}
 .frame:before{left:-4px}.frame:after{right:-4px;background:var(--red)}
 .frame i{position:absolute;top:-22px;bottom:-22px;width:1px;background:rgba(255,255,255,.22)}.frame i.l{left:0}.frame i.r{right:0}
 .def{margin:0!important;font-size:min(22px,5.7vw)!important;line-height:1.66!important;font-weight:400;color:var(--wh)!important;letter-spacing:-.04em}
-.def b{font-weight:800!important;box-shadow:inset 0 -3px 0 var(--red)}
+.def{font-size:min(18px,4.7vw)!important;color:var(--g1)!important}
+.def b{font-weight:800!important;color:#fff;box-shadow:inset 0 -3px 0 var(--red)}
 /* 과정 4단계 */
 /* 과정 4단계: 스크롤하면 숫자가 차오르고, 선이 그어지고, 도구가 밀려 들어옴 */
-.flow{padding-top:56px}
+.flow{padding-top:96px}
+.fl-h h2{margin-top:22px;font-size:min(35px,9vw);line-height:1.28;font-weight:400;letter-spacing:-.05em}.fl-h h2 b{font-weight:800}
+.fl-h{padding-bottom:20px}
 .fnav{position:sticky;top:0;z-index:5;display:flex;background:rgba(10,10,11,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--ln)}
 .fnav a{flex:1;position:relative;padding:14px 0 13px;text-align:center;font-size:15px;font-weight:600;color:var(--g2);transition:color .3s}
 .fnav a small{display:block;font-family:var(--en);font-size:10.5px;font-weight:700;letter-spacing:.1em;margin-bottom:1px}
@@ -81,12 +94,20 @@ a{color:inherit;text-decoration:none}
 .st .big{display:inline-block;padding-right:10px;font-family:var(--en);font-size:104px;font-weight:700;line-height:.86;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.5);background:linear-gradient(#fff,#fff) no-repeat left bottom/100% 0%;-webkit-background-clip:text;background-clip:text;transition:background-size 1s cubic-bezier(.3,.7,.2,1),-webkit-text-stroke-color .6s}
 .st.on .big{background-size:100% 100%;-webkit-text-stroke-color:#fff}
 .st .tt{display:flex;align-items:baseline;gap:12px;margin-top:20px}
-.st .tt b{font-size:38px;font-weight:800;letter-spacing:-.05em;line-height:1.15}
-.st .tt span{font-family:var(--en);font-size:12px;font-weight:700;letter-spacing:.22em;color:var(--red)}
+.st h3{margin-top:10px;font-size:min(31px,8vw);font-weight:800;letter-spacing:-.05em;line-height:1.28}
+.st .tt span{font-size:13.5px;font-weight:700;letter-spacing:-.01em;color:var(--red)}
 .st .bar{display:block;height:3px;margin-top:14px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.2,.7,.2,1) .25s}
 .st.on .bar{transform:none}
-.st>p{margin-top:16px;font-size:17.5px;font-weight:500;line-height:1.6;color:#fff;opacity:0;transform:translateY(12px);transition:opacity .6s .35s,transform .6s .35s}
+.st>p{margin-top:16px;font-size:16.5px;font-weight:400;line-height:1.75;color:var(--g1);opacity:0;transform:translateY(12px);transition:opacity .6s .35s,transform .6s .35s}
 .st.on>p{opacity:1;transform:none}
+.peek{position:relative;margin-top:20px;height:190px;overflow:hidden;background:#111;opacity:0;transition:opacity .8s .45s}
+.st.on .peek{opacity:1}
+.peek img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:grayscale(1) blur(7px) brightness(.55);transform:scale(1.08);transition:filter 1.1s,transform 1.1s}
+body.open .peek img{filter:grayscale(1) contrast(1.05);transform:none}
+.peek span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:7px;padding:9px 14px;background:#fff;color:#0A0A0B;font-size:13px;font-weight:700;white-space:nowrap}
+.peek .lk{width:14px;height:14px}
+body.open .peek span{display:none}
+.tool.nolink{border-left-color:var(--g2)}.tool.nolink em{color:var(--g2)}
 .st .tool{opacity:0;transform:translateX(34px);transition:opacity .6s,transform .6s cubic-bezier(.2,.7,.2,1),border-color .3s}
 .st.on .tool{opacity:1;transform:none;transition-delay:.55s}
 .st.on .tool+.tool{transition-delay:.72s}
@@ -204,46 +225,16 @@ body.open .sticky{display:none}
     <p class="concl rvl">노력이 부족해서가 아닙니다.<b>돈이 흐르는 길을 설계한 적이 없어서입니다.</b></p>
   </section>
 
-  <section class="what pad" id="what">
-    <p class="no en rvl">WHAT WE DO</p>
-    <div class="frame rvl"><i class="l"></i><i class="r"></i>
-      <p class="p def">메이크스베러 플랫폼은 고객의 재정 상태를 <b>진단</b>하고, 금융 <b>지식</b>을 높이며, 개인의 목표에 맞는 자산관리 방향을 <b>설계</b>하고 <b>실행</b>을 돕는 금융 코칭 플랫폼입니다.</p>
+  <section class="only pad" id="what">
+    <p class="no en rvl">ONLY HERE</p>
+    <h2 class="rvl">어디에서도<br><b>해 본 적 없는 경험<span class="dot">.</span></b></h2>
+    <div class="cmp rvl">
+      <div><small>유튜브 · 커뮤니티</small><p>정보는 넘치지만, 그 사람의 진짜 통장은 본 적이 없습니다.</p></div>
+      <div><small>은행 · 증권사</small><p>상품은 권하지만, 내 돈 전체를 봐 주지는 않습니다.</p></div>
+      <div class="us"><small>MAKESBETTER PLATFORM</small><p>직접 굴린 <b>실제 통장</b>을 매달 공개하고,<br>내 계좌까지 <b>직접 봐 드립니다.</b></p></div>
     </div>
-  </section>
-
-  <section class="flow" id="flow">
-    <nav class="fnav" aria-label="과정 4단계"><a href="#s1"><small>01</small>진단</a><a href="#s2"><small>02</small>지식</a><a href="#s3"><small>03</small>설계</a><a href="#s4"><small>04</small>실행</a></nav>
-    <div class="pad">
-      <article class="st" id="s1" data-i="0">
-        <span class="big">01</span>
-        <div class="tt"><b>진단</b><span>DIAGNOSE</span></div>
-        <i class="bar"></i>
-        <p>지금 내 돈이 어디로 흐르는지부터 봅니다.</p>
-        <a class="tool" data-lock href="https://mbkr.my/cashflow" target="_blank" rel="noopener"><span><b>현금흐름 진단</b><small>소득·고정지출·변동지출·저축, 네 칸으로</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
-        <a class="tool" data-lock href="https://mbkr.my/meta" target="_blank" rel="noopener"><span><b>금융 I.Q 테스트</b><small>3분 · 내 금융 감각과 결과 리포트</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
-      </article>
-      <article class="st" id="s2" data-i="1">
-        <span class="big">02</span>
-        <div class="tt"><b>지식</b><span>LEARN</span></div>
-        <i class="bar"></i>
-        <p>아는 만큼 지킬 수 있습니다.</p>
-        <a class="tool" data-lock href="https://calc.makesbetter.co.kr/books" target="_blank" rel="noopener"><span><b>전자책 2권</b><small>현금흐름 · 공포·탐욕 지수 읽는 법</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
-      </article>
-      <article class="st" id="s3" data-i="2">
-        <span class="big">03</span>
-        <div class="tt"><b>설계</b><span>DESIGN</span></div>
-        <i class="bar"></i>
-        <p>뉴스 100개 대신, 지표 24개로 방향을 잡습니다.</p>
-        <a class="tool" data-lock href="https://mbkr.my/studio" target="_blank" rel="noopener"><span><b>시장 환경 분석</b><small>7개 영역 24개 지표 · 매일 갱신</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
-        <a class="tool" data-lock href="https://mbkr.my/report" target="_blank" rel="noopener"><span><b>실제 계좌 월배당 리포트</b><small>계좌 4개 실수령액 · 매달 10일</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
-      </article>
-      <article class="st" id="s4" data-i="3">
-        <span class="big">04</span>
-        <div class="tt"><b>실행</b><span>EXECUTE</span></div>
-        <i class="bar"></i>
-        <p>보고 끝나지 않게, 내 계좌까지 함께 봅니다.</p>
-        <a class="tool" data-lock href="https://report.makesbetter.co.kr/check" target="_blank" rel="noopener"><span><b>내 포트폴리오 1:1 점검</b><small>배당 화면 캡처만 보내면 디렉터가 분석</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
-      </article>
+    <div class="frame rvl"><i class="l"></i><i class="r"></i>
+      <p class="p def">메이크스베러 플랫폼은 고객의 재정 상태를 진단하고, 금융 지식을 높이며, 개인의 목표에 맞는 자산관리 방향을 설계하고 실행을 돕는 <b>금융 코칭 플랫폼</b>입니다.</p>
     </div>
   </section>
 
@@ -258,12 +249,73 @@ body.open .sticky{display:none}
     </div>
   </section>
 
+  <section class="flow" id="flow">
+    <div class="pad fl-h">
+      <p class="no en rvl">INSIDE THE PLATFORM</p>
+      <h2 class="rvl">등록한 사람만<br><b>보게 되는 것들<span class="dot">.</span></b></h2>
+    </div>
+    <div class="pad">
+      <article class="st" data-i="0">
+        <span class="big">01</span>
+        <div class="tt"><span>월배당 리포트 · 매달 10일</span></div>
+        <h3>방금 그 통장이,<br>매달 내 카톡으로 옵니다.</h3>
+        <i class="bar"></i>
+        <p>좋은 달도 나쁜 달도, 계좌 4개에 찍힌 숫자 그대로. 남의 통장을 매달 보다 보면, 내 돈 보는 눈이 달라집니다.</p>
+        <div class="peek"><img src="/go/img/report.webp" alt=""><span><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>등록하면 열립니다</span></div>
+        <a class="tool" data-lock href="https://mbkr.my/report" target="_blank" rel="noopener"><span><b>월배당 리포트</b><small>이번 달 실제 계좌 전체 보기</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
+      </article>
+      <article class="st" data-i="1">
+        <span class="big">02</span>
+        <div class="tt"><span>시장 환경 분석 · 매일 갱신</span></div>
+        <h3>시장이 흔들린 날,<br>답이 먼저 와 있습니다.</h3>
+        <i class="bar"></i>
+        <p>금리·심리·변동성·환율까지 7개 영역 24개 지표. 뉴스 100개를 읽는 대신, 한 화면으로 지금 시장을 봅니다.</p>
+        <div class="peek"><img src="/go/img/studio.webp" alt=""><span><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>등록하면 열립니다</span></div>
+        <a class="tool" data-lock href="https://mbkr.my/studio" target="_blank" rel="noopener"><span><b>MAKESBETTER Studio</b><small>24개 지표로 읽는 지금 시장</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
+      </article>
+      <article class="st" data-i="2">
+        <span class="big">03</span>
+        <div class="tt"><span>포트폴리오 점검 · 1:1</span></div>
+        <h3>내 계좌를,<br>디렉터가 직접 봅니다.</h3>
+        <i class="bar"></i>
+        <p>배당 화면을 캡처해서 보내기만 하면 됩니다. 정보만 주고 끝나는 곳과 가장 다른 점입니다.</p>
+        <a class="tool" data-lock href="https://report.makesbetter.co.kr/check" target="_blank" rel="noopener"><span><b>내 포트폴리오 점검</b><small>캡처 한 장으로 1:1 분석</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
+      </article>
+      <article class="st" data-i="3">
+        <span class="big">04</span>
+        <div class="tt"><span>머니4스퀘어 · 현금흐름 진단</span></div>
+        <h3>내 돈이 새는 곳이,<br>네 칸에 다 보입니다.</h3>
+        <i class="bar"></i>
+        <p>소득·고정지출·변동지출·저축. 네 칸에 적는 순간, 왜 돈이 제자리였는지 숫자로 드러납니다.</p>
+        <a class="tool" data-lock href="https://mbkr.my/cashflow" target="_blank" rel="noopener"><span><b>머니4스퀘어</b><small>5분 작성 · 디렉터가 결과 확인</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
+      </article>
+      <article class="st" data-i="4">
+        <span class="big">05</span>
+        <div class="tt"><span>베러북 · 금융 I.Q</span></div>
+        <h3>읽을수록,<br>속지 않게 됩니다.</h3>
+        <i class="bar"></i>
+        <p>베러 고객님께는 금융 I.Q와 금융 상식을 꾸준히 보내 드립니다. 한 번 알려 드리고 끝내지 않습니다.</p>
+        <a class="tool" data-lock href="https://calc.makesbetter.co.kr/books" target="_blank" rel="noopener"><span><b>베러북 전자책 2권</b><small>현금흐름 · 공포·탐욕 지수 읽는 법</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
+        <a class="tool" data-lock href="https://mbkr.my/meta" target="_blank" rel="noopener"><span><b>금융 I.Q 테스트</b><small>3분 · 내 금융 감각과 결과 리포트</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
+      </article>
+      <article class="st" data-i="5">
+        <span class="big">06</span>
+        <div class="tt"><span>NEWS 4U · 세미나 · 1:1 상담</span></div>
+        <h3>더 이상,<br>혼자 공부하지 않습니다.</h3>
+        <i class="bar"></i>
+        <p>골라 드리는 금융 뉴스, 함께 듣는 세미나, 궁금할 때 바로 묻는 1:1 채팅까지. 물어볼 사람이 생깁니다.</p>
+        <div class="tool nolink"><span><b>NEWS 4U</b><small>꼭 알아야 할 금융·시장 뉴스</small></span><em><i>채널로 도착</i></em></div>
+        <a class="tool" data-lock href="https://mbkr.my/seminar" target="_blank" rel="noopener"><span><b>세미나 · 강의 신청</b><small>함께 듣고 바로 묻는 자리</small></span><em><svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><i data-st>잠김</i></em></a>
+      </article>
+    </div>
+  </section>
+
   <div class="band" aria-hidden="true"><img src="/open/walk.webp" alt=""><i></i></div>
 
   <section class="sec pad mem">
     <p class="no en rvl">FOR BETTER MEMBERS</p>
-    <h2 class="rvl">베러 고객님께는<br>금융 I.Q와 금융 상식을<br><b>꾸준히 보내 드립니다<span class="dot">.</span></b></h2>
-    <p class="p rvl">한 번 알려 드리고 끝내지 않습니다.<br>아는 만큼 지킬 수 있고,<br>아는 만큼 더 멀리 갈 수 있으니까요.</p>
+    <h2 class="rvl">한 번 들어오면,<br>돈을 보는 눈이<br><b>예전으로 돌아가지 않습니다<span class="dot">.</span></b></h2>
+    <p class="p rvl">매달 통장을 보고, 시장을 읽고,<br>내 계좌를 점검받는 사람과<br>그렇지 않은 사람의 1년은 다릅니다.</p>
   </section>
 
   <section class="vo pad">
