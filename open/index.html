@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>매달 10일, 실제 계좌를 엽니다 | MAKESBETTER</title>
+<meta name="description" content="메이크스베러가 직접 굴리는 계좌의 월배당 입금액을 매달 공개해요">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="메이크스베러">
+<meta property="og:description" content="매달 10일, 실제 계좌를 엽니다">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/go/img/report.webp">
+<meta name="theme-color" content="#15171C">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="/go/go.css">
+<style>
+/* 플랫폼 유입: 잠긴 통장 하나가 주인공. 어두운 첫 화면 → 밝은 본문 */
+body{background:#15171C}
+.wrap{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+.top{color:#fff}.top span{color:#C9B07A}
+.hero{color:#fff;padding-top:18px}
+.hero .day{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#E9CF8E;border:1px solid rgba(233,207,142,.4);border-radius:999px;padding:6px 13px}
+.hero .day i{width:7px;height:7px;border-radius:50%;background:#E9CF8E;animation:bl 1.4s infinite}
+@keyframes bl{50%{opacity:.25}}
+.hero h1{margin-top:18px;font-size:min(40px,10.4vw);line-height:1.22;letter-spacing:-.045em;font-weight:800}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#F3E0AE,#C29A4A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{margin-top:14px;font-size:16px;line-height:1.65;color:#CFC8BA}
+/* 통장 */
+.book{position:relative;margin-top:26px;padding:24px 22px 22px;border-radius:24px;background:linear-gradient(160deg,#262A33,#1B1E25);border:1px solid rgba(233,207,142,.28);box-shadow:0 30px 60px -30px #000}
+.book small{display:block;font-size:12.5px;line-height:1.5;color:#A9A398}
+.book .amt{margin-top:12px;display:flex;align-items:baseline;gap:5px;white-space:nowrap}
+.book .amt b{font-size:min(46px,11.6vw);font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;background:linear-gradient(90deg,#F3E0AE,#C29A4A);-webkit-background-clip:text;background-clip:text;color:transparent;transition:filter .9s}
+.book .amt span{font-size:19px;font-weight:700;color:#E9CF8E}
+.book .bars{display:flex;gap:10px;align-items:flex-end;height:70px;margin-top:20px}
+.book .bars div{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;font-size:12px;color:#8E897E}
+.book .bars i{display:block;width:100%;border-radius:6px 6px 0 0;background:#3A3E48}
+.book .bars .on i{background:linear-gradient(180deg,#E9CF8E,#B08A3E)}.book .bars .on{color:#E9CF8E;font-weight:700}
+.book .qz{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);font-size:15px;line-height:1.6;color:#E6E0D3}
+.book .qz b{color:#fff}
+.book .ans{display:inline-block;transition:filter .9s}
+body:not(.open) .book .amt b,body:not(.open) .book .ans{filter:blur(11px);user-select:none}
+.lockchip{position:absolute;left:50%;top:74px;transform:translateX(-50%);display:flex;align-items:center;gap:7px;white-space:nowrap;font-size:14px;font-weight:700;color:#15171C;background:#E9CF8E;border-radius:999px;padding:9px 16px;box-shadow:0 10px 24px rgba(0,0,0,.45)}
+.lockchip svg{width:15px;height:15px}
+body.open .lockchip{display:none}
+.hero .btn{margin-top:22px}
+.hero .fine{margin-top:10px;text-align:center;font-size:13px;color:#8E897E}
+body.open .hero .pre{display:none}
+.okline{display:none;margin-top:22px;padding:14px;border-radius:14px;background:rgba(233,207,142,.14);color:#E9CF8E;font-size:15px;font-weight:700;text-align:center}
+body.open .okline{display:block}
+/* 밝은 본문 */
+.sheetx{margin:34px -24px 0;padding:8px 24px 0;border-radius:28px 28px 0 0;background:var(--paper);color:var(--ink)}
+.sec{padding-top:44px}
+.sec .tag{font-size:13px;font-weight:700;color:var(--gold)}
+.sec h2{margin-top:8px;font-size:min(28px,7.3vw);line-height:1.32;letter-spacing:-.04em;font-weight:800}
+.sec h2 mark{background:linear-gradient(transparent 62%,#F0DDAA 62%);color:inherit}
+.sec .p{margin-top:12px;font-size:15.5px;line-height:1.7;color:var(--sub)}
+.cal{list-style:none;margin:22px 0 0;padding:0}
+.cal li{position:relative;margin-top:10px}
+.cal a{display:flex;align-items:center;gap:14px;padding:17px 16px;border-radius:18px;background:var(--card);border:1px solid var(--line);color:inherit;text-decoration:none}
+.cal .when{flex:none;width:58px;text-align:center;font-size:12px;font-weight:700;color:var(--gold);line-height:1.3}
+.cal .when b{display:block;font-size:19px;letter-spacing:-.03em;color:var(--ink)}
+.cal .tx{flex:1;min-width:0}
+.cal .tx b{display:block;font-size:16.5px;letter-spacing:-.03em}
+.cal .tx span{display:block;margin-top:2px;font-size:13.5px;color:var(--sub)}
+.cal .st{flex:none;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--faint);white-space:nowrap}
+.cal .st svg{width:14px;height:14px}
+body.open .cal .st{color:var(--gold)}
+body.open .cal .st svg{display:none}
+.cal a.shake{animation:gsh .5s}
+@keyframes gsh{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.vs div{padding:18px 16px;border-radius:18px;background:var(--card);border:1px solid var(--line)}
+.vs div.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.vs small{display:block;font-size:12.5px;font-weight:700;color:var(--faint)}.vs .on small{color:#E9CF8E}
+.vs p{margin-top:10px;font-size:14.5px;line-height:1.55;letter-spacing:-.02em}
+.proof{display:flex;gap:10px;margin-top:22px}
+.proof a{flex:1;padding:18px 16px;border-radius:18px;background:var(--card);border:1px solid var(--line);color:inherit;text-decoration:none}
+.proof b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em}.proof b small{font-size:15px;font-weight:700}
+.proof span{display:block;margin-top:2px;font-size:13.5px;color:var(--sub)}
+.gatex{margin-top:26px;padding:26px 22px 22px;border-radius:22px;background:var(--ink);color:#fff;text-align:center}
+.gatex b{display:block;font-size:22px;font-weight:800;letter-spacing:-.03em;line-height:1.35}
+.gatex p{margin-top:8px;font-size:14.5px;color:#CFC8BA}
+.gatex small{display:block;margin-top:12px;font-size:12.5px;color:#8E897E}
+body.open .gatex .pre{display:none}
+.gatex .post{display:none}body.open .gatex .post{display:block}
+.gatex .btn.gold{background:linear-gradient(90deg,#F3E0AE,#C29A4A);color:#15171C}
+.dis{margin-top:26px;font-size:12.5px;line-height:1.65;color:var(--faint)}
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:12px 24px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,rgba(21,23,28,0),#15171C 34%);transform:translateY(110%);transition:transform .3s}
+.sticky.on{transform:none}
+.sticky .btn{max-width:412px;margin:0 auto}
+body.open .sticky{display:none}
+@media (prefers-reduced-motion:reduce){.hero .day i{animation:none}.book .amt b,.book .ans{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><b>MAKESBETTER</b><span>가입비 없음</span></div>
+  <main>
+    <section class="hero">
+      <span class="day"><i></i>매달 10일 공개</span>
+      <h1>매달 10일,<br><em>실제 계좌</em>를 엽니다.</h1>
+      <p class="lead">메이크스베러가 직접 굴리는 계좌 4개.<br>지난달 통장에 들어온 월배당을 그대로 보여 드려요.</p>
+      <div class="book" id="book">
+        <small>2026년 10월 · 계좌 4개 합산 · 실수령액</small>
+        <div class="amt"><b id="amt" data-v="3643944">3,643,944</b><span>원</span></div>
+        <span class="lockchip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>등록하면 보여요</span>
+        <div class="bars" aria-hidden="true"><div><i style="height:100%"></i>7월</div><div><i style="height:88%"></i>8월</div><div><i style="height:89%"></i>9월</div><div class="on"><i style="height:89.5%"></i>10월</div></div>
+        <p class="qz"><b>포트폴리오 수익률이 −4.8%였던 달,</b><br>통장에 들어온 돈은 <span class="ans">9월보다 15,344원 늘었어요.</span></p>
+      </div>
+      <a class="btn kakao pre" id="chBtn" href="https://pf.kakao.com/_eETXxj/friend" target="_blank" rel="noopener">카카오톡 채널 추가하고 열기</a>
+      <p class="fine pre">무료 · 10초 · 추가하고 돌아오면 바로 열려요</p>
+      <p class="okline">✓ 등록 완료 · 계좌가 열렸어요</p>
+    </section>
+
+    <div class="sheetx">
+      <section class="sec">
+        <span class="tag rvl">왜 통장을 보여 주나요</span>
+        <h2 class="rvl">수익률은 누구나 말해요.<br><mark>통장</mark>은 아무도 안 보여 줘요.</h2>
+        <p class="p rvl">오를 때만 올리는 수익률 캡처 말고, 떨어진 달에도 통장에 얼마가 들어왔는지. 메이크스베러는 좋은 달도 나쁜 달도 같은 날 같은 방식으로 공개해요.</p>
+        <div class="vs rvl">
+          <div><small>흔한 투자 정보</small><p>잘된 날만 보여 줘요</p><p>뭘 살지는 안 알려 줘요</p><p>한 번 보고 끝나요</p></div>
+          <div class="on"><small>메이크스베러 등록</small><p>나쁜 달도 그대로 공개</p><p>이번 달 매수 방향 도착</p><p>매달 10일, 계속 와요</p></div>
+        </div>
+      </section>
+
+      <section class="sec" id="list">
+        <span class="tag rvl">등록하면 열리는 것</span>
+        <h2 class="rvl" id="listH">한 번 등록하면,<br><mark>매달</mark> 알아서 와요.</h2>
+        <ul class="cal">
+          <li class="rvl"><a data-lock href="https://mbkr.my/report" target="_blank" rel="noopener"><span class="when"><b>10일</b>매달</span><span class="tx"><b>월배당 리포트</b><span>실제 계좌 입금액과 그달의 결정</span></span><span class="st"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><em style="font-style:normal" data-st>잠김</em></span></a></li>
+          <li class="rvl"><a data-lock href="https://mbkr.my/studio" target="_blank" rel="noopener"><span class="when"><b>매일</b>갱신</span><span class="tx"><b>이번 달 매수 방향</b><span>24개 지표로 정한 Studio 신호</span></span><span class="st"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><em style="font-style:normal" data-st>잠김</em></span></a></li>
+          <li class="rvl"><a data-lock href="https://report.makesbetter.co.kr/check" target="_blank" rel="noopener"><span class="when"><b>언제든</b>무료</span><span class="tx"><b>내 포트폴리오 점검</b><span>배당 화면 캡처만 보내면 1:1 분석</span></span><span class="st"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><em style="font-style:normal" data-st>잠김</em></span></a></li>
+          <li class="rvl"><a data-lock href="https://calc.makesbetter.co.kr/books" target="_blank" rel="noopener"><span class="when"><b>바로</b>읽기</span><span class="tx"><b>전자책 2권</b><span>현금흐름 · 공포·탐욕 지수 읽는 법</span></span><span class="st"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><em style="font-style:normal" data-st>잠김</em></span></a></li>
+          <li class="rvl"><a data-lock href="https://mbkr.my/meta" target="_blank" rel="noopener"><span class="when"><b>3분</b>테스트</span><span class="tx"><b>금융 I.Q 테스트</b><span>내 금융 감각 확인 + 결과 리포트</span></span><span class="st"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><em style="font-style:normal" data-st>잠김</em></span></a></li>
+        </ul>
+      </section>
+
+      <section class="sec">
+        <span class="tag rvl">먼저 등록한 분들</span>
+        <h2 class="rvl">보기만 하던 분들이,<br>이제 <mark>자기 통장</mark>을 보내와요.</h2>
+        <div class="proof rvl">
+          <a href="https://mbkr.my/review" target="_blank" rel="noopener"><b>946<small>건</small></b><span>고객 후기 읽기 →</span></a>
+          <a href="https://mbkr.my/report" data-lock target="_blank" rel="noopener"><b>4<small>개</small></b><span>매달 공개하는 계좌</span></a>
+        </div>
+        <div class="gatex rvl" id="gate">
+          <div class="pre">
+            <b>지금 등록하면<br>10월 계좌부터 바로 열려요</b>
+            <p>리포트와 매수 방향이 메이크스베러<br>카카오톡 채널로 가요.</p>
+            <a class="btn kakao" id="chBtn2" href="https://pf.kakao.com/_eETXxj/friend" target="_blank" rel="noopener">카카오톡 채널 추가하기</a>
+            <small>무료 · 언제든 차단할 수 있어요</small>
+          </div>
+          <div class="post">
+            <b>등록됐어요.<br>10월 계좌부터 보세요</b>
+            <p>다음 공개는 12월 10일이에요.<br>채널로 먼저 알려 드릴게요.</p>
+            <a class="btn gold" href="https://mbkr.my/report" target="_blank" rel="noopener">10월 리포트 전체 보기</a>
+          </div>
+        </div>
+        <p class="dis">실제 사례를 그대로 공개한 자료이며, 수익을 보장하거나 투자를 권유하는 내용이 아니에요. 분배금은 달마다 달라지고, 투자 원금은 손실이 날 수 있어요.</p>
+      </section>
+    </div>
+  </main>
+</div>
+<div class="sticky" id="sticky"><a class="btn kakao" id="chBtn3" href="https://pf.kakao.com/_eETXxj/friend" target="_blank" rel="noopener">채널 추가하고 계좌 열기</a></div>
+<script>
+(function(){
+  function all(s,f){[].forEach.call(document.querySelectorAll(s),f)}
+  function hit(x){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/'+x,{keepalive:true,mode:'no-cors'})}catch(e){}}
+  var qs=new URLSearchParams(location.search),opened=false,clicked=false,KEY='mb-open-ch';
+  if(qs.get('reset')){try{localStorage.removeItem(KEY)}catch(e){}}
+  hit('open');
+  // 금액 올라가는 효과
+  function count(){var el=document.getElementById('amt'),v=+el.getAttribute('data-v'),t0=null;
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches){el.textContent=v.toLocaleString('ko-KR');return}
+    requestAnimationFrame(function f(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-p,3);el.textContent=Math.round(v*e).toLocaleString('ko-KR');if(p<1)requestAnimationFrame(f)})}
+  function unlock(quiet){if(opened)return;opened=true;document.body.classList.add('open');try{localStorage.setItem(KEY,'1')}catch(e){}
+    all('[data-st]',function(e){e.textContent='열기 →'});
+    document.getElementById('listH').innerHTML='열렸어요.<br><mark>하나씩</mark> 눌러 보세요.';
+    if(quiet)return;hit('open-done');
+    document.getElementById('book').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(count,500)}
+  // 이미 채널을 추가한 기기(이 페이지 또는 디렉터 초대장에서)는 바로 열림
+  try{if(localStorage.getItem(KEY)==='1'||(!qs.get('reset')&&localStorage.getItem('mb-d-ch')==='1'))unlock(true)}catch(e){}
+  ['chBtn','chBtn2','chBtn3'].forEach(function(id){document.getElementById(id).addEventListener('click',function(){clicked=true;hit('open-channel')})});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden&&clicked)unlock()});
+  window.addEventListener('focus',function(){if(clicked)setTimeout(unlock,400)});
+  // 등록 전에는 잠긴 항목을 누르면 등록 안내로
+  document.addEventListener('click',function(e){if(opened)return;var a=e.target.closest('a[data-lock]');if(!a)return;e.preventDefault();a.classList.remove('shake');void a.offsetWidth;a.classList.add('shake');
+    setTimeout(function(){document.getElementById('gate').scrollIntoView({behavior:'smooth',block:'center'})},380)},true);
+  // 나타나기 + 하단 고정 버튼(첫 버튼이 화면에서 벗어나면 표시, 마지막 안내 칸에서는 숨김)
+  var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12}):null;
+  all('.rvl',function(el){if(io)io.observe(el);else el.classList.add('in')});
+  var st=document.getElementById('sticky'),v1=true,v2=false;
+  function sy(){st.classList.toggle('on',!v1&&!v2)}
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){v1=es[0].isIntersecting||es[0].boundingClientRect.top>0;sy()}).observe(document.getElementById('chBtn'));new IntersectionObserver(function(es){v2=es[0].isIntersecting;sy()}).observe(document.getElementById('gate'))}
+})();
+</script>
+</body>
+</html>
