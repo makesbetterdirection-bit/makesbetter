@@ -13,6 +13,7 @@
 <meta property="og:image:height" content="630">
 <meta name="theme-color" content="#0A0A0B">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js" defer></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;500;700&display=swap">
 <style>
 /* CASH FLOW DESIGN STUDIO: 흑백 + 빨강 한 점. 얇은 글자와 굵은 글자의 대비, 가는 선, 넓은 여백. 둥근 카드·그림자·금색 없음. */
@@ -178,7 +179,15 @@ body.open .chip{display:none}
 .panel h2{font-family:var(--en);font-size:min(38px,9.8vw);font-weight:300;letter-spacing:-.04em;line-height:1.12}
 .panel h2 b{display:block;font-weight:700}
 .panel .p{margin-top:18px;font-size:15.5px;line-height:1.75;color:#fff}
-.panel .btn{margin-top:24px}
+.panel .btn{margin-top:20px}
+.reg{margin-top:22px}
+.reg label{display:block;margin-top:14px;font-size:13px;font-weight:700;color:#fff}
+.reg input[type=text],.reg input[type=tel]{width:100%;margin-top:6px;height:54px;padding:0 16px;border:0;border-radius:0;background:#fff;color:#0A0A0B;font:inherit;font-size:17px;font-weight:600;outline:none}
+.reg input:focus{box-shadow:0 0 0 3px #0A0A0B}
+.reg .agr{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:13px;font-weight:400;line-height:1.55;color:rgba(255,255,255,.92)}
+.reg .agr input{flex:none;width:20px;height:20px;margin:1px 0 0;accent-color:#0A0A0B}
+.rerr{min-height:20px;margin-top:10px;font-size:14px;font-weight:700;color:#fff}
+.rerr:not(:empty):before{content:"! ";}
 .panel .fine{color:rgba(255,255,255,.78)}
 .panel .sig{margin-top:30px;padding-bottom:18px;text-align:right;font-family:var(--en);font-size:12px;font-weight:700;letter-spacing:.14em;line-height:1.5}
 .panel .sig small{display:block;font-size:8px;font-weight:500;letter-spacing:.5em}
@@ -341,9 +350,15 @@ body.open .sticky{display:none}
       <i class="gl h2"></i><i class="gd c"></i><i class="gd d"></i>
       <div class="pre">
         <h2>CASH FLOW<b>DESIGN STUDIO</b></h2>
-        <p class="p">등록은 카카오톡 채널 추가 한 번이면 끝납니다.<br>추가하고 돌아오면, 위의 모든 것이 열립니다.</p>
-        <a class="btn" id="chBtn2" href="https://pf.kakao.com/_eETXxj/friend" target="_blank" rel="noopener">카카오톡 채널 추가하고 등록</a>
-        <p class="fine">가입비 없음 · 10초 · 언제든 차단할 수 있어요</p>
+        <p class="p">이름과 연락처를 남기고 채널을 추가하면 등록됩니다.<br>돌아오면, 위의 모든 것이 열립니다.</p>
+        <div class="reg">
+          <label for="rgN">이름</label><input id="rgN" type="text" autocomplete="name" maxlength="20" placeholder="홍길동">
+          <label for="rgP">연락처</label><input id="rgP" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" placeholder="010-0000-0000">
+          <label class="agr"><input type="checkbox" id="rgA"><span>등록 안내를 위해 이름·연락처를 수집하고 담당 디렉터에게 전달하는 것에 동의합니다. (등록 해지 시까지 보관)</span></label>
+          <p class="rerr" id="rgE" aria-live="polite"></p>
+        </div>
+        <a class="btn" id="chBtn2" href="https://pf.kakao.com/_eETXxj/friend" target="_blank" rel="noopener">등록하고 카카오톡 채널 추가</a>
+        <p class="fine">가입비 없음 · 언제든 차단할 수 있어요</p>
       </div>
       <div class="post">
         <h2>WELCOME<b>YOU ARE IN</b></h2>
@@ -359,7 +374,7 @@ body.open .sticky{display:none}
   </section>
   <footer class="foot"><b>MAKESBETTER</b><span class="en">CASH FLOW DESIGN STUDIO</span></footer>
 </div>
-<div class="sticky" id="sticky"><div><a class="btn" id="chBtn3" href="https://pf.kakao.com/_eETXxj/friend" target="_blank" rel="noopener">카카오톡 채널 추가하고 등록</a></div></div>
+<div class="sticky" id="sticky"><div><a class="btn" id="chBtn3" href="#gate">플랫폼 등록하기</a></div></div>
 <script>
 (function(){
   function all(s,f){[].forEach.call(document.querySelectorAll(s),f)}
@@ -381,7 +396,31 @@ body.open .sticky{display:none}
     document.getElementById('book').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(count,600)}
   // 이미 채널을 추가한 기기(이 페이지 또는 디렉터 초대장)는 바로 열림
   try{if(localStorage.getItem(KEY)==='1'||(!qs.get('reset')&&localStorage.getItem('mb-d-ch')==='1'))unlock(true)}catch(e){}
-  ['chBtn2','chBtn3'].forEach(function(id){document.getElementById(id).addEventListener('click',function(){clicked=true;hit(TAG+'-channel')})});
+  // 등록: 이름·연락처를 담당 디렉터에게 메일로 보내고(EmailJS, 코칭 신청서와 같은 계정) 채널 추가 화면을 연다
+  var MAIL={lee:'bd187@naver.com',oh:'u0112383@naver.com',byun:'wpqlrhc217@naver.com',hong:'carrot8807@naver.com',kang:'kangpro1004@kakao.com',kimdh:'plandh@naver.com',kimsy:'gnswnajr@naver.com'},MON='makesbetter.direction@gmail.com';
+  var rgN=document.getElementById('rgN'),rgP=document.getElementById('rgP'),rgE=document.getElementById('rgE');
+  rgP.addEventListener('input',function(){var d=rgP.value.replace(/\D/g,'').slice(0,11);rgP.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7)});
+  function pad(n){return n<10?'0'+n:''+n}
+  function sendReg(name,phone){
+    var now=new Date(),who=pk?P[pk]:'공통 주소',to=(pk?MAIL[pk]:MAIL.lee)+','+MON;
+    var params={site_label:' · 플랫폼 등록',consult_type:'플랫폼 등록 (CASH FLOW DESIGN STUDIO)',
+      date:now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate()),time:pad(now.getHours())+':'+pad(now.getMinutes()),
+      name:name,phone:phone,email:'-',director:pk?P[pk]:'배정 요청',to_email:to,
+      memo:['[플랫폼 등록]','유입 링크: '+who+(pk?' 디렉터 (mbkr.my/p'+pk+')':' (/open)'),'','이름과 연락처를 남기고 카카오톡 채널 추가 화면으로 이동했습니다.','※ 채널을 실제로 추가했는지는 카카오가 알려 주지 않아, 채널 친구 목록에서 확인이 필요합니다.'].join('\n')};
+    if(qs.get('mailtest')){params.to_email=MON;params.consult_type='[발송 시험] '+params.consult_type}
+    if(qs.get('test')){window.__regParams=params;return}
+    try{emailjs.init({publicKey:'37rMXVT1INDvECR8k'});emailjs.send('service_lehvmhu','template_myptiih',params).then(function(){hit(TAG+'-mail')},function(){try{localStorage.removeItem('mb-open-reg')}catch(e){}})}catch(e){}
+  }
+  document.getElementById('chBtn2').addEventListener('click',function(e){
+    var name=rgN.value.trim(),phone=rgP.value.trim(),sent=false;try{sent=localStorage.getItem('mb-open-reg')==='1'}catch(x){}
+    if(!sent){
+      var miss=!name?'이름을 적어 주세요':phone.replace(/\D/g,'').length<10?'연락처를 정확히 적어 주세요':!document.getElementById('rgA').checked?'동의에 체크해 주세요':'';
+      if(miss){e.preventDefault();rgE.textContent=miss;(!name?rgN:rgP).focus();return}
+      rgE.textContent='';try{localStorage.setItem('mb-open-reg','1')}catch(x){}
+      sendReg(name,phone);
+    }
+    clicked=true;hit(TAG+'-channel');
+  });
   document.addEventListener('visibilitychange',function(){if(!document.hidden&&clicked)unlock()});
   window.addEventListener('focus',function(){if(clicked)setTimeout(unlock,400)});
   // 등록 전에는 잠긴 도구를 누르면 등록 칸으로
