@@ -192,7 +192,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
   function done(fail){document.body.classList.remove("cf-hero");
     root.innerHTML='<main class="cq-body sd"><div class="sd-cup" aria-hidden="true">'+(S.sip.indexOf("ICE")===0?"🧊":"☕")+'</div><h2 class="cq-h">'+(fail?'전송이 잠깐 막혔어요':'신청이 접수됐어요')+'</h2>'+
       '<p class="cq-p">'+(fail?'신청 내용은 이 화면에 남아 있어요. 아래 버튼으로 다시 보내 주세요.':esc(S.director)+' 디렉터가 웰컴 드링크('+esc(S.sip)+')를 먼저 보내고 연락드릴게요.<br>마지막으로 카카오톡 채널을 추가하면 접수가 완료됩니다.')+'</p></main>'+
-      '<div class="cq-foot">'+(fail?'<button class="cq-next" id="sd-retry">다시 보내기</button>':'<a class="cq-next kk" href="'+CONFIG.channelUrl+'">카카오톡 채널 추가하고 완료하기</a>')+'</div>';
+      '<div class="cq-foot">'+(fail?'<button class="cq-next" id="sd-retry">다시 보내기</button>':'<a class="cq-next kk" href="'+CONFIG.channelUrl+'" rel="noreferrer" referrerpolicy="no-referrer">카카오톡 채널 추가하고 완료하기</a>')+'</div>';
     if(fail)root.querySelector("#sd-retry").onclick=send;
     else if(!TEST){try{fetch("https://abacus.jasoncameron.dev/hit/mbkr.my/sip-apply",{keepalive:true,mode:"no-cors"})}catch(e){}}}
   /* ── 신청 리포트 PDF (금융 IQ 테스트와 같은 방식: 브라우저에서 PDF를 만들어 메일에 첨부) ──

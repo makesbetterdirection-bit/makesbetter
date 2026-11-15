@@ -311,7 +311,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
           '<label class="cq-t"><input id="cq-name" type="text" autocomplete="name" placeholder="홍길동" maxlength="20" value="'+esc(state.name)+'"></label>'+
           (state.kakao?'<label class="cq-t"><span class="cq-l">연락처</span><input id="cq-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" value="'+esc(state.phone)+'"></label>'+
             '<label class="cq-t"><span class="cq-l">쿠폰번호<small>선택 · 카카오 쿠폰 12자리</small></span><input id="cq-coupon" type="text" inputmode="numeric" placeholder="카카오에서 받은 쿠폰번호" value="'+esc(state.coupon)+'"></label>'+
-            '<a class="cq-link" href="https://pf.kakao.com/_eETXxj/coupons" target="_blank" rel="noopener">카카오 채널에서 쿠폰 받기</a>':'');
+            '<a class="cq-link" href="https://pf.kakao.com/_eETXxj/coupons" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">카카오 채널에서 쿠폰 받기</a>':'');
       } else if(k==="director"){
         h='<h2 class="cq-h">담당 디렉터를<br>골라 주세요</h2><p class="cq-p">결과는 고른 디렉터에게 전달됩니다.</p>'+
           '<div class="cq-opts two" data-set="director">'+CONFIG.directors.map(function(d){ return '<button type="button" class="cq-o'+(state.director===d.name?" on":"")+'" data-v="'+d.name+'">'+d.name+'</button>'; }).join("")+'</div>';
