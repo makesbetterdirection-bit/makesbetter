@@ -26,22 +26,23 @@ h1,h2,h3,p{margin:0}
 
 /* 상단 쿠폰 */
 .head{padding:24px 0 8px}
-.ticket{position:relative;border-radius:22px;overflow:hidden;color:#fff;background:#9E010C;
-  box-shadow:0 18px 40px rgba(120,0,10,.28);padding:22px 22px 22px;isolation:isolate}
-.tk-top{display:flex;justify-content:space-between;align-items:center}
-.tk-wm{font-size:11px;font-weight:600;letter-spacing:.36em;color:var(--gold)}
-.tk-label{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.18em;color:#fff;background:#0B0B0C;padding:6px 11px 7px;transform:rotate(-3deg)}
-.ticket h1{position:relative;z-index:1;margin-top:18px;font-size:24px;line-height:1.3;letter-spacing:-.045em;font-weight:800}
-.tk-big{position:relative;z-index:1;margin-top:6px;font-size:clamp(76px,23vw,96px);line-height:.95;font-weight:800;letter-spacing:-.065em;white-space:nowrap}
-.tk-time{position:relative;z-index:1;margin-top:6px;display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
-.tk-time b{font-size:30px;line-height:1;font-weight:800;letter-spacing:-.05em;color:#fff}
-.tk-time span{font-size:13px;font-weight:800;letter-spacing:.14em;color:#fff;background:#0B0B0C;padding:6px 10px 7px;transform:rotate(-3deg)}
-.tk-gift{position:absolute;z-index:2;right:-22px;top:100px;width:clamp(140px,39vw,168px);height:auto;filter:drop-shadow(0 16px 18px rgba(60,0,0,.45));pointer-events:none}
-.tk-inc{position:relative;z-index:3;margin-top:22px;display:flex;flex-wrap:wrap;gap:5px}
-.tk-inc i{font-style:normal;font-size:clamp(11.5px,3.3vw,13px);font-weight:600;color:#fff;background:rgba(255,255,255,.16);border-radius:999px;padding:5px clamp(8px,2.6vw,11px);white-space:nowrap}
-.tk-from{position:relative;z-index:3;margin-top:14px;display:flex;align-items:baseline;gap:12px;padding:12px 14px;border-radius:12px;background:rgba(0,0,0,.24)}
-.tk-from span{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--gold)}
-.tk-from b{font-size:17px;font-weight:700;color:#fff}
+.ticket{position:relative;border-radius:22px;overflow:hidden;color:#fff;background:#0B0B0C url(invite.webp) right bottom/cover no-repeat;
+  box-shadow:0 22px 48px rgba(0,0,0,.35);padding:24px clamp(16px,5.4vw,22px) 22px;isolation:isolate;border:1px solid rgba(212,175,110,.28)}
+.ticket::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(100deg,rgba(8,8,9,.92) 0%,rgba(8,8,9,.72) 48%,rgba(8,8,9,.15) 100%),linear-gradient(0deg,rgba(8,8,9,.75) 0%,rgba(8,8,9,0) 45%)}
+.ticket>*{position:relative;z-index:1}
+.tk-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tk-wm{font-size:11px;font-weight:600;letter-spacing:clamp(.2em,1vw,.36em);color:var(--gold);white-space:nowrap}
+.tk-label{display:inline-block;font-size:clamp(9px,2.7vw,10px);font-weight:600;letter-spacing:clamp(.16em,.8vw,.28em);white-space:nowrap;color:var(--gold);border:1px solid rgba(212,175,110,.6);border-radius:999px;padding:5px 10px 5px 13px}
+.ticket h1{margin-top:28px;font-size:clamp(20px,6vw,23px);line-height:1.3;letter-spacing:-.04em;font-weight:600;color:rgba(255,255,255,.88)}
+.tk-big{margin-top:10px;font-size:clamp(68px,21vw,88px);line-height:.95;font-weight:700;letter-spacing:-.06em;white-space:nowrap;background:linear-gradient(180deg,#F3DFAE 0%,#D4AF6E 55%,#A9833F 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tk-time{margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
+.tk-time b{font-size:24px;line-height:1;font-weight:700;letter-spacing:-.04em;color:#fff}
+.tk-time span{font-size:10px;font-weight:700;letter-spacing:.28em;color:#0B0B0C;background:var(--gold);border-radius:999px;padding:5px 9px 5px 12px}
+.tk-inc{margin-top:26px;display:flex;flex-wrap:wrap;gap:clamp(4px,1.3vw,6px)}
+.tk-inc i{font-style:normal;font-size:clamp(10.5px,3.15vw,12.5px);font-weight:500;letter-spacing:-.03em;color:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:5px clamp(6px,2vw,11px);white-space:nowrap}
+.tk-from{margin-top:14px;display:flex;align-items:baseline;gap:12px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(212,175,110,.22)}
+.tk-from span{font-size:11px;font-weight:600;letter-spacing:.24em;color:var(--gold)}
+.tk-from b{font-size:16px;font-weight:600;color:#fff}
 /* 질문 */
 .q{background:var(--card);border-radius:20px;padding:24px 20px;margin-top:14px}
 .q h2{font-size:20px;line-height:1.4;font-weight:700;letter-spacing:-.035em}
@@ -97,7 +98,7 @@ h1,h2,h3,p{margin:0}
 .drink .opt small{display:block;margin-top:2px;font-size:13px;font-weight:500;color:var(--faint)}
 .drink .opt.on small{color:#B23A0C}
 /* 쿠폰 적용 표시 */
-.tk-cp{display:none;position:relative;z-index:3;margin-top:10px;font-size:14px;font-weight:600;color:#FFE3D6}
+.tk-cp{display:none;margin-top:10px;font-size:14px;font-weight:600;color:#FFE3D6}
 .tk-cp.on{display:block}
 .tk-cp i{font-style:normal;color:var(--gold);letter-spacing:.04em}
 .field input:focus{border-color:var(--ink)}
@@ -133,8 +134,7 @@ h1,h2,h3,p{margin:0}
   <header class="head">
     <div class="ticket">
       <div class="tk-top"><span class="tk-wm">MAKES · BETTER</span><span class="tk-label">INVITATION</span></div>
-      <h1>전문가 1:1 맞춤 코칭<br>신청서</h1>
-      <img class="tk-gift" src="gift.webp" alt="" width="520" height="538">
+      <h1>전문가 1:1 맞춤 코칭</h1>
       <div class="tk-big">2시간</div>
       <div class="tk-time"><b class="nw">코칭</b><span class="nw free">FREE</span></div>
       <div class="tk-inc"><i>현금흐름 점검</i><i>보유자산 평가</i><i>돈 모으는 툴 제공</i></div>
