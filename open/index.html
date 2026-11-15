@@ -100,6 +100,19 @@ body.open .sticky{display:none}
 .story{margin:44px -24px 0;padding:52px 24px 56px;background:#EDE8DC}
 .story h2{font-size:min(30px,7.8vw)}
 .story .p b{color:var(--ink)}
+.def{margin-top:26px;padding:24px 22px 22px;border-radius:22px;background:var(--card);border:1px solid #D9CFB8}
+.def small{display:block;font-size:11.5px;font-weight:800;letter-spacing:.2em;color:var(--gold)}
+.def p{margin-top:12px;font-size:16.5px;line-height:1.75;letter-spacing:-.025em;color:var(--ink)}
+.def p b{background:linear-gradient(transparent 62%,#F0DDAA 62%)}
+.def ol{list-style:none;display:flex;margin:20px 0 0;padding:16px 0 0;border-top:1px solid var(--line)}
+.def li{flex:1;text-align:center;font-size:14px;font-weight:700;letter-spacing:-.02em}
+.def li i{display:block;width:26px;height:26px;margin:0 auto 6px;border-radius:50%;background:var(--ink);color:#E9CF8E;font-style:normal;font-size:12.5px;font-weight:800;line-height:26px}
+.mem{margin:52px -24px 0;padding:64px 28px 66px;background:#15171C;color:#fff;text-align:center;background-image:radial-gradient(90% 60% at 50% 0,rgba(233,207,142,.16),transparent 70%)}
+.mem-k{font-size:11.5px;font-weight:800;letter-spacing:.26em;color:#E9CF8E}
+.mem h2{margin-top:18px;font-size:min(28px,7.3vw);line-height:1.42;letter-spacing:-.04em;font-weight:800}
+.mem h2 em{font-style:normal;background:linear-gradient(90deg,#F3E0AE,#C29A4A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mem-l{display:block;width:36px;height:1px;margin:26px auto 0;background:#C29A4A}
+.mem p{margin-top:24px;font-size:15.5px;line-height:1.8;color:#CFC8BA}
 .pill{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.08em;color:#fff;background:var(--ink);border-radius:999px;padding:6px 13px}
 .pt h2{margin-top:14px;font-size:min(30px,7.8vw)}
 .shot{margin-top:22px;border-radius:22px;overflow:hidden;background:#15171C;box-shadow:0 24px 40px -26px rgba(21,23,28,.6)}
@@ -181,7 +194,11 @@ body.open .rw em{color:var(--gold)}
         <h2 class="rvl">“말로 설명하는 대신,<br><mark>통장을 보여 드리자.</mark>”</h2>
         <p class="p rvl">20년 동안 상담하면서 가장 많이 들은 말은 “그래서 진짜 되나요?”였어요.</p>
         <p class="p rvl">그래서 설명을 줄였어요. 대신 우리가 직접 돈을 넣고, 매달 통장에 찍힌 숫자를 그대로 공개하기로 했어요. 좋은 달도, 나쁜 달도요.</p>
-        <p class="p rvl"><b>메이크스베러 플랫폼은 그 기록을 가장 먼저 받아 보는 자리예요.</b></p>
+        <div class="def rvl">
+          <small>MAKESBETTER PLATFORM</small>
+          <p>메이크스베러 플랫폼은 고객의 재정 상태를 <b>진단</b>하고, 금융 <b>지식</b>을 높이며, 개인의 목표에 맞는 자산관리 방향을 <b>설계</b>하고 <b>실행</b>을 돕는 금융 코칭 플랫폼입니다.</p>
+          <ol><li><i>1</i>진단</li><li><i>2</i>지식</li><li><i>3</i>설계</li><li><i>4</i>실행</li></ol>
+        </div>
       </section>
 
       <section class="sec pt">
@@ -206,6 +223,13 @@ body.open .rw em{color:var(--gold)}
         <div class="shot sq rvl"><img src="/go/img/ph-ask.webp" alt=""></div>
         <p class="p rvl">내 배당 화면을 캡처해서 보내면, 디렉터가 1:1로 점검해 드려요. 정보만 주고 끝나는 곳과 가장 다른 점이에요.</p>
         <p class="gain rvl">물어볼 사람이 생기면, 미루던 결정을 하게 돼요.</p>
+      </section>
+
+      <section class="mem rvl">
+        <span class="mem-k">FOR BETTER MEMBERS</span>
+        <h2>베러 고객님께는<br>금융 I.Q와 금융 상식을<br><em>꾸준히</em> 보내 드립니다.</h2>
+        <i class="mem-l" aria-hidden="true"></i>
+        <p>한 번 알려 드리고 끝내지 않습니다.<br>아는 만큼 지킬 수 있고,<br>아는 만큼 더 멀리 갈 수 있으니까요.</p>
       </section>
 
       <section class="sec" id="list">
