@@ -46,6 +46,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
 .cq-p{margin:12px 0 0;font-size:15.5px;line-height:1.6;color:var(--sub)}
 .cq-t,.cq-m{display:block;margin-top:22px}
 .cq-l{display:block;font-size:15px;font-weight:700;margin-bottom:8px}
+.cq-ag{display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:13.5px;line-height:1.55;color:var(--sub)}.cq-ag input{flex:none;width:20px;height:20px;margin:1px 0 0;accent-color:var(--ink)}
 .cq-l small{display:block;font-size:13px;font-weight:400;color:var(--faint);margin-top:1px}
 .cq-t input{width:100%;height:64px;border:2px solid transparent;border-radius:16px;background:var(--card);padding:0 20px;font:inherit;font-size:22px;font-weight:600;color:var(--ink)}
 .cq-in{display:flex;align-items:center;gap:8px;height:68px;border:2px solid transparent;border-radius:16px;background:var(--card);padding:0 20px}
@@ -114,7 +115,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
   var ACCT=["주택청약","은행 예적금","청년저축","증권계좌","퇴직연금계좌","개인형 IRP(세액공제)","연금저축계좌(세액공제)","비과세 계좌","중개형 ISA","기타"];
   if(window.emailjs) emailjs.init({publicKey:CONFIG.emailjsPublicKey});
   var root=document.getElementById("mb-sip-root");
-  var S={q:0,director:"",dLock:false,sip:"",name:"",phone:"",referrer:"",worry:"",assetMethod:[],assetGoal:[],incomeType:"",accounts:[],needInfo:[]};
+  var S={q:0,director:"",dLock:false,sip:"",name:"",phone:"",referrer:"",worry:"",assetMethod:[],assetGoal:[],incomeType:"",accounts:[],needInfo:[],agree:false};
   try{var short={lee:"이종호",oh:"오수현",byun:"변보라",hong:"홍민아",kang:"강소리",kimdh:"김다희",kimsy:"김상윤"};
     var m=/\/sip([a-z]+)\/?$/.exec(location.pathname),qs=new URLSearchParams(location.search),d=(qs.get("d")||"").trim();
     if(m&&short[m[1]]) d=short[m[1]]; else if(short[d]) d=short[d];
@@ -143,7 +144,8 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
       else if(k==="name"){h='<h2 class="cq-h">누구를 기다리면<br>될까요?</h2>'+
         '<label class="cq-t"><span class="cq-l">성함</span><input id="s-name" type="text" autocomplete="name" placeholder="홍길동" maxlength="20" value="'+esc(S.name)+'"></label>'+
         '<label class="cq-t"><span class="cq-l">휴대폰 번호</span><input id="s-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" maxlength="13" value="'+esc(S.phone)+'"></label>'+
-        '<label class="cq-t"><span class="cq-l">추천해 주신 분<small>없으면 비워 두세요</small></span><input id="s-ref" type="text" placeholder="이름" maxlength="20" value="'+esc(S.referrer)+'"></label>'}
+        '<label class="cq-t"><span class="cq-l">추천해 주신 분<small>없으면 비워 두세요</small></span><input id="s-ref" type="text" placeholder="이름" maxlength="20" value="'+esc(S.referrer)+'"></label>'+
+        '<label class="cq-ag"><input id="s-ag" type="checkbox"'+(S.agree?" checked":"")+'><span>코칭 일정 안내를 위해 이름·연락처를 수집하고, 담당 디렉터에게 전달하는 것에 동의합니다. (코칭 종료 후 1년 보관)</span></label>'}
       else if(k==="worry"){h='<h2 class="cq-h">요즘 돈 때문에<br>가장 불편한 건?</h2>'+opts("worry",WORRY)}
       else if(k==="method"){multi=true;h='<h2 class="cq-h">지금 자산은 주로<br>어떻게 운용하세요?</h2><p class="cq-p">해당하는 것을 모두 골라 주세요.</p>'+opts("assetMethod",METHOD,true)}
       else if(k==="goal"){multi=true;h='<h2 class="cq-h">무엇을 위해<br>모으고 계세요?</h2><p class="cq-p">해당하는 것을 모두 골라 주세요.</p>'+opts("assetGoal",GOAL,true)}
@@ -159,13 +161,13 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
         '<div class="cq-foot"><button class="cq-next" id="cq-next">'+next+'</button></div>';
       window.scrollTo(0,0);
     }
-    function err(t){var e=root.querySelector("#cq-err");if(e){e.textContent=t;e.classList.add("on")}}
-    function collect(){var a=root.querySelector("#s-name");if(a)S.name=a.value.trim();var p=root.querySelector("#s-phone");if(p)S.phone=p.value.trim();var r=root.querySelector("#s-ref");if(r)S.referrer=r.value.trim()}
+    function err(t){var e=root.querySelector("#cq-err");if(e){e.textContent=t;e.classList.add("on");try{e.scrollIntoView({block:"center",behavior:"smooth"})}catch(x){}}}
+    function collect(){var a=root.querySelector("#s-name");if(a)S.name=a.value.trim();var p=root.querySelector("#s-phone");if(p)S.phone=p.value.trim();var r=root.querySelector("#s-ref");if(r)S.referrer=r.value.trim();var g=root.querySelector("#s-ag");if(g)S.agree=g.checked}
     function go(dir){collect();
       if(dir>0){
         if(k==="director"&&!S.director)return err("디렉터를 골라 주세요.");
         if(k==="sip"&&!S.sip)return err("커피를 골라 주세요.");
-        if(k==="name"){if(!S.name)return err("성함을 적어 주세요.");if(S.phone.replace(/\D/g,"").length<10)return err("휴대폰 번호를 정확히 적어 주세요.")}
+        if(k==="name"){if(!S.name)return err("성함을 적어 주세요.");if(S.phone.replace(/\D/g,"").length<10)return err("휴대폰 번호를 정확히 적어 주세요.");if(!S.agree)return err("개인정보 수집에 동의해 주세요.")}
         if(k==="worry"&&!S.worry)return err("하나를 골라 주세요.");
         if(k==="income"&&!S.incomeType)return err("하나를 골라 주세요.");
         if(k==="need"&&!S.needInfo.length)return err("하나 이상 골라 주세요.");

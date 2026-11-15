@@ -209,6 +209,8 @@ h1,h2,h3,p{margin:0}
   var CPV=q.get('coupon')||q.get('coupon_no')||q.get('couponNumber')||q.get('coupon_number')||'';
   // 디렉터 페이지(?d=)에서 온 경우만 새 신청서(첫 인사 커피 + Sip 질문).
   // 그 밖(카카오 쿠폰·초대 이벤트 등)은 기존 신청서 그대로 — 이벤트용 개편은 이벤트 배포 때 따로.
+  // 디렉터 페이지(?d=)에서 온 신청은 한 화면에 질문 하나씩 넘어가는 /sip 설문으로 보낸다.
+  if(q.get('d')&&!CPV&&q.get('old')!=='1'){var sq=new URLSearchParams();sq.set('d',q.get('d'));if(q.get('by'))sq.set('by',q.get('by'));location.replace('/sip/?'+sq.toString());return}
   var LITE=!(q.get('d')&&!CPV);
   var S={rate:'',mgoal:'',sip:'',worry:'',method:[],goal:[],income:'',accounts:[],need:[],director:''};
 
