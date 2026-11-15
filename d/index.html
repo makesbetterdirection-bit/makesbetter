@@ -356,6 +356,11 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   // 보낸 사람(고객) 이름: ?by=이름
     if(by){all('[data-by=from]',function(e){e.textContent=by});all('[data-by=pt]',function(e){e.textContent='믿고 소개하는 자산관리 디렉터'});all('[data-by=who]',function(e){e.textContent=by+' 님'});
     all('[data-by=why]',function(e){e.textContent=by+' 님이 먼저 만나 본 디렉터를, 당신에게도 소개하고 싶어서 보낸 초대장이에요.'})}
+    else{ // 디렉터가 직접 보내는 초대장: 중간 전달자 없이 디렉터 목소리로, 구성은 짧게
+      all('[data-by=from]',function(e){e.textContent=d.name+' 디렉터'});
+      all('.l-who',function(e){e.innerHTML='제게는 그게 <em>당신</em>이었어요.'});
+      all('[data-by=why]',function(e){e.textContent=d.name+' 디렉터가 직접 보내는 초대장이에요.'});
+      all('.c-p,.w-flow',function(e){e.remove()})}
   /* 24시간 마감: 처음 연 순간부터. 채널을 추가해 선물을 열면 멈춤 */
   (function(){
     if(/^\/s\//.test(location.pathname)||/[?&]send=1/.test(location.search))return; // 보내는 사람 화면에는 마감 없음
