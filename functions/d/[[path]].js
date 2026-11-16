@@ -1,6 +1,6 @@
 // /d/<디렉터> — 디렉터 페이지. 페이지는 하나(/d/)이고 주소만 다름.
 // ?by=이름 이 있으면 카카오톡 미리보기 카드 제목에 보낸 사람 이름을 넣는다.
-const KEYS = new Set(["lee", "oh", "byun", "hong", "kang", "kimdh", "kimsy"]);
+const KEYS = new Set(["lee", "oh", "byun", "hong", "kang", "kimdh", "kimsy", "sy"]);
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 export async function onRequest({ request, env, next }) {
   const url = new URL(request.url);
