@@ -315,7 +315,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     hong:{name:'홍민아',role:'디렉터',quote:'“예·적금밖에 모르던 저에게 새로운 세계가 열린 것 같았어요.”',who:'함께한 고객',rv:'175279693'},
     kang:{name:'강소리',role:'디렉터',quote:'“첫째를 임신했을 때 처음 만난 게 벌써 15년. 덕분에 안정적으로 자산을 운용할 수 있었어요.”',who:'15년째 함께한 고객',rv:'174911919'},
     kimsy:{name:'김상윤',role:'디렉터',quote:'“제가 과한 욕심을 내려고 할 때는 오히려 브레이크를 걸어 주셨어요.”',who:'함께한 고객',rv:'173300869'},
-    sy:{name:'김소연',role:'디렉터',quote:'현금흐름 진단부터 포트폴리오까지, 1:1로 함께해요.',who:'후기 게시판',rv:''},
+    sy:{name:'김소연',role:'디렉터',quote:'',who:'',rv:''},
     kimdh:{name:'김다희',role:'디렉터',quote:'현금흐름 진단부터 포트폴리오까지, 1:1로 함께해요.',who:'후기 게시판',rv:''}
   };
   var m=/\/(?:d|s)\/([a-z]+)/.exec(location.pathname),q=/[?&]d=([a-z]+)/.exec(location.search),k=(m&&D[m[1]]?m[1]:q&&D[q[1]]?q[1]:'lee'),d=D[k];
@@ -323,6 +323,10 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   all('[data-d=name]',function(e){e.textContent=d.name});all('[data-d=role]',function(e){e.textContent=d.role});
   all('[data-d=mono]',function(e){e.textContent=d.name.charAt(0)});all('[data-d=quote]',function(e){e.textContent=d.quote});
   if(d.photo){all('[data-d=photo]',function(e){e.innerHTML='<img src="'+d.photo+'" alt="'+d.name+' '+d.role+'">'})}
+  /* 아직 받지 않은 내용(경력·한마디·후기)은 자리 표시 없이 비워 둔다 */
+  if(!d.career)all('[data-d=career]',function(e){e.style.display='none'});
+  if(!d.quote)all('[data-d=quote]',function(e){e.style.display='none'});
+  if(!d.rv&&!d.who)all('[data-d=rv]',function(e){e.style.display='none'});
   if(d.career){all('[data-d=career]',function(e){e.innerHTML=d.career.map(function(c){return '<li>'+c+'</li>'}).join('')+(d.motto?'<li class="dx-m">“'+d.motto+'”</li>':'')})}
   all('[data-d=rvwho]',function(e){e.textContent=d.who});all('[data-d=rv]',function(e){e.href=d.rv?'https://mbkr.my/review/?bmode=view&idx='+d.rv:'https://mbkr.my/review'});
   var by='';try{by=(new URLSearchParams(location.search).get('by')||'').trim().slice(0,10)}catch(e){}
