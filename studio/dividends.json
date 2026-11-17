@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12 09:42",
+ "updated": "2026-11-18 01:30",
  "hol": [
   "2026-10-05",
   "2026-10-09",
@@ -364,7 +364,7 @@
    "pay": "2026-11-17",
    "amt": 92,
    "rate": 0.77,
-   "est": true,
+   "est": false,
    "src": "https://www.samsungfund.com/etf/lounge/notice-view.do?no=80913"
   },
   {
@@ -376,7 +376,7 @@
    "pay": "2026-11-17",
    "amt": 180,
    "rate": 2.02,
-   "est": true,
+   "est": false,
    "src": "https://www.aceetf.co.kr/cs/notice/7383"
   },
   {
@@ -388,7 +388,7 @@
    "pay": "2026-11-17",
    "amt": 73,
    "rate": 0.99,
-   "est": true,
+   "est": false,
    "src": "https://www.samsungfund.com/etf/lounge/notice-view.do?no=80913"
   },
   {
@@ -400,7 +400,7 @@
    "pay": "2026-11-17",
    "amt": 266,
    "rate": 1.75,
-   "est": true,
+   "est": false,
    "src": "https://www.samsungfund.com/etf/lounge/notice-view.do?no=80913"
   },
   {
