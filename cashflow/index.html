@@ -209,7 +209,10 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
       { name: "강소리", email: "kangpro1004@kakao.com" },
       { name: "김다희", email: "plandh@naver.com" },
       { name: "김상윤", email: "gnswnajr@naver.com" },
-      { name: "김소연", email: "makesbetter.sy@gmail.com" }
+      { name: "김소연", email: "makesbetter.sy@gmail.com" },
+      { name: "조숙원", email: "makesbetter.direction@gmail.com" },
+      { name: "김현희", email: "makesbetter.direction@gmail.com" },
+      { name: "이지훈", email: "makesbetter.direction@gmail.com" }
     ],
     incomeTypes: ["근로소득자","개인사업자","근로소득자+개인사업자","법인대표 & 임원","기타"],
     // EmailJS 설정 - 예약 위젯과 동일한 계정/템플릿을 재사용합니다.
@@ -270,7 +273,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
 
 
   /* ===== 새 입력 화면: Studio 오프닝 + 한 화면에 질문 하나 (계산·리포트·메일 전송은 기존 그대로) ===== */
-  try{ var __short={lee:"이종호",oh:"오수현",byun:"변보라",hong:"홍민아",kang:"강소리",kimdh:"김다희",kimsy:"김상윤",sy:"김소연"};
+  try{ var __short={lee:"이종호",oh:"오수현",byun:"변보라",hong:"홍민아",kang:"강소리",kimdh:"김다희",kimsy:"김상윤",sy:"김소연",jo:"조숙원",kimhh:"김현희",leejh:"이지훈"};
     var __m=/\/cash([a-z]+)\/?$/.exec(location.pathname), __d=(new URLSearchParams(location.search).get("d")||"").trim();
     if(__m && __short[__m[1]]) __d=__short[__m[1]];            // 디렉터 전용 주소: /cashlee, /cashoh …
     if(__d && CONFIG.directors.some(function(x){return x.name===__d;})){ state.director=__d; state.dLock=true; } }catch(e){}

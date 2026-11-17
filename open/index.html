@@ -380,10 +380,10 @@ body.open .sticky{display:none}
   function hit(x){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/'+x,{keepalive:true,mode:'no-cors'})}catch(e){}}
   var qs=new URLSearchParams(location.search),opened=false,clicked=false,KEY='mb-open-ch';
   // 플래너별 주소: /p/lee 처럼 들어오면 그 플래너 이름을 표시하고, 방문·채널 추가·등록 수를 플래너별로 따로 센다
-  var P={lee:'이종호',oh:'오수현',byun:'변보라',hong:'홍민아',kang:'강소리',kimdh:'김다희',kimsy:'김상윤',sy:'김소연'};
+  var P={lee:'이종호',oh:'오수현',byun:'변보라',hong:'홍민아',kang:'강소리',kimdh:'김다희',kimsy:'김상윤',sy:'김소연',jo:'조숙원',kimhh:'김현희',leejh:'이지훈'};
   var pm=/^\/p\/([a-z]+)/.exec(location.pathname),pk=pm&&P[pm[1]]?pm[1]:'';
   var TAG=pk?'open-'+pk:'open';
-  if(pk){all('[data-pl]',function(e){e.textContent=P[pk]+' 디렉터';e.parentNode.hidden=false});try{localStorage.setItem('mb-open-p',pk)}catch(e){}}
+  if(pk){all('[data-pl]',function(e){e.textContent=P[pk]+' 디렉터';e.parentNode.hidden=false});all('a[href="https://mbkr.my/cashflow"]',function(e){e.href='/cash'+pk});try{localStorage.setItem('mb-open-p',pk)}catch(e){}}
   if(qs.get('reset')){try{localStorage.removeItem(KEY)}catch(e){}}
   hit(TAG);
   function count(){var el=document.getElementById('amt'),v=+el.getAttribute('data-v'),t0=null;
@@ -396,7 +396,7 @@ body.open .sticky{display:none}
   // 이미 채널을 추가한 기기(이 페이지 또는 디렉터 초대장)는 바로 열림
   try{if(localStorage.getItem(KEY)==='1'||(!qs.get('reset')&&localStorage.getItem('mb-d-ch')==='1'))unlock(true)}catch(e){}
   // 등록: 이름·연락처를 담당 디렉터에게 메일로 보내고(EmailJS, 코칭 신청서와 같은 계정) 채널 추가 화면을 연다
-  var MAIL={lee:'bd187@naver.com',oh:'u0112383@naver.com',byun:'wpqlrhc217@naver.com',hong:'carrot8807@naver.com',kang:'kangpro1004@kakao.com',kimdh:'plandh@naver.com',kimsy:'gnswnajr@naver.com',sy:'makesbetter.sy@gmail.com'},MON='makesbetter.direction@gmail.com';
+  var MAIL={lee:'bd187@naver.com',oh:'u0112383@naver.com',byun:'wpqlrhc217@naver.com',hong:'carrot8807@naver.com',kang:'kangpro1004@kakao.com',kimdh:'plandh@naver.com',kimsy:'gnswnajr@naver.com',sy:'makesbetter.sy@gmail.com',jo:'makesbetter.direction@gmail.com',kimhh:'makesbetter.direction@gmail.com',leejh:'makesbetter.direction@gmail.com'},MON='makesbetter.direction@gmail.com';
   var rgN=document.getElementById('rgN'),rgP=document.getElementById('rgP'),rgE=document.getElementById('rgE');
   rgP.addEventListener('input',function(){var d=rgP.value.replace(/\D/g,'').slice(0,11);rgP.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7)});
   function pad(n){return n<10?'0'+n:''+n}

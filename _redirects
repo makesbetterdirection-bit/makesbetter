@@ -20,6 +20,9 @@ http://report.makesbetter.co.kr/:month  /report/:month/  200!
 /d/kimdh  /d/  200
 /d/kimsy  /d/  200
 /d/sy  /d/  200
+/d/jo  /d/  200
+/d/kimhh  /d/  200
+/d/leejh  /d/  200
 /cashlee  /cashflow/  200
 /cashoh  /cashflow/  200
 /cashbyun  /cashflow/  200
@@ -28,6 +31,9 @@ http://report.makesbetter.co.kr/:month  /report/:month/  200!
 /cashkimdh  /cashflow/  200
 /cashkimsy  /cashflow/  200
 /cashsy  /cashflow/  200
+/cashjo  /cashflow/  200
+/cashkimhh  /cashflow/  200
+/cashleejh  /cashflow/  200
 /siplee  /sip/  200
 /sipoh  /sip/  200
 /sipbyun  /sip/  200
@@ -36,3 +42,6 @@ http://report.makesbetter.co.kr/:month  /report/:month/  200!
 /sipkimdh  /sip/  200
 /sipkimsy  /sip/  200
 /sipsy  /sip/  200
+/sipjo  /sip/  200
+/sipkimhh  /sip/  200
+/sipleejh  /sip/  200
