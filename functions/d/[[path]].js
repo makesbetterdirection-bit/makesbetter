@@ -13,7 +13,7 @@ export async function onRequest({ request, env, next }) {
   const by = (url.searchParams.get("by") || "").replace(/\s+/g, "").slice(0, 10);
   const img = `${url.origin}/d/og/${MALE.has(k) ? "m" : "f"}-1117.jpg`;
   const title = by ? `${esc(by)} 님이 보낸 초대장` : `${NAMES[k]} 디렉터의 초대장`;
-  const desc = by ? `${NAMES[k]} 디렉터 · 메이크스베러` : "돈의 흐름을 설계합니다. ETF로 제2의 월급";
+  const desc = by ? `${NAMES[k]} 디렉터 · 메이크스베러` : "돈의 흐름을 설계합니다. ETF로 제2의 급여 만들기";
   return new HTMLRewriter()
     .on('meta[property="og:title"]', { element(e) { e.setAttribute("content", title); } })
     .on('meta[property="og:description"]', { element(e) { e.setAttribute("content", desc); } })
