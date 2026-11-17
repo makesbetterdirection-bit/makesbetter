@@ -121,6 +121,20 @@ body:not(.open) #gifts a.w-rw>*:not(.lkc),body.opening #gifts a.w-rw:not(.pop)>*
 body.open:not(.opening) #gifts .lkc{display:none}
 body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
 .w-bar:not(.w-tm){display:flex}
+/* 11/17 디렉터 직접 보낸 초대장 · 서명 · 하단 버튼 · 마감 화면 */
+.wrap>.top{padding-right:0}
+.w-letter .l-who{font-size:19px;line-height:1.55}
+.l-sign{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:26px;font-size:15px;color:var(--sub)}
+.l-sign b{color:var(--ink);font-weight:700}
+.l-ph{display:block;width:44px;height:44px;flex:0 0 44px}
+.l-ph:empty{display:none}
+.l-ph img{width:44px;height:44px;border-radius:50%;object-fit:cover;display:block;box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px #C29A4A}
+.sticky{transition:transform .35s ease,opacity .35s ease}
+.sticky.off{transform:translateY(110%);opacity:0;pointer-events:none}
+.ex-l .ex-on{color:#F3E0AE;text-decoration:none}
+.ex-l .ex-on span{color:#E9CF8E}
+.ex-c{margin-top:28px;background:linear-gradient(180deg,#E9CF8E,#C29A4A)!important;color:#15171C!important}
+.ex-c+.ex-b{margin-top:10px}
 </style>
 </head>
 <body class="noscroll">
@@ -158,11 +172,12 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     <div class="top"><b>MAKESBETTER</b><span>초대장</span></div>
     <div class="ex-d"><svg viewBox="0 0 216 216" aria-hidden="true"><circle cx="108" cy="108" r="98" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="6" stroke-dasharray="3 9"/><g stroke="#7C867F" stroke-width="5" stroke-linecap="round"><line x1="108" y1="108" x2="108" y2="62"/><line x1="108" y1="108" x2="138" y2="124"/></g><circle cx="108" cy="108" r="5" fill="#7C867F"/></svg></div>
     <p class="ex-k">TIME OVER</p>
-    <h1>초대장이 열려 있는<br>시간이 지났어요.</h1>
-    <p class="ex-p"><span id="expAt"></span>까지 선물을 열지 않아<br>초대장이 자동으로 닫혔어요.</p>
-    <div class="ex-l"><div>1:1 코칭 2시간<span>마감</span></div><div>전자책 2권<span>마감</span></div><div>내 돈 진단 2가지<span>마감</span></div></div>
+    <h1>선물을 열 수 있는<br>시간이 지났어요.</h1>
+    <p class="ex-p"><span id="expAt"></span>까지 선물을 열지 않아<br>선물은 닫혔지만, 코칭 신청은 아직 열려 있어요.</p>
+    <div class="ex-l"><div>전자책 2권<span>마감</span></div><div>내 돈 진단 2가지<span>마감</span></div><div class="ex-on">1:1 코칭 2시간<span>신청 가능</span></div></div>
+    <a class="btn ex-c" data-d="coach" href="/sip/?d=이종호"><span data-d="name">이종호</span> 디렉터에게 코칭 신청</a>
     <a class="btn ex-b" href="https://pf.kakao.com/_eETXxj/chat" rel="noreferrer" referrerpolicy="no-referrer">채널로 문의하기</a>
-    <p class="ex-n">초대장은 처음 연 순간부터 24시간 동안만 열려 있어요.</p>
+    <p class="ex-n">선물은 처음 연 순간부터 24시간 동안만 열려 있어요.</p>
   </div>
 </div>
 <div class="prog" id="prog"><i></i></div>
@@ -183,9 +198,16 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
 
     <section class="w-sec w-letter">
       <p class="w-q rvl">“</p>
-      <h2 class="rvl">좋은 걸 알게 되면<br>가장 먼저 떠오르는<br>사람이 있어요.</h2>
-      <p class="l-who rvl"><span data-by="who">누군가</span>에게는 그게 <em>당신</em>이었어요.</p>
-      <p class="l-why rvl" data-by="why">먼저 만나 본 분이, 당신에게도 전하고 싶어서 보낸 초대장이에요.</p>
+      <div class="v-dir">
+        <h2 class="rvl">같은 월급을 받아도<br>10년 뒤 자산은<br>전혀 달라집니다.</h2>
+        <p class="l-who rvl">그 차이를 만드는 2시간,<br><em>아무에게나</em> 열지 않습니다.</p>
+        <p class="l-sign rvl"><span class="l-ph" data-d="sign"></span><span>— <b data-d="name">이종호</b> 디렉터</span></p>
+      </div>
+      <div class="v-by" hidden>
+        <h2 class="rvl">좋은 걸 알게 되면<br>가장 먼저 떠오르는<br>사람이 있어요.</h2>
+        <p class="l-who rvl"><span data-by="who">누군가</span>에게는 그게 <em>당신</em>이었어요.</p>
+        <p class="l-why rvl" data-by="why">먼저 만나 본 분이, 당신에게도 전하고 싶어서 보낸 초대장이에요.</p>
+      </div>
     </section>
 
     <section class="w-sec c-q"><div class="q-bg" aria-hidden="true"></div>
@@ -239,7 +261,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
 
     <section class="w-sec c-g" id="gifts">
       <span class="w-pt rvl">지금 받을 수 있는 것</span>
-      <h2 class="rvl" id="giftH">채널을 추가하면<br>선물 4가지가 열려요.</h2>
+      <h2 class="rvl" id="giftH">채널을 추가하면<br>선물 3가지와 코칭이 열려요.</h2>
       <div class="gate rvl" id="gate">
         <span class="gate-s">STEP 1 · 필수</span>
         <b class="gate-t">카카오톡 채널 추가</b>
@@ -335,7 +357,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   var by='';try{by=(new URLSearchParams(location.search).get('by')||'').trim().slice(0,10)}catch(e){}
   all('[data-d=coach]',function(e){e.href='/sip/?d='+encodeURIComponent(d.name)+(by?'&by='+encodeURIComponent(by):'')});all('[data-d=cf]',function(e){e.href='/cash'+k});all('[data-d=sip]',function(e){e.href='/sip'+k+(by?'?by='+encodeURIComponent(by):'')});
   document.title=d.name+' '+d.role+' | MAKESBETTER';
-  var opened=false,clicked=false;
+  var opened=false,clicked=false,pend='';
   function goldRain(ms){var c=document.getElementById('gold');if(!c||!c.getContext)return;var x=c.getContext('2d'),W=c.width=innerWidth*2,H=c.height=innerHeight*2,t0=performance.now(),P=[];c.style.display='block';
     for(var i=0;i<150;i++)P.push({x:Math.random()*W,y:-Math.random()*H*.9,s:6+Math.random()*12,v:3+Math.random()*6,r:Math.random()*6.3,w:(Math.random()-.5)*.25,d:(Math.random()-.5)*2.4,c:['#F3E0AE','#D4AE62','#B08A3E','#FFF4D6'][i%4],k:i%5===0});
     (function f(t){var e=t-t0,a=e>ms-900?Math.max(0,(ms-e)/900):1;x.clearRect(0,0,W,H);x.globalAlpha=a;P.forEach(function(p){p.y+=p.v;p.x+=p.d+Math.sin((e/400)+p.r)*1.6;p.r+=p.w;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;if(p.k){x.beginPath();x.arc(0,0,p.s*.45,0,6.3);x.fill()}else x.fillRect(-p.s/2,-p.s*.22*Math.abs(Math.cos(p.r*2)+.3),p.s,p.s*.44*Math.abs(Math.cos(p.r*2)+.3));x.restore()});
@@ -343,6 +365,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   function burst(c){var n=14;for(var i=0;i<n;i++){var sp=document.createElement('i');sp.className='spark';var a=Math.PI*2*i/n+Math.random()*.4,d=60+Math.random()*70;sp.style.setProperty('--x',Math.cos(a)*d+'px');sp.style.setProperty('--y',Math.sin(a)*d+'px');sp.style.top='78%';sp.style.background=i%3?'#D4AE62':'#F5E3B3';c.appendChild(sp);setTimeout(function(e){e.remove()},1100,sp)}}
   function unlock(q){if(opened)return;opened=true;document.body.classList.add('open');document.getElementById('giftH').innerHTML='가벼운 것부터,<br>하나씩 열어 보세요.';try{localStorage.setItem('mb-d-ch','1')}catch(e){}
     if(q)return;
+    if(pend){setTimeout(function(){location.href=pend},1600)}
     var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches,cs=document.querySelectorAll('#gifts a.w-rw');
     if(rm)return;
     [].forEach.call(cs,function(c){c.classList.add('pop');c.classList.remove('pop')});   // 잠금 띠를 잠시 유지
@@ -355,7 +378,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   document.addEventListener('visibilitychange',function(){if(!document.hidden&&clicked)unlock()});
   window.addEventListener('focus',function(){if(clicked)setTimeout(unlock,400)});
   // 채널 추가 전에는 선물·코칭 신청이 열리지 않고, 채널 추가 안내로 이동
-  document.addEventListener('click',function(e){if(opened)return;var a=e.target.closest('#gifts a.w-rw,[data-d=coach]');if(!a)return;e.preventDefault();var g=document.getElementById('gate');g.scrollIntoView({behavior:'smooth',block:'center'});g.classList.remove('shake');void g.offsetWidth;g.classList.add('shake')},true);
+  document.addEventListener('click',function(e){if(opened)return;var a=e.target.closest('#gifts a.w-rw,[data-d=coach]');if(!a||a.closest('#exp'))return;e.preventDefault();if(a.matches('[data-d=coach]')){pend=a.href;all('.gate-n',function(n){n.textContent='채널을 추가하고 돌아오면 코칭 신청서로 바로 이어져요 · 무료'})}var g=document.getElementById('gate');g.scrollIntoView({behavior:'smooth',block:'center'});g.classList.remove('shake');void g.offsetWidth;g.classList.add('shake')},true);
   function hit(x){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/'+x,{keepalive:true,mode:'no-cors'})}catch(e){}}
   hit('d-'+k);
   all('[data-d=coach]',function(e){e.addEventListener('click',function(){hit('d-'+k+'-coach')})});
@@ -364,6 +387,9 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   // 보낸 사람(고객) 이름: ?by=이름
     if(by){all('[data-by=from]',function(e){e.textContent=by});all('[data-by=pt]',function(e){e.textContent='믿고 소개하는 자산관리 디렉터'});all('[data-by=who]',function(e){e.textContent=by+' 님'});
     all('[data-by=why]',function(e){e.textContent=by+' 님이 먼저 만나 본 디렉터를, 당신에게도 소개하고 싶어서 보낸 초대장이에요.'})}
+    if(by){all('.v-dir',function(e){e.hidden=true});all('.v-by',function(e){e.hidden=false})}
+    else{all('[data-by=from]',function(e){e.textContent=d.name+' 디렉터'})}
+    if(d.photo){all('[data-d=sign]',function(e){e.innerHTML='<img src="'+d.photo+'" alt="">'})}
   /* 24시간 마감: 처음 연 순간부터. 채널을 추가해 선물을 열면 멈춤 */
   (function(){
     if(/^\/s\//.test(location.pathname)||/[?&]send=1/.test(location.search))return; // 보내는 사람 화면에는 마감 없음
@@ -413,6 +439,9 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   var env=document.getElementById('env');
   document.getElementById('openEnv').addEventListener('click',function(){hit('d-'+k+'-open');env.classList.add('open');setTimeout(function(){env.classList.add('gone');document.body.classList.remove('noscroll')},1100)});
   document.getElementById('qa').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;all('#qa button',function(x){x.classList.toggle('on',x===b)});var r=document.getElementById('qaR');r.textContent=b.getAttribute('data-a')==='1'?'대부분 그래요. 그래서 흐름부터 같이 봅니다.':'이미 흐름이 있으시네요. 더 단단하게 만드는 법을 함께 봐요.';r.classList.add('in')});
+  (function(){var st=document.getElementById('sticky');if(!st||!('IntersectionObserver' in window))return;var on=[];
+    var o=new IntersectionObserver(function(es){es.forEach(function(e){var i=on.indexOf(e.target);if(e.isIntersecting){if(i<0)on.push(e.target)}else if(i>=0)on.splice(i,1)});st.classList.toggle('off',on.length>0)});
+    [document.querySelector('.w-hero h1'),document.getElementById('gate')].forEach(function(el){if(el)o.observe(el)})})();
   var pg=document.getElementById('prog').firstChild;window.addEventListener('scroll',function(){var h=document.documentElement.scrollHeight-innerHeight;pg.style.transform='scaleX('+Math.max(0,Math.min(1,scrollY/h))+')'},{passive:true});
     try{var x=new XMLHttpRequest();x.open('GET','https://abacus.jasoncameron.dev/get/mbkr.my/cashflow-basic');x.timeout=4000;x.onload=function(){try{var v=JSON.parse(x.responseText).value;if(v>=1347)document.getElementById('cnt2').textContent=v.toLocaleString('ko-KR')}catch(e){}};x.send()}catch(e){}
 })();
