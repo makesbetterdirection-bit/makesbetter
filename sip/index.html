@@ -101,13 +101,15 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
 <div class="cf-top">MAKESBETTER</div>
 <div class="cf-wrap"><div id="mb-sip-root"></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="/sip/coach-report.js"></script>
 <script>
 (function(){
   var CONFIG={
     directors:[{name:"이종호",email:"bd187@naver.com"},{name:"오수현",email:"u0112383@naver.com"},{name:"변보라",email:"wpqlrhc217@naver.com"},{name:"홍민아",email:"carrot8807@naver.com"},{name:"강소리",email:"kangpro1004@kakao.com"},{name:"김다희",email:"plandh@naver.com"},{name:"김상윤",email:"gnswnajr@naver.com"},{name:"김소연",email:"makesbetter.sy@gmail.com"},{name:"조숙원",email:"swjoe12@naver.com"},{name:"김현희",email:"salesmanager2017@naver.com"},{name:"이지훈",email:"hoony33666@naver.com"}],
     monitorEmail:"makesbetter.direction@gmail.com",
     channelUrl:"https://pf.kakao.com/_eETXxj/friend",
-    emailjsPublicKey:"37rMXVT1INDvECR8k", emailjsServiceId:"service_lehvmhu", emailjsTemplateId:"template_myptiih"
+    emailjsPublicKey:"37rMXVT1INDvECR8k", emailjsServiceId:"service_lehvmhu", emailjsTemplateId:"template_myptiih",
+    reportTemplateId:"" /* 코칭 리포트 첨부용(template_myptiih 복사본 + report_pdf 변수 첨부) */
   };
   /* 선택지: 아임웹 THE OPENING SIP 위젯과 같은 값 (메일 내용이 기존과 같게) */
   var SIP=["ICE coffee","HOT coffee"];
@@ -195,67 +197,25 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
       '<div class="cq-foot">'+(fail?'<button class="cq-next" id="sd-retry">다시 보내기</button>':'<a class="cq-next kk" href="'+CONFIG.channelUrl+'" rel="noreferrer" referrerpolicy="no-referrer">카카오톡 채널 추가하고 완료하기</a>')+'</div>';
     if(fail)root.querySelector("#sd-retry").onclick=send;
     else if(!TEST){try{fetch("https://abacus.jasoncameron.dev/hit/mbkr.my/sip-apply",{keepalive:true,mode:"no-cors"})}catch(e){}}}
-  /* ── 신청 리포트 PDF (금융 IQ 테스트와 같은 방식: 브라우저에서 PDF를 만들어 메일에 첨부) ──
-     지금은 기초 양식(글자만). 디자인은 REPORT_DRAW 안만 바꾸면 된다. */
-  var TEST=/[?&]test=1/.test(location.search);
-  function reportRows(){return [["신청일",today()],["담당 디렉터",S.director],["성함",S.name],["연락처",S.phone],["추천인",S.referrer||"-"],["웰컴 드링크",S.sip],
-    ["가장 불편한 재정 고민",S.worry.join(", ")],["현재 자산 운용 방법",S.assetMethod.join(", ")],["자산 운용 목적",S.assetGoal.join(", ")],
-    ["더 만들고 싶은 소득",S.incomeType],["점검받을 계좌",S.accounts.join(", ")||"없음"],["코칭 때 받고 싶은 정보",S.needInfo.join(", ")]]}
-  function loadJsPdf(){if(window.jspdf)return Promise.resolve(window.jspdf.jsPDF);return new Promise(function(ok,no){var t=document.createElement("script");t.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";t.onload=function(){window.jspdf?ok(window.jspdf.jsPDF):no(new Error("jspdf"))};t.onerror=no;document.head.appendChild(t)})}
-  /* 리포트 디자인: 금융 IQ 리포트(메타 리서치)와 같은 톤 — 흰 바탕, 메이크스베러 레드, 네이비 B 마크 */
-  var RP={red:"#B60100",navy:"#02112E",ink:"#141414",sub:"#5C5C5C",faint:"#9A9A9A",rule:"#E6E6E6",tint:"#F7F4F2",
-    F:'"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif'};
-  function loadImg(src){return new Promise(function(ok){var i=new Image();i.onload=function(){ok(i)};i.onerror=function(){ok(null)};i.src=src})}
-  function wrapLines(x,t,maxW){var out=[],line="";String(t).split(" ").forEach(function(w){var n=line?line+" "+w:w;if(x.measureText(n).width>maxW&&line){out.push(line);line=w}else line=n});out.push(line);return out}
-  function REPORT_DRAW(cv,logo){var W=cv.width,x=cv.getContext("2d"),F=RP.F,M=104,CW=W-M*2,y=0;
-    function f(w,sz){x.font=w+" "+sz+"px "+F}
-    function txt(t,px,py,col){x.fillStyle=col;x.fillText(t,px,py)}
-    function tri(px,py){x.fillStyle=RP.red;x.beginPath();x.moveTo(px,py);x.lineTo(px+20,py);x.lineTo(px,py+20);x.closePath();x.fill()}
-    function head(t,en){tri(M,y+4);f("800",34);txt(t,M+34,y,RP.ink);if(en){f("700",19);x.textAlign="right";txt(en,W-M,y+10,RP.faint);x.textAlign="left"}y+=58;x.fillStyle=RP.ink;x.fillRect(M,y,CW,2);y+=26}
-    function chips(list,dark){f("600",26);var cx=M,ch=58,gap=12;(list.length?list:["-"]).forEach(function(t){var w=x.measureText(t).width+44;if(cx+w>W-M){cx=M;y+=ch+gap}
-      x.fillStyle=dark?RP.navy:"#fff";x.strokeStyle=dark?RP.navy:"#CFCFCF";x.lineWidth=2;x.beginPath();x.roundRect?x.roundRect(cx,y,w,ch,29):x.rect(cx,y,w,ch);x.fill();x.stroke();
-      txt(t,cx+22,y+15,dark?"#fff":RP.ink);cx+=w+gap});y+=ch+40}
-    function kv(rows,colW){var cols=2,cw=(CW-30)/cols;rows.forEach(function(r,i){var cxp=M+(i%cols)*(cw+30);if(i%cols===0&&i)y+=0;
-      var ty=y+Math.floor(i/cols)*96;f("600",21);txt(r[0],cxp,ty,RP.faint);f("700",29);wrapLines(x,r[1]||"-",cw).slice(0,1).forEach(function(l){txt(l,cxp,ty+34,RP.ink)})});y+=Math.ceil(rows.length/cols)*96+18}
-    x.fillStyle="#fff";x.fillRect(0,0,W,cv.height);x.textBaseline="top";
-    /* 왼쪽 레드 바 (커버와 같은 장치) */
-    x.fillStyle=RP.red;x.fillRect(0,0,22,cv.height);
-    /* 헤더 */
-    y=86;if(logo)x.drawImage(logo,M,y,92,92);f("800",30);txt("MAKESBETTER",M+(logo?114:0),y+14,RP.navy);f("500",21);txt("Coaching Brief",M+(logo?114:0),y+54,RP.faint);
-    x.textAlign="right";f("700",21);txt("신청일  "+today(),W-M,y+20,RP.sub);f("600",21);txt("www.makesbetter.co.kr",W-M,y+54,RP.faint);x.textAlign="left";
-    y+=150;f("800",86);txt("코칭 사전",M,y,RP.red);y+=104;txt("리포트",M,y,RP.red);y+=118;
-    f("600",31);txt((S.name||"고객")+"님  ·  담당 "+(S.director||"-")+" 디렉터",M,y,RP.ink);y+=78;
-    /* 먼저 할 일 */
-    x.fillStyle=RP.navy;x.fillRect(M,y,CW,112);f("700",20);txt("BEFORE WE MEET",M+40,y+24,"#F2603A");f("700",31);txt("만나기 전에 웰컴 드링크 "+(S.sip||"-")+"를 먼저 보내 주세요",M+40,y+56,"#fff");y+=166;
-    head("고객 정보","PROFILE");kv([["성함",S.name],["연락처",S.phone],["추천인",S.referrer||"없음"],["웰컴 드링크",S.sip]]);
-    head("가장 불편한 재정 고민","CONCERN");chips(S.worry,true);
-    head("자산 현황","ASSETS");
-    [["현재 운용 방법",S.assetMethod],["운용 목적",S.assetGoal],["더 만들고 싶은 소득",S.incomeType?[S.incomeType]:[]],["점검받을 계좌",S.accounts.length?S.accounts:["없음"]]].forEach(function(r){f("600",22);txt(r[0],M,y,RP.faint);y+=38;chips(r[1],false);y-=14});y+=14;
-    head("코칭 때 받고 싶은 정보","CHECKLIST");
-    (S.needInfo.length?S.needInfo:["-"]).forEach(function(t){x.strokeStyle=RP.red;x.lineWidth=3;x.strokeRect(M,y+4,30,30);x.beginPath();x.moveTo(M+7,y+19);x.lineTo(M+14,y+27);x.lineTo(M+25,y+11);x.stroke();f("600",29);txt(t,M+52,y+2,RP.ink);y+=56});
-    y+=50;return y}
-  function REPORT_FOOT(x,W,H){var F=RP.F;x.fillStyle=RP.rule;x.fillRect(104,H-118,W-208,2);x.textBaseline="top";x.font="800 22px "+F;x.fillStyle=RP.ink;x.fillText("NO MAGIC, JUST COMMON SENSE",104,H-88);
-    x.textAlign="right";x.font="500 20px "+F;x.fillStyle=RP.faint;x.fillText("이 리포트는 고객이 신청서에 직접 답한 내용입니다.",W-104,H-86);x.textAlign="left"}
-  function buildReport(){var all=reportRows().map(function(r){return r[0]+" "+r[1]}).join(" ")+" 코칭 사전 리포트 고객 정보 가장 불편한 재정 고민 자산 현황 받고 싶은 정보 만나기 전에 웰컴 드링크를 먼저 보내 주세요 이 리포트는 고객이 신청서에 직접 답한 내용입니다 없음 담당 디렉터 님";
-    var fontP=(document.fonts&&document.fonts.load)?Promise.all([document.fonts.load('800 40px "Pretendard Variable"',all),document.fonts.load('600 40px "Pretendard Variable"',all)]).catch(function(){}):Promise.resolve();
-    return Promise.all([loadJsPdf(),loadImg("/sip/mb-mark.png"),fontP]).then(function(r){var JsPDF=r[0],logo=r[1];
-    var tall=document.createElement("canvas");tall.width=1240;tall.height=3400;var endY=REPORT_DRAW(tall,logo);
-    var H=Math.max(1754,endY+150);var cv=document.createElement("canvas");cv.width=1240;cv.height=H;REPORT_DRAW(cv,logo);REPORT_FOOT(cv.getContext("2d"),1240,H);
-    window.__sipReportCanvas=cv;
-    var pw=595.28,ph=pw*cv.height/cv.width,out="",qs=[0.82,0.68,0.55,0.42];
-    for(var i=0;i<qs.length;i++){var doc=new JsPDF({unit:"pt",format:[pw,ph],orientation:"portrait",compress:true});doc.addImage(cv.toDataURL("image/jpeg",qs[i]),"JPEG",0,0,pw,ph,"p1","NONE");out="data:application/pdf;base64,"+btoa(doc.output());if(out.length<=450000)break}
-    return out})}
+  /* ── 신청 리포트 PDF: /sip/coach-report.js (D+ 「지금에서 가고 싶은 곳까지」 + 분석 평가) ──
+     PDF는 첨부 설정이 된 메일 양식(reportTemplateId)으로 보내고, 실패하면 첨부 없이 기존 양식으로 다시 보낸다. */
+  var TEST=/[?&]test=1/.test(location.search),MAILTEST=/[?&]mailtest=1/.test(location.search);
+  function reportData(){return {date:today(),director:S.director,name:S.name,phone:S.phone,referrer:S.referrer,route:"코칭 신청서(The Opening Sip)",drink:S.sip,
+    worry:S.worry,method:S.assetMethod,goal:S.assetGoal,income:S.incomeType,accounts:S.accounts,need:S.needInfo}}
+  function buildReport(){return window.MBCoachReport?window.MBCoachReport.build(reportData()):Promise.reject(new Error("coach-report.js"))}
   function send(){var b=root.querySelector("#cq-next")||root.querySelector("#sd-retry");if(b){b.disabled=true;b.textContent="보내는 중…"}
     var dEmail=(CONFIG.directors.filter(function(x){return x.name===S.director})[0]||{}).email;
     var params={site_label:" · 금융 코칭 등록",consult_type:"The Opening Sip 신청",date:today(),time:"-",name:S.name,phone:S.phone,email:"-",memo:memo(),director:S.director,to_email:(dEmail?dEmail+",":"")+CONFIG.monitorEmail,
       report_pdf:"",report_name:"코칭신청_리포트_"+(S.name||"고객").replace(/[\\/:*?"<>|\s]/g,"")+".pdf"};
     buildReport().then(function(pdf){params.report_pdf=pdf},function(e){console.warn("리포트 PDF 생성 실패",e)}).then(function(){
+      if(MAILTEST){params.to_email=CONFIG.monitorEmail;params.consult_type="[발송 시험] "+params.consult_type}
       if(TEST){window.__sipParams=params;return done(false)}
       if(!window.emailjs)return done(true);
-      emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,params).then(function(){done(false)},function(e){
-        console.warn("첨부 발송 실패, 첨부 없이 재발송",e);if(!params.report_pdf)return done(true);
-        var p2={};for(var k in params)p2[k]=params[k];p2.report_pdf="";
-        emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,p2).then(function(){done(false)},function(e2){console.error(e2);done(true)})})})}
+      var withPdf=!!(params.report_pdf&&CONFIG.reportTemplateId);
+      function plain(){var p2={};for(var k in params)p2[k]=params[k];p2.report_pdf="";
+        emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,p2).then(function(){done(false)},function(e2){console.error(e2);done(true)})}
+      if(!withPdf)return plain();
+      emailjs.send(CONFIG.emailjsServiceId,CONFIG.reportTemplateId,params).then(function(){done(false)},function(e){console.warn("첨부 발송 실패, 첨부 없이 재발송",e);plain()})})}
   draw();
 })();
 </script>

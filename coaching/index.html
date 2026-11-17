@@ -15,6 +15,7 @@
 <link rel="apple-touch-icon" href="/studio/icon-180.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
+<script src="/sip/coach-report.js"></script>
 <style>
 :root{--paper:#F2F2F2;--card:#fff;--ink:#0A0A0A;--sub:#5F5F5F;--faint:#9A9A9A;--rule:#E2E2E2;--accent:#FF5A1F;--accent-soft:#FFEDE5;--gold:#D4AF6E;--g:max(22px,env(safe-area-inset-left,0px))}
 *{box-sizing:border-box}
@@ -206,7 +207,8 @@ h1,h2,h3,p{margin:0}
     ],
     assignTo:"bd187@naver.com",           // '배정 요청'은 대표에게
     monitorEmail:"makesbetter.direction@gmail.com",
-    emailjsPublicKey:"37rMXVT1INDvECR8k",emailjsServiceId:"service_lehvmhu",emailjsTemplateId:"template_myptiih"
+    emailjsPublicKey:"37rMXVT1INDvECR8k",emailjsServiceId:"service_lehvmhu",emailjsTemplateId:"template_myptiih",
+    reportTemplateId:"" /* 코칭 리포트 첨부용(template_myptiih 복사본 + report_pdf 변수 첨부) */
   };
   var q=new URLSearchParams(location.search);
   var TEST=q.get('test')==='1';
@@ -330,7 +332,15 @@ h1,h2,h3,p{margin:0}
     if(TEST){window.__coachParams=params;setTimeout(function(){finish(true)},300);return}
     if(!MAILTEST){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/coaching-apply',{keepalive:true,mode:'no-cors'})}catch(e){}}
     if(!window.emailjs){finish(false);return}
-    emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,params).then(function(){finish(true)},function(){finish(false)});
+    /* 코칭 사전 리포트 PDF (/sip/coach-report.js) — 첨부 양식으로 보내고, 실패하면 첨부 없이 기존 양식으로 */
+    params.report_pdf='';params.report_name='코칭신청_리포트_'+(name||'고객').replace(/[\\/:*?"<>|\s]/g,'')+'.pdf';
+    var rdata={date:params.date,director:S.director,name:name,phone:phone,referrer:byv,route:(cp?'카카오 채널 쿠폰':pre?'디렉터 페이지':'코칭 신청서'),coupon:cp,drink:LITE?'':S.sip,
+      worry:S.worry,method:S.method,goal:S.goal,income:S.income,accounts:S.accounts,need:S.need,rate:S.rate,mgoal:S.mgoal,hasAccountsQ:!LITE};
+    function plain(){var p2={};for(var k in params)p2[k]=params[k];p2.report_pdf='';emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,p2).then(function(){finish(true)},function(){finish(false)})}
+    if(!CONFIG.reportTemplateId||!window.MBCoachReport){plain();return}
+    window.MBCoachReport.build(rdata).then(function(pdf){params.report_pdf=pdf;
+      emailjs.send(CONFIG.emailjsServiceId,CONFIG.reportTemplateId,params).then(function(){finish(true)},function(e){console.warn('첨부 발송 실패, 첨부 없이 재발송',e);plain()})
+    },function(e){console.warn('리포트 PDF 생성 실패',e);plain()});
   });
 
   // 완료 화면: 신청자 이름으로 초대장 공유
