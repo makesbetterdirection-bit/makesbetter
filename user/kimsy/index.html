@@ -333,7 +333,7 @@ function renderLinks(){
       lrow("초대장",ME.inv,"가망고객에게 내가 직접 보내기",1)+
       lrow("지인 전달",ME.join,"기계약자에게 주고 지인에게 전달 부탁",1)+
       lrow("플랫폼 유입",ME.plat,"플랫폼 등록으로 바로 연결",1)+
-      lrow("머니4스퀘어 베이직",ME.basic||("calc.makesbetter.co.kr/cash"+ME.k),"내 이름으로 접수되는 베이직",1)+
+      lrow("머니4스퀘어 베이직",ME.basic||("mbkr.my/cash"+ME.k),"내 이름으로 접수되는 베이직",1)+
       lrow("코칭 신청서",ME.sip||("calc.makesbetter.co.kr/sip"+ME.k),"내가 담당으로 지정된 신청서",1);
   }
   document.getElementById("lCommon").innerHTML=`<small>모든 디렉터 공통</small><strong>고객에게 보내는 링크</strong>`+COMMON.map(([a,b,c])=>lrow(a,b,c,1)).join("");
@@ -341,7 +341,7 @@ function renderLinks(){
 }
 function setMe(k){
   ME=DIR.find(d=>d.k===k)||null;
-  if(ME){L.me[1]=ME.inv;L.join[1]=ME.join;L.plat[1]=ME.plat;L.basic[1]=ME.basic||("calc.makesbetter.co.kr/cash"+ME.k)}
+  if(ME){L.me[1]=ME.inv;L.join[1]=ME.join;L.plat[1]=ME.plat;L.basic[1]=ME.basic||("mbkr.my/cash"+ME.k)}
   try{ME?localStorage.setItem("mb-guide-me",ME.k):localStorage.removeItem("mb-guide-me")}catch(e){}
   renderLinks();renderCourses();
 }
