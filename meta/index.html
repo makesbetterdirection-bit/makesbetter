@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>금융 IQ 테스트 | MAKESBETTER</title>
+<meta name="description" content="20문항 · 약 5분 · 나의 금융 IQ를 확인하세요">
+<meta property="og:type" content="website">
+<meta property="og:title" content="금융 IQ 테스트">
+<meta property="og:description" content="나의 금융 IQ, 지금 얼마나 될까요? · 20문항 약 5분">
+<meta property="og:image" content="https://calc.makesbetter.co.kr/meta/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="theme-color" content="#15201B">
+<link rel="icon" href="/studio/icon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+html,body{margin:0;background:#F6F3EC}
+body{min-height:100vh}
+#mb-iq-root, #mb-iq-root * { box-sizing: border-box !important; }
+#mb-iq-root { font-family: "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", sans-serif; margin: 0px auto; word-break: keep-all; overflow-wrap: break-word; color: rgb(29, 38, 34); max-width: 430px !important; width: 100% !important; }
+.mb-iq-serif { font-family: "Noto Serif KR", serif; }
+.mb-iq-screen { display: none; }
+.mb-iq-screen.mb-iq-active { display: block; }
+.mb-iq-badge-bar { background: rgb(21, 32, 27); color: rgb(227, 204, 151); text-align: center; font-size: 11px; font-weight: 600; letter-spacing: 2px; padding: 10px 12px; text-transform: uppercase; border-radius: 8px 8px 0px 0px; }
+.mb-iq-header { padding: 20px 24px 0px; }
+.mb-iq-logo { font-weight: 700; font-size: 16px; color: rgb(21, 32, 27); }
+.mb-iq-logo span { color: rgb(169, 132, 63); }
+.mb-iq-intro-wrap { padding: 22px 24px 30px; }
+.mb-iq-eyebrow { font-size: 11px; font-weight: 800; color: rgb(169, 132, 63); letter-spacing: 2px; margin-bottom: 10px; }
+.mb-iq-h1 { font-size: 21px; font-weight: 700; line-height: 1.4; margin-bottom: 10px; }
+.mb-iq-lead { font-size: 13px; color: rgb(117, 124, 114); line-height: 1.7; margin-bottom: 20px; }
+.mb-iq-meta-row { display: flex; gap: 10px; margin-bottom: 20px; }
+.mb-iq-meta-card { flex: 1 1 0%; background: rgb(244, 241, 232); border-radius: 10px; padding: 12px 8px; text-align: center; }
+.mb-iq-meta-card .v { font-size: 15px; font-weight: 800; color: rgb(21, 32, 27); }
+.mb-iq-meta-card .l { font-size: 10.5px; color: rgb(138, 143, 130); margin-top: 2px; }
+.mb-iq-areas { background: rgb(255, 255, 255); border: 1px solid rgb(231, 226, 212); border-radius: 10px; padding: 14px 16px; margin-bottom: 20px; }
+.mb-iq-areas .t { font-size: 12.5px; font-weight: 700; margin-bottom: 8px; }
+.mb-iq-areas ul { margin: 0px; padding: 0px; list-style: none; }
+.mb-iq-areas li { font-size: 12px; color: rgb(85, 85, 85); padding: 4px 0px 4px 14px; position: relative; }
+.mb-iq-areas li::before { content: "·"; position: absolute; left: 0px; color: rgb(169, 132, 63); font-weight: 800; }
+.mb-iq-review { background: rgb(21, 32, 27); border-radius: 10px; padding: 15px 18px; margin-bottom: 22px; text-align: center; }
+.mb-iq-review .sub-main { font-size: 13.5px; font-weight: 700; color: rgb(227, 204, 151); letter-spacing: 0.2px; }
+.mb-iq-btn { display: block; width: 100%; background: rgb(21, 32, 27); color: rgb(227, 204, 151); text-align: center; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 16px 0px; border-radius: 999px; border: 1px solid rgb(21, 32, 27); cursor: pointer; }
+.mb-iq-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.mb-iq-quiz-wrap { padding: 20px 24px 26px; }
+.mb-iq-progress-wrap { display: flex; gap: 5px; margin-bottom: 18px; }
+.mb-iq-progress-wrap i { flex: 1 1 0%; height: 4px; border-radius: 2px; background: rgb(231, 226, 212); display: block; }
+.mb-iq-progress-wrap i.on { background: rgb(169, 132, 63); }
+.mb-iq-qcount { font-size: 12px; color: rgb(138, 143, 130); font-weight: 700; margin-bottom: 6px; }
+.mb-iq-qsection { font-size: 11px; font-weight: 800; color: rgb(169, 132, 63); letter-spacing: 1px; margin-bottom: 6px; }
+.mb-iq-qtext { font-size: 16.5px; font-weight: 700; line-height: 1.5; margin-bottom: 24px; min-height: 70px; }
+.mb-iq-opt { display: block; width: 100%; text-align: left; background: rgb(255, 255, 255); border: 1px solid rgb(231, 226, 212); border-radius: 10px; padding: 14px 16px; font-size: 14px; margin-bottom: 10px; cursor: pointer; color: rgb(29, 38, 34); }
+.mb-iq-opt.mb-iq-sel { border-color: rgb(169, 132, 63); background: rgb(251, 246, 234); font-weight: 700; }
+.mb-iq-nav-row { display: flex; gap: 10px; margin-top: 20px; }
+.mb-iq-nav-row button { flex: 1 1 0%; }
+.mb-iq-btn-ghost { background: rgb(255, 255, 255); color: rgb(21, 32, 27); border: 1px solid rgb(231, 226, 212); border-radius: 999px; padding: 14px 0px; font-size: 13px; font-weight: 700; cursor: pointer; }
+.mb-iq-form-wrap { padding: 22px 24px 28px; }
+.mb-iq-section-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.mb-iq-section-desc { font-size: 13px; color: rgb(117, 124, 114); margin-bottom: 20px; line-height: 1.6; }
+.mb-iq-field { margin-bottom: 16px; }
+.mb-iq-field label { display: block; font-size: 12.5px; font-weight: 700; margin-bottom: 6px; }
+.mb-iq-field input, .mb-iq-field select { width: 100%; border: 1px solid rgb(231, 226, 212); background: rgb(255, 255, 255); border-radius: 8px; padding: 12px 14px; font-size: 14px; font-family: inherit; color: rgb(29, 38, 34); }
+.mb-iq-field input:focus, .mb-iq-field select:focus { outline: none; border-color: rgb(169, 132, 63); }
+.mb-iq-privacy { font-size: 11px; color: rgb(117, 124, 114); line-height: 1.6; margin-top: 14px; text-align: center; }
+.mb-iq-result-wrap { padding: 26px 24px 28px; text-align: center; }
+.mb-iq-r-eyebrow { font-size: 11px; letter-spacing: 2px; color: rgb(169, 132, 63); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+.mb-iq-r-h2 { font-size: 19px; font-weight: 700; }
+.mb-iq-r-who { font-size: 13px; color: rgb(117, 124, 114); margin-top: 6px; margin-bottom: 20px; }
+.mb-iq-score-card { background: rgb(21, 32, 27); border-radius: 12px; padding: 28px 18px; text-align: center; margin-bottom: 18px; width: 100%; overflow: hidden; }
+.mb-iq-score-card .num-main { font-size: 42px; font-weight: 800; color: rgb(243, 230, 198); line-height: 1; white-space: nowrap; }
+.mb-iq-score-card .num-sub { font-size: 13px; color: rgb(227, 204, 151); font-weight: 700; margin-top: 4px; }
+.mb-iq-tier-name { margin-top: 10px; font-size: 13.5px; font-weight: 800; color: rgb(227, 204, 151); letter-spacing: 1px; }
+.mb-iq-bar-track { height: 6px; background: rgb(42, 54, 47); border-radius: 3px; margin-top: 18px; overflow: hidden; }
+.mb-iq-bar-fill { height: 100%; background: linear-gradient(90deg, rgb(169, 132, 63), rgb(227, 204, 151)); width: 0%; transition: width 1s; }
+.mb-iq-legend { display: flex; justify-content: space-between; font-size: 9px; color: rgb(125, 133, 126); margin-top: 6px; white-space: nowrap; }
+.mb-iq-legend span { flex: 0 0 auto; }
+.mb-iq-next-note { background: rgb(255, 255, 255); border: 1px solid rgb(231, 226, 212); border-radius: 10px; padding: 16px 18px; font-size: 13px; line-height: 1.7; color: rgb(42, 51, 45); margin-bottom: 18px; }
+.mb-iq-next-note b { color: rgb(169, 132, 63); }
+.mb-iq-footer { padding: 18px 24px 26px; text-align: center; border-top: 1px solid rgb(231, 226, 212); margin-top: 4px; }
+.mb-iq-f-logo { font-size: 10.5px; font-weight: 700; color: rgb(117, 124, 114); letter-spacing: 2px; }
+.mb-iq-f-line { font-size: 11px; color: rgb(168, 172, 159); margin-top: 5px; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+<div id="mb-iq-root"></div>
+<script>
+
+(function(){
+  function initMbIq(root){
+    if (root.__mbIqInit) return;
+    root.__mbIqInit = true;
+
+    /* ====== EmailJS 설정 ====== */
+    var EMAILJS_PUBLIC_KEY  = '37rMXVT1INDvECR8k';
+    var EMAILJS_SERVICE_ID  = 'service_lehvmhu';
+    var EMAILJS_TEMPLATE_ID = 'template_yg28z2r';
+    var NOTIFY_EMAIL = 'bd187@naver.com';
+  /* 디렉터 목록 — 주소 /meta코드 로 들어오면 담당 디렉터가 고정되고 선택 칸이 숨겨진다.
+     결과 메일은 담당 디렉터에게 가고, 메일 양식(template_yg28z2r)의 참조(Cc)로 makesbetter.direction@gmail.com 에도 간다. */
+  var DIRECTORS = [
+    { k:'lee',   label:'이종호 EDM',  email:'bd187@naver.com' },
+    { k:'oh',    label:'오수현 GDM',  email:'u0112383@naver.com' },
+    { k:'byun',  label:'변보라 JGDM', email:'wpqlrhc217@naver.com' },
+    { k:'hong',  label:'홍민아 DM',   email:'carrot8807@naver.com' },
+    { k:'kang',  label:'강소리 DM',   email:'kangpro1004@kakao.com' },
+    { k:'kimdh', label:'김다희 DM',   email:'plandh@naver.com' },
+    { k:'kimsy', label:'김상윤 JD',   email:'gnswnajr@naver.com' },
+    { k:'sy',    label:'김소연',      email:'makesbetter.sy@gmail.com' },
+    { k:'jo',    label:'조숙원',      email:'swjoe12@naver.com' },
+    { k:'kimhh', label:'김현희',      email:'salesmanager2017@naver.com' },
+    { k:'leejh', label:'이지훈',      email:'hoony33666@naver.com' }
+  ];
+  var DIRECTOR_EMAILS = {}; DIRECTORS.forEach(function(d){ DIRECTOR_EMAILS[d.label] = d.email; });
+  var FIXED = (function(){ var m = /^\/meta([a-z]+)\/?$/.exec(location.pathname); if (!m) return null; for (var i=0;i<DIRECTORS.length;i++) if (DIRECTORS[i].k===m[1]) return DIRECTORS[i]; return null; })();
+  var MAILTEST = /[?&]mailtest=1/.test(location.search), TEST = /[?&]test=1/.test(location.search);
+    /* ========================== */
+
+    var QUESTIONS = [
+      { section: "투자 이해", text: "ETF와 펀드의 차이점을 알고 있습니까?" },
+      { section: "투자 이해", text: "복리 효과가 장기 투자에 미치는 영향을 이해하고 있습니까?" },
+      { section: "투자 이해", text: "환율 변동이 투자에 미치는 영향을 알고 있습니까?" },
+      { section: "투자 이해", text: "인플레이션과 금리 변화가 자산가치에 어떤 영향을 주는지 알고 있습니까?" },
+      { section: "투자 결정", text: "투자 목적과 기간을 명확히 설정한 후 실행합니까?" },
+      { section: "투자 결정", text: "단기 유행보다는 장기적 관점에서 투자 결정을 내립니까?" },
+      { section: "투자 결정", text: "투자 전, 해당 자산의 과거 변동성과 리스크를 확인합니까?" },
+      { section: "시장 이해", text: "경제 뉴스와 금융시장의 주요 흐름을 주기적으로 확인합니까?" },
+      { section: "시장 이해", text: "S&P500, 나스닥 등 주요 글로벌 지수의 의미를 이해합니까?" },
+      { section: "시장 이해", text: "AI·반도체·친환경에너지 등 미래 산업 트렌드를 파악하고 있습니까?" },
+      { section: "시장 이해", text: "월가 주요 기관(연준·IMF 등)의 정책 방향성을 확인하십니까?" },
+      { section: "투자 심리", text: "투자 손실이 발생했을 때 감정적으로 대응하지 않습니까?" },
+      { section: "투자 심리", text: "공포감에 급락장에서 손절하는 충동을 억제할 수 있습니까?" },
+      { section: "투자 심리", text: "투자 계획을 실행하는 데 꾸준함과 인내심을 유지합니까?" },
+      { section: "투자 심리", text: "시장의 과도한 낙관·비관 분위기에 휩쓸리지 않습니까?" },
+      { section: "세금 이해", text: "ISA의 비과세 한도와 세율 구조를 이해하고 있습니까?" },
+      { section: "세금 이해", text: "IRP 계좌가 세율 절감에 어떻게 도움이 되는지 알고 있습니까?" },
+      { section: "세금 이해", text: "국내·해외 주식과 ETF의 과세 방식을 이해하고 있습니까?" },
+      { section: "세금 이해", text: "절세형 계좌와 일반 계좌의 세금 부담 차이를 알고 있습니까?" },
+      { section: "세금 이해", text: "100% 비과세 혜택을 받기 위한 금액·기간·한도 조건을 알고 있습니까?" }
+    ];
+    var OPTIONS = ["아니다", "보통이다", "그렇다"];
+    var TIERS = [
+      { name: "Basic",        min: 0,  max: 30 },
+      { name: "Beginner",     min: 31, max: 45 },
+      { name: "Intermediate", min: 46, max: 65 },
+      { name: "Advanced",     min: 66, max: 85 },
+      { name: "Elite",        min: 86, max: 100 }
+    ];
+    function getTierName(score){
+      for (var i=0;i<TIERS.length;i++){ if (score>=TIERS[i].min && score<=TIERS[i].max) return TIERS[i].name; }
+      return '';
+    }
+    function buildAnswerDetail(){
+      var groups = [];
+      var lastSection = null;
+      QUESTIONS.forEach(function(q, i){
+        if (q.section !== lastSection){
+          groups.push({ section: q.section, items: [] });
+          lastSection = q.section;
+        }
+        groups[groups.length-1].items.push(i);
+      });
+      var lines = [];
+      groups.forEach(function(g, gi){
+        if (gi > 0) lines.push('');
+        lines.push('■ ' + g.section);
+        g.items.forEach(function(i){
+          var q = QUESTIONS[i];
+          var a = answers[i];
+          lines.push((i+1) + '. ' + q.text);
+          lines.push('→ ' + OPTIONS[a] + '  (점수: ' + a + '점)');
+          lines.push('');
+        });
+      });
+      return lines.join('\n');
+    }
+
+    /* ====== PDF 리포트 (표지 + 목차 + 등급 페이지) ====== */
+    var REPORT_BASE = '/meta/img/';
+    var REPORT_IMG = {
+      cover: '026603f2306d7.jpg',
+      contents: '9af847db1998e.jpg',
+      Basic: 'f49e63206b269.jpg',
+      Beginner: '16bb1c93141d9.jpg',
+      Intermediate: 'e4eac3f11136f.jpg',
+      Advanced: '075321498c8cb.jpg',
+      Elite: 'd9ff8d4685093.jpg'
+    };
+    var REPORT_W = 1240, REPORT_H = 1722;
+    function mbIqLoadJsPdf(){
+      if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve(window.jspdf.jsPDF);
+      return new Promise(function(resolve, reject){
+        var s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+        s.onload = function(){ (window.jspdf && window.jspdf.jsPDF) ? resolve(window.jspdf.jsPDF) : reject(new Error('jsPDF load failed')); };
+        s.onerror = function(){ reject(new Error('jsPDF load failed')); };
+        document.head.appendChild(s);
+      });
+    }
+    function mbIqFetchBytes(file){
+      return fetch(REPORT_BASE + file, { mode: 'cors' }).then(function(r){
+        if (!r.ok) throw new Error('image ' + r.status);
+        return r.arrayBuffer();
+      }).then(function(buf){ return new Uint8Array(buf); });
+    }
+    function mbIqBytesToImage(bytes){
+      return new Promise(function(resolve, reject){
+        var url = URL.createObjectURL(new Blob([bytes], { type: 'image/jpeg' }));
+        var im = new Image();
+        im.onload = function(){ resolve(im); };
+        im.onerror = function(){ reject(new Error('image decode failed')); };
+        im.src = url;
+      });
+    }
+    function mbIqTierPage(bytes, name, score, director){
+      return mbIqBytesToImage(bytes).then(function(im){
+        var c = document.createElement('canvas');
+        c.width = REPORT_W; c.height = REPORT_H;
+        var g = c.getContext('2d');
+        g.fillStyle = '#ffffff'; g.fillRect(0, 0, REPORT_W, REPORT_H);
+        g.drawImage(im, 0, 0, REPORT_W, REPORT_H);
+        g.fillStyle = '#1D2622';
+        g.textBaseline = 'alphabetic';
+        g.font = '700 22px "Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR","Nanum Gothic",sans-serif';
+        g.fillText(name, 232, 631, 170);
+        g.fillText(score + '점', 232, 753, 170);
+        g.fillText(director, 262, 794, 140);
+        return c;
+      });
+    }
+    function mbIqReportFileName(name, tier){
+      return '금융메타인지_리포트_' + String(name).replace(/[\\\/:*?"<>|\s]+/g, '') + '_' + tier + '.pdf';
+    }
+    function mbIqBuildReport(name, score, tier, director){
+      if (!REPORT_IMG[tier]) return Promise.reject(new Error('unknown tier ' + tier));
+      return Promise.all([
+        mbIqLoadJsPdf(),
+        mbIqFetchBytes(REPORT_IMG.cover),
+        mbIqFetchBytes(REPORT_IMG.contents),
+        mbIqFetchBytes(REPORT_IMG[tier])
+      ]).then(function(r){
+        var JsPDF = r[0];
+        return mbIqTierPage(r[3], name, score, director).then(function(tierCanvas){
+          var MAX_B64 = 450000;
+          var qs = [0.72, 0.6, 0.5, 0.42, 0.34, 0.26];
+          var out = '';
+          for (var qi = 0; qi < qs.length; qi++) {
+          var tierJpeg = tierCanvas.toDataURL('image/jpeg', qs[qi]);
+          var pw = 595.28, ph = pw * REPORT_H / REPORT_W;
+          var doc = new JsPDF({ unit: 'pt', format: [pw, ph], orientation: 'portrait', compress: true });
+          doc.addImage(r[1], 'JPEG', 0, 0, pw, ph, 'cover', 'NONE');
+          doc.addPage([pw, ph], 'portrait');
+          doc.addImage(r[2], 'JPEG', 0, 0, pw, ph, 'contents', 'NONE');
+          doc.addPage([pw, ph], 'portrait');
+          doc.addImage(tierJpeg, 'JPEG', 0, 0, pw, ph, 'tier', 'NONE');
+          out = 'data:application/pdf;base64,' + btoa(doc.output());
+          if (out.length <= MAX_B64) break;
+          }
+          return out;
+        });
+      });
+    }
+    /* ================================================ */
+
+    var answers = new Array(QUESTIONS.length).fill(null);
+    var current = 0;
+
+    root.innerHTML =
+      '<div class="mb-iq-badge-bar">NO MAGIC. JUST COMMON SENSE.</div>' +
+      '<div class="mb-iq-header"><div class="mb-iq-logo">Makes<span>Better</span></div></div>' +
+
+      '<div class="mb-iq-screen mb-iq-active" id="mb-iq-s-intro">' +
+        '<div class="mb-iq-intro-wrap">' +
+          '<div class="mb-iq-eyebrow">금융 IQ 테스트</div>' +
+          '<div class="mb-iq-h1 mb-iq-serif">나의 금융 IQ,<br>지금 얼마나 될까요?</div>' +
+          '<div class="mb-iq-lead">본격적인 상담에 앞서, 나의 금융 지식 수준을 먼저 확인하는 사전 진단이에요. 20개 질문에 답하면 점수를 바로 확인할 수 있고, 담당 디렉터가 결과에 맞춘 리포트를 이어서 전해드려요.</div>' +
+          '<div class="mb-iq-meta-row">' +
+            '<div class="mb-iq-meta-card"><div class="v">약 5분</div><div class="l">소요 시간</div></div>' +
+            '<div class="mb-iq-meta-card"><div class="v">20문항</div><div class="l">체크 항목</div></div>' +
+            '<div class="mb-iq-meta-card"><div class="v">100점</div><div class="l">채점 방식</div></div>' +
+          '</div>' +
+          '<div class="mb-iq-areas"><div class="t">무엇을 확인하나요</div><ul>' +
+            '<li>투자 이해 — ETF·복리·환율 기초</li>' +
+            '<li>투자 결정 — 목표 설정과 실행 습관</li>' +
+            '<li>시장 이해 — 뉴스·트렌드를 읽는 감각</li>' +
+            '<li>투자 심리 — 손실·급락장에서의 대응력</li>' +
+            '<li>세금 이해 — ISA·IRP 등 절세 활용도</li>' +
+          '</ul></div>' +
+          '<div class="mb-iq-review"><div class="sub-main">지금까지 약 1,200명이 참여했어요</div></div>' +
+          '<button class="mb-iq-btn" id="mb-iq-start-btn">금융 IQ 테스트 시작하기</button>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="mb-iq-screen" id="mb-iq-s-quiz">' +
+        '<div class="mb-iq-quiz-wrap">' +
+          '<div class="mb-iq-progress-wrap" id="mb-iq-progress"></div>' +
+          '<div class="mb-iq-qcount" id="mb-iq-qcount"></div>' +
+          '<div class="mb-iq-qsection" id="mb-iq-qsection"></div>' +
+          '<div class="mb-iq-qtext" id="mb-iq-qtext"></div>' +
+          '<div id="mb-iq-opts"></div>' +
+          '<div class="mb-iq-nav-row">' +
+            '<button class="mb-iq-btn-ghost" id="mb-iq-prev">이전</button>' +
+            '<button class="mb-iq-btn" id="mb-iq-next">다음</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="mb-iq-screen" id="mb-iq-s-contact">' +
+        '<div class="mb-iq-form-wrap">' +
+          '<div class="mb-iq-section-title mb-iq-serif">결과 리포트를 받아보세요</div>' +
+          '<div class="mb-iq-section-desc">점수는 바로 확인하실 수 있고, 담당 디렉터가 결과를 바탕으로 1:1 코칭 리포트를 이어서 전달해 드려요.</div>' +
+          '<div class="mb-iq-field"><label>본인 성함</label><input type="text" id="mb-iq-name" placeholder="홍길동"></div>' +
+          '<div class="mb-iq-field"><label>전화번호</label><input type="tel" id="mb-iq-phone" placeholder="010-0000-0000"></div>' +
+          '<div class="mb-iq-field"'+(FIXED?' style="display:none"':'')+'><label>담당 디렉터</label>' +
+            '<select id="mb-iq-director">' +
+              '<option value="">선택해주세요</option>' +
+              DIRECTORS.map(function(d){ return '<option'+(FIXED&&FIXED.k===d.k?' selected':'')+'>'+d.label+'</option>'; }).join('') +
+            '</select>' +
+          '</div>' +
+          '<button class="mb-iq-btn" id="mb-iq-submit">내 점수 확인하기</button>' +
+          '<div class="mb-iq-privacy">제출하신 정보와 점수는 담당 디렉터에게 전달되어 상담 및 리포트 작성 목적으로만 사용됩니다.</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="mb-iq-screen" id="mb-iq-s-result">' +
+        '<div class="mb-iq-result-wrap">' +
+          '<div class="mb-iq-r-eyebrow">테스트 완료</div>' +
+          '<div class="mb-iq-r-h2 mb-iq-serif">나의 금융 IQ 점수</div>' +
+          '<div class="mb-iq-r-who" id="mb-iq-r-who"></div>' +
+          '<div class="mb-iq-score-card">' +
+            '<div class="num-main" id="mb-iq-r-score">0</div>' +
+            '<div class="num-sub">/ 100</div>' +
+            '<div class="mb-iq-tier-name" id="mb-iq-r-tier"></div>' +
+            '<div class="mb-iq-bar-track"><div class="mb-iq-bar-fill" id="mb-iq-r-bar"></div></div>' +
+            '<div class="mb-iq-legend"><span>0</span><span>30</span><span>45</span><span>65</span><span>85</span><span>100</span></div>' +
+          '</div>' +
+          '<div class="mb-iq-next-note">점수 확인, 여기까지가 셀프 체크예요. 자세한 진단과 코칭 방향이 담긴 리포트는 <b id="mb-iq-r-director"></b>님이 확인 후 개인화해서 곧 전달해 드려요.</div>' +
+        '</div>' +
+        '<div class="mb-iq-footer"><div class="mb-iq-f-logo">MAKESBETTER</div><div class="mb-iq-f-line mb-iq-serif">Better Financial, Better Life</div></div>' +
+      '</div>';
+
+    if (window.emailjs && EMAILJS_PUBLIC_KEY){
+      try { emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); } catch(e){}
+    }
+
+    function showScreen(id){
+      root.querySelectorAll('.mb-iq-screen').forEach(function(s){ s.classList.remove('mb-iq-active'); });
+      root.querySelector('#'+id).classList.add('mb-iq-active');
+      root.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    // ---- 인트로 → 퀴즈 ----
+    root.querySelector('#mb-iq-start-btn').addEventListener('click', function(){
+      current = 0;
+      renderQuestion();
+      showScreen('mb-iq-s-quiz');
+    });
+
+    // ---- 퀴즈 렌더링 ----
+    function renderProgress(){
+      var bars = '';
+      for (var i=0;i<QUESTIONS.length;i++){ bars += '<i class="'+(i<=current?'on':'')+'"></i>'; }
+      root.querySelector('#mb-iq-progress').innerHTML = bars;
+    }
+    function renderQuestion(){
+      var q = QUESTIONS[current];
+      root.querySelector('#mb-iq-qcount').textContent = (current+1) + ' / ' + QUESTIONS.length;
+      root.querySelector('#mb-iq-qsection').textContent = q.section;
+      root.querySelector('#mb-iq-qtext').textContent = q.text;
+      var optsHtml = '';
+      OPTIONS.forEach(function(label, idx){
+        var sel = answers[current] === idx ? ' mb-iq-sel' : '';
+        optsHtml += '<button class="mb-iq-opt'+sel+'" data-idx="'+idx+'">'+label+'</button>';
+      });
+      root.querySelector('#mb-iq-opts').innerHTML = optsHtml;
+      root.querySelectorAll('.mb-iq-opt').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          answers[current] = parseInt(btn.getAttribute('data-idx'),10);
+          renderQuestion();
+        });
+      });
+      root.querySelector('#mb-iq-prev').style.visibility = current===0 ? 'hidden' : 'visible';
+      root.querySelector('#mb-iq-next').textContent = current===QUESTIONS.length-1 ? '결과 보기' : '다음';
+      renderProgress();
+    }
+    root.querySelector('#mb-iq-prev').addEventListener('click', function(){
+      if (current>0){ current--; renderQuestion(); }
+    });
+    root.querySelector('#mb-iq-next').addEventListener('click', function(){
+      if (answers[current] === null){
+        alert('답변을 선택해주세요.');
+        return;
+      }
+      if (current < QUESTIONS.length-1){
+        current++;
+        renderQuestion();
+      } else {
+        showScreen('mb-iq-s-contact');
+      }
+    });
+
+    // ---- 연락처 → 결과 + 이메일 발송 ----
+    var submitBtn = root.querySelector('#mb-iq-submit');
+    submitBtn.addEventListener('click', function(){
+      var name = root.querySelector('#mb-iq-name').value.trim();
+      var phone = root.querySelector('#mb-iq-phone').value.trim();
+      var director = root.querySelector('#mb-iq-director').value;
+      if (!name || !phone || !director){
+        alert('성함, 전화번호, 담당 디렉터를 모두 입력해주세요.');
+        return;
+      }
+      var raw = answers.reduce(function(sum, a){ return sum + (a||0); }, 0);
+      var score100 = Math.round((raw/40)*100);
+      var tier = getTierName(score100);
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = '전송 중...';
+
+      function showResult(){
+        root.querySelector('#mb-iq-r-who').textContent = name + '님';
+        root.querySelector('#mb-iq-r-score').textContent = score100;
+        root.querySelector('#mb-iq-r-tier').textContent = tier;
+        root.querySelector('#mb-iq-r-director').textContent = director;
+        showScreen('mb-iq-s-result');
+        setTimeout(function(){
+          var bar = root.querySelector('#mb-iq-r-bar');
+          if (bar) bar.style.width = score100 + '%';
+        }, 100);
+      }
+
+      if (window.emailjs && EMAILJS_PUBLIC_KEY){
+        var answerDetail = buildAnswerDetail();
+        mbIqBuildReport(name, score100, tier, director).then(null, function(e){ console.warn('리포트 PDF 생성 실패:', e); return ''; }).then(function(reportPdf){ var mbParams = {
+          report_pdf: reportPdf,
+          report_name: mbIqReportFileName(name, tier),
+          title: name + '님 ' + score100 + '점 (' + tier + ')',
+      site_label: " · 금융 아이큐",
+      
+          to_email: MAILTEST ? 'makesbetter.direction@gmail.com' : (DIRECTOR_EMAILS[director] || NOTIFY_EMAIL),
+          name: name,
+          phone: phone,
+          director: director,
+          score: score100,
+          tier: tier,
+          answers: answerDetail
+        };
+        if (TEST) { window.__metaParams = mbParams; return Promise.resolve(); }
+        return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, mbParams).then(null, function(err){
+          console.warn('PDF 첨부 발송 실패, 첨부 없이 재발송:', err);
+          var p2 = {};
+          for (var k in mbParams) p2[k] = mbParams[k];
+          p2.report_pdf = '';
+          p2.answers = mbParams.answers + '\n\n※ PDF 리포트 첨부에 실패해 본문만 발송되었습니다.';
+          return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, p2);
+        });
+        }).then(showResult, function(err){
+          console.warn('이메일 발송 실패 (진행은 계속됩니다):', err);
+          showResult();
+        });
+      } else {
+        showResult();
+      }
+    });
+  }
+
+  document.querySelectorAll('[id="mb-iq-root"]').forEach(initMbIq);
+})();
+
+
+</script>
+</body>
+</html>

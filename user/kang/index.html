@@ -305,8 +305,9 @@ const DIR=[
 const COMMON=[
  ["카카오톡 채널","pf.kakao.com/_eETXxj","모든 고객이 먼저 추가"],
  ["무료 전자책 2권","calc.makesbetter.co.kr/books","현금흐름은 산소다 외"],
- ["금융 IQ 테스트","mbkr.my/meta","20문항 · 금융 IQ 리포트"],
+ ["머니4스퀘어 베이직","mbkr.my/cashflow","담당 디렉터를 고객이 고름"],
  ["머니4스퀘어 PRO","mbkr.my/cashflowpro","2·3차 PT 전 작성"],
+ ["금융 IQ 테스트","mbkr.my/meta","20문항 · 금융 IQ 리포트"],
  ["월배당 리포트","mbkr.my/report","매달 같은 주소"],
  ["월배당 점검","report.makesbetter.co.kr/check","포트폴리오 무료 점검"],
  ["Studio","mbkr.my/studio","월별 분배 일정 달력"],
@@ -334,14 +335,16 @@ function renderLinks(){
       lrow("지인 전달",ME.join,"기계약자에게 주고 지인에게 전달 부탁",1)+
       lrow("플랫폼 유입",ME.plat,"플랫폼 등록으로 바로 연결",1)+
       lrow("머니4스퀘어 베이직",ME.basic||("mbkr.my/cash"+ME.k),"내 이름으로 접수되는 베이직",1)+
+      lrow("머니4스퀘어 PRO","mbkr.my/cashflowpro","2·3차 PT 전 작성 · 베이직 다음 단계",1)+
+      lrow("금융 IQ 테스트","mbkr.my/meta"+ME.k,"결과·리포트가 내 메일로 접수",1)+
       lrow("코칭 신청서",ME.sip||("calc.makesbetter.co.kr/sip"+ME.k),"내가 담당으로 지정된 신청서",1);
   }
-  document.getElementById("lCommon").innerHTML=`<small>모든 디렉터 공통</small><strong>고객에게 보내는 링크</strong>`+COMMON.map(([a,b,c])=>lrow(a,b,c,1)).join("");
+  document.getElementById("lCommon").innerHTML=`<small>모든 디렉터 공통</small><strong>고객에게 보내는 링크</strong>`+COMMON.filter(r=>!ME||!/^(머니4스퀘어|금융 IQ)/.test(r[0])).map(([a,b,c])=>lrow(a,b,c,1)).join("");
   document.getElementById("lPlanner").innerHTML=`<small>보내지 않는 링크</small><strong>플래너 전용</strong>`+PLANNER.map(([a,b,c,w])=>lrow(a,b,c,0,w)).join("");
 }
 function setMe(k){
   ME=DIR.find(d=>d.k===k)||null;
-  if(ME){L.me[1]=ME.inv;L.join[1]=ME.join;L.plat[1]=ME.plat;L.basic[1]=ME.basic||("mbkr.my/cash"+ME.k)}
+  if(ME){L.me[1]=ME.inv;L.join[1]=ME.join;L.plat[1]=ME.plat;L.basic[1]=ME.basic||("mbkr.my/cash"+ME.k);L.iq[1]="mbkr.my/meta"+ME.k}
   try{ME?localStorage.setItem("mb-guide-me",ME.k):localStorage.removeItem("mb-guide-me")}catch(e){}
   renderLinks();renderCourses();
 }

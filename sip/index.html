@@ -197,10 +197,10 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
       '<div class="cq-foot">'+(fail?'<button class="cq-next" id="sd-retry">다시 보내기</button>':'<a class="cq-next kk" href="'+CONFIG.channelUrl+'" rel="noreferrer" referrerpolicy="no-referrer">카카오톡 채널 추가하고 완료하기</a>')+'</div>';
     if(fail)root.querySelector("#sd-retry").onclick=send;
     else if(!TEST){try{fetch("https://abacus.jasoncameron.dev/hit/mbkr.my/sip-apply",{keepalive:true,mode:"no-cors"})}catch(e){}}}
-  /* ── 신청 리포트 PDF: /sip/coach-report.js (D+ 「지금에서 가고 싶은 곳까지」 + 분석 평가) ──
+  /* ── 신청 리포트 PDF: /sip/coach-report.js (고객이 고른 답만 정리) ──
      PDF는 첨부 설정이 된 메일 양식(reportTemplateId)으로 보내고, 실패하면 첨부 없이 기존 양식으로 다시 보낸다. */
   var TEST=/[?&]test=1/.test(location.search),MAILTEST=/[?&]mailtest=1/.test(location.search);
-  function reportData(){return {date:today(),director:S.director,name:S.name,phone:S.phone,referrer:S.referrer,route:"코칭 신청서(The Opening Sip)",drink:S.sip,
+  function reportData(){return {date:today(),director:S.director,name:S.name,phone:S.phone,referrer:S.referrer,route:"The Opening Sip",drink:S.sip,
     worry:S.worry,method:S.assetMethod,goal:S.assetGoal,income:S.incomeType,accounts:S.accounts,need:S.needInfo}}
   function buildReport(){return window.MBCoachReport?window.MBCoachReport.build(reportData()):Promise.reject(new Error("coach-report.js"))}
   function send(){var b=root.querySelector("#cq-next")||root.querySelector("#sd-retry");if(b){b.disabled=true;b.textContent="보내는 중…"}

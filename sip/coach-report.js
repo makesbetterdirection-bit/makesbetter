@@ -1,4 +1,4 @@
-/* MAKESBETTER 코칭 사전 리포트 (D+ 「지금에서 가고 싶은 곳까지」 + 분석 평가)
+/* MAKESBETTER 코칭 사전 리포트 — 고객이 고른 답만 정리 (분석·판정 문장 없음, 11/18)
    쓰는 곳: /sip/ (The Opening Sip 신청), /coaching/ (쿠폰 1:1 코칭 신청)
    MBCoachReport.build(data) → Promise<"data:application/pdf;base64,...">
    MBCoachReport.analyze(data) → { rows:[{k,t,b,a,c}], summary }   (c: ok 일치 · ref 참고 · chk 점검 필요 · sug 제안)
@@ -131,48 +131,48 @@
   };
   var CHIP_L = { ok: "일치", ref: "참고", chk: "점검 필요", sug: "제안" };
 
-  function lines(list, empty) { list = arr(list); return list.length ? list.map(esc).join("<br>") : '<span style="color:' + C.mute + '">' + esc(empty || "답 없음") + "</span>"; }
-  function stage(no, label, title, body, sub, hi) {
-    var circle = hi ? "background:" + C.accent + ";color:#FFFFFF" : "border:1.5px solid " + C.ink + ";color:" + C.ink;
-    return '<div style="display:flex;flex-direction:column;gap:6px;' + (hi ? "padding:12px;margin-top:-12px;background:#FFFFFF;border:1px solid " + C.card : "") + '">' +
-      '<p style="margin:0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:' + (hi ? C.accent : C.mute) + '"><span style="width:22px;height:22px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;' + circle + '">' + no + "</span>" + label + "</p>" +
-      '<p style="margin:2px 0 0;font-family:' + SERIF + ';font-size:15px;font-weight:700">' + title + "</p>" +
-      '<p style="margin:0;font-size:13px;line-height:1.55">' + body + "</p>" +
-      (sub ? '<p style="margin:2px 0 0;font-size:12px;line-height:1.5;color:' + C.mute + '">' + sub + "</p>" : "") + "</div>";
+  /* 리포트는 고객이 직접 고른 답만 보여 준다 — 추정·판정 문장은 넣지 않는다 (11/18 대표 요청) */
+  var R = { bg: "#FFFFFF", ink: "#141414", sub: "#6B6B6B", rule: "#E4E4E4", accent: "#A30E14" };
+  function vals(list, empty) {
+    list = arr(list);
+    if (!list.length) return '<p style="margin:0;font-size:15px;color:' + R.sub + '">' + esc(empty || "고르지 않음") + "</p>";
+    return list.map(function (x) { return '<p style="margin:0;font-size:15px;line-height:1.6;font-weight:500">' + esc(x) + "</p>"; }).join("");
   }
-  var ARROW = '<p aria-hidden="true" style="margin:26px 0 0;font-size:14px;color:#A8A097;text-align:center">→</p>';
+  function row(label, body) {
+    return '<div style="display:grid;grid-template-columns:168px minmax(0,1fr);gap:0 24px;padding:16px 0;border-bottom:1px solid ' + R.rule + '">' +
+      '<p style="margin:2px 0 0;font-size:13px;font-weight:700;color:' + R.sub + '">' + esc(label) + "</p><div>" + body + "</div></div>";
+  }
+  function info(label, v) {
+    return '<div><p style="margin:0;font-size:12px;color:' + R.sub + '">' + esc(label) + '</p><p style="margin:5px 0 0;font-size:15px;font-weight:700">' + esc(v || "-") + "</p></div>";
+  }
 
   function html(raw) {
-    var d = norm(raw), an = analyze(raw);
-    var meta = [d.phone, d.referrer ? "추천인 " + d.referrer : "", d.route ? d.route + "으로 신청" : "", d.coupon ? "쿠폰 " + d.coupon : ""].filter(Boolean)
-      .map(function (x) { return '<p style="margin:0">' + esc(x) + "</p>"; }).join("");
-    var s1sub = d.hasAccountsQ ? "계좌 · " + (d.accounts.length ? esc(d.accounts.join(", ")) : "고르지 않음") : "";
-    var s3sub = d.income ? "더 만들 소득 · " + esc(d.income) : [d.rate ? "희망 수익률 · " + esc(d.rate) : "", d.mgoal ? "월배당 목표 · " + esc(d.mgoal) : ""].filter(Boolean).join("<br>");
-    var flow = stage(1, "지금", "이렇게 운용해요", lines(d.method, "답 없음"), s1sub) + ARROW +
-      stage(2, "불편한 것", "이게 걸려요", lines(d.worry)) + ARROW +
-      stage(3, "가고 싶은 곳", "이걸 위해 모아요", lines(d.goal, d.mgoal ? "월배당으로 제2의 월급" : "답 없음"), s3sub) + ARROW +
-      stage(4, "코칭에서", "꼭 받고 싶어요", lines(d.need, "코칭 때 직접 묻기"), "", true);
-    var rows = an.rows.map(function (r) {
-      return '<div style="display:grid;grid-template-columns:88px minmax(0,1fr) 196px 66px;gap:0 14px;align-items:start;padding:13px 0;border-bottom:1px solid ' + C.rule + '">' +
-        '<p style="margin:2px 0 0;font-size:12px;font-weight:700;color:' + C.mute + '">' + esc(r.k) + "</p>" +
-        '<div><p style="margin:0;font-size:15px;font-weight:700">' + esc(r.t) + '</p><p style="margin:4px 0 0;font-size:12px;line-height:1.5;color:' + C.mute + '">' + esc(r.b) + "</p></div>" +
-        '<p style="margin:0;font-size:13px;line-height:1.55">' + esc(r.a) + "</p>" +
-        '<p style="margin:0;justify-self:end;padding:3px 8px;font-size:12px;font-weight:700;white-space:nowrap;' + CHIP[r.c] + '">' + CHIP_L[r.c] + "</p></div>";
-    }).join("");
-    return '<div style="width:794px;min-height:1123px;box-sizing:border-box;padding:42px 48px 26px;display:flex;flex-direction:column;gap:24px;background:' + C.bg + ";color:" + C.ink + ";font-family:" + SANS + ';word-break:keep-all">' +
-      '<div style="display:flex;flex-direction:column;gap:10px;padding-bottom:18px;border-bottom:1px solid ' + C.ink + '">' +
-      '<div style="display:flex;justify-content:space-between;align-items:baseline"><p style="margin:0;font-size:12px;font-weight:700;color:' + C.accent + '">The Opening Sip · 코칭 사전 리포트</p><p style="margin:0;font-size:12px;color:' + C.mute + '">' + esc(d.director ? d.director + " 디렉터" : "담당 디렉터 배정 요청") + " · 신청 " + esc(d.date) + "</p></div>" +
-      '<h1 style="margin:0;font-family:' + SERIF + ';font-size:30px;font-weight:900;letter-spacing:-0.8px">' + esc(d.name || "고객") + " 님의 지금과, 가고 싶은 곳</h1>" +
-      '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;font-size:13px;color:#4F4943">' + meta +
-      (d.drink ? '<p style="margin:0 0 0 auto;padding:4px 10px;background:' + C.ink + ';font-size:12px;font-weight:700;color:' + C.bg + '">웰컴 드링크 ' + esc(d.drink) + " 먼저 보내기</p>" : "") + "</div></div>" +
-      '<div style="display:grid;grid-template-columns:minmax(0,0.95fr) 14px minmax(0,0.8fr) 14px minmax(0,0.85fr) 14px minmax(0,1.4fr);gap:6px;align-items:start">' + flow + "</div>" +
-      '<div style="display:flex;flex-direction:column"><div style="display:flex;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:1.5px solid ' + C.ink + '">' +
-      '<h2 style="margin:0;font-family:' + SERIF + ';font-size:20px;font-weight:900">분석 평가</h2><p style="margin:0;font-size:12px;color:' + C.mute + '">신청서 답변을 정해진 기준으로 판정했습니다 · 코칭 전에 확인할 것</p></div>' +
-      (rows || '<p style="margin:0;padding:14px 0;font-size:13px;color:' + C.mute + '">판정할 답변이 부족합니다. 코칭 때 직접 확인해 주세요.</p>') + "</div>" +
-      '<div style="padding:18px 22px;background:' + C.ink + ";color:" + C.bg + '"><p style="margin:0;font-size:12px;font-weight:700;color:#F0A5A8">종합</p><p style="margin:6px 0 0;font-family:' + SERIF + ';font-size:17px;font-weight:700;line-height:1.6">' + esc(an.summary) + "</p></div>" +
-      '<div style="flex:1 1 auto;min-height:80px;display:flex;flex-direction:column"><p style="margin:0;font-size:12px;font-weight:700;color:' + C.mute + '">디렉터 메모</p>' +
-      '<div style="margin-top:26px;height:1px;background:' + C.line + '"></div><div style="margin-top:26px;height:1px;background:' + C.line + '"></div></div>' +
-      '<div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid ' + C.line + '"><p style="margin:0;font-family:' + SERIF + ';font-size:13px;font-weight:700">No Magic. Just Common Sense.</p><p style="margin:0;font-size:12px;color:' + C.mute + '">답변은 고객이 직접 고른 것 · 평가는 신청서 기준 자동 판정</p></div></div>';
+    var d = norm(raw);
+    var rows = row("가장 불편한 재정 고민", vals(d.worry)) +
+      row("현재 자산 운용 방법", vals(d.method)) +
+      row("자산 운용 목적", vals(d.goal));
+    if (d.income) rows += row("더 만들고 싶은 소득", vals([d.income]));
+    if (d.rate) rows += row("희망 수익률", vals([d.rate]));
+    if (d.mgoal) rows += row("월배당 목표", vals([d.mgoal]));
+    if (d.hasAccountsQ) rows += row("점검받을 계좌", vals(d.accounts, "없음"));
+    rows += row("코칭 때 받고 싶은 정보", vals(d.need, "코칭 때 직접 묻기"));
+    var route = d.coupon ? "쿠폰 " + d.coupon : (d.route || "-");
+    return '<div style="width:794px;min-height:1123px;box-sizing:border-box;padding:56px 64px 36px;display:flex;flex-direction:column;background:' + R.bg + ";color:" + R.ink + ";font-family:" + SANS + ';word-break:keep-all">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center">' +
+        '<div style="display:flex;align-items:center;gap:12px"><img src="/sip/mb-mark.png" width="40" height="40" alt="" style="display:block;width:40px;height:40px">' +
+        '<p style="margin:0;font-size:14px;font-weight:700;letter-spacing:2px">MAKESBETTER</p></div>' +
+        '<p style="margin:0;font-size:13px;color:' + R.sub + '">신청일 ' + esc(d.date || "") + "</p></div>" +
+      '<h1 style="margin:56px 0 0;font-family:' + SERIF + ';font-size:34px;font-weight:900;letter-spacing:-0.8px">코칭 사전 리포트</h1>' +
+      '<p style="margin:12px 0 0;font-size:17px">' + esc(d.name || "고객") + ' 님 <span style="color:' + R.sub + '">·</span> 담당 ' + esc(d.director || "-") + " 디렉터</p>" +
+      '<div style="margin-top:32px;padding:20px 0;border-top:2px solid ' + R.ink + ";border-bottom:1px solid " + R.rule + ';display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">' +
+        info("연락처", d.phone) + info("추천인", d.referrer || "없음") + info("신청 경로", route) + info("웰컴 드링크", d.drink || "-") + "</div>" +
+      '<p style="margin:36px 0 0;font-size:13px;font-weight:700;color:' + R.accent + '">고객이 고른 답</p>' +
+      '<div style="margin-top:6px;border-top:1px solid ' + R.ink + '">' + rows + "</div>" +
+      '<div style="flex:1 1 auto;min-height:120px;margin-top:32px"><p style="margin:0;font-size:13px;font-weight:700;color:' + R.sub + '">디렉터 메모</p>' +
+        '<div style="margin-top:30px;height:1px;background:' + R.rule + '"></div><div style="margin-top:30px;height:1px;background:' + R.rule + '"></div></div>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:12px;border-top:1px solid ' + R.rule + '">' +
+        '<p style="margin:0;font-family:' + SERIF + ';font-size:13px;font-weight:700">No Magic. Just Common Sense.</p>' +
+        '<p style="margin:0;font-size:12px;color:' + R.sub + '">모든 답은 고객이 신청서에서 직접 고른 내용입니다</p></div></div>';
   }
 
   function loadScript(src, test) {
@@ -202,7 +202,7 @@
       loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js", function () { return !!(window.jspdf && window.jspdf.jsPDF); }),
       loadFonts(el.textContent)
     ]).then(function () {
-      return window.html2canvas(el, { scale: 2, backgroundColor: C.bg, logging: false, useCORS: true, windowWidth: 794 });
+      return window.html2canvas(el, { scale: 2, backgroundColor: R.bg, logging: false, useCORS: true, windowWidth: 794 });
     }).then(function (cv) {
       window.__coachReportCanvas = cv;
       var pw = 595.28, ph = pw * cv.height / cv.width, out = "", qs = [0.86, 0.74, 0.62, 0.5, 0.4];

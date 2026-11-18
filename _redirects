@@ -34,6 +34,17 @@ http://report.makesbetter.co.kr/:month  /report/:month/  200!
 /cashjo  /cashflow/  200
 /cashkimhh  /cashflow/  200
 /cashleejh  /cashflow/  200
+/metalee  /meta/  200
+/metasy  /meta/  200
+/metaoh  /meta/  200
+/metahong  /meta/  200
+/metakang  /meta/  200
+/metabyun  /meta/  200
+/metakimsy  /meta/  200
+/metakimdh  /meta/  200
+/metajo  /meta/  200
+/metakimhh  /meta/  200
+/metaleejh  /meta/  200
 /siplee  /sip/  200
 /sipoh  /sip/  200
 /sipbyun  /sip/  200
