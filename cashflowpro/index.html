@@ -366,13 +366,14 @@ input:disabled{opacity:.5}
 (function(){
 const KEY='m4s-pro-draft-v5';
 // 담당 디렉터 목록 (접수 시트 '디렉터' 탭과 같은 이름이어야 메일이 그 디렉터에게 감)
-const DIRECTORS=['이종호','오수현','변보라','홍민아','강소리','김다희','김상윤','모름'];
+const DIRECTORS=['이종호','오수현','변보라','홍민아','강소리','김다희','김상윤','김소연','조숙원','김현희','이지훈','모름'];
+const DIR_CODE={lee:'이종호',oh:'오수현',byun:'변보라',hong:'홍민아',kang:'강소리',kimdh:'김다희',kimsy:'김상윤',sy:'김소연',jo:'조숙원',kimhh:'김현희',leejh:'이지훈'};
 const READY=[['근로소득 원천징수영수증','홈택스 또는 회사에서 발급'],['카드 앱의 최근 3개월 결제(청구) 내역','이번 달은 빼고 지난 3개월'],['통장 자동이체 목록',''],['대출 잔액·월 상환액','은행 앱에서 확인'],['적금·예금 금리, 증권 앱 잔액','']];
 const blank=()=>({mode:'',profile:{name:'',phone:'',age:'',planner:'',family:'',kids:''},consent:false,ready:false,checks:[],basic:{income:0,fixed:0,variable:0,saving:0},incomeSel:[],fixedSel:[],
   income:{},fixed:{},cards:[],cuts:{},savings:[],cash:[],invest:[],estate:[],deposit:[],loans:[],retire:{age:'',living:'',pension:''},goals:[]});
 let S=blank(), cur='mode', error='', ret=null, ack={};
 // 디렉터가 보낸 링크(?d=이름)면 담당 디렉터를 미리 채움
-const DIRQ=(()=>{try{return (new URLSearchParams(location.search).get('d')||'').trim().slice(0,30);}catch(e){return '';}})();
+const DIRQ=(()=>{try{const q=(new URLSearchParams(location.search).get('d')||'').trim().slice(0,30);if(q)return DIR_CODE[q]||q;const m=location.pathname.match(/\/pro([a-z]+)\/?$/);return m&&DIR_CODE[m[1]]||'';}catch(e){return '';}})();
 try{const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(d&&d.data){S=Object.assign(blank(),d.data); cur=d.cur||'mode';}}catch(e){}
 if(DIRQ){ S.profile.planner=DIRQ; cur='mode'; } // 디렉터 링크로 열면 항상 오프닝부터 (입력값은 유지)
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({data:S,cur}))}catch(e){}};
