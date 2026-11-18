@@ -223,6 +223,8 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
     emailjsPublicKey: "37rMXVT1INDvECR8k",
     emailjsServiceId: "service_lehvmhu",
     emailjsTemplateId: "template_o2bn4wc", // 공용 알림(기본) — 제목 {{subject}} · 본문 {{{body}}}
+    reportTemplateId: "template_9ljzh1k",  // 공용 알림(PDF 첨부) — 베이직 리포트 첨부용
+    basicReport: false,                    // 베이직 리포트 PDF 첨부 (대표 시안 승인 후 true · 시험은 ?report=1)
     // 모든 결과 메일의 참조(모니터링)로 항상 함께 받을 주소
     monitorEmail: "makesbetter.direction@gmail.com"
   };
@@ -767,6 +769,10 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
   }
 
   /* ===== 메일: 공용 알림 양식 (제목 {{subject}} · 본문 {{{body}}}) ===== */
+  function loadBasicReport(){
+    if (window.MBBasicReport) return Promise.resolve();
+    return new Promise(function(ok, no){ var s = document.createElement("script"); s.src = "/cashflow/basic-report.js"; s.onload = function(){ window.MBBasicReport ? ok() : no(new Error("basic-report.js")); }; s.onerror = no; document.head.appendChild(s); });
+  }
   var MAILTEST = /[?&]mailtest=1/.test(location.search);
   var MAILWRAP = '<div style="font-family:system-ui,-apple-system,Apple SD Gothic Neo,Malgun Gothic,Arial,sans-serif;font-size:15px;line-height:1.8;color:#111">';
   function mailStamp(){ var d=new Date(); return todayStr()+" "+pad(d.getHours())+":"+pad(d.getMinutes()); }
@@ -860,13 +866,20 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
       body: MAILWRAP + mailHead(directorObj.name) + "<br><br>" + mailData() + "</div>"
     };
     if (MAILTEST){ params.to_email = CONFIG.monitorEmail; params.subject = "[발송 시험] " + params.subject; }
-    emailjs.send(CONFIG.emailjsServiceId, CONFIG.emailjsTemplateId, params)
-      .then(function(){ state.step = "done"; renderDone(false); })
-      .catch(function(err){
-        console.error("EmailJS 전송 실패:", err);
-        state.step = "done";
-        renderDone(true);
-      });
+    function finish(ok, err){ if (!ok) console.error("EmailJS 전송 실패:", err); state.step = "done"; renderDone(!ok); }
+    function plain(){ emailjs.send(CONFIG.emailjsServiceId, CONFIG.emailjsTemplateId, params).then(function(){ finish(true); }, function(e){ finish(false, e); }); }
+    /* 베이직 리포트 PDF 첨부 — CONFIG.basicReport 가 true 일 때(시험: ?report=1). 실패하면 첨부 없이 본문에 결과를 담아 보낸다. */
+    if (!(CONFIG.basicReport || /[?&]report=1/.test(location.search))) return plain();
+    loadBasicReport().then(function(){
+      return window.MBBasicReport.build({ date: todayStr(), director: directorObj.name, name: state.name, phone: state.phone || "-", route: mailRoute(), coupon: state.coupon,
+        incomeType: state.incomeType, self: state.self, lastYearIncome: state.lastYearIncome, monthlyIncome: state.monthlyIncome, monthlyFixed: state.monthlyFixed,
+        bank: state.bank, securities: state.securities, insurance: state.insurance, totalFinancial: state.totalFinancial, totalRealEstate: state.totalRealEstate, totalDebt: state.totalDebt });
+    }).then(function(pdf){
+      var p2 = {}; for (var k in params) p2[k] = params[k];
+      p2.report_pdf = pdf; p2.report_name = "현금흐름베이직_" + (state.name || "고객").replace(/[\\/:*?"<>|\s]/g, "") + ".pdf";
+      p2.body = MAILWRAP + mailHead(directorObj.name) + "<br><br>현금흐름 베이직 리포트(PDF)를 첨부했습니다.</div>";
+      return emailjs.send(CONFIG.emailjsServiceId, CONFIG.reportTemplateId, p2).then(function(){ finish(true); });
+    }).catch(function(e){ console.warn("리포트 첨부 발송 실패, 첨부 없이 재발송", e); plain(); });
   }
 
   function onSubmit(){ sendMail(); }
