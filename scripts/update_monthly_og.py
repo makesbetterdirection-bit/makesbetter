@@ -19,8 +19,13 @@ def cur_month(ev, cyc, today):
     mine = [e for e in ev if e["cyc"] == cyc and e["code"] in CODES[cyc]]
     yms = sorted({e["ym"] for e in mine})
     up = [ym for ym in yms if any(e["ym"] == ym and e["pay"] >= today for e in mine)]
-    ym = up[0] if up else (yms[-1] if yms else None)
-    return ym
+    # 페이지(monthly/index.html)와 같은 규칙: 다가오는 회차가 운용사 공시로 확정됐을 때만 넘어가고,
+    # 공시 전이면 직전에 확정된 회차(지급 완료)를 계속 보여 준다.
+    ann = lambda y: any(e["ym"] == y and not e.get("est") for e in mine)
+    if up and ann(up[0]):
+        return up[0]
+    done = [y for y in yms if ann(y) and (not up or y < up[0])]
+    return done[-1] if done else (up[0] if up else (yms[-1] if yms else None))
 
 
 def set_meta(html, prop, val):
