@@ -222,7 +222,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
     // EmailJS 설정 - 예약 위젯과 동일한 계정/템플릿을 재사용합니다.
     emailjsPublicKey: "37rMXVT1INDvECR8k",
     emailjsServiceId: "service_lehvmhu",
-    emailjsTemplateId: "template_myptiih",
+    emailjsTemplateId: "template_o2bn4wc", // 공용 알림(기본) — 제목 {{subject}} · 본문 {{{body}}}
     // 모든 결과 메일의 참조(모니터링)로 항상 함께 받을 주소
     monitorEmail: "makesbetter.direction@gmail.com"
   };
@@ -715,11 +715,11 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
         director: directorObj.name,
         to_email: directorObj.email + "," + CONFIG.monitorEmail,
         subject: "머니4스퀘어 PRO 의뢰." + (state.name || "고객") + " 님." + todayStr(),
-        body: mailHead(directorObj.name) + "<br><br>" +
+        body: MAILWRAP + mailHead(directorObj.name) + "<br><br>" +
           "베이직 리포트를 본 고객이 PRO 과정을 요청했습니다.<br>" +
           esc("확인 안 된 돈(월): " + mbrNum(gap) + "만원") + "<br>" +
           esc(showCross ? "체감 연환산 − 작년 세전 소득: " + (diff>0?"+":"") + mbrNum(diff) + "만원" : "작년 소득 미입력") +
-          "<br><br>" + mailData()
+          "<br><br>" + mailData() + "</div>"
       };
       if (MAILTEST){ params.to_email = CONFIG.monitorEmail; params.subject = "[발송 시험] " + params.subject; }
       emailjs.send(CONFIG.emailjsServiceId, CONFIG.emailjsTemplateId, params)
@@ -768,6 +768,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
 
   /* ===== 메일: 공용 알림 양식 (제목 {{subject}} · 본문 {{{body}}}) ===== */
   var MAILTEST = /[?&]mailtest=1/.test(location.search);
+  var MAILWRAP = '<div style="font-family:system-ui,-apple-system,Apple SD Gothic Neo,Malgun Gothic,Arial,sans-serif;font-size:15px;line-height:1.8;color:#111">';
   function mailStamp(){ var d=new Date(); return todayStr()+" "+pad(d.getHours())+":"+pad(d.getMinutes()); }
   function mailRoute(){ return state.kakao ? "카카오 채널" : state.dLock ? "디렉터 링크" : CJ ? "청주 링크" : "공용 링크"; }
   function mailHead(directorName){
@@ -856,7 +857,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
       director: directorObj.name,
       to_email: directorObj.email + "," + CONFIG.monitorEmail,
       subject: "현금흐름 베이직." + (state.name || "고객") + " 님." + todayStr(),
-      body: mailHead(directorObj.name) + "<br><br>" + mailData()
+      body: MAILWRAP + mailHead(directorObj.name) + "<br><br>" + mailData() + "</div>"
     };
     if (MAILTEST){ params.to_email = CONFIG.monitorEmail; params.subject = "[발송 시험] " + params.subject; }
     emailjs.send(CONFIG.emailjsServiceId, CONFIG.emailjsTemplateId, params)

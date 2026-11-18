@@ -96,10 +96,10 @@ body{min-height:100vh}
     /* ====== EmailJS 설정 ====== */
     var EMAILJS_PUBLIC_KEY  = '37rMXVT1INDvECR8k';
     var EMAILJS_SERVICE_ID  = 'service_lehvmhu';
-    var EMAILJS_TEMPLATE_ID = 'template_yg28z2r';
+    var EMAILJS_TEMPLATE_ID = 'template_9ljzh1k'; /* 공용 알림(PDF 첨부) — 11/18 template_yg28z2r(Contact Us)에서 변경 */
     var NOTIFY_EMAIL = 'bd187@naver.com';
   /* 디렉터 목록 — 주소 /meta코드 로 들어오면 담당 디렉터가 고정되고 선택 칸이 숨겨진다.
-     결과 메일은 담당 디렉터에게 가고, 메일 양식(template_yg28z2r)의 참조(Cc)로 makesbetter.direction@gmail.com 에도 간다. */
+     결과 메일은 담당 디렉터와 회사 메일에 함께 간다(공용 알림 PDF 첨부 양식 template_9ljzh1k). */
   var DIRECTORS = [
     { k:'lee',   label:'이종호 EDM',  email:'bd187@naver.com' },
     { k:'oh',    label:'오수현 GDM',  email:'u0112383@naver.com' },
@@ -452,8 +452,11 @@ body{min-height:100vh}
         mbParams.subject = (MAILTEST ? '[발송 시험] ' : '') + '금융 IQ.' + name + ' 님.' + ymd;
         var iqHead = [['고객이름', name], ['전화번호', phone || '-'], ['담당자', director], ['날짜', ymd + ' ' + z(nd.getHours()) + ':' + z(nd.getMinutes())], ['점수', score100 + '점 · ' + tier]]
           .map(function(r){ return he(r[0]) + ': ' + he(r[1]); }).join('<br>');
-        mbParams.body = iqHead + (reportPdf ? '<br><br>금융 IQ 리포트(PDF)를 첨부했습니다.' : '') + '<br><br>' + he(answerDetail).replace(/\n/g, '<br>');
-        mbParams.body_plain = iqHead + '<br><br>※ PDF 리포트 첨부에 실패해 본문만 보냅니다.<br><br>' + he(answerDetail).replace(/\n/g, '<br>');
+        var WR = '<div style="font-family:system-ui,-apple-system,Apple SD Gothic Neo,Malgun Gothic,Arial,sans-serif;font-size:15px;line-height:1.8;color:#111">';
+        mbParams.body = WR + iqHead + (reportPdf ? '<br><br>금융 IQ 리포트(PDF)를 첨부했습니다.' : '') + '<br><br>' + he(answerDetail).replace(/\n/g, '<br>') + '</div>';
+        mbParams.body_plain = WR + iqHead + '<br><br>※ PDF 리포트 첨부에 실패해 본문만 보냅니다.<br><br>' + he(answerDetail).replace(/\n/g, '<br>') + '</div>';
+        /* 공용 알림(PDF 첨부) 양식은 참조(Cc)가 없어서 회사 메일을 받는 사람에 함께 넣는다 */
+        if (!MAILTEST && mbParams.to_email.indexOf('makesbetter.direction@gmail.com') < 0) mbParams.to_email += ',makesbetter.direction@gmail.com';
         if (TEST) { window.__metaParams = mbParams; return Promise.resolve(); }
         return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, mbParams).then(null, function(err){
           console.warn('PDF 첨부 발송 실패, 첨부 없이 재발송:', err);
@@ -462,7 +465,7 @@ body{min-height:100vh}
           p2.report_pdf = '';
           p2.answers = mbParams.answers + '\n\n※ PDF 리포트 첨부에 실패해 본문만 발송되었습니다.';
           p2.body = mbParams.body_plain;
-          return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, p2);
+          return emailjs.send(EMAILJS_SERVICE_ID, 'template_o2bn4wc', p2);
         });
         }).then(showResult, function(err){
           console.warn('이메일 발송 실패 (진행은 계속됩니다):', err);

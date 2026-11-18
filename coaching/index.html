@@ -207,8 +207,8 @@ h1,h2,h3,p{margin:0}
     ],
     assignTo:"bd187@naver.com",           // '배정 요청'은 대표에게
     monitorEmail:"makesbetter.direction@gmail.com",
-    emailjsPublicKey:"37rMXVT1INDvECR8k",emailjsServiceId:"service_lehvmhu",emailjsTemplateId:"template_myptiih",
-    reportTemplateId:"template_9ljzh1k" /* 코칭 리포트 첨부용(template_myptiih 복사본 + report_pdf 변수 첨부) */
+    emailjsPublicKey:"37rMXVT1INDvECR8k",emailjsServiceId:"service_lehvmhu",emailjsTemplateId:"template_o2bn4wc" /* 공용 알림(기본) — 첨부 실패 시 */,
+    reportTemplateId:"template_9ljzh1k" /* 공용 알림(PDF 첨부): 제목 {{subject}} · 본문 {{{body}}} · 첨부 report_pdf */
   };
   var q=new URLSearchParams(location.search);
   var TEST=q.get('test')==='1';
@@ -334,8 +334,9 @@ h1,h2,h3,p{margin:0}
     var head=[['고객이름',name],['전화번호',phone],['담당자',S.director],['날짜',params.date+' '+params.time],['신청 경로',cp?'카카오 채널 쿠폰':pre?'디렉터 페이지':'코칭 신청서'],['쿠폰번호',cp||'없음'],['추천인',byv]]
       .concat(LITE?[]:[['첫 인사 커피',S.sip+' — 만나기 전에 먼저 보내 주세요']]).map(function(r){return he(r[0])+': '+he(r[1])}).join('<br>');
     var note='※ 디렉터 일정이 되는 시점에 차례로 연락해 2시간 코칭을 잡아 주세요. 쿠폰은 받은 날부터 7일 안에 등록하는 조건이며, 코칭 후 파트너센터에서 쿠폰 사용 처리.';
-    var bodyPdf=head+'<br><br>코칭 신청 리포트(PDF)를 첨부했습니다.<br><br>'+he(note);
-    var bodyPlain=head+'<br><br>'+he(memo).replace(/\n/g,'<br>');
+    var WR='<div style="font-family:system-ui,-apple-system,Apple SD Gothic Neo,Malgun Gothic,Arial,sans-serif;font-size:15px;line-height:1.8;color:#111">';
+    var bodyPdf=WR+head+'<br><br>코칭 신청 리포트(PDF)를 첨부했습니다.<br><br>'+he(note)+'</div>';
+    var bodyPlain=WR+head+'<br><br>'+he(memo).replace(/\n/g,'<br>')+'</div>';
     params.body=bodyPdf;
     if(MAILTEST){params.to_email=CONFIG.monitorEmail;params.consult_type='[발송 시험] '+params.consult_type;params.subject='[발송 시험] '+params.subject;}
     if(TEST){window.__coachParams=params;setTimeout(function(){finish(true)},300);return}

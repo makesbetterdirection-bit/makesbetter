@@ -108,8 +108,8 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
     directors:[{name:"이종호",email:"bd187@naver.com"},{name:"오수현",email:"u0112383@naver.com"},{name:"변보라",email:"wpqlrhc217@naver.com"},{name:"홍민아",email:"carrot8807@naver.com"},{name:"강소리",email:"kangpro1004@kakao.com"},{name:"김다희",email:"plandh@naver.com"},{name:"김상윤",email:"gnswnajr@naver.com"},{name:"김소연",email:"makesbetter.sy@gmail.com"},{name:"조숙원",email:"swjoe12@naver.com"},{name:"김현희",email:"salesmanager2017@naver.com"},{name:"이지훈",email:"hoony33666@naver.com"}],
     monitorEmail:"makesbetter.direction@gmail.com",
     channelUrl:"https://pf.kakao.com/_eETXxj/friend",
-    emailjsPublicKey:"37rMXVT1INDvECR8k", emailjsServiceId:"service_lehvmhu", emailjsTemplateId:"template_myptiih",
-    reportTemplateId:"template_9ljzh1k" /* 코칭 리포트 첨부용(template_myptiih 복사본 + report_pdf 변수 첨부) */
+    emailjsPublicKey:"37rMXVT1INDvECR8k", emailjsServiceId:"service_lehvmhu", emailjsTemplateId:"template_o2bn4wc" /* 공용 알림(기본) — 첨부 실패 시 */,
+    reportTemplateId:"template_9ljzh1k" /* 공용 알림(PDF 첨부): 제목 {{subject}} · 본문 {{{body}}} · 첨부 report_pdf */
   };
   /* 선택지: 아임웹 THE OPENING SIP 위젯과 같은 값 (메일 내용이 기존과 같게) */
   var SIP=["ICE coffee","HOT coffee"];
@@ -212,8 +212,9 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
     params.subject="코칭 신청."+(S.name||"고객")+" 님."+today();
     var head=[["고객이름",S.name||"-"],["전화번호",S.phone||"-"],["담당자",S.director||"-"],["날짜",stampT],["신청 경로","The Opening Sip (초대장)"],["추천인",S.referrer||"-"],["웰컴 드링크",(S.sip||"-")+" — 만나기 전에 먼저 보내 주세요"]]
       .map(function(r){return esc(r[0])+": "+esc(r[1])}).join("<br>");
-    var bodyPdf=head+"<br><br>코칭 신청 리포트(PDF)를 첨부했습니다.";
-    var bodyPlain=head+"<br><br>"+esc(memo()).replace(/\n/g,"<br>");
+    var WR='<div style="font-family:system-ui,-apple-system,Apple SD Gothic Neo,Malgun Gothic,Arial,sans-serif;font-size:15px;line-height:1.8;color:#111">';
+    var bodyPdf=WR+head+"<br><br>코칭 신청 리포트(PDF)를 첨부했습니다.</div>";
+    var bodyPlain=WR+head+"<br><br>"+esc(memo()).replace(/\n/g,"<br>")+"</div>";
     params.body=bodyPdf;
     buildReport().then(function(pdf){params.report_pdf=pdf},function(e){console.warn("리포트 PDF 생성 실패",e)}).then(function(){
       if(MAILTEST){params.to_email=CONFIG.monitorEmail;params.consult_type="[발송 시험] "+params.consult_type;params.subject="[발송 시험] "+params.subject}

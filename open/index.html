@@ -400,7 +400,7 @@ body.open .sticky{display:none}
   var rgN=document.getElementById('rgN'),rgP=document.getElementById('rgP'),rgE=document.getElementById('rgE');
   rgP.addEventListener('input',function(){var d=rgP.value.replace(/\D/g,'').slice(0,11);rgP.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7)});
   function pad(n){return n<10?'0'+n:''+n}
-  /* 플랫폼 유입 알림 — EmailJS 「플랫폼 유입 알림」 template_o2bn4wc
+  /* 플랫폼 유입 알림 — EmailJS 「공용 알림(기본)」 template_o2bn4wc (제목 {{subject}} · 본문 {{{body}}})
      제목: 플랫폼 유입.{{name}} / 본문: 고객이름 · 전화번호 · 담당자 · 날짜 (상담 메일 양식과 분리) */
   function sendReg(name,phone){
     var now=new Date(),to=(pk?MAIL[pk]:MAIL.lee)+','+MON;
@@ -410,7 +410,7 @@ body.open .sticky{display:none}
     /* 공용 알림 양식: 제목 {{subject}} · 본문 {{{body}}} */
     var he=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
     params.subject='플랫폼 유입.'+params.name;
-    params.body=[['고객이름',name],['전화번호',phone],['담당자',params.director],['날짜',params.date]].map(function(r){return he(r[0])+': '+he(r[1])}).join('<br>');
+    params.body='<div style="font-family:system-ui,-apple-system,Apple SD Gothic Neo,Malgun Gothic,Arial,sans-serif;font-size:15px;line-height:1.8;color:#111">'+[['고객이름',name],['전화번호',phone],['담당자',params.director],['날짜',params.date]].map(function(r){return he(r[0])+': '+he(r[1])}).join('<br>')+'</div>';
     if(qs.get('test')){window.__regParams=params;return}
     try{emailjs.init({publicKey:'37rMXVT1INDvECR8k'});emailjs.send('service_lehvmhu','template_o2bn4wc',params).then(function(){hit(TAG+'-mail')},function(){try{localStorage.removeItem('mb-open-reg')}catch(e){}})}catch(e){}
   }
