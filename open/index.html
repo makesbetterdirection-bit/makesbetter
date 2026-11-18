@@ -400,15 +400,15 @@ body.open .sticky{display:none}
   var rgN=document.getElementById('rgN'),rgP=document.getElementById('rgP'),rgE=document.getElementById('rgE');
   rgP.addEventListener('input',function(){var d=rgP.value.replace(/\D/g,'').slice(0,11);rgP.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7)});
   function pad(n){return n<10?'0'+n:''+n}
+  /* 플랫폼 유입 알림 — EmailJS 「플랫폼 유입 알림」 template_o2bn4wc
+     제목: 플랫폼 유입.{{name}} / 본문: 고객이름 · 전화번호 · 담당자 · 날짜 (상담 메일 양식과 분리) */
   function sendReg(name,phone){
-    var now=new Date(),who=pk?P[pk]:'공통 주소',to=(pk?MAIL[pk]:MAIL.lee)+','+MON;
-    var params={site_label:' · 플랫폼 등록',consult_type:'플랫폼 등록 (CASH FLOW DESIGN STUDIO)',
-      date:now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate()),time:pad(now.getHours())+':'+pad(now.getMinutes()),
-      name:name,phone:phone,email:'-',director:pk?P[pk]:'배정 요청',to_email:to,
-      memo:['[플랫폼 등록]','유입 링크: '+who+(pk?' 디렉터 (mbkr.my/'+(pk==='sy'?'sy':'p'+pk)+')':' (/open)'),'','이름과 연락처를 남기고 카카오톡 채널 추가 화면으로 이동했습니다.','※ 채널을 실제로 추가했는지는 카카오가 알려 주지 않아, 채널 친구 목록에서 확인이 필요합니다.'].join('\n')};
-    if(qs.get('mailtest')){params.to_email=MON;params.consult_type='[발송 시험] '+params.consult_type}
+    var now=new Date(),to=(pk?MAIL[pk]:MAIL.lee)+','+MON;
+    var params={name:name,phone:phone,email:'-',director:pk?P[pk]:'배정 요청',to_email:to,
+      date:now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+' '+pad(now.getHours())+':'+pad(now.getMinutes())};
+    if(qs.get('mailtest')){params.to_email=MON;params.name='[발송 시험] '+params.name}
     if(qs.get('test')){window.__regParams=params;return}
-    try{emailjs.init({publicKey:'37rMXVT1INDvECR8k'});emailjs.send('service_lehvmhu','template_myptiih',params).then(function(){hit(TAG+'-mail')},function(){try{localStorage.removeItem('mb-open-reg')}catch(e){}})}catch(e){}
+    try{emailjs.init({publicKey:'37rMXVT1INDvECR8k'});emailjs.send('service_lehvmhu','template_o2bn4wc',params).then(function(){hit(TAG+'-mail')},function(){try{localStorage.removeItem('mb-open-reg')}catch(e){}})}catch(e){}
   }
   document.getElementById('chBtn2').addEventListener('click',function(e){
     var name=rgN.value.trim(),phone=rgP.value.trim(),sent=false;try{sent=localStorage.getItem('mb-open-reg')==='1'}catch(x){}
