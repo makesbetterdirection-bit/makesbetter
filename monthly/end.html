@@ -225,7 +225,11 @@ function dw(d){return DOW[new Date(d+'T00:00:00Z').getUTCDay()]}
 function diff(a,b){return Math.round((Date.parse(b)-Date.parse(a))/864e5)}
 var mine=V.ev.filter(function(e){return e.cyc===T&&CODES.indexOf(e.code)>=0});
 var yms=mine.map(function(e){return e.ym}).filter(function(v,i,a){return a.indexOf(v)===i}).sort();
-var ym=yms.filter(function(y){return mine.some(function(e){return e.ym===y&&e.pay>=today})})[0]||yms[yms.length-1];
+/* 보여 줄 회차: 다가오는 회차가 운용사 공시로 확정됐을 때만 넘어간다. 공시 전이면 직전에 확정된 회차(지급 완료)를 그대로 보여 주고,
+   다음 회차의 예상 일정은 아래 「다음 회차」에서 「예상」 표시와 함께 안내한다. */
+function announced(y){return mine.some(function(e){return e.ym===y&&!e.est})}
+var upc=yms.filter(function(y){return mine.some(function(e){return e.ym===y&&e.pay>=today})});
+var ym=upc[0]&&announced(upc[0])?upc[0]:(yms.filter(function(y){return announced(y)&&(!upc[0]||y<upc[0])}).pop()||upc[0]||yms[yms.length-1]);
 var ev=mine.filter(function(e){return e.ym===ym});
 function hist(code){return V.ev.filter(function(e){return e.code===code&&e.amt!=null}).sort(function(a,b){return a.ym<b.ym?-1:1})}
 function view(code){var h=hist(code),cur=h.filter(function(e){return e.ym===ym})[0],prev=h.filter(function(e){return e.ym<ym});
