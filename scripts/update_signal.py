@@ -79,9 +79,15 @@ def daily(sym, years=26):
             try:
                 url = f"https://{host}/v8/finance/chart/{sym}?period1={now - years * 366 * 86400}&period2={now}&interval=1d"
                 res = json.loads(http_get(url, tries=1, ua=ua, timeout=60))["chart"]["result"][0]
-                off = res["meta"].get("gmtoffset", 0)
-                return [(datetime.utcfromtimestamp(t + off).date(), float(c))
-                        for t, c in zip(res["timestamp"], res["indicators"]["quote"][0]["close"]) if c is not None]
+                meta = res["meta"]
+                off = meta.get("gmtoffset", 0)
+                ts, cl = res["timestamp"], list(res["indicators"]["quote"][0]["close"])
+                # 야후는 마감 뒤 한동안 당일 일봉 종가를 비워 두고(None) 현재가 칸에만 값을 둔다.
+                # 마지막 봉이 비어 있고 현재가 시각이 같은 날이면 그 값으로 채운다(빈 칸을 버리면 기준일이 전날로 되돌아감).
+                if ts and cl and cl[-1] is None and meta.get("regularMarketPrice") and meta.get("regularMarketTime"):
+                    if datetime.utcfromtimestamp(meta["regularMarketTime"] + off).date() == datetime.utcfromtimestamp(ts[-1] + off).date():
+                        cl[-1] = meta["regularMarketPrice"]
+                return [(datetime.utcfromtimestamp(t + off).date(), float(c)) for t, c in zip(ts, cl) if c is not None]
             except Exception as e:  # noqa: BLE001
                 last = e
     raise RuntimeError(f"yahoo {sym}: {last}")
@@ -141,7 +147,9 @@ def main():
     today = idx["KOSPI"]["date"]   # 기준일 = 코스피 최근 종가일(휴장일에 다시 돌아도 같은 날짜)
     old = json.load(open(OUT, encoding="utf-8")) if os.path.exists(OUT) else {"history": []}
     hist = [h for h in old.get("history", []) if h["date"] != today] if os.environ.get("SIG_REDO") else old.get("history", [])
-    if hist and hist[-1]["date"] == today:
+    # 이미 기록한 날짜이거나 기록된 마지막 날짜보다 과거면 건너뜀(자료 지연으로 기준일이 되돌아가 같은 날짜가 두 번 쌓이는 것 방지)
+    if hist and (today in {h["date"] for h in hist} or today < max(h["date"] for h in hist)):
+        log("기준일", today, "— 이미 기록했거나 과거 날짜, 신호 계산 건너뜀")
         print("signal_changed=false")
         return
     prev = hist[-1]["sig"] if hist else None
