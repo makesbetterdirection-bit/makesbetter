@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18 01:30",
+ "updated": "2026-11-18 12:54",
  "hol": [
   "2026-10-05",
   "2026-10-09",
@@ -365,7 +365,8 @@
    "amt": 92,
    "rate": 0.77,
    "est": false,
-   "src": "https://www.samsungfund.com/etf/lounge/notice-view.do?no=80913"
+   "src": "https://www.samsungfund.com/etf/lounge/notice-view.do?no=80913",
+   "final": true
   },
   {
    "code": "480030",
@@ -387,9 +388,10 @@
    "rec": "2026-11-13",
    "pay": "2026-11-17",
    "amt": 73,
-   "rate": 0.99,
+   "rate": 1.0,
    "est": false,
-   "src": "https://www.samsungfund.com/etf/lounge/notice-view.do?no=80913"
+   "src": "https://www.samsungfund.com/etf/lounge/notice-view.do?no=80913",
+   "final": true
   },
   {
    "code": "498400",
@@ -399,9 +401,10 @@
    "rec": "2026-11-13",
    "pay": "2026-11-17",
    "amt": 266,
-   "rate": 1.75,
+   "rate": 1.7,
    "est": false,
-   "src": "https://www.samsungfund.com/etf/lounge/notice-view.do?no=80913"
+   "src": "https://www.samsungfund.com/etf/lounge/notice-view.do?no=80913",
+   "final": true
   },
   {
    "code": "0022T0",
