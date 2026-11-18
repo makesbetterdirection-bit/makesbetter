@@ -116,6 +116,9 @@ body{min-height:100vh}
   var DIRECTOR_EMAILS = {}; DIRECTORS.forEach(function(d){ DIRECTOR_EMAILS[d.label] = d.email; });
   var FIXED = (function(){ var m = /^\/meta([a-z]+)\/?$/.exec(location.pathname); if (!m) return null; for (var i=0;i<DIRECTORS.length;i++) if (DIRECTORS[i].k===m[1]) return DIRECTORS[i]; return null; })();
   var MAILTEST = /[?&]mailtest=1/.test(location.search), TEST = /[?&]test=1/.test(location.search);
+  /* 청주 금융 IQ(mbkr.my/meta1 → /meta1): 디렉터 3명만 고르게 */
+  var CJ = /^\/meta1\/?$/.test(location.pathname) || /[?&]set=cj(&|$)/.test(location.search);
+  var PICK = CJ ? ['김현희','이지훈','조숙원'].map(function(n){ return DIRECTORS.filter(function(d){ return d.label === n; })[0]; }).filter(Boolean) : DIRECTORS;
     /* ========================== */
 
     var QUESTIONS = [
@@ -316,7 +319,7 @@ body{min-height:100vh}
           '<div class="mb-iq-field"'+(FIXED?' style="display:none"':'')+'><label>담당 디렉터</label>' +
             '<select id="mb-iq-director">' +
               '<option value="">선택해주세요</option>' +
-              DIRECTORS.map(function(d){ return '<option'+(FIXED&&FIXED.k===d.k?' selected':'')+'>'+d.label+'</option>'; }).join('') +
+              PICK.map(function(d){ return '<option'+(FIXED&&FIXED.k===d.k?' selected':'')+'>'+d.label+'</option>'; }).join('') +
             '</select>' +
           '</div>' +
           '<button class="mb-iq-btn" id="mb-iq-submit">내 점수 확인하기</button>' +
