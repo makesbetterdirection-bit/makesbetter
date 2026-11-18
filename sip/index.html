@@ -207,12 +207,20 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
     var dEmail=(CONFIG.directors.filter(function(x){return x.name===S.director})[0]||{}).email;
     var params={site_label:" · 금융 코칭 등록",consult_type:"The Opening Sip 신청",date:today(),time:"-",name:S.name,phone:S.phone,email:"-",memo:memo(),director:S.director,to_email:(dEmail?dEmail+",":"")+CONFIG.monitorEmail,
       report_pdf:"",report_name:"코칭신청_리포트_"+(S.name||"고객").replace(/[\\/:*?"<>|\s]/g,"")+".pdf"};
+    /* 공용 알림 양식: 제목 {{subject}} · 본문 {{{body}}} */
+    var nw=new Date(),stampT=today()+" "+pad(nw.getHours())+":"+pad(nw.getMinutes());
+    params.subject="코칭 신청."+(S.name||"고객")+" 님."+today();
+    var head=[["고객이름",S.name||"-"],["전화번호",S.phone||"-"],["담당자",S.director||"-"],["날짜",stampT],["신청 경로","The Opening Sip (초대장)"],["추천인",S.referrer||"-"],["웰컴 드링크",(S.sip||"-")+" — 만나기 전에 먼저 보내 주세요"]]
+      .map(function(r){return esc(r[0])+": "+esc(r[1])}).join("<br>");
+    var bodyPdf=head+"<br><br>코칭 신청 리포트(PDF)를 첨부했습니다.";
+    var bodyPlain=head+"<br><br>"+esc(memo()).replace(/\n/g,"<br>");
+    params.body=bodyPdf;
     buildReport().then(function(pdf){params.report_pdf=pdf},function(e){console.warn("리포트 PDF 생성 실패",e)}).then(function(){
-      if(MAILTEST){params.to_email=CONFIG.monitorEmail;params.consult_type="[발송 시험] "+params.consult_type}
+      if(MAILTEST){params.to_email=CONFIG.monitorEmail;params.consult_type="[발송 시험] "+params.consult_type;params.subject="[발송 시험] "+params.subject}
       if(TEST){window.__sipParams=params;return done(false)}
       if(!window.emailjs)return done(true);
       var withPdf=!!(params.report_pdf&&CONFIG.reportTemplateId);
-      function plain(){var p2={};for(var k in params)p2[k]=params[k];p2.report_pdf="";
+      function plain(){var p2={};for(var k in params)p2[k]=params[k];p2.report_pdf="";p2.body=bodyPlain;
         emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,p2).then(function(){done(false)},function(e2){console.error(e2);done(true)})}
       if(!withPdf)return plain();
       emailjs.send(CONFIG.emailjsServiceId,CONFIG.reportTemplateId,params).then(function(){done(false)},function(e){console.warn("첨부 발송 실패, 첨부 없이 재발송",e);plain()})})}

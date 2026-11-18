@@ -446,6 +446,14 @@ body{min-height:100vh}
           tier: tier,
           answers: answerDetail
         };
+        /* 공용 알림 양식: 제목 {{subject}} · 본문 {{{body}}} */
+        var he = function(t){ return String(t==null?'':t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+        var nd = new Date(), z = function(n){ return (n<10?'0':'')+n; }, ymd = nd.getFullYear()+'-'+z(nd.getMonth()+1)+'-'+z(nd.getDate());
+        mbParams.subject = (MAILTEST ? '[발송 시험] ' : '') + '금융 IQ.' + name + ' 님.' + ymd;
+        var iqHead = [['고객이름', name], ['전화번호', phone || '-'], ['담당자', director], ['날짜', ymd + ' ' + z(nd.getHours()) + ':' + z(nd.getMinutes())], ['점수', score100 + '점 · ' + tier]]
+          .map(function(r){ return he(r[0]) + ': ' + he(r[1]); }).join('<br>');
+        mbParams.body = iqHead + (reportPdf ? '<br><br>금융 IQ 리포트(PDF)를 첨부했습니다.' : '') + '<br><br>' + he(answerDetail).replace(/\n/g, '<br>');
+        mbParams.body_plain = iqHead + '<br><br>※ PDF 리포트 첨부에 실패해 본문만 보냅니다.<br><br>' + he(answerDetail).replace(/\n/g, '<br>');
         if (TEST) { window.__metaParams = mbParams; return Promise.resolve(); }
         return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, mbParams).then(null, function(err){
           console.warn('PDF 첨부 발송 실패, 첨부 없이 재발송:', err);
@@ -453,6 +461,7 @@ body{min-height:100vh}
           for (var k in mbParams) p2[k] = mbParams[k];
           p2.report_pdf = '';
           p2.answers = mbParams.answers + '\n\n※ PDF 리포트 첨부에 실패해 본문만 발송되었습니다.';
+          p2.body = mbParams.body_plain;
           return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, p2);
         });
         }).then(showResult, function(err){

@@ -407,6 +407,10 @@ body.open .sticky{display:none}
     var params={name:name,phone:phone,email:'-',director:pk?P[pk]:'배정 요청',to_email:to,
       date:now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+' '+pad(now.getHours())+':'+pad(now.getMinutes())};
     if(qs.get('mailtest')){params.to_email=MON;params.name='[발송 시험] '+params.name}
+    /* 공용 알림 양식: 제목 {{subject}} · 본문 {{{body}}} */
+    var he=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+    params.subject='플랫폼 유입.'+params.name;
+    params.body=[['고객이름',name],['전화번호',phone],['담당자',params.director],['날짜',params.date]].map(function(r){return he(r[0])+': '+he(r[1])}).join('<br>');
     if(qs.get('test')){window.__regParams=params;return}
     try{emailjs.init({publicKey:'37rMXVT1INDvECR8k'});emailjs.send('service_lehvmhu','template_o2bn4wc',params).then(function(){hit(TAG+'-mail')},function(){try{localStorage.removeItem('mb-open-reg')}catch(e){}})}catch(e){}
   }

@@ -328,7 +328,16 @@ h1,h2,h3,p{margin:0}
       document.getElementById('sum').innerHTML=(LITE?[['추천인',byv+' 님'],['재정 고민',S.worry],['희망 수익률',S.rate],['월배당 목표',S.mgoal],['담당 디렉터',S.director]]:[['추천인',byv+' 님'],['첫 인사 커피',S.sip],['재정 고민',S.worry],['자산 운용',S.method.join(', ')],['모으는 목적',S.goal.join(', ')],['더 만들고 싶은 소득',S.income],['점검받을 계좌',S.accounts.join(', ')||'없음'],['받고 싶은 정보',S.need.join(', ')],['담당 디렉터',S.director]]).map(function(r){return '<div><span>'+r[0]+'</span><b>'+r[1].replace(/</g,'&lt;')+'</b></div>'}).join('');
       document.getElementById('doneBy').textContent=byv+' 님의 ';if(LITE)document.getElementById('doneTx').innerHTML='담당 디렉터의 일정이 허락하는 때에<br>맞춰 차례로 연락드립니다.';document.getElementById('done').classList.add('on');scrollTo(0,0);
     }
-    if(MAILTEST){params.to_email=CONFIG.monitorEmail;params.consult_type='[발송 시험] '+params.consult_type;}
+    /* 공용 알림 양식: 제목 {{subject}} · 본문 {{{body}}} */
+    var he=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+    params.subject='쿠폰 코칭 신청.'+(name||'고객')+' 님.'+params.date;
+    var head=[['고객이름',name],['전화번호',phone],['담당자',S.director],['날짜',params.date+' '+params.time],['신청 경로',cp?'카카오 채널 쿠폰':pre?'디렉터 페이지':'코칭 신청서'],['쿠폰번호',cp||'없음'],['추천인',byv]]
+      .concat(LITE?[]:[['첫 인사 커피',S.sip+' — 만나기 전에 먼저 보내 주세요']]).map(function(r){return he(r[0])+': '+he(r[1])}).join('<br>');
+    var note='※ 디렉터 일정이 되는 시점에 차례로 연락해 2시간 코칭을 잡아 주세요. 쿠폰은 받은 날부터 7일 안에 등록하는 조건이며, 코칭 후 파트너센터에서 쿠폰 사용 처리.';
+    var bodyPdf=head+'<br><br>코칭 신청 리포트(PDF)를 첨부했습니다.<br><br>'+he(note);
+    var bodyPlain=head+'<br><br>'+he(memo).replace(/\n/g,'<br>');
+    params.body=bodyPdf;
+    if(MAILTEST){params.to_email=CONFIG.monitorEmail;params.consult_type='[발송 시험] '+params.consult_type;params.subject='[발송 시험] '+params.subject;}
     if(TEST){window.__coachParams=params;setTimeout(function(){finish(true)},300);return}
     if(!MAILTEST){try{fetch('https://abacus.jasoncameron.dev/hit/mbkr.my/coaching-apply',{keepalive:true,mode:'no-cors'})}catch(e){}}
     if(!window.emailjs){finish(false);return}
@@ -336,7 +345,7 @@ h1,h2,h3,p{margin:0}
     params.report_pdf='';params.report_name='코칭신청_리포트_'+(name||'고객').replace(/[\\/:*?"<>|\s]/g,'')+'.pdf';
     var rdata={date:params.date,director:S.director,name:name,phone:phone,referrer:byv,route:(cp?'카카오 채널 쿠폰':pre?'디렉터 페이지':'코칭 신청서'),coupon:cp,drink:LITE?'':S.sip,
       worry:S.worry,method:S.method,goal:S.goal,income:S.income,accounts:S.accounts,need:S.need,rate:S.rate,mgoal:S.mgoal,hasAccountsQ:!LITE};
-    function plain(){var p2={};for(var k in params)p2[k]=params[k];p2.report_pdf='';emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,p2).then(function(){finish(true)},function(){finish(false)})}
+    function plain(){var p2={};for(var k in params)p2[k]=params[k];p2.report_pdf='';p2.body=bodyPlain;emailjs.send(CONFIG.emailjsServiceId,CONFIG.emailjsTemplateId,p2).then(function(){finish(true)},function(){finish(false)})}
     if(!CONFIG.reportTemplateId||!window.MBCoachReport){plain();return}
     window.MBCoachReport.build(rdata).then(function(pdf){params.report_pdf=pdf;
       emailjs.send(CONFIG.emailjsServiceId,CONFIG.reportTemplateId,params).then(function(){finish(true)},function(e){console.warn('첨부 발송 실패, 첨부 없이 재발송',e);plain()})

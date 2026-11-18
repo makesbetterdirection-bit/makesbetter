@@ -230,6 +230,12 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
 
   if (window.emailjs) { emailjs.init({ publicKey: CONFIG.emailjsPublicKey }); }
 
+  /* 청주 베이직(mbkr.my/cashflow1 → /cashflow1): 디렉터 3명만 고르게 */
+  var CJ = /\/cashflow1\/?$/.test(location.pathname) || /[?&]set=cj(&|$)/.test(location.search);
+  if (CJ) {
+    CONFIG.directors = ["김현희","이지훈","조숙원"].map(function(n){ return CONFIG.directors.filter(function(d){ return d.name === n; })[0]; }).filter(Boolean);
+  }
+
   var STEPS = ["basic","income","asset","self","result","done"];
   var STEP_LABELS = { basic:"STEP 1", income:"STEP 2", asset:"STEP 3", self:"STEP 4", result:"STEP 5" };
 
@@ -707,8 +713,15 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
         email: "-",
         memo: head + buildMemo(),
         director: directorObj.name,
-        to_email: directorObj.email + "," + CONFIG.monitorEmail
+        to_email: directorObj.email + "," + CONFIG.monitorEmail,
+        subject: "머니4스퀘어 PRO 의뢰." + (state.name || "고객") + " 님." + todayStr(),
+        body: mailHead(directorObj.name) + "<br><br>" +
+          "베이직 리포트를 본 고객이 PRO 과정을 요청했습니다.<br>" +
+          esc("확인 안 된 돈(월): " + mbrNum(gap) + "만원") + "<br>" +
+          esc(showCross ? "체감 연환산 − 작년 세전 소득: " + (diff>0?"+":"") + mbrNum(diff) + "만원" : "작년 소득 미입력") +
+          "<br><br>" + mailData()
       };
+      if (MAILTEST){ params.to_email = CONFIG.monitorEmail; params.subject = "[발송 시험] " + params.subject; }
       emailjs.send(CONFIG.emailjsServiceId, CONFIG.emailjsTemplateId, params)
         .then(function(){ done(true); })
         .catch(function(err){ try{ console.error("PRO 의뢰 전송 실패:", err); }catch(e){} done(false); });
@@ -751,6 +764,39 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
     if (failed){
       root.querySelector("#mbc-resend").onclick = function(){ sendMail(); };
     }
+  }
+
+  /* ===== 메일: 공용 알림 양식 (제목 {{subject}} · 본문 {{{body}}}) ===== */
+  var MAILTEST = /[?&]mailtest=1/.test(location.search);
+  function mailStamp(){ var d=new Date(); return todayStr()+" "+pad(d.getHours())+":"+pad(d.getMinutes()); }
+  function mailRoute(){ return state.kakao ? "카카오 채널" : state.dLock ? "디렉터 링크" : CJ ? "청주 링크" : "공용 링크"; }
+  function mailHead(directorName){
+    var rows = [["고객이름", state.name || "-"], ["전화번호", state.phone || "-"], ["담당자", directorName], ["날짜", mailStamp()], ["유입", mailRoute()]];
+    if (state.coupon) rows.push(["쿠폰번호", state.coupon]);
+    return rows.map(function(x){ return esc(x[0])+": "+esc(x[1]); }).join("<br>");
+  }
+  function mailData(){
+    var r = calc();
+    var selfLabelMap = {A:"A (매우 정확·5점)",B:"B (정확한 편·4점)",C:"C (보통·3점)",D:"D (부족한 편·2점)",E:"E (매우 부족·1점)"};
+    var L = function(k,v){ return esc(k)+": "+esc(v); };
+    return [
+      "<b>결과</b>",
+      L("월 저축·투자율", r.savingsRate===null ? "-" : r.savingsRate.toFixed(1)+"%"),
+      L("월 여유자금", fmt(r.surplus)+"만원"),
+      L("순자산", fmt(r.netAssets)+"만원"),
+      L("부채비율", r.debtRatio===null ? "-" : r.debtRatio.toFixed(1)+"%"),
+      "",
+      "<b>입력</b>",
+      L("소득구조", state.incomeType || "-"),
+      L("작년 소득(세전)", fmt(num(state.lastYearIncome))+"만원"),
+      L("체감 평균 소득(월)", fmt(num(state.monthlyIncome))+"만원"),
+      L("체감 평균 고정지출(월)", fmt(num(state.monthlyFixed))+"만원"),
+      L("저축·투자(월)", "은행 "+fmt(num(state.bank))+"만원 / 증권사 "+fmt(num(state.securities))+"만원 / 보험사 "+fmt(num(state.insurance))+"만원"),
+      L("총 금융자산", fmt(num(state.totalFinancial))+"만원"),
+      L("총 부동산자산", fmt(num(state.totalRealEstate))+"만원"),
+      L("총 부채", fmt(num(state.totalDebt))+"만원"),
+      L("현금흐름 정확도(셀프)", selfLabelMap[state.self] || "-")
+    ].join("<br>");
   }
 
   function buildMemo(){
@@ -808,8 +854,11 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
       email: "-",
       memo: buildMemo(),
       director: directorObj.name,
-      to_email: directorObj.email + "," + CONFIG.monitorEmail
+      to_email: directorObj.email + "," + CONFIG.monitorEmail,
+      subject: "현금흐름 베이직." + (state.name || "고객") + " 님." + todayStr(),
+      body: mailHead(directorObj.name) + "<br><br>" + mailData()
     };
+    if (MAILTEST){ params.to_email = CONFIG.monitorEmail; params.subject = "[발송 시험] " + params.subject; }
     emailjs.send(CONFIG.emailjsServiceId, CONFIG.emailjsTemplateId, params)
       .then(function(){ state.step = "done"; renderDone(false); })
       .catch(function(err){

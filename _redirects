@@ -23,6 +23,7 @@ http://report.makesbetter.co.kr/:month  /report/:month/  200!
 /d/jo  /d/  200
 /d/kimhh  /d/  200
 /d/leejh  /d/  200
+/cashflow1  /cashflow/  200
 /cashlee  /cashflow/  200
 /cashoh  /cashflow/  200
 /cashbyun  /cashflow/  200
