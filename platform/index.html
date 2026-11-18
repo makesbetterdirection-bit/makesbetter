@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>플랫폼 가이드 | MAKESBETTER</title>
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:title" content="플래너 전용">
+<meta property="og:description" content="▶︎ 플랫폼 요금 안내">
+<meta property="og:image" content="https://cdn.imweb.me/upload/S20221017478de857c3379/296139b613b63.png">
+<meta property="og:url" content="https://calc.makesbetter.co.kr/platform/">
+<meta name="theme-color" content="#1B6B63">
+<link rel="icon" href="/studio/icon-32.png">
+<style>
+html,body{margin:0;background:#F4F6F5}
+body{min-height:100vh;padding:20px 12px 40px;box-sizing:border-box;-webkit-text-size-adjust:100%}
+@media (min-width:700px){body{padding:48px 16px 64px}}
+#mb-platform-root { max-width: 480px !important; width: 100% !important; margin: 0 auto; word-break: keep-all; overflow-wrap: break-word; font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif; color: #1a1a1a; }
+  #mb-platform-root, #mb-platform-root * { box-sizing: border-box !important; }
+  #mb-platform-root .mbp-card { background: #fff; border-radius: 20px; padding: 30px 24px 26px; box-shadow: 0 4px 26px rgba(0,0,0,0.07); min-height: 480px; display: flex; flex-direction: column; }
+  #mb-platform-root .mbp-topbar { display:flex; justify-content: space-between; align-items:center; margin-bottom: 18px; }
+  #mb-platform-root .mbp-brand { font-weight: 800; font-size: 15px; color: #1B6B63; letter-spacing: -0.2px; }
+  #mb-platform-root .mbp-tag { font-size: 11px; font-weight: 700; color: #999; letter-spacing: 0.4px; }
+  #mb-platform-root .mbp-progress { display: flex; gap: 4px; margin-bottom: 22px; }
+  #mb-platform-root .mbp-bar { flex: 1; height: 3.5px; border-radius: 2px; background: #eee; }
+  #mb-platform-root .mbp-bar.on { background: #1B6B63; }
+  #mb-platform-root .mbp-num { font-size: 46px; font-weight: 800; color: #d8e6e3; line-height: 1; margin-bottom: 6px; }
+  #mb-platform-root .mbp-label { font-size: 12px; font-weight: 800; color: #1B6B63; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 10px; }
+  #mb-platform-root .mbp-headline { font-size: 20px; font-weight: 800; color: #111; line-height: 1.45; margin-bottom: 14px; }
+  #mb-platform-root .mbp-desc { font-size: 14px; color: #555; line-height: 1.7; margin-bottom: 18px; }
+  #mb-platform-root .mbp-bullets { flex: 1; }
+  #mb-platform-root .mbp-bullet { display:flex; gap: 10px; padding: 11px 0; border-bottom: 1px solid #f2f2f2; font-size: 14px; color: #333; line-height: 1.55; }
+  #mb-platform-root .mbp-bullet:last-child { border-bottom: none; }
+  #mb-platform-root .mbp-bullet .dot { flex-shrink:0; width: 6px; height: 6px; border-radius: 50%; background: #1B6B63; margin-top: 8px; }
+  #mb-platform-root .mbp-bullet b { color: #111; }
+  #mb-platform-root .mbp-warn { display:flex; gap: 9px; background: #fff8ea; border: 1px solid #f0deac; border-radius: 12px; padding: 13px 14px; margin-bottom: 6px; font-size: 12.5px; color: #7a5c00; line-height: 1.6; }
+  #mb-platform-root .mbp-plan { border: 1.5px solid #eee; border-radius: 14px; padding: 18px 16px; margin-bottom: 14px; }
+  #mb-platform-root .mbp-plan.premium { border-color: #1B6B63; background: #f6faf9; }
+  #mb-platform-root .mbp-plan-name { font-size: 13px; font-weight: 800; color: #999; letter-spacing: 0.5px; text-transform: uppercase; }
+  #mb-platform-root .mbp-plan.premium .mbp-plan-name { color: #1B6B63; }
+  #mb-platform-root .mbp-plan-price { font-size: 24px; font-weight: 800; color: #111; margin: 4px 0 10px; }
+  #mb-platform-root .mbp-plan-price small { font-size: 13px; font-weight: 600; color: #888; }
+  #mb-platform-root .mbp-plan ul { margin: 0; padding: 0; list-style: none; }
+  #mb-platform-root .mbp-plan li { font-size: 13px; color: #444; padding: 4px 0; line-height: 1.55; }
+  #mb-platform-root .mbp-item { margin-bottom: 14px; }
+  #mb-platform-root .mbp-item-title { font-size: 14.5px; font-weight: 800; color: #111; margin-bottom: 3px; }
+  #mb-platform-root .mbp-item-price { font-size: 13px; font-weight: 700; color: #1B6B63; margin-bottom: 3px; }
+  #mb-platform-root .mbp-item-note { font-size: 12.5px; color: #888; line-height: 1.6; }
+  #mb-platform-root .mbp-btn-row { display: flex; gap: 10px; margin-top: 18px; }
+  #mb-platform-root .mbp-btn { flex: 1; padding: 15px; border-radius: 12px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; }
+  #mb-platform-root .mbp-btn.primary { background: #1B6B63; color: #fff; }
+  #mb-platform-root .mbp-btn.ghost { background: #f2f2f2; color: #555; flex: 0 0 84px; }
+  #mb-platform-root .mbp-final { text-align: center; padding-top: 10px; }
+  #mb-platform-root .mbp-final .mbp-check { margin-bottom: 16px; }
+  #mb-platform-root .mbp-final-sub { font-size: 14px; color: #666; line-height: 1.75; margin: 10px 0 20px; }
+  #mb-platform-root .mbp-contact { background: #f6faf9; border-radius: 12px; padding: 16px; font-size: 13.5px; color: #444; line-height: 1.8; }
+  #mb-platform-root .mbp-contact a { color: #1B6B63; font-weight: 700; text-decoration: none; white-space: nowrap; font-size: clamp(10.5px, 3.6vw, 13.5px); display: inline-block; }
+  #mb-platform-root .mbp-guide-box { background: linear-gradient(180deg,#153f3a,#12433d); border-radius: 14px; padding: 22px 18px 20px; margin: 18px 0 0; text-align: left; }
+  #mb-platform-root .mbp-guide-title { font-size: 14.5px; font-weight: 800; color:#fff; text-align:center; margin-bottom: 6px; }
+  #mb-platform-root .mbp-guide-desc { font-size: 11.5px; color: #a9c9c3; text-align:center; line-height:1.7; margin-bottom: 18px; }
+  #mb-platform-root .mbp-guide-sec { margin-bottom: 16px; }
+  #mb-platform-root .mbp-guide-sec:last-child { margin-bottom: 0; }
+  #mb-platform-root .mbp-guide-tag { display:inline-block; background:#c99a3f; color:#12433d; font-size: 10px; font-weight: 800; padding: 3px 9px; border-radius: 6px; margin-bottom: 8px; }
+  #mb-platform-root .mbp-account-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 11px 13px; margin-top: 6px; }
+  #mb-platform-root .mbp-account-card .name { font-size: 11.5px; color:#a9c9c3; }
+  #mb-platform-root .mbp-account-card .num { font-size: 14px; font-weight: 800; color:#f0d69a; margin-top: 8px; letter-spacing: 0.6px; word-break: keep-all; overflow-wrap: normal; white-space: normal; }
+  #mb-platform-root .mbp-guide-sec.mbp-anim { opacity: 0; transform: translateY(14px); transition: opacity .9s ease, transform .9s ease; }
+  #mb-platform-root .mbp-guide-sec.mbp-anim.mbp-in { opacity: 1; transform: translateY(0); }
+  #mb-platform-root .mbp-fee-row { display:flex; justify-content:space-between; align-items:baseline; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  #mb-platform-root .mbp-fee-row:last-of-type { border-bottom:none; }
+  #mb-platform-root .mbp-fee-row .flabel { font-size: 12px; color: #dcece8; }
+  #mb-platform-root .mbp-fee-row .fprice { font-size: 14px; font-weight: 800; color: #f0d69a; }
+  #mb-platform-root .mbp-fee-note { font-size: 10.5px; color: #8fb5af; line-height: 1.6; margin-top: 8px; }
+  #mb-platform-root .mbp-guide-line { font-size: 12px; color: #dcece8; line-height: 1.75; }
+  #mb-platform-root .mbp-guide-line b { color: #fff; }
+  #mb-platform-root .mbp-thanks { text-align:center; font-size: 12px; color:#a9c9c3; margin-top: 18px; letter-spacing: 1px; }
+  #mb-platform-root .mbp-brandfoot { background: #0d302b; border-radius: 14px; padding: 22px 16px; margin-top: 18px; text-align: center; }
+  #mb-platform-root .mbp-slogan-1 { font-size: 15.5px; font-weight: 800; letter-spacing: 1px; color: #f0d69a; line-height: 1; }
+  #mb-platform-root .mbp-slogan-2 { font-size: 12px; font-weight: 600; letter-spacing: .4px; color: #f0d69a; line-height: 1; margin-top: 6px; }
+  #mb-platform-root .mbp-slogan-kr { font-size: 10.5px; color: #8fb5af; margin-top: 10px; letter-spacing: 1px; }
+  @media (max-width: 480px) {
+    #mb-platform-root .mbp-card { padding: 26px 18px 22px; min-height: 440px; }
+    #mb-platform-root .mbp-headline { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<!-- 원본: 아임웹 mbkr.my/platform 코드 위젯 (모바일 전용 섹션이라 PC에서 안 보이던 문제로 2026-11-18 calc로 이전) -->
+<div id="mb-platform-root"></div>
+<script>
+(function(){
+  function initPlatformWidget(root){
+    if (root.__mbPlatformInit) return;
+    root.__mbPlatformInit = true;
+
+    var CONFIG = {
+      brandName: "MakesBetter",
+      contactEmail: "makesbetter.direction@gmail.com"
+    };
+
+    var PROCESS = [
+      {
+        num: "1", label: "PRE MEETING",
+        headline: "고객을 만나기도 전에,\n이미 상담 준비가 끝나게 됩니다.",
+        bullets: [
+          "재정 메타인지 체크로 고객의 현재 상태를 사전에 파악",
+          "개인 홈페이지 링크로 사전 진단·일정 확정까지 자동 진행"
+        ]
+      },
+      {
+        num: "2", label: "1ST COACHING",
+        headline: "오프라인에서 만나는 순간,\n이미 '다른 전문가'가 되어 있습니다.",
+        bullets: [
+          "<b>BETTER.ONE PT · 통화분산 PT</b> 등 대외비 공통 자료로 상담 진행",
+          "소득·지출·저축, <b>3가지 기준</b>에 대한 고객의 동의를 이끌어냄"
+        ]
+      },
+      {
+        num: "3", label: "2ND & 3RD COACHING",
+        headline: "보장성 상품 너머,\n진짜 자산관리로 넘어갑니다.",
+        bullets: [
+          "<b>Better.Two / Better.Three PT</b> 자료로 심화 상담 진행",
+          "고객 맞춤 <b>포트폴리오</b>를 실제로 완성해 전달"
+        ]
+      },
+      {
+        num: "4", label: "6 MONTH FEEDBACK",
+        headline: "6개월 피드백 미팅이\n코칭의 백미입니다.",
+        bullets: [
+          "포트폴리오 수익률 점검 및 월배당 포트폴리오 관리",
+          "소개 & 업셀링 전략 공유로 <b>시장을 확대</b>"
+        ]
+      }
+    ];
+
+    var STEPS = ["intro","p0","p1","p2","p3","pricing","options","addon","benefits","terms","obligations","final"];
+    var state = { idx: 0 };
+
+    function headerHtml(label){
+      return '<div class="mbp-topbar"><div class="mbp-brand">'+CONFIG.brandName+'</div><div class="mbp-tag">'+label+'</div></div>';
+    }
+
+    function progressHtml(){
+      var total = STEPS.length - 1; // exclude intro from bar count basis, but simplest: show across all steps
+      var bars = "";
+      for (var i=1;i<STEPS.length;i++){
+        bars += '<div class="mbp-bar'+(i<=state.idx ? " on" : "")+'"></div>';
+      }
+      return '<div class="mbp-progress">'+bars+'</div>';
+    }
+
+    function navRow(showPrev){
+      return '<div class="mbp-btn-row">'+
+        (showPrev ? '<button class="mbp-btn ghost" id="mbp-prev">이전</button>' : '') +
+        '<button class="mbp-btn primary" id="mbp-next">다음</button>'+
+      '</div>';
+    }
+
+    function renderIntro(){
+      root.innerHTML = '<div class="mbp-card">'+
+        headerHtml("PLATFORM GUIDE")+
+        '<div class="mbp-label">FOR PLANNER</div>'+
+        '<div class="mbp-headline">자산관리를 위한\n업무 지원 플랫폼</div>'+
+        '<div class="mbp-desc">MakesBetter 플랫폼은 상담자료, 포트폴리오 구성 자료, 교육 콘텐츠, 리포트 등 실무에 바로 쓸 수 있는 도구를 제공해서, 플래너님이 고객 상담과 자산관리 업무에만 집중하실 수 있도록 돕습니다.</div>'+
+        '<div class="mbp-warn">⚠ 본 플랫폼은 업무지원 도구이며, 투자자문·일임이 아니고 성과를 보장하지 않습니다.</div>'+
+        '<div style="flex:1;"></div>'+
+        navRow(false)+
+      '</div>';
+      bind();
+    }
+
+    function renderProcess(i){
+      var p = PROCESS[i];
+      root.innerHTML = '<div class="mbp-card">'+
+        headerHtml("COACHING PROCESS")+
+        progressHtml()+
+        '<div class="mbp-num">'+p.num+'</div>'+
+        '<div class="mbp-label">'+p.label+'</div>'+
+        '<div class="mbp-headline">'+p.headline.replace(/\n/g,"<br>")+'</div>'+
+        '<div class="mbp-bullets">'+
+          p.bullets.map(function(b){ return '<div class="mbp-bullet"><div class="dot"></div><div>'+b+'</div></div>'; }).join("")+
+        '</div>'+
+        navRow(true)+
+      '</div>';
+      bind();
+    }
+
+    function renderPricing(){
+      root.innerHTML = '<div class="mbp-card">'+
+        headerHtml("이용 요금")+
+        progressHtml()+
+        '<div class="mbp-label">요금제</div>'+
+        '<div class="mbp-headline">플랜을 선택하세요</div>'+
+        '<div class="mbp-plan" style="border:2px solid #1B6B63;background:#f3f8f7;box-shadow:0 8px 22px rgba(27,107,99,.16);">'+
+          '<div class="mbp-plan-name">Standard <span style="color:#1B6B63;font-weight:700;">(비기너 추천)</span></div>'+
+          '<div class="mbp-plan-price">100,000원<small> /월 (VAT 별도)</small></div>'+
+          '<ul>'+
+            '<li>핵심 기능 제공</li>'+
+            '<li>코어 PT 자료 제공</li>'+
+            '<li>연 3회 무료 코칭 제공</li>'+
+            '<li>1&6 라운지 월 2회 무료 사용 (주차 3시간, 음료 제공)</li>'+
+            '<li>고객 등록 최대 50명</li>'+
+            '<li>50명 고객 플랫폼 무료 이용</li>'+
+          '</ul>'+
+        '</div>'+
+        '<div class="mbp-plan premium" style="border:1px solid #e5e5e5;background:#fff;box-shadow:none;">'+
+          '<div class="mbp-plan-name">Premium</div>'+
+          '<div class="mbp-plan-price">100,000원<small> /월 (VAT 별도)</small></div>'+
+          '<div style="position:relative;"><ul style="filter:blur(5px);opacity:.5;user-select:none;pointer-events:none;">'+
+            '<li>전체 프로그램 제공</li>'+
+            '<li>코칭·PT자료 무제한 제공</li>'+
+            '<li>1&6 라운지 무료 이용 (월 4회, 주차 3시간+음료)</li>'+
+            '<li>고객 수 제한 없음</li>'+
+            '<li>교육비 · 특강 참가비 전액 면제</li>'+
+          '</ul><div style="position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;"><span style="background:#12433d;color:#fff;font-size:15px;font-weight:800;letter-spacing:-.2px;padding:11px 20px;border-radius:999px;">1&amp;6 디렉터 전용</span></div></div>'+
+        '</div>'+
+        navRow(true)+
+      '</div>';
+      bind();
+    }
+
+    function renderOptions(){
+      root.innerHTML = '<div class="mbp-card">'+
+        headerHtml("선택 옵션")+
+        progressHtml()+
+        '<div class="mbp-label">선택 옵션</div>'+
+        '<div class="mbp-headline">필요한 만큼만\n추가하세요</div>'+
+        '<div class="mbp-bullets">'+
+          '<div class="mbp-item"><div class="mbp-item-title">개인 상담 링크 제공</div><div class="mbp-item-price">연 1회 30,000원</div></div>'+
+          '<div class="mbp-item"><div class="mbp-item-title">MakesBetter 명함</div><div class="mbp-item-price">60,000원</div><div class="mbp-item-note">외부 제작업체를 통해 제작</div></div>'+
+          '<div class="mbp-item"><div class="mbp-item-title">월 1회 특강 참여</div><div class="mbp-item-price">회당 50,000원</div><div class="mbp-item-note">자료 업데이트 · 금융 지식 교육 · 세일즈 TOOL 공유 (운영 일정에 따라 진행)</div></div>'+
+        '</div>'+
+        navRow(true)+
+      '</div>';
+      bind();
+    }
+
+    function renderAddon(){
+      root.innerHTML = '<div class="mbp-card">'+
+        headerHtml("별도 제공 서비스")+
+        progressHtml()+
+        '<div class="mbp-label">1:1 코칭</div>'+
+        '<div class="mbp-headline">더 깊은 도움이\n필요할 때</div>'+
+        '<div class="mbp-bullets">'+
+          '<div class="mbp-item"><div class="mbp-item-title">현장 동반 서비스</div><div class="mbp-item-price">100,000원 / 회</div><div class="mbp-item-note">계약 성사 시에도 쉐어링·수수료를 요구하지 않습니다</div></div>'+
+          '<div class="mbp-item"><div class="mbp-item-title">포트폴리오 코칭</div><div class="mbp-item-price">50,000원 / 회</div><div class="mbp-item-note">Standard 이상 이용자는 월 1회 무료</div></div>'+
+          '<div class="mbp-item"><div class="mbp-item-title">업무 프로세스 점검 · 개선 코칭</div><div class="mbp-item-price">월 30,000원</div><div class="mbp-item-note">Standard 이상 이용자는 연 3회 무료</div></div>'+
+        '</div>'+
+        navRow(true)+
+      '</div>';
+      bind();
+    }
+
+    function renderBenefits(){
+      root.innerHTML = '<div class="mbp-card">'+
+        headerHtml("혜택")+
+        progressHtml()+
+        '<div class="mbp-label">고객 경험 서비스 · 구독료 지원</div>'+
+        '<div class="mbp-headline">이용자에게는\n더 많은 혜택이</div>'+
+        '<div class="mbp-bullets">'+
+          '<div class="mbp-bullet"><div class="dot"></div><div><b>내 고객 금융 서비스 제공</b> — NEWS 4U 뉴스레터, 베러 카카오 플랫폼 서비스 100%, 6개월 피드백, 각종 이벤트 참여</div></div>'+
+          '<div class="mbp-bullet"><div class="dot"></div><div>자격을 갖춘 플래너를 추천해 등록시키면 <b>1인당 2개월 이용료 무료</b> (2026년 기준, 변경될 수 있음)</div></div>'+
+          '<div class="mbp-bullet"><div class="dot"></div><div>고객 경험 서비스는 <b>2027년 1분기부터</b> 월 2,900~3,900원으로 유료 전환될 예정이에요</div></div>'+
+        '</div>'+
+        navRow(true)+
+      '</div>';
+      bind();
+    }
+
+    function renderTerms(){
+      root.innerHTML = '<div class="mbp-card">'+
+        headerHtml("꼭 확인하세요")+
+        progressHtml()+
+        '<div class="mbp-label">이용 자격 · 결제</div>'+
+        '<div class="mbp-headline">시작 전 꼭\n확인해주세요</div>'+
+        '<div class="mbp-bullets">'+
+          '<div class="mbp-bullet"><div class="dot"></div><div><b>경력 플래너 요건</b> — 24개월 이상 세일즈 & 변액보험 관련 자격증 보유, 25회차 유지율 85% 이상</div></div>'+
+          '<div class="mbp-bullet"><div class="dot"></div><div>최초 이용자는 <b>3개월 이용료 선납</b> 후 이용 가능하며, 이후 자동이체로 월 단위 결제됩니다</div></div>'+
+          '<div class="mbp-bullet"><div class="dot"></div><div>계약은 <b>월 단위 자동 갱신</b>되며, 이미 납부한 이용료는 환불되지 않습니다</div></div>'+
+          '<div class="mbp-bullet"><div class="dot"></div><div>신입 플래너이거나 역량이 기준에 못 미치는 경우 이용이 <b>제한될 수 있어요</b></div></div>'+
+          '<div class="mbp-bullet"><div class="dot"></div><div>자료 무단 유출, 브랜드 훼손, 법령 위반 등이 확인되면 <b>사전 통보 없이</b> 이용이 제한·해지될 수 있습니다</div></div>'+
+        '</div>'+
+        navRow(true)+
+      '</div>';
+      bind();
+    }
+
+    function renderObligations(){
+      root.innerHTML = '<div class="mbp-card">'+
+        headerHtml("함께 지켜요")+
+        progressHtml()+
+        '<div class="mbp-label">플래너의 의무 · 보안</div>'+
+        '<div class="mbp-headline">함께 지켜야 할\n약속들</div>'+
+        '<div class="mbp-bullets">'+
+          '<div class="mbp-bullet"><div class="dot"></div><div>플랫폼은 <b>고객 상담·자산관리 목적</b>으로만 사용해주세요</div></div>'+
+          '<div class="mbp-bullet"><div class="dot"></div><div>제공되는 자료·콘텐츠·시스템은 회사 자산이며, <b>사전 서면 동의 없이 복제·배포·상업적 이용은 불가</b>해요</div></div>'+
+          '<div class="mbp-bullet"><div class="dot"></div><div>영업상 정보는 계약 종료 후에도 제3자에게 <b>누설할 수 없어요</b> (위반 시 손해배상 청구 및 즉시 해지 사유)</div></div>'+
+          '<div class="mbp-bullet"><div class="dot"></div><div>점검·장애·천재지변 등으로 서비스가 <b>일시 중단</b>될 수 있어요 (긴급 장애는 사후 공지)</div></div>'+
+        '</div>'+
+        navRow(true)+
+      '</div>';
+      bind();
+    }
+
+    function renderFinal(){
+      root.innerHTML = '<div class="mbp-card">'+
+        headerHtml("PLATFORM GUIDE")+
+        '<div class="mbp-final">'+
+          '<div class="mbp-check">'+svgCheck()+'</div>'+
+          '<div class="mbp-headline" style="margin-bottom:0;">안내가 끝났습니다</div>'+
+          '<div class="mbp-final-sub">정식 이용은 계약서에 서명하는 것으로<br>진행됩니다.</div>'+
+          '<div class="mbp-contact">궁금한 점이 있으시면 담당자에게 문의해주세요.<br><a href="mailto:'+CONFIG.contactEmail+'">'+CONFIG.contactEmail+'</a></div>'+
+          '<div class="mbp-guide-box">'+
+            '<div class="mbp-guide-title">플랫폼 이용 안내</div>'+
+            '<div class="mbp-guide-desc">정식 플랫폼 이용은 계약서 서명 및<br>이용요금 입금이 확인된 후 시작됩니다.</div>'+
+            '<div class="mbp-guide-sec mbp-anim" id="mbp-acct-sec">'+
+              '<span class="mbp-guide-tag">입금 계좌</span>'+
+              '<div class="mbp-account-card"><div class="name">예금주 : (주)메이크스베러</div><div class="num">하나은행 105-910024-19104</div></div>'+
+            '</div>'+
+            '<div class="mbp-guide-sec mbp-anim" id="mbp-fee-sec">'+
+              '<span class="mbp-guide-tag">이용 요금</span>'+
+              '<div class="mbp-fee-row"><span class="flabel">1개월 이용</span><span class="fprice">₩100,000</span></div>'+
+              '<div class="mbp-fee-row"><span class="flabel">3개월 이용 + 1개월 무료</span><span class="fprice">₩300,000</span></div>'+
+              '<div class="mbp-fee-note">모든 요금은 부가세 별도이며, 이용요금은 <b style="color:#f0d69a">최대 3개월 단위(분기별)</b>로 납부하실 수 있습니다.</div>'+
+            '</div>'+
+            '<div class="mbp-guide-sec">'+
+              '<span class="mbp-guide-tag">특별 혜택</span>'+
+              '<div class="mbp-guide-line">플랫폼을 1인 추천해 주시면, 추천인에게<br><b>플랫폼 이용기간 2개월을 무료로 제공</b>합니다.</div>'+
+            '</div>'+
+            '<div class="mbp-thanks">감사합니다.</div>'+
+          '</div>'+
+          '<div class="mbp-brandfoot"><div class="mbp-slogan-1">NO MAGIC</div><div class="mbp-slogan-2">just common sense</div><div class="mbp-slogan-kr">MAKESBETTER</div></div>'+
+        '</div>'+
+        '<div class="mbp-btn-row"><button class="mbp-btn ghost" id="mbp-prev">이전</button><button class="mbp-btn primary" id="mbp-restart">처음부터 다시 보기</button></div>'+
+      '</div>';
+      var prevBtn = root.querySelector("#mbp-prev");
+      if (prevBtn) prevBtn.onclick = function(){ state.idx -= 1; render(); };
+      root.querySelector("#mbp-restart").onclick = function(){ state.idx = 0; render(); };
+
+      // 계좌 먼저, 그 다음 이용 요금 순서로 나타나는 연출
+      var acctSec = root.querySelector('#mbp-acct-sec');
+      var feeSec = root.querySelector('#mbp-fee-sec');
+      setTimeout(function(){ if (acctSec) acctSec.classList.add('mbp-in'); }, 150);
+      setTimeout(function(){ if (feeSec) feeSec.classList.add('mbp-in'); }, 750);
+    }
+
+    function svgCheck(){
+      return '<svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+        '<circle cx="12" cy="12" r="11" fill="#1B6B63"/>'+
+        '<path d="M7 12.5L10.3 15.8L17 8.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'+
+      '</svg>';
+    }
+
+    function bind(){
+      var nextBtn = root.querySelector("#mbp-next");
+      var prevBtn = root.querySelector("#mbp-prev");
+      if (nextBtn) nextBtn.onclick = function(){ state.idx += 1; render(); };
+      if (prevBtn) prevBtn.onclick = function(){ state.idx -= 1; render(); };
+    }
+
+    function render(){
+      var step = STEPS[state.idx];
+      if (step === "intro") renderIntro();
+      else if (step === "p0") renderProcess(0);
+      else if (step === "p1") renderProcess(1);
+      else if (step === "p2") renderProcess(2);
+      else if (step === "p3") renderProcess(3);
+      else if (step === "pricing") renderPricing();
+      else if (step === "options") renderOptions();
+      else if (step === "addon") renderAddon();
+      else if (step === "benefits") renderBenefits();
+      else if (step === "terms") renderTerms();
+      else if (step === "obligations") renderObligations();
+      else if (step === "final") renderFinal();
+    }
+
+    render();
+  }
+
+  document.querySelectorAll('[id="mb-platform-root"]').forEach(initPlatformWidget);
+})();
+
+</script>
+</body>
+</html>

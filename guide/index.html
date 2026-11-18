@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>컨설팅 프로세스 | MAKESBETTER</title>
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:title" content="플래너 전용">
+<meta property="og:description" content="▶︎ 컨설팅 과정 안내">
+<meta property="og:image" content="https://cdn.imweb.me/upload/S20221017478de857c3379/296139b613b63.png">
+<meta property="og:url" content="https://calc.makesbetter.co.kr/guide/">
+<meta name="theme-color" content="#1B6B63">
+<link rel="icon" href="/studio/icon-32.png">
+<style>
+html,body{margin:0;background:#FFFFFF}
+body{min-height:100vh;padding:20px 12px 40px;box-sizing:border-box;-webkit-text-size-adjust:100%}
+@media (min-width:700px){body{padding:48px 16px 64px}}
+#mb-process-root, #mb-process-root * { box-sizing: border-box !important; }
+  #mb-process-root {
+    font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif;
+    max-width: 480px !important;
+    width: 100% !important;
+    margin: 0 auto;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  /* progress */
+  .mbpc-progress-wrap { display:flex; gap:6px; padding: 4px 4px 18px; }
+  .mbpc-progress-wrap i { flex:1; height:4px; border-radius:2px; background:#e3e0d6; display:block; transition: background .3s; }
+  .mbpc-progress-wrap i.on { background:#1B6B63; }
+
+  .mbpc-intro { text-align:center; padding: 8px 10px 22px; }
+  .mbpc-intro .eyebrow { font-size: 11.5px; font-weight: 800; color: #1B6B63; letter-spacing: 2px; margin-bottom: 8px; }
+  .mbpc-intro h1 { font-size: 21px; font-weight: 800; color: #12433d; line-height: 1.4; margin: 0 0 10px; }
+  .mbpc-intro p { font-size: 13px; color: #777; line-height: 1.7; margin: 0; }
+
+  .mbpc-section { margin-bottom: 22px; }
+  .mbpc-section.locked { display: none; }
+
+  .mbpc-wrap * { box-sizing: border-box; }
+  .mbpc-card { border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.07); }
+  .mbpc-banner { background: #12433d; color: #fff; text-align: center; padding: 14px 10px; }
+  .mbpc-banner .brand { font-weight: 800; font-size: 15px; letter-spacing: 2px; }
+  .mbpc-banner .sub { font-size: 9.5px; letter-spacing: 3px; color: #a9c9c3; margin-top: 3px; }
+  .mbpc-body { background: #f7f5ef; padding: 24px 20px 26px; }
+  .mbpc-stagehead { display:flex; align-items:center; gap: 12px; margin-bottom: 18px; }
+  .mbpc-num { width: 38px; height: 38px; border-radius: 50%; background: #12433d; color:#fff; font-weight:800; font-size:17px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .mbpc-title-en { font-size: 17px; font-weight: 800; color: #12433d; }
+  .mbpc-title-kr { font-size: 12.5px; color: #777; font-weight: 700; }
+
+  .mbpc-purpose { background: linear-gradient(180deg,#153f3a,#12433d); border-radius: 12px; padding: 20px 20px 22px; margin-bottom: 18px; text-align: center; opacity: 0; transform: translateY(16px); transition: opacity 1.8s ease, transform 1.8s ease; }
+  .mbpc-purpose.mbpc-in { opacity: 1; transform: translateY(0); }
+  .mbpc-purpose-label { font-size: 10px; font-weight: 800; color: #7fd9c9; letter-spacing: 2px; margin-bottom: 9px; }
+  .mbpc-purpose-text { font-size: 15.5px; font-weight: 800; color: #fff; line-height: 1.5; letter-spacing: -0.2px; word-break: keep-all; overflow-wrap: normal; white-space: normal; }
+  .mbpc-purpose-text .dim { display:block; font-size: 13.5px; font-weight: 700; color: #a9c9c3; margin-top: 5px; }
+  .mbpc-ch { opacity: 0; transition: opacity .54s ease; }
+  .mbpc-ch.mbpc-show { opacity: 1; }
+
+  .mbpc-step { background:#fff; border-radius: 12px; padding: 16px 17px; margin-bottom: 12px; }
+  .mbpc-step-head { display:flex; align-items:center; gap: 10px; margin-bottom: 6px; }
+  .mbpc-step-num { width: 24px; height: 24px; border-radius: 50%; background:#1B6B63; color:#fff; font-size: 12px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .mbpc-step-title { font-size: 14.5px; font-weight: 800; color: #1a1a1a; }
+  .mbpc-step-sub { font-size: 11.5px; font-weight: 700; color: #1B6B63; margin: 0 0 8px 34px; }
+  .mbpc-step-list { margin: 0 0 0 34px; padding: 0; list-style: none; }
+  .mbpc-step-list li { font-size: 12.5px; color: #555; line-height: 1.7; padding: 4px 0 4px 13px; position: relative; }
+  .mbpc-step-list li::before { content: "·"; position: absolute; left: 0; color: #1B6B63; font-weight:800; }
+  .mbpc-step-list b { color: #1a1a1a; }
+  .mbpc-li-label { display:block; font-weight:800; color:#1a1a1a; }
+  .mbpc-li-desc { display:block; color:#555; margin-top:2px; }
+
+  .mbpc-emo { border-radius: 12px; padding: 15px 16px; margin: 14px 0; }
+  .mbpc-emo-text .mbpc-ch { transition: opacity .25s ease; }
+  .mbpc-emo.cust { background: #eef5f3; }
+  .mbpc-emo.planner { background: #fbf3e6; }
+  .mbpc-emo-label { display:flex; align-items:center; gap: 7px; font-size: 12px; font-weight: 800; margin-bottom: 7px; }
+  .mbpc-emo.cust .mbpc-emo-label { color: #1B6B63; }
+  .mbpc-emo.planner .mbpc-emo-label { color: #a8781c; }
+  .mbpc-badge { width: 18px; height: 18px; border-radius: 5px; display:flex; align-items:center; justify-content:center; font-size: 10px; color:#fff; flex-shrink:0; }
+  .mbpc-emo.cust .mbpc-badge { background:#1B6B63; }
+  .mbpc-emo.planner .mbpc-badge { background:#c99a3f; }
+  .mbpc-emo-text { font-size: 12.5px; color: #444; line-height: 1.75; }
+  .mbpc-emo-text b { color: #1a1a1a; }
+
+  .mbpc-insight { background: #12433d; border-radius: 12px; padding: 18px 18px; margin-top: 4px; opacity: 0; transform: translateY(18px); transition: opacity 2s ease, transform 2s ease; }
+  .mbpc-insight.mbpc-in { opacity: 1; transform: translateY(0); }
+  .mbpc-insight-tag { display:inline-block; background: #c99a3f; color:#fff; font-size: 11px; font-weight: 800; padding: 3px 11px; border-radius: 6px; margin-bottom: 10px; }
+  .mbpc-insight-text { font-size: 12.5px; color: #dcece8; line-height: 1.85; }
+  .mbpc-insight-text p { margin: 0 0 10px; }
+  .mbpc-insight-text p:last-child { margin-bottom: 0; }
+  .mbpc-insight-text b { color: #fff; }
+
+  .mbpc-foot { background: #0d302b; color:#fff; text-align:center; padding: 18px 14px; }
+  .mbpc-foot .slogan-1 { font-size: 15.5px; font-weight: 800; letter-spacing: 1px; color: #f0d69a; line-height: 1.3; }
+  .mbpc-foot .slogan-2 { font-size: 12px; font-weight: 600; letter-spacing: .4px; color: #f0d69a; line-height: 1.3; margin-top: 2px; }
+  .mbpc-foot .slogan-kr { font-size: 10.5px; color: #8fb5af; margin-top: 8px; letter-spacing: 1px; }
+
+  .mbpc-nextbtn-wrap { text-align:center; margin-top: 16px; }
+  .mbpc-nextbtn {
+    display:inline-flex; align-items:center; gap:8px; background:#1B6B63; color:#fff; border:none;
+    padding: 13px 26px; border-radius: 999px; font-size: 13.5px; font-weight: 700; cursor:pointer;
+    font-family: inherit; box-shadow: 0 6px 16px rgba(27,107,99,0.25);
+  }
+  .mbpc-nextbtn:active { transform: translateY(1px); }
+  .mbpc-nextbtn .arrow { display:inline-block; animation: mbpc-bounce 1.4s infinite; }
+  @keyframes mbpc-bounce { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(4px);} }
+
+  .mbpc-manifesto { background: linear-gradient(160deg, #14433d, #081f1b); border-radius: 16px; padding: 46px 26px 42px; text-align: center; }
+  .mbpc-manifesto .mf-brand { font-size: 11px; font-weight: 800; letter-spacing: 4px; color: #5c8f89; margin-bottom: 36px; }
+  .mbpc-manifesto .mf-line { color: #cfe4e0; font-size: 14.5px; line-height: 1.9; margin: 0 0 26px; }
+  .mbpc-manifesto .mf-line b { color: #fff; font-weight: 800; }
+  .mbpc-manifesto .mf-strong { color: #fff; font-weight: 800; font-size: 16.5px; line-height: 1.7; margin: 0 0 26px; }
+  .mbpc-manifesto .mf-build { margin: 6px 0 26px; }
+  .mbpc-manifesto .mf-build div { font-weight: 800; }
+  .mbpc-manifesto .mf-build div:nth-child(1) { font-size: 14px; color: #a9c9c3; font-weight: 700; margin-bottom: 8px; }
+  .mbpc-manifesto .mf-build div:nth-child(2) { font-size: 16px; color: #dcece8; margin-bottom: 4px; }
+  .mbpc-manifesto .mf-build div:nth-child(3) { font-size: 18.5px; color: #eef5f3; margin-bottom: 4px; }
+  .mbpc-manifesto .mf-build div:nth-child(4) { font-size: 21px; color: #f0d69a; }
+  .mbpc-manifesto .mf-divider { width: 34px; height: 2px; background: #2e5a53; margin: 8px auto 26px; }
+  .mbpc-manifesto .mf-slogan-en { font-size: 14px; font-weight: 400; letter-spacing: 0.4px; color: #fff; line-height: 1.7; }
+
+  .mbpc-manifesto-cta-wrap { text-align: center; margin-top: 18px; }
+  .mbpc-manifesto-cta {
+    display:inline-flex; align-items:center; gap:8px; background:#1B6B63; color:#fff !important; text-decoration:none;
+    padding: 13px 26px; border-radius: 999px; font-size: 13.5px; font-weight: 700;
+    box-shadow: 0 6px 16px rgba(27,107,99,0.25);
+  }
+</style>
+</head>
+<body>
+<!-- 원본: 아임웹 mbkr.my/guide 코드 위젯 (모바일 전용 섹션이라 PC에서 안 보이던 문제로 2026-11-18 calc로 이전) -->
+<div id="mb-process-root"></div>
+<script>
+(function(){
+
+  function initProcess(root){
+    if (root.__mbpcInit) return;
+    root.__mbpcInit = true;
+
+    var TOTAL = 4;
+
+    function progressHtml(unlocked){
+      var bars = "";
+      for (var i=0;i<TOTAL;i++){ bars += '<i class="'+(i<unlocked?'on':'')+'"></i>'; }
+      return '<div class="mbpc-progress-wrap" id="mbpc-progress">'+bars+'</div>';
+    }
+
+    var STAGE1 = ''+
+      '<div class="mbpc-wrap mbpc-card">'+
+        '<div class="mbpc-banner"><div class="brand">MAKESBETTER</div><div class="sub">FINANCIAL CONSULTING</div></div>'+
+        '<div class="mbpc-body">'+
+          '<div class="mbpc-stagehead"><div class="mbpc-num">1</div><div><div class="mbpc-title-en">PRE MEETING</div><div class="mbpc-title-kr">사전 미팅</div></div></div>'+
+          '<div class="mbpc-purpose"><div class="mbpc-purpose-label">목적</div><div class="mbpc-purpose-text">당신이 몰랐던 자산관리의 가능성,<span class="dim">지금부터 경험하게 될 겁니다.</span></div></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">1</div><div class="mbpc-step-title">베러 코칭 등록</div></div><div class="mbpc-step-sub">▶ 사전 필수 단계</div><ul class="mbpc-step-list"><li>개인화된 <b>니즈체크 링크</b> 발송</li></ul></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">2</div><div class="mbpc-step-title">사전 진단 3종 발송</div></div><div class="mbpc-step-sub">▶ 1차 미팅을 위한 준비</div><ul class="mbpc-step-list">'+
+            '<li><span class="mbpc-li-label">Booking</span><span class="mbpc-li-desc">일정 확인 (고객이 선택)</span></li>'+
+            '<li><span class="mbpc-li-label">금융 IQ</span><span class="mbpc-li-desc">고객의 금융지식 사전 체크</span></li>'+
+            '<li><span class="mbpc-li-label">재정 메타인지 Part.1</span><span class="mbpc-li-desc">현금흐름 파악</span></li>'+
+          '</ul></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">3</div><div class="mbpc-step-title">사전 데이터 취합·분석</div></div><div class="mbpc-step-sub">▶ 재무목표·니즈·재정상황 파악</div><ul class="mbpc-step-list"><li><b>금융 IQ 레포트</b> 준비</li></ul></div>'+
+          '<div class="mbpc-emo cust"><div class="mbpc-emo-label"><span class="mbpc-badge">고</span>고객의 감정</div><div class="mbpc-emo-text">평소 관심 있던 돈 관련 상담에 대한 기대감을 가지고 있던 고객은, 메이크스베러만의 체계적인 프로세스를 접하며 <b>더 큰 신뢰와 집중</b>을 갖게 된다. 그 결과 1차 미팅을 갖기도 전부터 이미 <b>상당히 호의적인 태도</b>를 갖추게 된다.</div></div>'+
+          '<div class="mbpc-emo planner"><div class="mbpc-emo-label"><span class="mbpc-badge">플</span>플래너의 감정</div><div class="mbpc-emo-text">지금까지 경험해보지 못한 체계적인 준비 과정을 마주하며 <b>강한 놀라움</b>을 느낀다. 링크 하나만으로 첫 만남 전부터 이미 전문가로 인식된다는 사실에 확신이 선다. "이 프로세스라면 나도 완전히 다른 차원의 상담을 할 수 있겠다"는 <b>기대감</b>이 차오르며, 지금 당장 <b>이 플랫폼을 써야겠다는 마음</b>이 강하게 든다.</div></div>'+
+          '<div class="mbpc-insight"><span class="mbpc-insight-tag">\'현상유지 편향\'</span><div class="mbpc-insight-text">'+
+            '<p>만남을 갖기도 전에 고객에게 사전 정보를 요청하는 것이 낯설게 느껴질 수 있다. 이 저항감을 이겨내는 것이 <b>무엇보다 중요하다.</b></p>'+
+            '<p>같은 산행이라도 한라산을 오르는 것과 에베레스트를 오르는 것이 다르듯, 이 프로세스는 지난 20년간 계속 업그레이드되며 다듬어진 <b>가장 현실적이고 최적화된 방식입니다.</b></p>'+
+          '</div></div>'+
+        '</div>'+
+        '<div class="mbpc-foot"><div class="slogan-1">NO MAGIC</div><div class="slogan-2">just common sense</div><div class="slogan-kr">MAKESBETTER</div></div>'+
+      '</div>';
+
+    var STAGE2 = ''+
+      '<div class="mbpc-wrap mbpc-card">'+
+        '<div class="mbpc-banner"><div class="brand">MAKESBETTER</div><div class="sub">FINANCIAL CONSULTING</div></div>'+
+        '<div class="mbpc-body">'+
+          '<div class="mbpc-stagehead"><div class="mbpc-num">2</div><div><div class="mbpc-title-en">1ST COACHING</div><div class="mbpc-title-kr">1차 코칭 · 오피스</div></div></div>'+
+          '<div class="mbpc-purpose"><div class="mbpc-purpose-label">목적</div><div class="mbpc-purpose-text">막연했던 재정 상태가,<span class="dim">처음으로 선명한 숫자가 됩니다.</span></div></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">1</div><div class="mbpc-step-title">BETTER.ONE PT<br>통화분산 PT 진행</div></div><div class="mbpc-step-sub">▶ 상담의 시작</div><ul class="mbpc-step-list">'+
+            '<li><span class="mbpc-li-label">BETTER.ONE PT</span><span class="mbpc-li-desc">필수 금융 상식과 자산관리 핵심 원칙</span></li>'+
+            '<li><span class="mbpc-li-label">통화분산 PT</span><span class="mbpc-li-desc">현재 시장 환경·투자 트렌드</span></li>'+
+          '</ul></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">2</div><div class="mbpc-step-title">머니 4스퀘어 현금흐름 분석</div></div><div class="mbpc-step-sub">▶ 3가지 동의 이끌어내기</div><ul class="mbpc-step-list">'+
+            '<li><b>머니 4스퀘어</b>로 소득·지출·저축 현황 분석</li>'+
+            '<li>소득·지출·저축 기준에 대한 <b>고객의 동의(3동의)</b></li>'+
+          '</ul></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">3</div><div class="mbpc-step-title">포트폴리오 방향 설정 &amp; 후속자료 요청</div></div><div class="mbpc-step-sub">▶ 2차 코칭을 위한 준비</div><ul class="mbpc-step-list">'+
+            '<li><b>1:1 포트폴리오 방향</b> 설정</li>'+
+            '<li><b>원천징수영수증 · 최근 3개월 소득자료</b> 요청</li>'+
+          '</ul></div>'+
+          '<div class="mbpc-emo cust"><div class="mbpc-emo-label"><span class="mbpc-badge">고</span>고객의 감정</div><div class="mbpc-emo-text">처음으로 자신의 소득과 지출을 숫자로 마주하며 약간의 긴장을 느끼지만, 체계적인 툴(머니 4스퀘어)로 정리되는 과정을 보며 "이 사람은 다르다"는 <b>신뢰</b>가 쌓인다. 세 가지 기준에 직접 동의하면서 스스로도 자신의 재정 계획에 <b>주체적으로 참여하고 있다는 확신</b>을 갖게 된다.</div></div>'+
+          '<div class="mbpc-emo planner"><div class="mbpc-emo-label"><span class="mbpc-badge">플</span>플래너의 감정</div><div class="mbpc-emo-text">BETTER.ONE PT와 통화분산 PT라는 검증된 툴로 상담을 이끌며, 이전처럼 상품 설명에 급급하지 않고 <b>전문 컨설턴트로서 대화를 주도하는 자신</b>을 발견한다. 고객이 스스로 숫자에 동의하는 순간을 마주하며, "이게 진짜 재무 상담이구나"라는 <b>확신</b>이 든다.</div></div>'+
+          '<div class="mbpc-insight"><span class="mbpc-insight-tag">\'일관성 원리\'</span><div class="mbpc-insight-text">'+
+            '<p>사람은 스스로 동의한 내용에 대해 훨씬 더 강한 책임감을 느낀다. 소득·지출·저축, 세 가지에 대한 <b>직접적인 동의</b>를 받는 것이 이 단계의 핵심이다.</p>'+
+            '<p>말로 설명하는 것과 고객이 직접 "동의"하는 것은 전혀 다른 결과를 만든다. 이 작은 습관이 이후 포트폴리오 실행률을 <b>가장 크게 좌우한다.</b></p>'+
+          '</div></div>'+
+        '</div>'+
+        '<div class="mbpc-foot"><div class="slogan-1">NO MAGIC</div><div class="slogan-2">just common sense</div><div class="slogan-kr">MAKESBETTER</div></div>'+
+      '</div>';
+
+    var STAGE3 = ''+
+      '<div class="mbpc-wrap mbpc-card">'+
+        '<div class="mbpc-banner"><div class="brand">MAKESBETTER</div><div class="sub">FINANCIAL CONSULTING</div></div>'+
+        '<div class="mbpc-body">'+
+          '<div class="mbpc-stagehead"><div class="mbpc-num">3</div><div><div class="mbpc-title-en">2ND &amp; 3RD COACHING</div><div class="mbpc-title-kr">2차 · 3차 코칭 · 오피스</div></div></div>'+
+          '<div class="mbpc-purpose"><div class="mbpc-purpose-label">목적</div><div class="mbpc-purpose-text">막연했던 계획이,<span class="dim">이제, 손에 쥘 수 있는 포트폴리오가 됩니다.</span></div></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">1</div><div class="mbpc-step-title">소득 기준 최종 합의</div></div><div class="mbpc-step-sub">▶ 2차 코칭의 마무리</div><ul class="mbpc-step-list"><li>1차에서 합의한 소득 기준을 <b>최종 확정</b></li></ul></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">2</div><div class="mbpc-step-title">Better.Two PT<br>Better.Three PT 진행</div></div><div class="mbpc-step-sub">▶ 전략 설계의 시작</div><ul class="mbpc-step-list">'+
+            '<li><span class="mbpc-li-label">Better.Two PT</span><span class="mbpc-li-desc">현금흐름 개선·강화</span></li>'+
+            '<li><span class="mbpc-li-label">Better.Three PT</span><span class="mbpc-li-desc">자산배분·절세전략·월배당</span></li>'+
+          '</ul></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">3</div><div class="mbpc-step-title">맞춤 포트폴리오 설계</div></div><div class="mbpc-step-sub">▶ 실행 가능한 전략으로 구체화</div><ul class="mbpc-step-list">'+
+            '<li>개인 재무구조에 맞춘 <b>자산 배분</b></li>'+
+            '<li><span class="mbpc-li-label">절세 전략</span><span class="mbpc-li-desc">세금을 자산으로</span></li>'+
+            '<li><b>월배당 포트폴리오</b> 구성 — 제2의 월급</li>'+
+          '</ul></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">4</div><div class="mbpc-step-title">최종 포트폴리오 확정 및 실행</div></div><div class="mbpc-step-sub">▶ 총 소요 약 1개월</div><ul class="mbpc-step-list"><li>합의된 전략을 바탕으로 <b>포트폴리오 확정 및 실행</b></li></ul></div>'+
+          '<div class="mbpc-emo cust"><div class="mbpc-emo-label"><span class="mbpc-badge">고</span>고객의 감정</div><div class="mbpc-emo-text">1차에서 쌓인 신뢰를 바탕으로 "그래서 나는 뭘 해야 하지"라는 기대감으로 시작한다. 절세·월배당 같은 구체적인 전략을 보며 <b>"이런 것도 가능하구나"</b>라는 놀라움을 느끼고, 최종 포트폴리오를 손에 쥐는 순간 <b>"드디어 내 계획이 생겼다"</b>는 확신과 안도감으로 마무리된다.</div></div>'+
+          '<div class="mbpc-emo planner"><div class="mbpc-emo-label"><span class="mbpc-badge">플</span>플래너의 감정</div><div class="mbpc-emo-text">실제 포트폴리오를 완성해 고객 손에 쥐어주는 순간, <b>"내가 만든 결과물이 이 사람의 인생을 바꾸는구나"</b>라는 보람을 느낀다. 보장성 상품 하나 팔고 끝나던 예전과는 다른 무게감을 실감하며, <b>"나는 이제 설계사가 아니라 자산관리 전문가"</b>라는 정체성이 자리잡는다.</div></div>'+
+          '<div class="mbpc-insight"><span class="mbpc-insight-tag">\'소유 효과\'</span><div class="mbpc-insight-text">'+
+            '<p>사람은 자신이 소유한 것에 더 큰 가치를 부여한다. 막연한 조언이 아니라 <b>직접 손에 쥘 수 있는 포트폴리오</b>를 만들어주는 것이 이 단계의 핵심이다.</p>'+
+            '<p>고객이 "이건 내 계획이다"라고 느끼는 순간, 실행 의지와 지속 가능성이 <b>가장 크게 높아진다.</b></p>'+
+          '</div></div>'+
+        '</div>'+
+        '<div class="mbpc-foot"><div class="slogan-1">NO MAGIC</div><div class="slogan-2">just common sense</div><div class="slogan-kr">MAKESBETTER</div></div>'+
+      '</div>';
+
+    var STAGE4 = ''+
+      '<div class="mbpc-wrap mbpc-card">'+
+        '<div class="mbpc-banner"><div class="brand">MAKESBETTER</div><div class="sub">FINANCIAL CONSULTING</div></div>'+
+        '<div class="mbpc-body">'+
+          '<div class="mbpc-stagehead"><div class="mbpc-num">4</div><div><div class="mbpc-title-en">6 MONTH FEEDBACK</div><div class="mbpc-title-kr">6개월 피드백</div></div></div>'+
+          '<div class="mbpc-purpose"><div class="mbpc-purpose-label">목적</div><div class="mbpc-purpose-text">한 번의 상담이 아니라,<span class="dim">평생 관리받는 관계가 시작됩니다.</span></div></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">1</div><div class="mbpc-step-title">포트폴리오 &amp; 월배당 점검</div></div><div class="mbpc-step-sub">▶ 성과 확인</div><ul class="mbpc-step-list">'+
+            '<li><b>포트폴리오 수익률</b> 점검</li>'+
+            '<li><b>월배당 리포트</b> 및 배당 일정 관리</li>'+
+          '</ul></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">2</div><div class="mbpc-step-title">개인 재정 이슈 점검</div></div><div class="mbpc-step-sub">▶ 삶의 변화까지 함께</div><ul class="mbpc-step-list"><li>고객의 <b>개인적 재정 이슈</b> 점검</li></ul></div>'+
+          '<div class="mbpc-step"><div class="mbpc-step-head"><div class="mbpc-step-num">3</div><div class="mbpc-step-title">소개 &amp; 다음 사이클로 확장</div></div><div class="mbpc-step-sub">▶ 신뢰의 선순환</div><ul class="mbpc-step-list">'+
+            '<li><b>소개·업셀링 전략</b> 공유</li>'+
+            '<li><b>6개월 주기</b>로 반복</li>'+
+          '</ul></div>'+
+          '<div class="mbpc-emo cust"><div class="mbpc-emo-label"><span class="mbpc-badge">고</span>고객의 감정</div><div class="mbpc-emo-text">"이제 끝났나" 싶었는데 6개월 뒤 다시 연락이 오며 <b>"진짜 관리해주는구나"</b>라는 감동을 느낀다. 수익률과 배당을 직접 확인하며 뿌듯함을 느낀 뒤, 주변에 자연스럽게 <b>추천하고 싶어지는 자발적 신뢰</b>로 이어진다.</div></div>'+
+          '<div class="mbpc-emo planner"><div class="mbpc-emo-label"><span class="mbpc-badge">플</span>플래너의 감정</div><div class="mbpc-emo-text">6개월 만에 다시 연락했을 뿐인데, 고객이 먼저 <b>"진짜 관리해주시네요"</b>라며 반가워하는 순간을 마주한다. 한 번 팔고 끝나는 관계가 아니라는 걸 스스로 증명하며, 이 미팅이 컨설팅의 <b>백미</b>임을 깨닫는다. 소개가 자연스럽게 이어지는 걸 경험하며, "이제는 시장을 넓혀도 되겠다"는 <b>확신</b>과 함께 자신의 사업이 진짜로 성장하고 있음을 실감한다.</div></div>'+
+          '<div class="mbpc-insight"><span class="mbpc-insight-tag">\'피크엔드 법칙\'</span><div class="mbpc-insight-text">'+
+            '<p>사람은 경험 전체를 평균이 아니라, <b>가장 강렬했던 순간과 마지막 순간</b>으로 기억한다. 6개월 후 다시 연락하는 이 마지막 접점이 전체 컨설팅에 대한 인상을 좌우한다.</p>'+
+            '<p>이 순간을 감동으로 만들면 고객은 자발적으로 소개를 시작한다. 지금까지의 여정 — <b>무심함 → 호기심 → 경계심 → 신뢰 → 확신 → 감동 → 자발적 추천</b> — 이 완성되는 순간이다.</p>'+
+          '</div></div>'+
+        '</div>'+
+        '<div class="mbpc-foot"><div class="slogan-1">NO MAGIC</div><div class="slogan-2">just common sense</div><div class="slogan-kr">MAKESBETTER</div></div>'+
+      '</div>';
+
+    var MANIFESTO = ''+
+      '<div class="mbpc-wrap mbpc-card">'+
+        '<div class="mbpc-manifesto">'+
+          '<div class="mf-brand">MAKESBETTER</div>'+
+          '<div class="mf-line">이미 성공한 사람에게 필요한 것은<br>노력이 아니라 <b>레버리지</b>입니다.</div>'+
+          '<div class="mf-line">경험을 쌓는 데는 수년이 걸리지만,<br>경험을 활용하는 데는 <b>1개월</b>이면 충분합니다.</div>'+
+          '<div class="mf-line">수많은 성공과 실패,<br>그리고 그 속에서 축적된 데이터를<br>하나의 플랫폼으로 완성했습니다.</div>'+
+          '<div class="mf-strong">당신은 처음부터<br>다시 시작할 필요가 없습니다.</div>'+
+          '<div class="mf-strong">우리가 축적한 시간을,<br>당신의 성장으로 바꾸십시오.</div>'+
+          '<div class="mf-line">성장은 더 이상<br>개인의 능력만으로 만드는 것이 아닙니다.</div>'+
+          '<div class="mf-build">'+
+            '<div>시스템을 가진 사람이</div>'+
+            '<div>더 멀리,</div>'+
+            '<div>더 빠르게,</div>'+
+            '<div>더 크게 성장합니다.</div>'+
+          '</div>'+
+          '<div class="mf-divider"></div>'+
+          '<div class="mf-slogan-en">NO MAGIC.<br>JUST COMMON SENSE.</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="mbpc-manifesto-cta-wrap">'+
+        '<a class="mbpc-manifesto-cta" href="/platform/">베러 플랫폼 안내 <span>→</span></a>'+
+      '</div>';
+
+    var STAGES = [STAGE1, STAGE2, STAGE3, STAGE4];
+    var NEXT_LABELS = ["1차 코칭 이어보기", "2차·3차 코칭 이어보기", "6개월 피드백 이어보기", "마지막 이야기 이어보기"];
+
+    function buildSection(idx){
+      var html = '<div class="mbpc-section'+(idx===0?'':' locked')+'" id="mbpc-sec-'+idx+'">'+STAGES[idx];
+      if (NEXT_LABELS[idx]){
+        html += '<div class="mbpc-nextbtn-wrap"><button class="mbpc-nextbtn" data-idx="'+idx+'">'+NEXT_LABELS[idx]+' <span class="arrow">▾</span></button></div>';
+      }
+      html += '</div>';
+      return html;
+    }
+
+    var body = progressHtml(1) +
+      '<div class="mbpc-intro">'+
+        '<div class="eyebrow">MAKESBETTER PROCESS</div>'+
+        '<h1>메이크스베러<br>컨설팅 프로세스</h1>'+
+        '<p>사전 미팅부터 6개월 피드백까지,<br>한 장씩 확인하며 전체 과정을 살펴보세요.</p>'+
+      '</div>'+
+      buildSection(0) + buildSection(1) + buildSection(2) + buildSection(3) +
+      '<div class="mbpc-section locked" id="mbpc-closing">'+MANIFESTO+'</div>';
+
+    root.innerHTML = body;
+
+    // ---- 목적 박스: 박스가 먼저 떠오르고, 글자가 하나씩 써지는 연출 ----
+    function wrapChars(node){
+      if (node.nodeType === 3){
+        var frag = document.createDocumentFragment();
+        var text = node.textContent;
+        for (var i=0;i<text.length;i++){
+          var span = document.createElement('span');
+          span.className = 'mbpc-ch';
+          span.textContent = text[i];
+          frag.appendChild(span);
+        }
+        node.parentNode.replaceChild(frag, node);
+      } else if (node.nodeType === 1 && node.tagName !== 'BR'){
+        Array.prototype.slice.call(node.childNodes).forEach(wrapChars);
+      }
+    }
+    root.querySelectorAll('.mbpc-purpose-text').forEach(function(el){
+      wrapChars(el);
+    });
+    root.querySelectorAll('.mbpc-emo-text').forEach(function(el){
+      wrapChars(el);
+    });
+    // ---- 고객의 감정(3초 타이핑) → 플래너의 감정(4초 타이핑) → 인사이트 박스 전체(2초 걸쳐 올라오며 등장) ----
+    // 감정 박스는 틀 고정, 텍스트만 타이핑 / 인사이트 박스는 틀·배지·텍스트 전체가 함께 떠오름
+    function playEmoTyping(box, totalMs, textSelector){
+      if (!box || box.__mbpcEmoPlayed) return;
+      box.__mbpcEmoPlayed = true;
+      var textEl = box.querySelector(textSelector || '.mbpc-emo-text');
+      if (!textEl) return;
+      var chars = textEl.querySelectorAll('.mbpc-ch');
+      var per = chars.length ? totalMs / chars.length : 0;
+      chars.forEach(function(ch, i){
+        setTimeout(function(){ ch.classList.add('mbpc-show'); }, i * per);
+      });
+    }
+    function playEmoChain(sectionEl){
+      if (!sectionEl || sectionEl.__mbpcEmoChainPlayed) return;
+      sectionEl.__mbpcEmoChainPlayed = true;
+      var custBox = sectionEl.querySelector('.mbpc-emo.cust');
+      var plannerBox = sectionEl.querySelector('.mbpc-emo.planner');
+      var insightBox = sectionEl.querySelector('.mbpc-insight');
+      playEmoTyping(custBox, 3000, '.mbpc-emo-text');
+      setTimeout(function(){ playEmoTyping(plannerBox, 4000, '.mbpc-emo-text'); }, 3000);
+      setTimeout(function(){
+        if (insightBox) requestAnimationFrame(function(){ insightBox.classList.add('mbpc-in'); });
+      }, 3000 + 4000);
+    }
+    if ('IntersectionObserver' in window){
+      var emoObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting){
+            playEmoChain(entry.target.closest('.mbpc-section'));
+            emoObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      root.querySelectorAll('.mbpc-emo.cust').forEach(function(el){ emoObserver.observe(el); });
+    } else {
+      root.querySelectorAll('.mbpc-section').forEach(function(sec){ playEmoChain(sec); });
+    }
+
+    function playPurposeAnim(sectionEl){
+      if (!sectionEl) return;
+      var box = sectionEl.querySelector('.mbpc-purpose');
+      if (!box || box.__mbpcPlayed) return;
+      box.__mbpcPlayed = true;
+      requestAnimationFrame(function(){ box.classList.add('mbpc-in'); });
+      var chars = box.querySelectorAll('.mbpc-ch');
+      setTimeout(function(){
+        chars.forEach(function(ch, i){
+          setTimeout(function(){ ch.classList.add('mbpc-show'); }, i * 66);
+        });
+      }, 1350);
+    }
+
+    // 첫 화면(사전 미팅)은 로드 직후 바로 재생
+    setTimeout(function(){ playPurposeAnim(root.querySelector('#mbpc-sec-0')); }, 200);
+
+    var unlocked = 1;
+    function updateProgress(){
+      var bars = root.querySelectorAll('#mbpc-progress i');
+      bars.forEach(function(b, i){ b.classList.toggle('on', i < unlocked); });
+    }
+
+    root.querySelectorAll('.mbpc-nextbtn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var idx = parseInt(btn.getAttribute('data-idx'), 10);
+        var nextIdx = idx + 1;
+        var nextEl = nextIdx < 4 ? root.querySelector('#mbpc-sec-'+nextIdx) : root.querySelector('#mbpc-closing');
+        if (nextEl){
+          nextEl.classList.remove('locked');
+          unlocked = Math.max(unlocked, nextIdx + 1);
+          updateProgress();
+          playPurposeAnim(nextEl);
+          setTimeout(function(){
+            nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 60);
+        }
+      });
+    });
+  }
+
+  document.querySelectorAll('[id="mb-process-root"]').forEach(initProcess);
+})();
+
+</script>
+</body>
+</html>
