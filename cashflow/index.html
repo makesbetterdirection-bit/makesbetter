@@ -224,7 +224,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
     emailjsServiceId: "service_lehvmhu",
     emailjsTemplateId: "template_o2bn4wc", // 공용 알림(기본) — 제목 {{subject}} · 본문 {{{body}}}
     reportTemplateId: "template_9ljzh1k",  // 공용 알림(PDF 첨부) — 베이직 리포트 첨부용
-    basicReport: false,                    // 베이직 리포트 PDF 첨부 (대표 시안 승인 후 true · 시험은 ?report=1)
+    basicReport: true,                     // 베이직 리포트 PDF 첨부 (11/18 대표 승인 · false 로 끄면 본문만)
     // 모든 결과 메일의 참조(모니터링)로 항상 함께 받을 주소
     monitorEmail: "makesbetter.direction@gmail.com"
   };
