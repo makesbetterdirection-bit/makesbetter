@@ -47,6 +47,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
 @media (prefers-reduced-motion:no-preference){.cq-body{animation:cqin .35s ease-out}@keyframes cqin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}}
 .cq-h{margin:0;font-size:30px;line-height:1.3;font-weight:800;letter-spacing:-.035em}
 .cq-hi{word-break:keep-all}
+.cq-hl{white-space:nowrap}
 .cq-p{margin:12px 0 0;font-size:15.5px;line-height:1.6;color:var(--sub)}
 .cq-t,.cq-m{display:block;margin-top:22px}
 .cq-l{display:block;font-size:15px;font-weight:700;margin-bottom:8px}
@@ -134,6 +135,8 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
   function today(){var d=new Date();return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
   function opts(set,list,multi,cls){var cur=S[set];return '<div class="cq-opts '+(cls||"")+'" data-set="'+set+'"'+(multi?' data-multi="1"':'')+'>'+list.map(function(o){var on=multi?cur.indexOf(o)>-1:cur===o;return '<button type="button" class="cq-o'+(on?" on":"")+'" data-v="'+esc(o)+'">'+esc(o)+'</button>'}).join("")+'</div>'}
   function row(l,v){return '<div class="sv-r"><span>'+l+'</span><b>'+(v&&v.length?esc(Array.isArray(v)?v.join(", "):v):"–")+'</b></div>'}
+  function fitHi(){var h=document.querySelector(".cq-hi"),l=h&&h.querySelector(".cq-hl");if(!l)return;h.style.fontSize="";var fs=parseFloat(getComputedStyle(h).fontSize);while(l.getBoundingClientRect().width>h.clientWidth&&fs>16){fs-=1;h.style.fontSize=fs+"px"}}
+  window.addEventListener("resize",fitHi);window.addEventListener("load",fitHi);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitHi);
   function draw(){
     var list=L();if(S.q<0)S.q=0;if(S.q>list.length-1)S.q=list.length-1;
     var k=list[S.q],n=S.q,total=list.length-1,h="",next="다음",multi=false;
@@ -147,7 +150,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
     } else {
       if(k==="director"){h='<h2 class="cq-h">어느 디렉터와<br>만나시나요?</h2>'+opts("director",CONFIG.directors.map(function(x){return x.name}),false,"two")}
       else if(k==="sip"){h='<h2 class="cq-h">웰컴 드링크,<br>어떤 커피로 보내 드릴까요?</h2><p class="cq-p">상담 전에 '+esc(S.director||"디렉터")+' 디렉터가 먼저 보내 드려요.</p>'+opts("sip",SIP,false,"two big")}
-      else if(k==="name"){var dr=CONFIG.directors.filter(function(x){return x.name===S.director})[0];h=(dr?'<h2 class="cq-h cq-hi">안녕하세요?<br>'+esc(dr.name)+' '+(dr.role||"디렉터")+'입니다.</h2>':'<h2 class="cq-h">누구를 기다리면<br>될까요?</h2>')+
+      else if(k==="name"){var dr=CONFIG.directors.filter(function(x){return x.name===S.director})[0];h=(dr?'<h2 class="cq-h cq-hi">안녕하세요?<br><span class="cq-hl">'+esc(dr.name)+' '+(dr.role||"디렉터")+'입니다.</span></h2>':'<h2 class="cq-h">누구를 기다리면<br>될까요?</h2>')+
         '<label class="cq-t"><span class="cq-l">성함</span><input id="s-name" type="text" autocomplete="name" placeholder="홍길동" maxlength="20" value="'+esc(S.name)+'"></label>'+
         '<label class="cq-t"><span class="cq-l">휴대폰 번호</span><input id="s-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" maxlength="13" value="'+esc(S.phone)+'"></label>'+
         '<label class="cq-t"><span class="cq-l">추천해 주신 분<small>없으면 비워 두세요</small></span><input id="s-ref" type="text" placeholder="이름" maxlength="20" value="'+esc(S.referrer)+'"></label>'+
@@ -165,6 +168,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
         '<div class="cq-bar"><i style="width:'+Math.round(n/total*100)+'%"></i></div><span class="cq-n">'+n+' / '+total+'</span></header>'+
         '<main class="cq-body">'+h+'<p class="cq-err" id="cq-err" role="alert"></p></main>'+
         '<div class="cq-foot"><button class="cq-next" id="cq-next">'+next+'</button></div>';
+      fitHi();
       window.scrollTo(0,0);
     }
     function err(t){var e=root.querySelector("#cq-err");if(e){e.textContent=t;e.classList.add("on");try{e.scrollIntoView({block:"center",behavior:"smooth"})}catch(x){}}}
