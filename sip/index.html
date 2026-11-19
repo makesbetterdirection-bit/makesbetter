@@ -107,7 +107,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
 <script>
 (function(){
   var CONFIG={
-    directors:[{name:"이종호",role:"대표 디렉터",email:"bd187@naver.com"},{name:"오수현",email:"u0112383@naver.com"},{name:"변보라",email:"wpqlrhc217@naver.com"},{name:"홍민아",email:"carrot8807@naver.com"},{name:"강소리",email:"kangpro1004@kakao.com"},{name:"김다희",email:"plandh@naver.com"},{name:"김상윤",email:"gnswnajr@naver.com"},{name:"김소연",email:"makesbetter.sy@gmail.com"},{name:"조숙원",email:"swjoe12@naver.com"},{name:"김현희",email:"salesmanager2017@naver.com"},{name:"이지훈",email:"hoony33666@naver.com"}],
+    directors:[{name:"이종호",role:"대표 디렉터",dc:1,email:"bd187@naver.com"},{name:"오수현",email:"u0112383@naver.com"},{name:"변보라",email:"wpqlrhc217@naver.com"},{name:"홍민아",email:"carrot8807@naver.com"},{name:"강소리",email:"kangpro1004@kakao.com"},{name:"김다희",email:"plandh@naver.com"},{name:"김상윤",email:"gnswnajr@naver.com"},{name:"김소연",email:"makesbetter.sy@gmail.com"},{name:"조숙원",email:"swjoe12@naver.com"},{name:"김현희",email:"salesmanager2017@naver.com"},{name:"이지훈",email:"hoony33666@naver.com"}],
     monitorEmail:"makesbetter.direction@gmail.com",
     channelUrl:"https://pf.kakao.com/_eETXxj/friend",
     emailjsPublicKey:"37rMXVT1INDvECR8k", emailjsServiceId:"service_lehvmhu", emailjsTemplateId:"template_o2bn4wc" /* 공용 알림(기본) — 첨부 실패 시 */,
@@ -150,7 +150,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
     } else {
       if(k==="director"){h='<h2 class="cq-h">어느 디렉터와<br>만나시나요?</h2>'+opts("director",CONFIG.directors.map(function(x){return x.name}),false,"two")}
       else if(k==="sip"){h='<h2 class="cq-h">웰컴 드링크,<br>어떤 커피로 보내 드릴까요?</h2><p class="cq-p">상담 전에 '+esc(S.director||"디렉터")+' 디렉터가 먼저 보내 드려요.</p>'+opts("sip",SIP,false,"two big")}
-      else if(k==="name"){var dr=CONFIG.directors.filter(function(x){return x.name===S.director})[0];h=(dr?'<h2 class="cq-h cq-hi">안녕하세요?<br><span class="cq-hl">'+esc(dr.name)+' '+(dr.role||"디렉터")+'입니다.</span></h2>':'<h2 class="cq-h">누구를 기다리면<br>될까요?</h2>')+
+      else if(k==="name"){var dr=CONFIG.directors.filter(function(x){return x.name===S.director})[0];h=(dr&&dr.role?'<h2 class="cq-h cq-hi">안녕하세요?<br><span class="cq-hl">'+esc(dr.name)+' '+(dr.role||"디렉터")+'입니다.</span></h2>':'<h2 class="cq-h">누구를 기다리면<br>될까요?</h2>')+
         '<label class="cq-t"><span class="cq-l">성함</span><input id="s-name" type="text" autocomplete="name" placeholder="홍길동" maxlength="20" value="'+esc(S.name)+'"></label>'+
         '<label class="cq-t"><span class="cq-l">휴대폰 번호</span><input id="s-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" maxlength="13" value="'+esc(S.phone)+'"></label>'+
         '<label class="cq-t"><span class="cq-l">추천해 주신 분<small>없으면 비워 두세요</small></span><input id="s-ref" type="text" placeholder="이름" maxlength="20" value="'+esc(S.referrer)+'"></label>'+
@@ -160,7 +160,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
       else if(k==="goal"){multi=true;h='<h2 class="cq-h">무엇을 위해<br>모으고 계세요?</h2><p class="cq-p">해당하는 것을 모두 골라 주세요.</p>'+opts("assetGoal",GOAL,true)}
       else if(k==="income"){h='<h2 class="cq-h">월급 말고,<br>어떤 소득을 더 만들고 싶으세요?</h2>'+opts("incomeType",INCOME)}
       else if(k==="accounts"){multi=true;h='<h2 class="cq-h">점검받고 싶은<br>계좌가 있나요?</h2><p class="cq-p">가지고 있는 계좌를 모두 골라 주세요. 없으면 그냥 다음으로.</p>'+opts("accounts",ACCT,true,"two")}
-      else if(k==="need"){multi=true;h='<h2 class="cq-h">코칭 때 꼭<br>챙겨 받고 싶은 건?</h2><p class="cq-p">고른 것 위주로 디렉터가 미리 준비해 가요. 모두 골라 주세요.</p>'+opts("needInfo",["퇴직연금(DC) 투자 설정과 노하우","월배당으로 제2의 월급 만들기","연금(IRP·연금저축) 제대로 굴리기","달러·환율, 언제 어떻게 담을지","대출 상환 vs 투자, 무엇부터 할지","세금 덜 내는 계좌(ISA·비과세) 활용","지금 가진 금융상품 점검"],true)}
+      else if(k==="need"){multi=true;h='<h2 class="cq-h">코칭 때 꼭<br>챙겨 받고 싶은 건?</h2><p class="cq-p">고른 것 위주로 디렉터가 미리 준비해 가요. 모두 골라 주세요.</p>'+opts("needInfo",[((CONFIG.directors.filter(function(x){return x.name===S.director})[0]||{}).dc?"퇴직연금(DC) 투자 설정과 노하우":""),"월배당으로 제2의 월급 만들기","연금(IRP·연금저축) 제대로 굴리기","달러·환율, 언제 어떻게 담을지","대출 상환 vs 투자, 무엇부터 할지","세금 덜 내는 계좌(ISA·비과세) 활용","지금 가진 금융상품 점검"].filter(Boolean),true)}
       else if(k==="review"){next="신청하기";h='<h2 class="cq-h">이대로 신청할게요</h2><p class="cq-p">'+esc(S.director)+' 디렉터에게 전달되고, 디렉터가 직접 연락드려요.</p>'+
         '<div class="sv">'+row("담당 디렉터",S.director)+row("웰컴 드링크",S.sip)+row("성함",S.name)+row("연락처",S.phone)+row("추천인",S.referrer)+row("가장 불편한 고민",S.worry)+row("자산 운용",S.assetMethod)+row("운용 목적",S.assetGoal)+row("더 만들고 싶은 소득",S.incomeType)+row("점검받을 계좌",S.accounts)+row("받고 싶은 정보",S.needInfo)+'</div>'+
         '<p class="cq-p sv-n">신청 후 카카오톡 채널 추가 화면으로 넘어가요. 채널을 추가해야 접수가 완료됩니다.</p>'}

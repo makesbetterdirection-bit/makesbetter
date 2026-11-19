@@ -260,7 +260,7 @@ h1,h2,h3,p{margin:0}
   function openSheet(qq){
     cur=qq;var vv=vis();document.getElementById('shTitle').textContent=(FX?'질문 '+(vv.indexOf(qq)+1)+'/'+vv.length+' · ':'')+qq.t;document.getElementById('shHint').textContent=qq.h||'';
     shOpts.className='opts'+(qq.two?' two':'')+(qq.multi?' multi':'');shOpts.innerHTML='';sheet.classList.toggle('multi',!!qq.multi);
-    qq.o.forEach(function(v){var b=document.createElement('button');b.type='button';var on=qq.multi?S[qq.k].indexOf(v)>-1:S[qq.k]===v;b.className='opt'+(on?' on':'');b.textContent=qq.lab?qq.lab(v):v;
+    (qq.k==='need'&&S.director!=='이종호'?qq.o.filter(function(v){return v!=='퇴직연금(DC) 투자 설정과 노하우'}):qq.o).forEach(function(v){var b=document.createElement('button');b.type='button';var on=qq.multi?S[qq.k].indexOf(v)>-1:S[qq.k]===v;b.className='opt'+(on?' on':'');b.textContent=qq.lab?qq.lab(v):v;
       b.addEventListener('click',function(){
         if(!qq.multi){setVal(qq,v);closeSheet();openNext();return}
         var a=S[qq.k],i=a.indexOf(v);if(i>-1)a.splice(i,1);else a.push(v);b.classList.toggle('on',i<0);paint(qq);doneLab();

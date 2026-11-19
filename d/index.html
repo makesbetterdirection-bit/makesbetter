@@ -349,7 +349,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
 (function(){
   // 디렉터별 내용: 주소(/d/lee 또는 ?d=lee)만 다르고 페이지는 하나
   var D={
-    lee:{name:'이종호',role:'대표 디렉터',walk:1,gift:'Private Collection<span class="pc-s">(선물)</span>',drink:1,photo:'/d/img/lee.webp',career:['한국투자증권 Financial Advisor','퇴직연금 DC 관리 · 금융세미나<br>자산관리 · 플랫폼 매니지먼트'],motto:'현상은 복잡하지만 본질은 단순하다',quote:'“대표님을 만나지 않았다면 금전적으로 빚 걱정, 미래 걱정이 없는 저는 없었을 거 같았습니다. 늘 감사합니다!”',who:'5년째 함께한 고객',rv:'174960813'},
+    lee:{name:'이종호',role:'대표 디렉터',dc:1,walk:1,gift:'Private Collection<span class="pc-s">(선물)</span>',drink:1,photo:'/d/img/lee.webp',career:['한국투자증권 Financial Advisor','퇴직연금 DC 관리 · 금융세미나<br>자산관리 · 플랫폼 매니지먼트'],motto:'현상은 복잡하지만 본질은 단순하다',quote:'“대표님을 만나지 않았다면 금전적으로 빚 걱정, 미래 걱정이 없는 저는 없었을 거 같았습니다. 늘 감사합니다!”',who:'5년째 함께한 고객',rv:'174960813'},
     oh:{name:'오수현',role:'디렉터',photo:'/d/img/oh.webp',career:['한국투자증권 Financial Advisor','자산관리 · 은퇴설계<br>세금전략 · 위험관리'],motto:'Makes Better Direction',quote:'“잘못된 투자로 손해를 보고 마음을 닫았던 저에게, 인생의 경제적 길잡이가 되어 주셨어요.”',who:'10년 가까이 함께한 고객',rv:'173082766'},
     byun:{name:'변보라',role:'디렉터',photo:'/d/img/byun.webp',career:['한국투자증권 Financial Advisor','자산관리 · 금융교육세미나<br>퇴직연금(DB · DC · IRP)'],motto:'등고자비(登高自卑)<br>높이 오르려면 낮은 곳에서부터',quote:'“현실적인 조언에 정신이 번쩍 들기도 하고, 따뜻한 응원 덕분에 다시 힘을 얻기도 했습니다.”',who:'6개월째 함께한 고객',rv:'175153000'},
     hong:{name:'홍민아',role:'디렉터',photo:'/d/img/hong.webp',career:['한국투자증권 Financial Advisor','자산관리 · 은퇴관리 · 세금전략<br>위험관리 · 교육지원'],motto:'Change your view',quote:'“예·적금밖에 모르던 저에게 새로운 세계가 열린 것 같았어요.”',who:'오랜 시간 함께한 고객',rv:'175279693'},
@@ -373,6 +373,10 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   /* 디렉터별 선물 표기(이종호: Private Collection + 웰컴 드링크, 11/19) — 없으면 기본 「선물 3가지」 */
   if(d.gift){all('[data-d=gift]',function(e){e.innerHTML=d.gift});var gh=document.getElementById('giftH');if(gh)gh.innerHTML='채널을 추가하면<br>'+d.gift+'과<br>코칭이 열려요.'}
   if(d.drink)all('[data-d=drink]',function(e){e.style.display=''});
+  /* dc: 퇴직연금 DC 항목(코칭 대상 첫 줄 · 자주 묻는 질문 Q1)은 dc:1 인 디렉터(이종호)만 — 나머지는 빼고 Q 번호를 다시 매김 */
+  if(!d.dc){[].forEach.call(document.querySelectorAll('.w-ck li'),function(x){if(/퇴직연금 DC/.test(x.textContent))x.parentNode.removeChild(x)});
+    var nq=document.querySelectorAll('.nds details.nd');if(nq.length&&/퇴직연금, 그냥 둬도/.test(nq[0].textContent)){nq[0].parentNode.removeChild(nq[0]);nq=document.querySelectorAll('.nds details.nd');
+      [].forEach.call(nq,function(x,i){var sp=x.querySelector('summary span');if(sp)sp.textContent='Q'+(i+1)});if(nq[0])nq[0].open=true}}
   /* walk: 「이런 분들에게」 목록이 화면에 들어오면 2초에 한 장씩 검은 배경으로 채움 (동작 줄이기 설정이면 퇴직연금 DC·연금 방치 두 장만 고정) */
   if(d.walk)(function(){var ul=document.querySelector('.w-ck');if(!ul)return;var li=[].slice.call(ul.children),i=0,go=false;ul.classList.add('walk');
     li.forEach(function(x){if(/퇴직연금 DC|연금, 넣기만/.test(x.textContent))x.classList.add('hot')});
