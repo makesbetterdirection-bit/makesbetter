@@ -24,6 +24,7 @@
 .sd-g{list-style:none;margin:24px 0 0;padding:0;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(233,207,142,.28);text-align:left}
 .sd-g li{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.1)}.sd-g li:last-child{border:0}
 .sd-g b{display:block;font-size:16px;letter-spacing:-.02em}.sd-g span{display:block;margin-top:3px;font-size:13px;color:#CFC8BA}.sd-g s{color:#9A958A}
+.sd-g b .pc-s{display:inline;margin:0 0 0 .2em;font-size:.75em;color:#CFC8BA;opacity:.8}
 .sd-f{margin-top:22px;padding:20px 18px;border-radius:18px;background:#fff;color:#15171C;text-align:left}
 .sd-f label{display:block;font-size:14px;font-weight:600;color:#5F5F5F;margin-bottom:6px}
 .sd-f input{width:100%;box-sizing:border-box;font:inherit;font-size:17px;border:1.5px solid #E2E2E2;border-radius:14px;padding:15px 14px;background:#fff;color:#0A0A0A;outline:none}
@@ -41,6 +42,7 @@
 /* 체크리스트: 제목·설명 한 줄씩 */
 .w-ck li b{white-space:nowrap;font-size:clamp(14px,4.3vw,16.5px)!important}
 .w-ck li span{white-space:nowrap;font-size:clamp(11.5px,3.5vw,13.5px)!important;letter-spacing:-.03em}
+.pc-s{font-size:.6em;font-weight:500;opacity:.62;margin-left:.2em;letter-spacing:0;white-space:nowrap}
 /* 가장 큰 선물(코칭) 카드 */
 .w-rw.best{position:relative;overflow:hidden;border:0;padding:26px 20px 22px;background:linear-gradient(140deg,#FF6A2B 0%,#FF3D1F 46%,#C2185B 100%);box-shadow:0 22px 44px -16px rgba(255,74,31,.7);animation:bxglow 2.2s ease-in-out infinite}
 .w-rw.best .w-rn{display:inline-block;color:#FF3D1F;background:#fff;border-radius:99px;padding:5px 11px;font-weight:800}
@@ -157,7 +159,8 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     <p class="sd-p"><b data-d="name">이종호</b> 디렉터를 먼저 만나 본<br>당신의 이름으로 초대장이 전달돼요.</p>
     <ul class="sd-g">
       <li><b>디렉터 1:1 머니 코칭 2시간</b><span><s>25만원</s> 면제</span></li>
-      <li><b>선물 3가지</b><span>금융 I.Q 테스트 · 전자책 2권 · 현금흐름 진단</span></li>
+      <li><b data-d="gift">선물 3가지</b><span>금융 I.Q 테스트 · 전자책 2권 · 현금흐름 진단</span></li>
+      <li data-d="drink" style="display:none"><b>웰컴 드링크</b><span>스타벅스 Hot or Ice 선택</span></li>
     </ul>
     <div class="sd-f">
       <label for="sdName">보내는 사람</label>
@@ -189,7 +192,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     <section class="w-hero">
       <div class="w-ph rvl"><img src="/go/img/ph-gift.webp" alt=""><span class="w-bd">초대 한정</span></div>
       <div class="kick rvl">INVITATION</div>
-      <h1 class="rvl">[초대받은 분께만]<br>선물 3가지<br>전문 디렉터 머니 코칭</h1>
+      <h1 class="rvl">[초대받은 분께만]<br><span data-d="gift">선물 3가지</span><br>전문 디렉터 머니 코칭</h1>
       <ul class="w-st rvl">
         <li><b>1,032<small>건</small></b><span>고객 후기</span></li>
         <li><b><i id="cnt2">1,347</i><small>명</small></b><span>현금흐름 진단</span></li>
@@ -334,7 +337,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
 (function(){
   // 디렉터별 내용: 주소(/d/lee 또는 ?d=lee)만 다르고 페이지는 하나
   var D={
-    lee:{name:'이종호',role:'대표 디렉터',photo:'/d/img/lee.webp',career:['한국투자증권 Financial Advisor','퇴직연금 DC 관리 · 금융세미나<br>자산관리 · 플랫폼 매니지먼트'],motto:'현상은 복잡하지만 본질은 단순하다',quote:'“대표님을 만나지 않았다면 금전적으로 빚 걱정, 미래 걱정이 없는 저는 없었을 거 같았습니다. 늘 감사합니다!”',who:'5년째 함께한 고객',rv:'174960813'},
+    lee:{name:'이종호',role:'대표 디렉터',gift:'Private Collection<span class="pc-s">(선물)</span>',drink:1,photo:'/d/img/lee.webp',career:['한국투자증권 Financial Advisor','퇴직연금 DC 관리 · 금융세미나<br>자산관리 · 플랫폼 매니지먼트'],motto:'현상은 복잡하지만 본질은 단순하다',quote:'“대표님을 만나지 않았다면 금전적으로 빚 걱정, 미래 걱정이 없는 저는 없었을 거 같았습니다. 늘 감사합니다!”',who:'5년째 함께한 고객',rv:'174960813'},
     oh:{name:'오수현',role:'디렉터',photo:'/d/img/oh.webp',career:['한국투자증권 Financial Advisor','자산관리 · 은퇴설계<br>세금전략 · 위험관리'],motto:'Makes Better Direction',quote:'“잘못된 투자로 손해를 보고 마음을 닫았던 저에게, 인생의 경제적 길잡이가 되어 주셨어요.”',who:'10년 가까이 함께한 고객',rv:'173082766'},
     byun:{name:'변보라',role:'디렉터',photo:'/d/img/byun.webp',career:['한국투자증권 Financial Advisor','자산관리 · 금융교육세미나<br>퇴직연금(DB · DC · IRP)'],motto:'등고자비(登高自卑)<br>높이 오르려면 낮은 곳에서부터',quote:'“현실적인 조언에 정신이 번쩍 들기도 하고, 따뜻한 응원 덕분에 다시 힘을 얻기도 했습니다.”',who:'6개월째 함께한 고객',rv:'175153000'},
     hong:{name:'홍민아',role:'디렉터',photo:'/d/img/hong.webp',career:['한국투자증권 Financial Advisor','자산관리 · 은퇴관리 · 세금전략<br>위험관리 · 교육지원'],motto:'Change your view',quote:'“예·적금밖에 모르던 저에게 새로운 세계가 열린 것 같았어요.”',who:'오랜 시간 함께한 고객',rv:'175279693'},
@@ -355,6 +358,9 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   if(!d.career)all('[data-d=career]',function(e){e.style.display='none'});
   if(!d.quote)all('[data-d=quote]',function(e){e.style.display='none'});
   if(!d.rv&&!d.who)all('[data-d=rv]',function(e){e.style.display='none'});
+  /* 디렉터별 선물 표기(이종호: Private Collection + 웰컴 드링크, 11/19) — 없으면 기본 「선물 3가지」 */
+  if(d.gift){all('[data-d=gift]',function(e){e.innerHTML=d.gift});var gh=document.getElementById('giftH');if(gh)gh.innerHTML='채널을 추가하면<br>'+d.gift+'과<br>코칭이 열려요.'}
+  if(d.drink)all('[data-d=drink]',function(e){e.style.display=''});
   if(d.career){all('[data-d=career]',function(e){e.innerHTML=d.career.map(function(c){return '<li>'+c+'</li>'}).join('')+(d.motto?'<li class="dx-m">“'+d.motto+'”</li>':'')})}
   all('[data-d=rvwho]',function(e){e.textContent=d.who});all('[data-d=rv]',function(e){e.href=d.rv?'https://mbkr.my/review/?bmode=view&idx='+d.rv:'https://mbkr.my/review'});
   var by='';try{by=(new URLSearchParams(location.search).get('by')||'').trim().slice(0,10)}catch(e){}
