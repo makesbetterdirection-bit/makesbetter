@@ -102,7 +102,7 @@ const LABEL={work:'근로소득',spouse:'배우자 근로소득',biz:'사업소�
   house:'주거비',util:'관리비·공과금',ins:'보험료',tel:'통신·구독',sub:'구독 서비스',club:'모임·동호회',trans:'교통비',car:'자동차 운영비',food:'식비',edu:'교육비',allow:'용돈',etc2:'기타 2'};
 const FIXLABEL=Object.assign({},LABEL,{etc1:'기타 1'});
 let D=DEMO;
-const A={nominal:5.0,lo:3.5,hi:10,inflation:2.0,life:90,unknownRate:4.5,unknownTerm:20,emergency:6,cutA:10,cutB:20,director:'',comment:''};
+const A={nominal:5.0,lo:3.5,hi:10,planInfl:0,inflation:2.0,life:90,unknownRate:4.5,unknownTerm:20,emergency:6,cutA:10,cutB:20,director:'',comment:''};
 /* 2026년 근로자 부담 4대보험 요율 — 입력값 점검용(계산에는 입력값 사용) */
 const INS26={pension:.0475,pensionCap:6590000,pensionFloor:410000,health:.03595,ltcOfHealth:.1314,emp:.009};
 const expectedIns=g=>{const m=g/12;return Math.min(Math.max(m,INS26.pensionFloor),INS26.pensionCap)*INS26.pension*12+g*INS26.health*(1+INS26.ltcOfHealth)+g*INS26.emp;};
@@ -118,7 +118,7 @@ function payment(bal,ratePct,months,kind){ const r=ratePct/100/12; if(bal<=0) re
   return r===0?bal/months:bal*r/(1-Math.pow(1+r,-months)); }
 const ORDER=['ok','warn','bad'];
 const worst=a=>a.filter(Boolean).reduce((w,g)=>ORDER.indexOf(g)>ORDER.indexOf(w)?g:w,'ok');
-const realM=nom=>Math.pow((1+nom/100)/(1+A.inflation/100),1/12)-1;
+const realM=nom=>Math.pow((1+nom/100)/(1+A.planInfl/100),1/12)-1;
 /* 목표 월 필요액: 지금 돈 가치 기준 목표액, 모아둔 돈 반영, 실질수익률 */
 function goalPM(amt,saved,n,rm){const fv=saved*Math.pow(1+rm,n), rem=Math.max(0,amt-fv); if(!rem) return 0; return rm?rem*rm/(Math.pow(1+rm,n)-1):rem/n;}
 const PRI={'1순위':1,'2순위':2,'3순위':3,'4순위 이하':4};
@@ -447,7 +447,7 @@ function p3(x,dv){const p=page();header(p,3,'재무목표','Goals');band(p,360);
       rows:g6.map(g=>[`${g.priLabel} ${g.name}`,man(g.amt),g.years+'년',g.saved?man(g.saved):'—',man(g.pmLo),man(g.pm),man(g.pmHi)])
         .concat(x.retAuto?[['노후 부족분',man(x.need-x.have),Math.round(x.N/12)+'년','자산 반영','',man(x.extra),'']]:[])
         .concat([['월 필요액 합계','','','','',man(x.totalNeed),'']])});
-    T(p,`목표액은 지금 돈 가치 기준입니다.${x.goals.some(g=>g.mBasis)?` 노후 자금 = (월 생활비 ${won(x.living)} − 예상 연금 ${won(x.pen)}) × ${x.rAge}세~${A.life}세, 은퇴 시점 필요액으로 환산.`:''} 물가 ${A.inflation}%를 뺀 실질수익률로 계산하고, 모아둔 돈이 불어난 만큼을 빼고 남은 금액을 매달 모읍니다. 단위 만 원.`,{size:11,c:'#8A8A8A',x:64,y:tb+12,w:666,lh:155});
+    T(p,`목표액은 지금 돈 가치 기준입니다.${x.goals.some(g=>g.mBasis)?` 노후 자금 = (월 생활비 ${won(x.living)} − 예상 연금 ${won(x.pen)}) × ${x.rAge}세~${A.life}세, 은퇴 시점 필요액으로 환산.`:''} 물가상승률은 아직 반영하지 않고 명목수익률로 계산하며, 모아둔 돈이 불어난 만큼을 빼고 남은 금액을 매달 모읍니다. 단위 만 원.`,{size:11,c:'#8A8A8A',x:64,y:tb+12,w:666,lh:155});
     const y2=tb+70; dots(p,y2);
     label(p,{y:y2+24,title:'지금 저축으로 채워지는 정도',key:`월 ${won(Math.max(0,x.steps[0].acc))} / 필요 ${won(x.totalNeed)}`,body:'남는 돈과 지출 절감까지 더한\n개선 플랜은 08장에 있습니다.',w:230});
     const cv=Math.min(1,dv.coverNow||0);R(p,{x:310,y:y2+34,w:420,h:18,c:'#E1E4EA',r:9});R(p,{x:310,y:y2+34,w:Math.max(6,420*cv),h:18,c:'#1D4FBF',r:9});
@@ -580,7 +580,7 @@ function pAlt(x,dv){const p=page();header(p,9,'목표 대안','Alternatives');ba
   if(miss.length){
     const tb=table(p,{y,cols:[130,100,108,108,116,104],head:['목표','배분 / 필요','수익률 올리면','기간 늦추면','금액 조정','소득 늘리면'],rowH:34,
       rows:miss.slice(0,5).map(g=>[`${g.pri} ${g.name}`,`${man(g.got)} / ${man(g.need)}`,g.rateNew!=null?`연 ${g.rateNew.toFixed(1)}%`:(g.got>0?'연 30% 초과':'배분 없음'),g.yearsNew?`${g.years} → ${g.yearsNew}년`:'50년 넘게 걸림',`${man(g.amt)} → ${man(g.amtNew)}`,`월 + ${man(g.incomeAdd)}`])});
-    T(p,`수익률은 명목 기준이며 물가 ${A.inflation}%를 빼고 계산합니다. 기간·금액은 08장에서 배분된 월 금액(배분액)을 그대로 쓴다고 가정합니다. 단위 만 원.`,{size:11,c:'#8A8A8A',x:64,y:tb+10,w:666,lh:155});y=tb+60;}
+    T(p,`수익률은 명목 기준이며 물가상승률은 아직 반영하지 않았습니다. 기간·금액은 08장에서 배분된 월 금액(배분액)을 그대로 쓴다고 가정합니다. 단위 만 원.`,{size:11,c:'#8A8A8A',x:64,y:tb+10,w:666,lh:155});y=tb+60;}
   else{const ok=al.goals.slice(0,5);if(ok.length){const tb=table(p,{y,cols:[166,150,150,200],head:['목표','월 필요액','배분액','결과'],rowH:34,rows:ok.map(g=>[`${g.pri} ${g.name}`,man(g.need),man(g.got),'개선 플랜으로 충족'])});y=tb+30;} else {empty(p,'등록된 재무목표가 없습니다.',y+8);y+=50;}}
   sec(p,'노후 대안',Math.max(y,800),false);const yy=Math.max(y,800)+48;
   if(retMiss){[['은퇴 나이 늦추기',retMiss.ageNew?`${x.rAge} → ${retMiss.ageNew}세`:'10년 늦춰도 부족',`배분액 월 ${man(retMiss.got)} 유지 기준`],['필요 수익률',retMiss.rateNew!=null?`연 ${retMiss.rateNew.toFixed(1)}%`:'연 30% 초과','지금 은퇴 나이 유지 시'],['생활비 낮추기',`월 ${man(retMiss.livingOK)}`,`희망 월 ${man(x.living)} · 지금 플랜으로 가능한 생활비`]].forEach(([l,v,sb],i)=>{const xx=64+i*222;
@@ -695,7 +695,7 @@ function pRet(x,dv){const p=page();header(p,13,'노후','Retirement');band(p,352
   const rows=[['은퇴 희망 나이',`${x.rAge}세 (현재 ${x.age}세)`,'기대수명',`${A.life}세`],['희망 생활비 (월)',won(x.living),'예상 연금 (월)',x.penUnknown?'모름 (0원 가정)':won(x.pen)],['노후용 금융자산',won(x.A0),'실질수익률',`연 ${(real*100).toFixed(2)}%`]];
   const cw=[120,213,120,213],xs=[64,184,397,517];let y=616;R(p,{x:64,y,w:666,h:1,c:'#9A9A9A'});
   rows.forEach(rr=>{R(p,{x:64,y,w:120,h:38,c:'#E6E6E6'});R(p,{x:397,y,w:120,h:38,c:'#E6E6E6'});R(p,{x:64,y:y+37,w:666,h:1,c:'#D6D6D6'});rr.forEach((v,i)=>T(p,v,{s:i%2?'Medium':'Regular',size:i%2?12:11.5,c:i%2?'#111111':'#222222',x:xs[i]+cw[i]/2,y:y+10,w:cw[i]-6,align:'CENTER'}));y+=38;});
-  T(p,`지금 물가 기준 · 명목 ${A.nominal}% − 물가 ${A.inflation}% · 노후용 금융자산 = 금융자산 − 비상자금 ${A.emergency}개월분 (거주 부동산·보증금 제외) · 매달 저축은 08장 개선 플랜에서 목표와 함께 배분`,{size:10.5,c:'#8A8A8A',x:64,y:y+12,w:666,lh:155});
+  T(p,`명목 ${A.nominal}% 기준 · 물가상승률 미반영 · 노후용 금융자산 = 금융자산 − 비상자금 ${A.emergency}개월분 (거주 부동산·보증금 제외) · 매달 저축은 08장 개선 플랜에서 목표와 함께 배분`,{size:10.5,c:'#8A8A8A',x:64,y:y+12,w:666,lh:155});
   sec(p,'개선 플랜에서 노후에 배분되는 금액',830,false);
   const ra=x.alloc.find(a=>a.pri==='노후');
   if(ra){label(p,{y:878,title:ra.ok?'노후 부족분 충족':'노후 부족분 일부 충족',key:`필요 월 ${won(ra.need)} · 배분 ${won(ra.got)}`,body:ra.ok?'재무목표를 채우고 남는 돈으로\n노후 적립까지 가능합니다.':`매달 ${won(ra.need-ra.got)}이 더 필요합니다.\n연금계좌 활용 여부를 상담합니다.`,w:260});
