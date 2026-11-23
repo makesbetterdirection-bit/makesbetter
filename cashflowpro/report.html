@@ -102,7 +102,7 @@ const LABEL={work:'근로소득',spouse:'배우자 근로소득',biz:'사업소�
   house:'주거비',util:'관리비·공과금',ins:'보험료',tel:'통신·구독',sub:'구독 서비스',club:'모임·동호회',trans:'교통비',car:'자동차 운영비',food:'식비',edu:'교육비',allow:'용돈',etc2:'기타 2'};
 const FIXLABEL=Object.assign({},LABEL,{etc1:'기타 1'});
 let D=DEMO;
-const A={nominal:4.0,inflation:2.0,life:90,unknownRate:4.5,unknownTerm:20,emergency:6,cutA:10,cutB:20,director:'',comment:''};
+const A={nominal:5.0,lo:3.5,hi:10,inflation:2.0,life:90,unknownRate:4.5,unknownTerm:20,emergency:6,cutA:10,cutB:20,director:'',comment:''};
 /* 2026년 근로자 부담 4대보험 요율 — 입력값 점검용(계산에는 입력값 사용) */
 const INS26={pension:.0475,pensionCap:6590000,pensionFloor:410000,health:.03595,ltcOfHealth:.1314,emp:.009};
 const expectedIns=g=>{const m=g/12;return Math.min(Math.max(m,INS26.pensionFloor),INS26.pensionCap)*INS26.pension*12+g*INS26.health*(1+INS26.ltcOfHealth)+g*INS26.emp;};
@@ -175,7 +175,7 @@ function analyze(d){
   const goals=(d.goals||[]).map((g,i)=>{const mBasis=g.name==='노후 자금'&&(g.basis==='monthly'||!+g.amount);
     const n=mBasis?Math.max(12,N):(g.yearsNum||parseInt(g.years)||1)*12, yrs=Math.round(n/12), amt=mBasis?Math.round(need):+g.amount||0, saved=+g.saved||0;
     return {name:g.name,mBasis,living:mBasis?living:0,amt,saved,years:yrs,n,pri:PRI[g.priority]||(i+1),priLabel:g.priority||`${i+1}순위`,pm:goalPM(amt,saved,n,rm),
-      pmLo:goalPM(amt,saved,n,realM(2)),pmHi:goalPM(amt,saved,n,realM(6)),pm0:goalPM(amt,saved,n,0)};}).sort((a,b)=>a.pri-b.pri);
+      pmLo:goalPM(amt,saved,n,realM(A.lo)),pmHi:goalPM(amt,saved,n,realM(A.hi)),pm0:goalPM(amt,saved,n,0)};}).sort((a,b)=>a.pri-b.pri);
   const goalNeed=sum(goals,g=>g.pm);
   // 고객이 '노후 자금'을 목표로 직접 정했으면 그 목표액을 쓰고, 생활비 기준 자동 노후 부족분은 더하지 않음(이중 계산 방지)
   const retGoal=goals.some(g=>g.name==='노후 자금'), retAuto=!retGoal&&ratio<1&&N>0&&extra>0;
@@ -443,7 +443,7 @@ function p3(x,dv){const p=page();header(p,3,'재무목표','Goals');band(p,360);
   sec(p,'목표별 계산',576,false);
   if(x.goals.length){
     const g6=x.goals.slice(0,6);
-    const tb=table(p,{y:624,cols:[140,96,60,96,90,94,90],head:['목표','목표액','기간','모아둔 돈','연 2%',`연 ${A.nominal}% (기본)`,'연 6%'],rowH:32,total:true,
+    const tb=table(p,{y:624,cols:[140,96,60,96,90,94,90],head:['목표','목표액','기간','모아둔 돈',`연 ${A.lo}%`,`연 ${A.nominal}% (기본)`,`연 ${A.hi}%`],rowH:32,total:true,
       rows:g6.map(g=>[`${g.priLabel} ${g.name}`,man(g.amt),g.years+'년',g.saved?man(g.saved):'—',man(g.pmLo),man(g.pm),man(g.pmHi)])
         .concat(x.retAuto?[['노후 부족분',man(x.need-x.have),Math.round(x.N/12)+'년','자산 반영','',man(x.extra),'']]:[])
         .concat([['월 필요액 합계','','','','',man(x.totalNeed),'']])});
