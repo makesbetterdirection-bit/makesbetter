@@ -338,7 +338,7 @@ const PARTOF={3:'GOAL',4:'M4S',5:'M4S',6:'M4S',7:'M4S',8:'DEEP',9:'DEEP',10:'DEE
 function partChip(p,num){const k=PARTOF[num]; if(!k) return; const w=k==='DEEP'?46:k==='GOAL'?44:40, x=64, y=36;
   R(p,{x,y,w,h:18,r:9,c:k==='GOAL'?'#F3F3F3':'#111111',stroke:k==='GOAL'?{c:'#111111',w:1}:null});
   T(p,k,{f:'Onest',s:'Medium',size:9.5,c:k==='GOAL'?'#111111':k==='DEEP'?'#FF5A1F':'#FFFFFF',x:x+w/2,y:y+3.5,w,align:'CENTER',ls:12});}
-function header(p,num,title,sub,latin){partChip(p,num);T(p,String(num),{f:'Onest',size:11,c:'#222222',x:730,y:42,w:40,align:'RIGHT'});R(p,{x:64,y:64,w:666,h:1,c:'#9A9A9A'});T(p,title,{f:latin?'Onest':'IBM Plex Sans KR',s:'Medium',size:32,c:'#111111',x:64,y:92,ls:-2});T(p,sub,{size:13,c:'#222222',x:728,y:114,w:260,align:'RIGHT'});}
+let PNS=0;function header(p,num,title,sub,latin){partChip(p,num);T(p,String(num>10?num-PNS:num),{f:'Onest',size:11,c:'#222222',x:730,y:42,w:40,align:'RIGHT'});R(p,{x:64,y:64,w:666,h:1,c:'#9A9A9A'});T(p,title,{f:latin?'Onest':'IBM Plex Sans KR',s:'Medium',size:32,c:'#111111',x:64,y:92,ls:-2});T(p,sub,{size:13,c:'#222222',x:728,y:114,w:260,align:'RIGHT'});}
 function band(p,h){return R(p,{x:0,y:180,w:794,h,fills:[`url(${IMG_BAND}) center/cover no-repeat`]});}
 function sec(p,text,y,dark){const d=document.createElement('div');d.className='sec';d.style.top=y+'px';d.style.color=dark?'#FFFFFF':'#111111';d.style.fontSize=(SCALE?22:20)+'px';
   const s=document.createElement('span');s.textContent=text;const i=document.createElement('i');i.style.background=dark?'rgba(255,255,255,.45)':'#9A9A9A';d.append(s,i);p.appendChild(d);}
@@ -365,7 +365,8 @@ function derive(x){
   const coverNow=x.totalNeed?Math.max(0,x.steps[0].acc)/x.totalNeed:null, coverPlan=x.totalNeed?x.planCap/x.totalNeed:null;
   return {name,ds,ar,st,fixed,inc,fam,coverNow,coverPlan};
 }
-const TOC=[['02','한눈에 보기'],['03','재무목표'],['04','Money 4 Square'],['05','소득'],['06','고정지출'],['07','변동지출'],['08','개선 플랜'],['09','목표 대안'],['10','상품 점검'],['11','자산'],['12','부채'],['13','노후'],['14','상담 포인트']];
+const TOC0=[['02','한눈에 보기'],['03','재무목표'],['04','Money 4 Square'],['05','소득'],['06','고정지출'],['07','변동지출'],['08','개선 플랜'],['09','목표 대안'],['10','상품 점검'],['11','자산'],['12','부채'],['13','노후'],['14','상담 포인트']];
+let TOC=TOC0;
 
 /* ---------- 상담 우선순위 (목표 달성 중심) ---------- */
 function priorities(x,dv){const out=[];
@@ -729,8 +730,11 @@ function pCons(x,dv){const p=page();header(p,14,'상담 포인트','For the dire
 
 /* ===================== 렌더 & 패널 ===================== */
 function render(){const root=ROOT();root.innerHTML='';const x=analyzeAll(D),dv=derive(x);
-  [p1,p2,p3,p4,p5,p6,p7,p8,pAlt,pProd,pAsset,pDebt,pRet,pCons].forEach(f=>f(x,dv));fit();
-  const m=document.getElementById('who');if(m) m.textContent=`${dv.name}님 · 14장`;}
+  const kiVal=(D.savings||[]).filter(q=>(+q.value||0)>0).reduce((a,q)=>a+(q.type==='기타'?+q.value:0),0),allVal=(D.savings||[]).reduce((a,q)=>a+(+q.value||0),0);
+  /* 상품 점검(10장)은 상품 정보가 부정확하면 뺍니다: 디렉터가 D.skipProd로 지정하거나, 유형 '기타'가 평가금의 절반 이상일 때 */
+  const skipProd=!!D.skipProd||(allVal>0&&kiVal/allVal>=0.5);PNS=skipProd?1:0;TOC=TOC0.filter(t=>!(skipProd&&t[0]==='10')).map(t=>skipProd&&+t[0]>10?[String(+t[0]-1).padStart(2,'0'),t[1]]:t);
+  [p1,p2,p3,p4,p5,p6,p7,p8,pAlt,...(skipProd?[]:[pProd]),pAsset,pDebt,pRet,pCons].forEach(f=>f(x,dv));fit();
+  const m=document.getElementById('who');if(m) m.textContent=`${dv.name}님 · ${14-PNS}장`;}
 function fit(){const vw=document.documentElement.clientWidth,z=matchMedia('print').matches?1:Math.min(1,(vw-24)/794);
   document.querySelectorAll('.pw').forEach(w=>{w.style.width=(794*z)+'px';w.style.height=(1123*z)+'px';w.firstChild.style.transform=`scale(${z})`;});}
 addEventListener('resize',fit);
