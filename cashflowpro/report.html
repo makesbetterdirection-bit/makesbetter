@@ -126,7 +126,8 @@ const PRI={'1순위':1,'2순위':2,'3순위':3,'4순위 이하':4};
 function analyze(d){
   const p=d.profile||{}, married=p.family==='기혼', age=+p.age||0;
   // 소득: 연간 세전/세금/4대보험 → 월 평균 실소득
-  const incomeItems=Object.entries(d.income||{}).map(([k,v])=>{
+  const divRaw=(d.income||{}).int, div={y:divRaw?(+divRaw.gross||0):0}; div.m=div.y/12; /* 월배당금(이자·배당)은 소득에 합산하지 않고 참고로만 기재, 세금도 빼지 않음 */
+  const incomeItems=Object.entries(d.income||{}).filter(([k])=>k!=='int').map(([k,v])=>{
     if(v&&typeof v==='object'){const g=+v.gross||0,t=+v.tax||0,s=+v.ins||0,net=g-t-s;
       const exp=(k==='work'||k==='spouse')&&g?expectedIns(g):null;
       return {k,l:LABEL[k]||k,gross:g,tax:t,ins:s,netY:net,v:net/12,annual:true,exp,insOff:exp?Math.abs(s-exp)/exp>.3:false};}
@@ -194,7 +195,7 @@ function analyze(d){
   // 우선순위대로 배분
   let left=planCap; const alloc=goals.map(g=>{const a=Math.min(left,g.pm); left-=a; return {name:g.name,pri:g.priLabel,need:g.pm,got:a,ok:g.pm<=a+1};});
   if(retAuto){const a=Math.min(left,extra); left-=a; alloc.push({name:'노후 부족분',pri:'노후',need:extra,got:a,ok:extra<=a+1});}
-  return {basicCmp,basicGap,hasBasic,retired,p,married,age,incomeItems,I,Igross,Itax,Iins,fixedItems,F,cardFixed,C,inst,V,loans,L,debt,Ssav,spend,net,target,sRate,gapAmt,
+  return {div,basicCmp,basicGap,hasBasic,retired,p,married,age,incomeItems,I,Igross,Itax,Iins,fixedItems,F,cardFixed,C,inst,V,loans,L,debt,Ssav,spend,net,target,sRate,gapAmt,
     cash,savVal,inv,invCost,estate,dep,fin,assets,netWorth,homeVal,mort,dsr,stress,debtRatio,ltv,emerMonths,
     rAge,living,pen,penUnknown,rm,N,M,G,need,reserve,A0,fvA,fvS,have,ratio,extra,goals,goalNeed,totalNeed,retGoal,retAuto,
     cutItems,cutVar,cutFixed,cutTotal,scenA,scenB,extraVar,surplus,steps,planCap,planGap,alloc};
@@ -501,7 +502,7 @@ function p5(x,dv){const p=page();header(p,5,'소득','Income');band(p,330);sec(p
   const y2=tb+76;dots(p,y2);
   label(p,{y:y2+22,title:'이렇게 계산한 이유',body:'통장에 찍히는 체감 금액이 아니라\n상여·연말정산까지 반영한\n1년 확정 금액을 12로 나눴습니다.',w:230});
   const off=dv.inc.filter(i=>i.insOff);
-  const lines=['근로소득: 근로소득 원천징수영수증의 총급여, 결정세액(소득세·지방소득세), 국민연금·건강·장기요양·고용보험료','사업·임대소득: 종합소득세 신고서의 소득금액과 결정세액, 지역가입 국민연금·건강보험료','2026년 근로자 부담 요율: 국민연금 4.75% · 건강보험 3.595% · 장기요양 건강보험료의 13.14% · 고용보험 0.9%'];
+  const lines=['근로소득: 근로소득 원천징수영수증의 총급여, 결정세액(소득세·지방소득세), 국민연금·건강·장기요양·고용보험료','사업·임대소득: 종합소득세 신고서의 소득금액과 결정세액, 지역가입 국민연금·건강보험료','2026년 근로자 부담 요율: 국민연금 4.75% · 건강보험 3.595% · 장기요양 건강보험료의 13.14% · 고용보험 0.9%'].concat(x.div.y>0?[`월배당금(참고): 월 ${man(x.div.m)} · 연 ${man(x.div.y)} — 소득에 합산하지 않았고 세금도 빼지 않았습니다. 일반 계좌분 과세는 상담에서 확인합니다`]:[]);
   T(p,lines.map(l=>'· '+l).join('\n'),{size:11,c:'#666666',x:310,y:y2+24,w:420,lh:165});
   if(off.length) T(p,'※ '+off.map(i=>`${i.l} 4대보험 ${man(i.ins)}이 요율 계산값 ${man(i.exp)}과 30% 이상 차이`).join(' · ')+' → 원천징수영수증 재확인',{s:'Medium',size:11,c:'#6E4700',x:64,y:1056,w:666});
   conf(p);}

@@ -361,7 +361,7 @@ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({data:S,cur}))}catch
 if(cur==='mode' && S.mode){ cur='intro'; }
 
 const INCOME=[['work','근로소득','회사 급여'],['spouse','배우자 근로소득','배우자 회사 급여'],['biz','사업소득','자영업·프리랜서'],
-  ['rent','임대소득','월세·임대 수입'],['int','이자·배당소득','예금 이자·주식 배당'],['pen','연금소득','국민연금·개인연금 등'],['etc1','기타소득','부업·강연료 등']];
+  ['rent','임대소득','월세·임대 수입'],['int','월배당금','월배당·이자 (소득에 합산하지 않고 참고로만 기재)'],['pen','연금소득','국민연금·개인연금 등'],['etc1','기타소득','부업·강연료 등']];
 /* 소득별 서류와 입력 칸 (모두 1년 기준) */
 const INC_DOC={work:['근로소득 원천징수영수증','1년 세전 총급여','1년 결정세액 (소득세 + 지방소득세)','1년 4대보험료 (국민연금 + 건강 + 장기요양 + 고용)'],
   spouse:['배우자 근로소득 원천징수영수증','1년 세전 총급여','1년 결정세액 (소득세 + 지방소득세)','1년 4대보험료 (국민연금 + 건강 + 장기요양 + 고용)'],
@@ -373,12 +373,8 @@ const INC_DOC={work:['근로소득 원천징수영수증','1년 세전 총급여
 /* 2026년 근로자 부담 4대보험 요율 — 입력값 참고용: 국민연금 4.75%(기준소득월액 41만~659만), 건강 3.595%, 장기요양 건강보험료의 13.14%, 고용 0.9% */
 const insRef=g=>{const m=g/12;return Math.round(Math.min(Math.max(m,410000),6590000)*.0475*12+g*.03595*1.1314+g*.009);};
 // 이자·배당: 원천징수 15.4%(소득세 14% + 지방소득세 1.4%) 고정, 4대보험은 떼지 않음 → 세전 금액만 받고 자동 계산
-const INT_TAX=0.154, intAuto=o=>{o.tax=Math.round((o.gross||0)*INT_TAX); o.ins=0; o.taxSet=o.insSet=true; return o;};
-const intCalc=o=>{const g=o.gross||0; let w='';
-  if(g>20000000) w=`<span class="int-w"><b>연 2,000만 원 초과 · 금융소득종합과세 대상</b>초과분은 다음 해 5월 다른 소득과 합산해 6~45% 세율로 정산합니다. 실제 세금은 담당 디렉터가 상담에서 확인합니다.</span>`;
-  else if(g>10000000) w=`<span class="int-w"><b>연 1,000만 원 초과 · 건강보험 확인</b>건강보험 피부양자라면 이 금액 전액이 소득으로 잡힙니다. 다른 소득과 합쳐 연 2,000만 원을 넘으면 피부양자에서 빠집니다.</span>`;
-  return `<div class="int-auto"><div><span>원천징수 세금 <small>15.4% · 소득세 14% + 지방소득세 1.4%</small></span><b class="num">${g?kor(Math.round(g*INT_TAX)):'—'}</b></div><div><span>4대보험 <small>이자·배당에서는 떼지 않습니다</small></span><b class="num">0 원</b></div>${w}</div>`;};
-const incNet=o=>o?Math.max(0,(o.gross||0)-(o.tax||0)-(o.ins||0))/12:0;
+const INT_TAX=0, intAuto=o=>{o.tax=Math.round((o.gross||0)*INT_TAX); o.ins=0; o.taxSet=o.insSet=true; return o;};
+const intCalc=o=>{const g=o.gross||0; return `<div class="int-auto"><div><span>월배당금 <small>1년 합계 ÷ 12 · 소득에 합산하지 않습니다</small></span><b class="num">${g?kor(Math.round(g/12)):'—'}</b></div><div><span>세금 <small>과세 이연 기준으로 빼지 않습니다</small></span><b class="num">0 원</b></div></div>`;}; const incNet=o=>o?Math.max(0,(o.gross||0)-(o.tax||0)-(o.ins||0))/12:0;
 const FIXED=[['house','주거비','월세 등'],['util','관리비·공과금','전기·가스·수도 포함'],['ins','보험료','실손·종신·자동차 등'],
   ['tel','통신·구독','휴대폰·인터넷·OTT·멤버십'],['trans','교통비','대중교통·택시'],['car','자동차 운영비','주유·정비 등'],
   ['food','식비','장보기 등 고정 지출'],['edu','교육비','학원·교재'],['allow','용돈','부모님·자녀 용돈'],['club','모임·동호회','회비·정기 모임'],['etc1','기타 1','그 밖의 고정지출'],['etc2','기타 2','그 밖의 고정지출']];
@@ -680,7 +676,7 @@ function render(){
     const o=S.income[pg.k]||{}, dc=INC_DOC[pg.k], q=[100,500,1000];
     const isW=pg.k==='work'||pg.k==='spouse';
     h=`${head(sub,pg.l,`${pg.h}. <b class="doc-hl">${dc[0]}</b>을 보고 1년 금액을 적어주세요.`)}
-    <div class="note"><span>${pg.k==='int'?'<b>세금 떼기 전</b> 1년 이자·배당 합계만 적어주세요. 세금은 15.4%로 자동 계산하고, 4대보험은 이 소득에서 떼지 않아 입력하지 않습니다.':'통장에 들어오는 금액이 아니라 <b>1년 확정 금액</b>으로 계산합니다. 상여·성과급·연말정산까지 반영돼 더 정확합니다. 해당 없는 칸은 <b>0</b>을 적어주세요.'}</span></div>
+    <div class="note"><span>${pg.k==='int'?'1년 월배당·이자 합계만 적어주세요. 소득에 합산하지 않고 월배당금(월·년)으로만 기재하며, 세금은 빼지 않습니다(과세 이연 기준).':'통장에 들어오는 금액이 아니라 <b>1년 확정 금액</b>으로 계산합니다. 상여·성과급·연말정산까지 반영돼 더 정확합니다. 해당 없는 칸은 <b>0</b>을 적어주세요.'}</span></div>
     <section class="card stack">
       ${moneyField(`income-${pg.k}-gross`,o.gross,dc[1],pg.k==='int'?'<span class="where-d">예금·적금 이자 + 주식·ETF·펀드 분배금을 모두 더한 금액. 금융사 앱의 이자·배당 지급 내역에서 세전 금액을 보세요</span>':isW?WH('21','총급여','위쪽 근무처별 16번 \'계\'가 아니라 정산명세의 21번 총급여입니다 (비과세 제외 금액)'):'',q)}
       ${pg.k==='int'?`<div data-intcalc>${intCalc(intAuto(o))}</div>`:`${moneyField(`income-${pg.k}-tax`,(o.taxSet&&!o.tax)?'0':o.tax,dc[2],isW?WH('72','결정세액','소득세 칸 + 지방소득세 칸을 더해 적어주세요. 맨 아래 차감징수세액(환급·추가납부)이 아닙니다'):'',[10,50,100])}
