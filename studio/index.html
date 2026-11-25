@@ -831,9 +831,22 @@ html.snapnear .snapstop:not(.near),html.snapnear .hero{scroll-snap-align:none}
 .pk-st p{margin-top:6px;font-size:14px;line-height:22px;color:var(--sub)}
 .pk-st.stale b{color:#C2410C}
 </style>
-<script>/* 바로가기 링크(?go=res): 오프닝 화면 없이 '이 달의 월배당' 배분 카드로 바로 */
-(function(){try{if(/[?&]go=res\b/.test(location.search)){document.documentElement.classList.add('nohero');if(!location.hash)history.replaceState(null,'',location.pathname+location.search+'#res')}}catch(e){}})();
-</script><style>html.nohero .hero{display:none!important}#res{display:block;position:relative;top:-20px;height:0;visibility:hidden}</style>
+<script>/* 바로가기 링크(?go=res): 오프닝·위 내용 없이 '이달의 배분' 카드부터, 추천 ETF 버튼 강조 */
+(function(){try{if(/[?&]go=res\b/.test(location.search)){document.documentElement.classList.add('nohero');if(location.hash==='#res')history.replaceState(null,'',location.pathname+location.search)}}catch(e){}})();
+</script><style>
+html.nohero .hero,html.nohero #month,html.nohero #signal .eyebrow,html.nohero #sigTitle,html.nohero #signal .lede,html.nohero #todayCard,html.nohero #rollCard,html.nohero #signal .mid-h{display:none!important}
+html.nohero #signal{padding-top:calc(76px + env(safe-area-inset-top,0px))!important}
+html.nohero #signal .sec-body{margin-top:0!important}
+#res{display:none}
+html.nohero #signal a.btn{position:relative;overflow:visible;background:#FF5A1F!important;color:#fff;font-weight:700;isolation:isolate;animation:mbBeat 1.6s cubic-bezier(.3,0,.2,1) .9s infinite}
+html.nohero #signal a.btn::before,html.nohero #signal a.btn::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
+html.nohero #signal a.btn::before{z-index:-1;box-shadow:0 0 0 0 rgba(255,90,31,.55);animation:mbRing 1.6s ease-out .9s infinite}
+html.nohero #signal a.btn::after{background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%) no-repeat;background-size:220% 100%;background-position:160% 0;animation:mbShine 3.2s ease-in-out 1.2s infinite}
+@keyframes mbBeat{0%,100%{transform:scale(1)}12%{transform:scale(1.06)}24%{transform:scale(.98)}36%{transform:scale(1.04)}52%{transform:scale(1)}}
+@keyframes mbRing{0%{box-shadow:0 0 0 0 rgba(255,90,31,.6)}70%,100%{box-shadow:0 0 0 18px rgba(255,90,31,0)}}
+@keyframes mbShine{0%{background-position:160% 0}45%,100%{background-position:-60% 0}}
+@media (prefers-reduced-motion:reduce){html.nohero #signal a.btn,html.nohero #signal a.btn::before,html.nohero #signal a.btn::after{animation:none}}
+</style>
 </head>
 <body>
 <header class="hdr" id="hdr">
