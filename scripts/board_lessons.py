@@ -23,6 +23,12 @@ EDGE_RULE = 1.0  # 규칙으로 올리는 평균 우위 크기(%p)
 N_MISS = 10      # 기본 판단 놓친 기회 규칙의 최소 판단 수
 MISS_RATE = 40.0 # 놓친 기회 비율(%) 기준
 
+BENCH = {"480030": 20, "494300": 15, "498400": 10, "497570": 5, "485690": 5, "0036R0": 5,
+         "473330": 10, "0022T0": 10, "332610": 5, "441640": 5, "488770": 10}
+N_DAYS = 10      # 수치 구간을 비교할 수 있는 최소 판단일 수
+VIX_BANDS = [("20 미만", lambda v: v < 20), ("20~30", lambda v: 20 <= v < 30), ("30 이상", lambda v: v >= 30)]
+FNG_BANDS = [("25 미만(극단 공포)", lambda v: v < 25), ("25~45(공포)", lambda v: 25 <= v < 45), ("45 이상", lambda v: v >= 45)]
+
 NAME = {"488770": "머니마켓", "473330": "美30년국채CC", "332610": "美단기회사채", "480030": "美500CC",
         "441640": "美배당CC", "494300": "나스닥100CC", "498400": "200위클리CC", "0022T0": "국제금CC",
         "497570": "필라AI반도체", "485690": "AI밸류체인", "0036R0": "휴머노이드"}
@@ -57,7 +63,32 @@ def eval_entry(adj, e, h):
         calls.append({"date": e["date"], "code": c, "call": x["call"], "conf": x.get("conf"),
                       "drivers": x.get("drivers") or [], "rel": rel,
                       "edge": s * rel if s else None, "miss": (not s) and abs(rel) > MISS})
-    return {"calls": calls, "to": to}
+    wb = sum(BENCH[c] for c in rs)
+    wr = sum(BENCH[c] * (e["etf"][c].get("tilt") or 1) for c in rs)
+    base = sum(BENCH[c] * rs[c] for c in rs) / wb
+    rec = sum(BENCH[c] * (e["etf"][c].get("tilt") or 1) * rs[c] for c in rs) / wr
+    return {"calls": calls, "to": to, "base": base, "excess": rec - base}
+
+
+def pick(inputs, want, skip=()):
+    """판단 기록의 inputs 에서 이름에 want 가 들어가고 skip 은 안 들어간 첫 숫자."""
+    for k, v in (inputs or {}).items():
+        ku = k.upper()
+        if want in ku and not any(x in ku for x in skip) and isinstance(v, (int, float)):
+            return float(v)
+    return None
+
+
+def band_stats(days, key, bands):
+    out = []
+    for label, f in bands:
+        d = [x for x in days if x[key] is not None and f(x[key])]
+        n = len(d)
+        out.append({"band": label, "days": n,
+                    "base_ret": round(sum(x["base"] for x in d) / n, 2) if n else None,
+                    "excess": round(sum(x["excess"] for x in d) / n, 2) if n else None,
+                    "enough": n >= N_DAYS})
+    return out
 
 
 def agg(calls):
@@ -80,13 +111,20 @@ def main():
     log = json.load(open(os.path.join(BOARD, "log.json"), encoding="utf-8"))
     px = json.load(open(os.path.join(BOARD, "prices.json"), encoding="utf-8"))
     ents = sorted((e for e in log["entries"] if str(e.get("by", "")).startswith("Claude")), key=lambda e: e["date"])
-    done, calls, last_to = [], [], None
+    done, calls, last_to, days = [], [], None, []
     for e in ents:
         r = eval_entry(px["adj"], e, H)
         if r:
             done.append(e["date"])
             calls += r["calls"]
             last_to = r["to"]
+            days.append({"date": e["date"], "base": r["base"], "excess": r["excess"],
+                         "regime": (e.get("regime") or {}).get("call"),
+                         "vix": pick(e.get("inputs"), "VIX", skip=("VKOSPI", "등락")),
+                         "fng": pick(e.get("inputs"), "공포", skip=("등락",))})
+
+    for x in days:
+        x["regime_i"] = {"적극": 0, "분할": 1, "대기": 2}.get(x["regime"])
 
     # 근거 × 방향
     by = {}
@@ -162,7 +200,10 @@ def main():
         "asof": last_to, "horizon": H, "scored_days": len(done), "scored_calls": sum(1 for c in calls if c["edge"] is not None),
         "thresholds": {"rule_min_calls": N_RULE, "rule_edge_pp": EDGE_RULE, "miss_pp": MISS, "base_min_calls": N_MISS, "base_miss_rate": MISS_RATE},
         "rules": rules, "watch": watch,
-        "stats": {"driver_call": drivers, "etf_call": etfs, "base": base, "conf": conf},
+        "stats": {"driver_call": drivers, "etf_call": etfs, "base": base, "conf": conf,
+                  "regime": band_stats(days, "regime_i", [(k, (lambda v, i=i: v == i)) for i, k in enumerate(("적극", "분할", "대기"))]),
+                  "vix": band_stats(days, "vix", VIX_BANDS), "fng": band_stats(days, "fng", FNG_BANDS),
+                  "note": "base_ret = 판단일 뒤 %d거래일 Better.7 기본 비중 수익률(%%), excess = 초과 성과(%%p). enough 가 true 인 구간이 둘 이상일 때만 구간끼리 비교한다." % H},
     }
 
     path = os.path.join(BOARD, "lessons.json")

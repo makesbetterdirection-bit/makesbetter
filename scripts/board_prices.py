@@ -5,6 +5,7 @@
 - 11종 ETF: 야후파이낸스 일별 '수정종가(adjclose)'. 분배금이 반영된 값이라 커버드콜 ETF의 분배락 하락이 오차로 잡히지 않는다.
 - 보드는 판단일 종가(판단일이 휴장이면 그다음 거래일 종가)를 기준으로 5·20거래일 뒤 수익률을 계산한다.
 - 조회 실패 종목은 기존 이력을 유지한다(추정값으로 채우지 않음).
+- "extra": 보조 지표(scripts/board_extra.py). 보드 화면은 쓰지 않고 일일 판단이 읽는다.
 출력: changed=true|false
 """
 import json
@@ -42,9 +43,10 @@ def adj_history(code):
 
 
 def main():
-    old = {}
+    old, old_extra = {}, {}
     if os.path.exists(OUT):
-        old = json.load(open(OUT, encoding="utf-8")).get("adj", {})
+        prev = json.load(open(OUT, encoding="utf-8"))
+        old, old_extra = prev.get("adj", {}), prev.get("extra", {})
     adj, failed = {}, []
     for c in CODES:
         try:
@@ -54,12 +56,20 @@ def main():
             log("FAIL", c, e)
             if c in old:
                 adj[c] = old[c]
-    if not adj or old == adj:
+    # 보조 지표(추세·실질금리·채권 변동성·금리차). 실패해도 가격 저장은 계속한다.
+    extra = old_extra
+    try:
+        from board_extra import build as build_extra
+        from update_indicators import fred, yahoo
+        extra = build_extra(yahoo, fred, old_extra, log)
+    except Exception as e:  # noqa: BLE001
+        log("board_extra 실패", e)
+    if not adj or (old == adj and old_extra == extra):
         print("changed=false")
         return
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     json.dump({"updated": datetime.now(KST).strftime("%Y-%m-%d %H:%M KST"), "source": "야후파이낸스 수정종가(분배금 반영)",
-               "failed": failed, "adj": adj}, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+               "failed": failed, "extra": extra, "adj": adj}, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     print("changed=true")
     log(f"보드 가격 {len(adj)}종 저장, 실패 {failed}")
 
