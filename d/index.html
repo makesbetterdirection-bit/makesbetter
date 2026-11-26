@@ -435,6 +435,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   /* 24시간 마감: 처음 연 순간부터. 채널을 추가해 선물을 열면 멈춤 */
   (function(){
     if(/^\/s\//.test(location.pathname)||/[?&]send=1/.test(location.search))return; // 보내는 사람 화면에는 마감 없음
+    if(HD){all('.w-tm,.env-tm',function(e){e.style.display='none'});return} // 현대자동차 DC 전환판(/d/lee1)은 24시간 마감 없음 (11/26)
     var DUR=864e5,T0=null,KEY='mb-d-t-'+k,qs=new URLSearchParams(location.search),expired=false;
     if(qs.get('reset')){try{localStorage.removeItem(KEY);localStorage.removeItem('mb-d-ch')}catch(e){}}
     try{T0=+localStorage.getItem(KEY)||null}catch(e){}
