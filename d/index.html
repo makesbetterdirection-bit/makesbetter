@@ -373,6 +373,8 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   /* 디렉터별 선물 표기(이종호: Private Collection + 웰컴 드링크, 11/19) — 없으면 기본 「선물 3가지」 */
   if(d.gift){all('[data-d=gift]',function(e){e.innerHTML=d.gift});var gh=document.getElementById('giftH');if(gh)gh.innerHTML='채널을 추가하면<br>'+d.gift+'과<br>코칭이 열려요.'}
   if(d.drink)all('[data-d=drink]',function(e){e.style.display=''});
+  /* 현대자동차 퇴직연금 DC 전환용 보내기 화면(/s/lee1 = mbkr.my/leejoin1, 11/26) — 보내기 카드만 4줄로. 받는 분 초대장(/d/lee)은 그대로 */
+  if(/^\/s\/lee1\/?$/.test(location.pathname)){var sg=document.querySelector('.sd-g');if(sg)sg.innerHTML='<li><b>현대자동차 퇴직연금 DC 전환 1:1 코칭 2시간</b><span><s>25만원</s> 면제 · 전환 판단부터 첫 운용 설정까지</span></li>'+'<li><b>'+(d.gift||'선물 3가지')+'</b><span>금융 I.Q 테스트 · 전자책 2권 · 현금흐름 진단</span></li>'+'<li><b>웰컴 드링크</b><span>스타벅스 Hot or Ice 선택</span></li>'+'<li><b>콜센터가 아닌 전문 디렉터의 코칭</b><span>2개월 점검 · 6개월 피드백까지 같은 디렉터가 직접</span></li>'}
   /* dc: 퇴직연금 DC 항목(코칭 대상 첫 줄 · 자주 묻는 질문 Q1)은 dc:1 인 디렉터(이종호)만 — 나머지는 빼고 Q 번호를 다시 매김 */
   if(!d.dc){[].forEach.call(document.querySelectorAll('.w-ck li'),function(x){if(/퇴직연금 DC/.test(x.textContent))x.parentNode.removeChild(x)});
     var nq=document.querySelectorAll('.nds details.nd');if(nq.length&&/퇴직연금, 그냥 둬도/.test(nq[0].textContent)){nq[0].parentNode.removeChild(nq[0]);nq=document.querySelectorAll('.nds details.nd');
