@@ -164,7 +164,7 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
       else if(k==="method"){multi=true;h='<h2 class="cq-h">지금 자산은 주로<br>어떻게 운용하세요?</h2><p class="cq-p">해당하는 것을 모두 골라 주세요.</p>'+opts("assetMethod",METHOD,true)}
       else if(k==="hdtype"){h='<h2 class="cq-h">어떤 상담이<br>필요하세요?</h2>'+opts("hdType",HD_TYPE,false,"two big")}
       else if(k==="hdamount"){h='<h2 class="cq-h">예상 이전 &amp; 수령<br>금액은요?</h2><p class="cq-p">대략 어느 정도인지 골라 주세요.</p>'+opts("hdAmount",HD_AMT)}
-      else if(k==="hddate"){multi=true;h='<h2 class="cq-h">코칭 희망 날짜를<br>골라 주세요</h2><p class="cq-p">가능한 날을 모두 골라 주세요. 시간은 디렉터가 연락드려 맞춰요.</p>'+opts("hdDates",HD_DATE,true)}
+      else if(k==="hddate"){multi=true;h='<h2 class="cq-h">코칭 희망 날짜를<br>골라 주세요</h2><p class="cq-p">가능한 날을 2개 골라 주세요. 시간은 디렉터가 연락드려 맞춰요.</p>'+opts("hdDates",HD_DATE,true).replace('data-multi="1"','data-multi="1" data-max="2"')}
       else if(k==="goal"){multi=true;h='<h2 class="cq-h">무엇을 위해<br>모으고 계세요?</h2><p class="cq-p">해당하는 것을 모두 골라 주세요.</p>'+opts("assetGoal",GOAL,true)}
       else if(k==="income"){h='<h2 class="cq-h">월급 말고,<br>어떤 소득을 더 만들고 싶으세요?</h2>'+opts("incomeType",INCOME)}
       else if(k==="accounts"){multi=true;h='<h2 class="cq-h">점검받고 싶은<br>계좌가 있나요?</h2><p class="cq-p">가지고 있는 계좌를 모두 골라 주세요. 없으면 그냥 다음으로.</p>'+opts("accounts",ACCT,true,"two")}
@@ -191,14 +191,14 @@ body.cf-hero::after{content:"";position:fixed;inset:0;background-image:var(--gra
         if(k==="need"&&!S.needInfo.length)return err("하나 이상 골라 주세요.");
         if(k==="hdtype"&&!S.hdType)return err("하나를 골라 주세요.");
         if(k==="hdamount"&&!S.hdAmount)return err("하나를 골라 주세요.");
-        if(k==="hddate"&&!S.hdDates.length)return err("가능한 날을 하나 이상 골라 주세요.");
+        if(k==="hddate"&&S.hdDates.length<2)return err("가능한 날을 2개 골라 주세요.");
         if(k==="review")return send();
       }
       S.q+=dir;draw()}
     root.querySelector("#cq-next").onclick=function(){go(1)};
     var bk=root.querySelector("#cq-back");if(bk)bk.onclick=function(){go(-1)};
     [].forEach.call(root.querySelectorAll(".cq-opts"),function(g){g.addEventListener("click",function(e){var b=e.target.closest(".cq-o");if(!b)return;var set=g.getAttribute("data-set"),v=b.getAttribute("data-v");
-      if(g.getAttribute("data-multi")){var i=S[set].indexOf(v);if(i>-1)S[set].splice(i,1);else S[set].push(v);b.classList.toggle("on")}
+      if(g.getAttribute("data-multi")){var i=S[set].indexOf(v),mx=+g.getAttribute("data-max")||0;if(i>-1)S[set].splice(i,1);else{if(mx&&S[set].length>=mx){var old=S[set].shift();[].forEach.call(g.querySelectorAll(".cq-o"),function(x){if(x.getAttribute("data-v")===old)x.classList.remove("on")})}S[set].push(v)}b.classList.toggle("on")}
       else{S[set]=v;[].forEach.call(g.querySelectorAll(".cq-o"),function(x){x.classList.toggle("on",x===b)});setTimeout(function(){go(1)},220)}})});
     var ph=root.querySelector("#s-phone");if(ph)ph.addEventListener("input",function(){var d=ph.value.replace(/\D/g,"").slice(0,11);ph.value=d.length>7?d.replace(/(\d{3})(\d{3,4})(\d{4})/,"$1-$2-$3"):d.length>3?d.slice(0,3)+"-"+d.slice(3):d});
     [].forEach.call(root.querySelectorAll("input"),function(i){i.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();var all=[].slice.call(root.querySelectorAll("input")),ix=all.indexOf(i);if(ix<all.length-1)all[ix+1].focus();else go(1)}})});
