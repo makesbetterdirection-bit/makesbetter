@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18 12:54",
+ "updated": "2026-11-26 12:54",
  "hol": [
   "2026-10-05",
   "2026-10-09",
@@ -449,10 +449,10 @@
    "buy": "2026-11-26",
    "rec": "2026-11-30",
    "pay": "2026-12-02",
-   "amt": null,
-   "rate": null,
+   "amt": 97,
+   "rate": 1.25,
    "est": true,
-   "src": ""
+   "src": "https://www.samsungfund.com/etf/lounge/notice-view.do?no=81185"
   },
   {
    "code": "494300",
@@ -461,10 +461,10 @@
    "buy": "2026-11-26",
    "rec": "2026-11-30",
    "pay": "2026-12-02",
-   "amt": null,
-   "rate": null,
+   "amt": 140,
+   "rate": 1.9,
    "est": true,
-   "src": ""
+   "src": "https://www.samsungfund.com/etf/lounge/notice-view.do?no=81185"
   },
   {
    "code": "441640",
