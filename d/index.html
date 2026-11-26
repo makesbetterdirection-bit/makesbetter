@@ -376,12 +376,21 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   if(d.gift){all('[data-d=gift]',function(e){e.innerHTML=d.gift});var gh=document.getElementById('giftH');if(gh)gh.innerHTML='채널을 추가하면<br>'+d.gift+'과<br>코칭이 열려요.'}
   if(d.drink)all('[data-d=drink]',function(e){e.style.display=''});
   /* 현대자동차 퇴직연금 DC 전환판: 보내기 카드 4줄 + 받는 분 초대장(/d/lee1)의 코칭 문구 */
-  if(HD){var sc=document.querySelector('.sd-card');if(sc){sc.src='/go/img/inv-card-dc2.webp';sc.alt='DC전환 & IRP이전 초대장';sc.style.width='270px';sc.style.borderRadius='14px'}var sh=document.querySelector('.sd-in h1');if(sh)sh.innerHTML='떠오르는 현대인에게<br>초대장을 전해 주세요';var sg=document.querySelector('.sd-g');if(sg)sg.innerHTML='<li><b>현대자동차 퇴직연금 DC 전환 1:1 코칭 2시간</b><span><s>25만원</s> 면제 · 전환 판단부터 첫 운용 설정까지</span></li>'+'<li><b>'+(d.gift||'선물 3가지')+'</b><span>금융 I.Q 테스트 · 전자책 2권 · 현금흐름 진단</span></li>'+'<li><b>웰컴 드링크</b><span>스타벅스 Hot or Ice 선택</span></li>'+'<li><b>콜센터가 아닌 전문 디렉터의 코칭</b><span>2개월 점검 · 6개월 피드백까지 같은 디렉터가 직접</span></li>';
-    var h1=document.querySelector('.w-hero h1');if(h1)h1.innerHTML=h1.innerHTML.replace('전문 디렉터 머니 코칭','퇴직연금 DC 전환 코칭');
-    var wb=document.querySelector('.w-hero .w-bar span');if(wb&&/1:1 코칭 2시간/.test(wb.textContent))wb.textContent='DC 전환 1:1 코칭 2시간';
-    var bp=document.querySelector('.w-rw.best p');if(bp)bp.textContent='DC 전환 판단 · 첫 운용 설정 · 제2의 월급 전략';
-    var tl=document.querySelectorAll('.w-tl li');if(tl.length){var t4=tl[tl.length-1];t4.innerHTML='<b>2시간 DC 전환 1:1 코칭</b><span>전환 판단 · 첫 운용 설정 · 제2의 월급 전략</span>';
-      var t5=document.createElement('li');t5.className='rvl';t5.innerHTML='<b>콜센터가 아닌 같은 디렉터가</b><span>2개월 점검 · 6개월 피드백까지 직접</span>';t4.parentNode.appendChild(t5)}}
+  if(HD){var sc=document.querySelector('.sd-card');if(sc){sc.src='/go/img/inv-card-dc2.webp';sc.alt='DC전환 & IRP이전 초대장';sc.style.width='270px';sc.style.borderRadius='14px'}var sh=document.querySelector('.sd-in h1');if(sh)sh.innerHTML='떠오르는 현대인에게<br>초대장을 전해 주세요';var sg=document.querySelector('.sd-g');if(sg)sg.innerHTML='<li><b>현대자동차 퇴직연금 DC 전환 &amp; IRP 이전 1:1 코칭 2시간</b><span><s>25만원</s> 면제 · 판단부터 첫 운용 설정까지</span></li>'+'<li><b>'+(d.gift||'선물 3가지')+'</b><span>금융 I.Q 테스트 · 전자책 2권 · 현금흐름 진단</span></li>'+'<li><b>웰컴 드링크</b><span>스타벅스 Hot or Ice 선택</span></li>'+'<li><b>콜센터가 아닌 전문 디렉터의 코칭</b><span>2개월 점검 · 6개월 피드백까지 같은 디렉터가 직접</span></li>';
+    var h1=document.querySelector('.w-hero h1');if(h1)h1.innerHTML=h1.innerHTML.replace('전문 디렉터 머니 코칭','DC 전환 &amp; IRP 이전 코칭');
+    var wb=document.querySelector('.w-hero .w-bar span');if(wb&&/1:1 코칭 2시간/.test(wb.textContent))wb.textContent='DC·IRP 1:1 코칭 2시간';
+    var bp=document.querySelector('.w-rw.best p');if(bp)bp.textContent='DC 전환 · IRP 이전 판단 · 첫 운용 설정 · 연금 월배당';
+    var tl=document.querySelectorAll('.w-tl li');if(tl.length){var t4=tl[tl.length-1];t4.innerHTML='<b>2시간 DC 전환 &amp; IRP 이전 코칭</b><span>판단부터 첫 운용 설정 · 연금 월배당까지</span>';
+      var t5=document.createElement('li');t5.className='rvl';t5.innerHTML='<b>콜센터가 아닌 같은 디렉터가</b><span>2개월 점검 · 6개월 피드백까지 직접</span>';t4.parentNode.appendChild(t5)}
+    var bd=document.querySelector('.w-hero .w-bd');if(bd)bd.textContent='초대 한정 · 선착순 50명';
+    var vs=document.querySelector('.w-vs');if(vs)vs.innerHTML='<div><small>혼자 할 때</small><p>DC형이 뭔지,<br>어떻게 투자하는지 막막해요</p><p>누구한테 물어봐야 할지<br>모르겠어요</p><p>그때마다 콜센터나<br>지점을 찾아가야 해요</p></div>'+
+      '<div class="on"><small>디렉터와 함께</small><p>언제든 1:1로<br>코칭하는 디렉터</p><p>6개월에 한 번<br>자산 점검 피드백</p><p>연금으로<br>월배당 만들기</p></div>';
+    /* 실제 계좌 금액: 화면에 들어오면 0부터 올라가는 숫자 */
+    (function(){var a=document.getElementById('amt');if(!a)return;var v=+a.getAttribute('data-v')||0,f=function(n){return Math.round(n).toLocaleString('ko-KR')};
+      var rm=false;try{rm=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}if(rm||!('IntersectionObserver' in window))return;
+      a.style.fontVariantNumeric='tabular-nums';a.textContent='0';var run=false;
+      function go(){if(run)return;run=true;var t0=0,D=1800;function st(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/D),e=1-Math.pow(1-p,3);a.textContent=f(v*e);if(p<1)requestAnimationFrame(st);else a.textContent=f(v)}requestAnimationFrame(st)}
+      var io2=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){go();io2.disconnect()}})},{threshold:.5});io2.observe(a)})()}
   /* dc: 퇴직연금 DC 항목(코칭 대상 첫 줄 · 자주 묻는 질문 Q1)은 dc:1 인 디렉터(이종호)만 — 나머지는 빼고 Q 번호를 다시 매김 */
   if(!d.dc){[].forEach.call(document.querySelectorAll('.w-ck li'),function(x){if(/퇴직연금 DC/.test(x.textContent))x.parentNode.removeChild(x)});
     var nq=document.querySelectorAll('.nds details.nd');if(nq.length&&/퇴직연금, 그냥 둬도/.test(nq[0].textContent)){nq[0].parentNode.removeChild(nq[0]);nq=document.querySelectorAll('.nds details.nd');
@@ -397,7 +406,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   if(d.career){all('[data-d=career]',function(e){e.innerHTML=d.career.map(function(c){return '<li>'+c+'</li>'}).join('')+(d.motto?'<li class="dx-m">“'+d.motto+'”</li>':'')})}
   all('[data-d=rvwho]',function(e){e.textContent=d.who});all('[data-d=rv]',function(e){e.href=d.rv?'https://mbkr.my/review/?bmode=view&idx='+d.rv:'https://mbkr.my/review'});
   var by='';try{by=(new URLSearchParams(location.search).get('by')||'').trim().slice(0,10)}catch(e){}
-  all('[data-d=coach]',function(e){e.href='/sip/?d='+encodeURIComponent(d.name)+(by?'&by='+encodeURIComponent(by):'')});all('[data-d=cf]',function(e){e.href='/cash'+k});all('[data-d=sip]',function(e){e.href='/sip'+k+(by?'?by='+encodeURIComponent(by):'')});
+  all('[data-d=coach]',function(e){e.href='/sip/?d='+encodeURIComponent(d.name)+(HD?'&hd=1':'')+(by?'&by='+encodeURIComponent(by):'')});all('[data-d=cf]',function(e){e.href='/cash'+k});all('[data-d=sip]',function(e){e.href=HD?'/sip/?d='+encodeURIComponent(d.name)+'&hd=1'+(by?'&by='+encodeURIComponent(by):''):'/sip'+k+(by?'?by='+encodeURIComponent(by):'')});
   document.title=d.name+' '+d.role+' | MAKESBETTER';
   var opened=false,clicked=false,pend='';
   function goldRain(ms){var c=document.getElementById('gold');if(!c||!c.getContext)return;var x=c.getContext('2d'),W=c.width=innerWidth*2,H=c.height=innerHeight*2,t0=performance.now(),P=[];c.style.display='block';

@@ -148,14 +148,17 @@
 
   function html(raw) {
     var d = norm(raw);
-    var rows = row("가장 불편한 재정 고민", vals(d.worry)) +
+    var hd = !!d.hdType; /* 현대자동차 DC 전환 & IRP 이전판(sip ?hd=1) */
+    var rows = (hd ? row("상담 유형", vals([d.hdType])) : "") +
+      row("가장 불편한 재정 고민", vals(d.worry)) +
       row("현재 자산 운용 방법", vals(d.method)) +
-      row("자산 운용 목적", vals(d.goal));
+      (hd ? row("예상 이전·수령 금액", vals(d.hdAmount ? [d.hdAmount] : [])) + row("근무 형태", vals(d.hdJob ? [d.hdJob] : [])) : row("자산 운용 목적", vals(d.goal)));
     if (d.income) rows += row("더 만들고 싶은 소득", vals([d.income]));
     if (d.rate) rows += row("희망 수익률", vals([d.rate]));
     if (d.mgoal) rows += row("월배당 목표", vals([d.mgoal]));
     if (d.hasAccountsQ) rows += row("점검받을 계좌", vals(d.accounts, "없음"));
     rows += row("코칭 때 받고 싶은 정보", vals(d.need, "코칭 때 직접 묻기"));
+    if (hd) rows += row("코칭 희망 날짜", vals(arr(d.hdDates)));
     var route = d.coupon ? "쿠폰 " + d.coupon : (d.route || "-");
     return '<div style="width:794px;min-height:1123px;box-sizing:border-box;padding:56px 64px 36px;display:flex;flex-direction:column;background:' + R.bg + ";color:" + R.ink + ";font-family:" + SANS + ';word-break:keep-all">' +
       '<div style="display:flex;justify-content:space-between;align-items:center">' +
