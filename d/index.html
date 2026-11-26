@@ -383,6 +383,9 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     var tl=document.querySelectorAll('.w-tl li');if(tl.length){var t4=tl[tl.length-1];t4.innerHTML='<b>2시간 DC 전환 &amp; IRP 이전 코칭</b><span>판단부터 첫 운용 설정 · 연금 월배당까지</span>';
       var t5=document.createElement('li');t5.className='rvl';t5.innerHTML='<b>콜센터가 아닌 같은 디렉터가</b><span>2개월 점검 · 6개월 피드백까지 직접</span>';t4.parentNode.appendChild(t5)}
     var bd=document.querySelector('.w-hero .w-bd');if(bd)bd.textContent='초대 한정 · 선착순 50명';
+    /* POINT 02 · 현대차판: 2시간 코칭에서 하는 일 3단계 (11/26) */
+    var hw=document.querySelector('.w-how h2');if(hw)hw.innerHTML='2시간이면<br>내 퇴직연금 <mark>지도</mark>가 그려져요.';
+    var ws=document.querySelector('.w-how .w-step');if(ws)ws.innerHTML='<li class="rvl"><i>1</i><div><b>DC 전환 &amp; IRP 이전, 내게 맞는지 판단</b><p>남은 근속 기간과 임금 인상, 기대 수익을 놓고 DB 유지와 DC 전환을 비교해요. 한 번 바꾸면 DB로 되돌릴 수 없어서 먼저 따져 봐요.</p></div></li>'+'<li class="rvl"><i>2</i><div><b>첫 운용 설정</b><p>DC·IRP 계좌 안에서 무엇을 얼마나 담을지, 첫 포트폴리오를 함께 짜요. 혼자 상품 목록을 뒤지지 않아도 돼요.</p></div></li>'+'<li class="rvl"><i>3</i><div><b>연금으로 월배당 만들기</b><p>퇴직 뒤에도 매달 들어오는 돈, 연금 계좌 안에서 월배당으로 가는 순서를 정해요.</p></div></li>';
     var vs=document.querySelector('.w-vs');if(vs)vs.innerHTML='<div><small>혼자 할 때</small><p>DC형이 뭔지,<br>어떻게 투자하는지 막막해요</p><p>누구한테 물어봐야 할지<br>모르겠어요</p><p>그때마다 콜센터나<br>지점을 찾아가야 해요</p></div>'+
       '<div class="on"><small>디렉터와 함께</small><p>언제든 1:1로<br>코칭하는 디렉터</p><p>6개월에 한 번<br>자산 점검 피드백</p><p>연금으로<br>월배당 만들기</p></div>';
     /* 실제 계좌 금액: 화면에 들어오면 0부터 올라가는 숫자 */
