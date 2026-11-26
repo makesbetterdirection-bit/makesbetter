@@ -361,9 +361,7 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     kimhh:{name:'김현희',role:'디렉터',quote:'',who:'',rv:''},
     leejh:{name:'이지훈',role:'디렉터',quote:'',who:'',rv:''}
   };
-  // 같은 디렉터의 다른 주소(카톡 카드 문구만 다름): lee1 = 이종호 · 현대자동차 퇴직연금 DC 신청용
-  var ALIAS={lee1:'lee'};
-  var m=/\/(?:d|s)\/([a-z0-9]+)/.exec(location.pathname),q=/[?&]d=([a-z]+)/.exec(location.search),mk=m&&(D[m[1]]?m[1]:ALIAS[m[1]]),k=(mk&&D[mk]?mk:q&&D[q[1]]?q[1]:'lee'),d=D[k],lk=(m&&ALIAS[m[1]]&&mk===k)?m[1]:k;
+  var m=/\/(?:d|s)\/([a-z]+)/.exec(location.pathname),q=/[?&]d=([a-z]+)/.exec(location.search),k=(m&&D[m[1]]?m[1]:q&&D[q[1]]?q[1]:'lee'),d=D[k];
   function all(s,f){[].forEach.call(document.querySelectorAll(s),f)}
   all('[data-d=name]',function(e){e.textContent=d.name});all('[data-d=role]',function(e){e.textContent=d.role});
   all('[data-d=mono]',function(e){e.textContent=d.name.charAt(0)});all('[data-d=quote]',function(e){e.textContent=d.quote});
@@ -450,22 +448,22 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
       setTimeout(tick,1000-(Date.now()%1000))}
     tick();
   })();
-  // 보내는 사람(기계약자) 화면: /s/<디렉터> 또는 ?send=1 — 이름을 넣어 /d/<디렉터>?by=이름 을 공유 (/s/lee1 → /d/lee1?by=)
+  // 보내는 사람(기계약자) 화면: /s/<디렉터> 또는 ?send=1 — 이름을 넣어 /d/<디렉터>?by=이름 을 공유
   var SEND=/^\/s\//.test(location.pathname)||/[?&]send=1/.test(location.search);
   if(SEND)(function(){
     var sd=document.getElementById('sd'),inp=document.getElementById('sdName'),msg=document.getElementById('sdMsg');
     sd.classList.remove('hide');try{document.getElementById('env').classList.add('gone')}catch(e){}
     document.title=d.name+' 디렉터 초대장 보내기 | MAKESBETTER';
-    document.getElementById('sdView').href='/d/'+lk;
+    document.getElementById('sdView').href='/d/'+k;
     try{var me=localStorage.getItem('mb_me');if(me)inp.value=me.slice(0,10)}catch(e){}
     hit('d-'+k+'-send-open');
     document.getElementById('sdBtn').addEventListener('click',function(){
       var n=inp.value.replace(/\s+/g,'').slice(0,10);
       if(n.length<2){msg.textContent='이름을 적어 주세요.';inp.focus();return}
       try{localStorage.setItem('mb_me',n)}catch(e){}
-      var url=location.origin+'/d/'+lk+'?by='+encodeURIComponent(n);
+      var url=location.origin+'/d/'+k+'?by='+encodeURIComponent(n);
       var text=n+' 님이 보낸 초대장이에요.';
-      document.getElementById('sdView').href='/d/'+lk+'?by='+encodeURIComponent(n);
+      document.getElementById('sdView').href='/d/'+k+'?by='+encodeURIComponent(n);
       hit('d-'+k+'-send');msg.textContent='';
       if(navigator.share){navigator.share({title:n+' 님이 보낸 초대장',text:text,url:url}).then(function(){msg.style.color='#1E7A3C';msg.textContent='보냈어요. 한 분 더 보내려면 다시 눌러 주세요.'}).catch(function(){});return}
       try{navigator.clipboard.writeText(text+'\n'+url).then(function(){msg.textContent='초대장 링크를 복사했어요. 카카오톡에 붙여 넣어 보내 주세요.'},function(){msg.textContent=url})}catch(e){msg.textContent=url}
