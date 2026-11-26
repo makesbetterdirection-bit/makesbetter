@@ -1,5 +1,7 @@
 // /s/<디렉터> — 기계약자가 지인에게 초대장을 보내는 화면. 페이지는 /d/ 와 같고 주소로 보내기 화면을 연다.
 const NAMES = { lee: "이종호", oh: "오수현", byun: "변보라", hong: "홍민아", kang: "강소리", kimdh: "김다희", kimsy: "김상윤", sy: "김소연", jo: "조숙원", kimhh: "김현희", leejh: "이지훈" };
+// 디렉터 전용 썸네일 (없으면 /d/ 기본 이미지)
+const OG = { lee: "lee-1126" };
 export async function onRequest({ request, env, next }) {
   const url = new URL(request.url);
   const m = /^\/s\/([a-z]+)\/?$/.exec(url.pathname);
@@ -9,6 +11,7 @@ export async function onRequest({ request, env, next }) {
   return new HTMLRewriter()
     .on('meta[property="og:title"]', { element(e) { e.setAttribute("content", title); } })
     .on('meta[property="og:description"]', { element(e) { e.setAttribute("content", NAMES[m[1]] + " 디렉터 드림"); } })
+    .on('meta[property="og:image"]', { element(e) { if (OG[m[1]]) e.setAttribute("content", `${url.origin}/d/og/${OG[m[1]]}.jpg`); } })
     .on("title", { element(e) { e.setInnerContent(title); } })
     .transform(res);
 }
