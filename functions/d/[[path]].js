@@ -1,7 +1,7 @@
 // /d/<디렉터> — 디렉터 페이지. 페이지는 하나(/d/)이고 주소만 다름.
 // 카카오톡 미리보기 카드: 디렉터 이름 · 썸네일(남/여)을 주소에 맞게 넣는다.
 // ?by=이름 이 있으면 카드 제목에 보낸 사람 이름을 넣는다.
-// lee1 = 현대자동차 DC 전환판(mbkr.my/leejoin1 에서 보낸 초대장). 카드는 /d/lee 와 같음
+// lee1 = 현대자동차 DC 전환판(mbkr.my/leejoin1 에서 보낸 초대장). 제목·썸네일은 /d/lee 와 같고 설명만 「현대자동차 / 퇴직연금 DC & IRP 상담 신청」(11/26 밤)
 const NAMES = { lee: "이종호", lee1: "이종호", oh: "오수현", byun: "변보라", hong: "홍민아", kang: "강소리", kimdh: "김다희", kimsy: "김상윤", sy: "김소연", jo: "조숙원", kimhh: "김현희", leejh: "이지훈" };
 const MALE = new Set(["lee", "lee1", "kimsy", "leejh"]);
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -14,7 +14,7 @@ export async function onRequest({ request, env, next }) {
   const by = (url.searchParams.get("by") || "").replace(/\s+/g, "").slice(0, 10);
   const img = `${url.origin}/d/og/${MALE.has(k) ? "m-1117" : "f-1117b"}.jpg`;
   const title = by ? `${esc(by)} 님이 보낸 초대장` : `${NAMES[k]} 디렉터의 초대장`;
-  const desc = by ? `${NAMES[k]} 디렉터 · 메이크스베러` : "MAKES.BETTER\u2028현금흐름을 디자인하다";
+  const desc = k === "lee1" ? "현대자동차\u2028퇴직연금 DC & IRP 상담 신청" : by ? `${NAMES[k]} 디렉터 · 메이크스베러` : "MAKES.BETTER\u2028현금흐름을 디자인하다";
   return new HTMLRewriter()
     .on('meta[property="og:title"]', { element(e) { e.setAttribute("content", title); } })
     .on('meta[property="og:description"]', { element(e) { e.setAttribute("content", desc); } })
