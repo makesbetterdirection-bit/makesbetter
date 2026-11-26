@@ -362,6 +362,8 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     leejh:{name:'이지훈',role:'디렉터',quote:'',who:'',rv:''}
   };
   var m=/\/(?:d|s)\/([a-z]+)/.exec(location.pathname),q=/[?&]d=([a-z]+)/.exec(location.search),k=(m&&D[m[1]]?m[1]:q&&D[q[1]]?q[1]:'lee'),d=D[k];
+  /* 현대자동차 퇴직연금 DC 전환판(11/26): /s/lee1 = mbkr.my/leejoin1 보내기 → 받는 분은 /d/lee1?by=이름. 페이지는 이종호 것, 코칭 문구만 DC 전환으로 */
+  var HD=/^\/(?:d|s)\/lee1\/?$/.test(location.pathname),lk=HD?'lee1':k;
   function all(s,f){[].forEach.call(document.querySelectorAll(s),f)}
   all('[data-d=name]',function(e){e.textContent=d.name});all('[data-d=role]',function(e){e.textContent=d.role});
   all('[data-d=mono]',function(e){e.textContent=d.name.charAt(0)});all('[data-d=quote]',function(e){e.textContent=d.quote});
@@ -373,8 +375,13 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
   /* 디렉터별 선물 표기(이종호: Private Collection + 웰컴 드링크, 11/19) — 없으면 기본 「선물 3가지」 */
   if(d.gift){all('[data-d=gift]',function(e){e.innerHTML=d.gift});var gh=document.getElementById('giftH');if(gh)gh.innerHTML='채널을 추가하면<br>'+d.gift+'과<br>코칭이 열려요.'}
   if(d.drink)all('[data-d=drink]',function(e){e.style.display=''});
-  /* 현대자동차 퇴직연금 DC 전환용 보내기 화면(/s/lee1 = mbkr.my/leejoin1, 11/26) — 보내기 카드만 4줄로. 받는 분 초대장(/d/lee)은 그대로 */
-  if(/^\/s\/lee1\/?$/.test(location.pathname)){var sg=document.querySelector('.sd-g');if(sg)sg.innerHTML='<li><b>현대자동차 퇴직연금 DC 전환 1:1 코칭 2시간</b><span><s>25만원</s> 면제 · 전환 판단부터 첫 운용 설정까지</span></li>'+'<li><b>'+(d.gift||'선물 3가지')+'</b><span>금융 I.Q 테스트 · 전자책 2권 · 현금흐름 진단</span></li>'+'<li><b>웰컴 드링크</b><span>스타벅스 Hot or Ice 선택</span></li>'+'<li><b>콜센터가 아닌 전문 디렉터의 코칭</b><span>2개월 점검 · 6개월 피드백까지 같은 디렉터가 직접</span></li>'}
+  /* 현대자동차 퇴직연금 DC 전환판: 보내기 카드 4줄 + 받는 분 초대장(/d/lee1)의 코칭 문구 */
+  if(HD){var sg=document.querySelector('.sd-g');if(sg)sg.innerHTML='<li><b>현대자동차 퇴직연금 DC 전환 1:1 코칭 2시간</b><span><s>25만원</s> 면제 · 전환 판단부터 첫 운용 설정까지</span></li>'+'<li><b>'+(d.gift||'선물 3가지')+'</b><span>금융 I.Q 테스트 · 전자책 2권 · 현금흐름 진단</span></li>'+'<li><b>웰컴 드링크</b><span>스타벅스 Hot or Ice 선택</span></li>'+'<li><b>콜센터가 아닌 전문 디렉터의 코칭</b><span>2개월 점검 · 6개월 피드백까지 같은 디렉터가 직접</span></li>';
+    var h1=document.querySelector('.w-hero h1');if(h1)h1.innerHTML=h1.innerHTML.replace('전문 디렉터 머니 코칭','퇴직연금 DC 전환 코칭');
+    var wb=document.querySelector('.w-hero .w-bar span');if(wb&&/1:1 코칭 2시간/.test(wb.textContent))wb.textContent='DC 전환 1:1 코칭 2시간';
+    var bp=document.querySelector('.w-rw.best p');if(bp)bp.textContent='DC 전환 판단 · 첫 운용 설정 · 제2의 월급 전략';
+    var tl=document.querySelectorAll('.w-tl li');if(tl.length){var t4=tl[tl.length-1];t4.innerHTML='<b>2시간 DC 전환 1:1 코칭</b><span>전환 판단 · 첫 운용 설정 · 제2의 월급 전략</span>';
+      var t5=document.createElement('li');t5.className='rvl';t5.innerHTML='<b>콜센터가 아닌 같은 디렉터가</b><span>2개월 점검 · 6개월 피드백까지 직접</span>';t4.parentNode.appendChild(t5)}}
   /* dc: 퇴직연금 DC 항목(코칭 대상 첫 줄 · 자주 묻는 질문 Q1)은 dc:1 인 디렉터(이종호)만 — 나머지는 빼고 Q 번호를 다시 매김 */
   if(!d.dc){[].forEach.call(document.querySelectorAll('.w-ck li'),function(x){if(/퇴직연금 DC/.test(x.textContent))x.parentNode.removeChild(x)});
     var nq=document.querySelectorAll('.nds details.nd');if(nq.length&&/퇴직연금, 그냥 둬도/.test(nq[0].textContent)){nq[0].parentNode.removeChild(nq[0]);nq=document.querySelectorAll('.nds details.nd');
@@ -456,16 +463,16 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
     var sd=document.getElementById('sd'),inp=document.getElementById('sdName'),msg=document.getElementById('sdMsg');
     sd.classList.remove('hide');try{document.getElementById('env').classList.add('gone')}catch(e){}
     document.title=d.name+' 디렉터 초대장 보내기 | MAKESBETTER';
-    document.getElementById('sdView').href='/d/'+k;
+    document.getElementById('sdView').href='/d/'+lk;
     try{var me=localStorage.getItem('mb_me');if(me)inp.value=me.slice(0,10)}catch(e){}
     hit('d-'+k+'-send-open');
     document.getElementById('sdBtn').addEventListener('click',function(){
       var n=inp.value.replace(/\s+/g,'').slice(0,10);
       if(n.length<2){msg.textContent='이름을 적어 주세요.';inp.focus();return}
       try{localStorage.setItem('mb_me',n)}catch(e){}
-      var url=location.origin+'/d/'+k+'?by='+encodeURIComponent(n);
+      var url=location.origin+'/d/'+lk+'?by='+encodeURIComponent(n);
       var text=n+' 님이 보낸 초대장이에요.';
-      document.getElementById('sdView').href='/d/'+k+'?by='+encodeURIComponent(n);
+      document.getElementById('sdView').href='/d/'+lk+'?by='+encodeURIComponent(n);
       hit('d-'+k+'-send');msg.textContent='';
       if(navigator.share){navigator.share({title:n+' 님이 보낸 초대장',text:text,url:url}).then(function(){msg.style.color='#1E7A3C';msg.textContent='보냈어요. 한 분 더 보내려면 다시 눌러 주세요.'}).catch(function(){});return}
       try{navigator.clipboard.writeText(text+'\n'+url).then(function(){msg.textContent='초대장 링크를 복사했어요. 카카오톡에 붙여 넣어 보내 주세요.'},function(){msg.textContent=url})}catch(e){msg.textContent=url}
