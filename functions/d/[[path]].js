@@ -3,8 +3,8 @@
 // ?by=이름 이 있으면 카드 제목에 보낸 사람 이름을 넣는다.
 const NAMES = { lee: "이종호", lee1: "이종호", oh: "오수현", byun: "변보라", hong: "홍민아", kang: "강소리", kimdh: "김다희", kimsy: "김상윤", sy: "김소연", jo: "조숙원", kimhh: "김현희", leejh: "이지훈" };
 const MALE = new Set(["lee", "lee1", "kimsy", "leejh"]);
-// 디렉터 전용 썸네일 (없으면 남/여 공용). lee1 = 현대자동차 퇴직연금 DC 신청용 (페이지 내용은 /d/lee 와 같음)
-const OG = { lee: "lee-1126", lee1: "lee1-1126" };
+// 주소별 카톡 카드 문구 (썸네일 이미지는 그대로). lee1 = 현대자동차 퇴직연금 DC 신청용 (페이지 내용은 /d/lee 와 같음)
+const CARD = { lee1: { title: "한국투자증권 FC", desc: "현대자동차 퇴직연금 DC 신청" } };
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 export async function onRequest({ request, env, next }) {
   const url = new URL(request.url);
@@ -13,9 +13,9 @@ export async function onRequest({ request, env, next }) {
   const k = m[1];
   const res = await env.ASSETS.fetch(new Request(new URL("/d/", url), request));
   const by = (url.searchParams.get("by") || "").replace(/\s+/g, "").slice(0, 10);
-  const img = `${url.origin}/d/og/${OG[k] || (MALE.has(k) ? "m-1117" : "f-1117b")}.jpg`;
-  const title = by ? `${esc(by)} 님이 보낸 초대장` : `${NAMES[k]} 디렉터의 초대장`;
-  const desc = by ? `${NAMES[k]} 디렉터 · 메이크스베러` : "MAKES.BETTER\u2028현금흐름을 디자인하다";
+  const img = `${url.origin}/d/og/${MALE.has(k) ? "m-1117" : "f-1117b"}.jpg`;
+  const title = by ? `${esc(by)} 님이 보낸 초대장` : CARD[k] ? CARD[k].title : `${NAMES[k]} 디렉터의 초대장`;
+  const desc = by ? `${NAMES[k]} 디렉터 · 메이크스베러` : CARD[k] ? CARD[k].desc : "MAKES.BETTER\u2028현금흐름을 디자인하다";
   return new HTMLRewriter()
     .on('meta[property="og:title"]', { element(e) { e.setAttribute("content", title); } })
     .on('meta[property="og:description"]', { element(e) { e.setAttribute("content", desc); } })
