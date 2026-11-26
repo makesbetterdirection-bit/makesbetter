@@ -152,7 +152,7 @@
     var rows = (hd ? row("상담 유형", vals([d.hdType])) : "") +
       row("가장 불편한 재정 고민", vals(d.worry)) +
       row("현재 자산 운용 방법", vals(d.method)) +
-      (hd ? row("예상 이전·수령 금액", vals(d.hdAmount ? [d.hdAmount] : [])) + row("근무 형태", vals(d.hdJob ? [d.hdJob] : [])) : row("자산 운용 목적", vals(d.goal)));
+      (hd ? row("예상 이전·수령 금액", vals(d.hdAmount ? [d.hdAmount] : [])) + (d.hdJob ? row("근무 형태", vals([d.hdJob])) : "") : row("자산 운용 목적", vals(d.goal)));
     if (d.income) rows += row("더 만들고 싶은 소득", vals([d.income]));
     if (d.rate) rows += row("희망 수익률", vals([d.rate]));
     if (d.mgoal) rows += row("월배당 목표", vals([d.mgoal]));
