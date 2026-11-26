@@ -470,7 +470,9 @@ body:not(.open) #coachBtn{display:none}body.open #chBtn2{display:none}
       var n=inp.value.replace(/\s+/g,'').slice(0,10);
       if(n.length<2){msg.textContent='이름을 적어 주세요.';inp.focus();return}
       try{localStorage.setItem('mb_me',n)}catch(e){}
-      var url=location.origin+'/d/'+lk+'?by='+encodeURIComponent(n);
+      /* 현대자동차판은 짧은 주소 /h/코드 (이름 한글 음절마다 36진수 3자리, functions/h 가 풀어서 /d/lee1?by= 로 넘김) */
+      var hc=HD&&/^[\uAC00-\uD7A3]{1,10}$/.test(n)?n.split('').map(function(c){var v=c.charCodeAt(0)-0xAC00;return ('00'+v.toString(36)).slice(-3)}).join(''):'';
+      var url=hc?location.origin+'/h/'+hc:location.origin+'/d/'+lk+'?by='+encodeURIComponent(n);
       var text=n+' 님이 보낸 초대장이에요.';
       document.getElementById('sdView').href='/d/'+lk+'?by='+encodeURIComponent(n);
       hit('d-'+k+'-send');msg.textContent='';
