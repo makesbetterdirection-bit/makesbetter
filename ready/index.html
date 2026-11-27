@@ -91,34 +91,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .ck .tg{display:inline-block;margin-left:6px;padding:1px 6px;font-size:11px;font-weight:700;letter-spacing:0;color:var(--red);border:1px solid var(--red);vertical-align:2px;text-decoration:none}
 .note{margin-top:22px;padding-left:14px;border-left:2px solid var(--red);font-size:14px;line-height:1.7;color:var(--g1)}
 
-/* 흰 카드 (요금) */
-.paper{margin-top:30px;background:var(--wh);color:#0A0A0B;padding:26px 22px 22px}
-.paper .en{color:var(--red);font-size:11px}
-.fee{margin-top:14px}
-.fee div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:13px 0;border-bottom:1px solid #DADAD6}
-.fee div:first-child{border-top:1.5px solid #0A0A0B}
-.fee span{font-size:14.5px;color:#3A3A3D;line-height:1.45}
-.fee span small{display:block;font-size:12.5px;color:#7A7A7D}
-.fee strong{font-family:var(--en);font-size:22px;font-weight:700;letter-spacing:-.03em;white-space:nowrap}
-.fee strong i{font-style:normal;font-family:var(--ko);font-size:14px;font-weight:700;margin-left:1px}
-.vat{margin-top:10px;font-size:12.5px;color:#6A6A6D}
-.acct{margin-top:22px;padding:18px;background:#0A0A0B;color:var(--wh)}
-.acct .k{font-size:12.5px;color:var(--g2)}
-.acct .v{margin-top:4px;font-family:var(--en);font-size:20px;font-weight:700;letter-spacing:.01em;white-space:nowrap;user-select:all;-webkit-user-select:all}
-.acct .o{font-size:14px;color:var(--g1)}
-.cp{margin-top:14px;display:flex;justify-content:space-between;align-items:center;width:100%;height:48px;padding:0 16px;background:var(--wh);color:#0A0A0B;font-size:14.5px;font-weight:700}
-.cp:after{content:"";width:18px;height:7px;border-bottom:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:skewX(45deg);margin-right:3px}
-.cp.done{background:var(--red);color:#fff}
-.prem{margin-top:14px;font-size:13px;color:#6A6A6D}
-
-/* 코칭 일정 */
-.days{margin-top:30px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--ln);border-bottom:1px solid var(--ln)}
-.days div{padding:18px 12px 18px 0;min-width:0}
-.days div+div{padding-left:14px;border-left:1px solid var(--ln)}
-.days .en{font-size:10.5px;color:var(--g2);letter-spacing:.2em}
-.days b{display:block;margin-top:6px;font-size:18px;font-weight:800;letter-spacing:-.03em}
-.days span{display:block;font-size:13.5px;color:var(--g1);white-space:nowrap}
-
 /* 바로가기 */
 .go{margin-top:26px;display:grid;gap:10px}
 .btn{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:58px;padding:0 20px;border:1px solid var(--wh);font-size:15.5px;font-weight:700}
@@ -161,6 +133,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .mail{margin-top:24px;padding:16px 18px;background:rgba(0,0,0,.22)}
 .mail .k{font-size:12.5px;color:rgba(255,255,255,.75)}
 .mail .v{margin-top:2px;font-family:var(--en);font-size:16px;font-weight:500;letter-spacing:0;user-select:all;-webkit-user-select:all;overflow-wrap:anywhere}
+.cp{margin-top:14px;display:flex;justify-content:space-between;align-items:center;width:100%;height:48px;padding:0 16px;font-size:14.5px;font-weight:700}
+.cp:after{content:"";width:18px;height:7px;border-bottom:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:skewX(45deg);margin-right:3px}
 .end .cp{background:#fff;color:#0A0A0B}
 .end .cp.done{background:#0A0A0B;color:#fff}
 .motto{margin-top:40px;display:flex;justify-content:space-between;align-items:flex-end}
@@ -197,10 +171,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
       <p class="lead ld d3">처음 메이크스베러 플랫폼을 쓰는 플래너를 위한 준비 리스트입니다. 준비된 항목을 눌러 하나씩 체크해 보세요.</p>
       <nav class="idx" aria-label="준비 단계">
         <a href="#s1"><span class="n">01</span><span class="t">자격 확인</span><span class="c" data-c="s1"></span></a>
-        <a href="#s2"><span class="n">02</span><span class="t">계약 · 결제</span><span class="c" data-c="s2"></span></a>
-        <a href="#s3"><span class="n">03</span><span class="t">첫 코칭 전 준비</span><span class="c" data-c="s3"></span></a>
-        <a href="#s4"><span class="n">04</span><span class="t">개인 링크 · 명함 자료</span><span class="c" data-c="s4"></span></a>
-        <a href="#s5"><span class="n">05</span><span class="t">코칭 뒤 첫 30일</span><span class="c" data-c="s5"></span></a>
+        <a href="#s2"><span class="n">02</span><span class="t">첫 코칭 전 준비</span><span class="c" data-c="s2"></span></a>
+        <a href="#s3"><span class="n">03</span><span class="t">개인 링크 · 명함 자료</span><span class="c" data-c="s3"></span></a>
+        <a href="#s4"><span class="n">04</span><span class="t">코칭 뒤 첫 30일</span><span class="c" data-c="s4"></span></a>
       </nav>
     </div>
   </header>
@@ -224,38 +197,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
     </section>
 
     <section class="sec pad" id="s2">
-      <div class="hd"><span class="big">02</span><p class="lb"><span class="en">Contract</span><span class="k">계약 · 결제</span></p></div>
-      <h2>입금이 확인되면<br><b>정식 이용이 시작돼요<span class="dot">.</span></b></h2>
-      <ul class="cl">
-        <li><button class="ck" data-id="b1" aria-pressed="false"><i class="bx"></i><span><b>요금제 정하기</b><small>처음이라면 Standard를 추천해요.</small></span></button></li>
-        <li><button class="ck" data-id="b3" aria-pressed="false"><i class="bx"></i><span><b>최초 3개월 이용료 입금</b><small>3개월 + 1개월 무료, <span class="nw">300,000원</span> (VAT 별도)</small></span></button></li>
-        <li><button class="ck" data-id="b4" aria-pressed="false"><i class="bx"></i><span><b>자동이체 계좌 준비</b><small>첫 3개월 뒤로는 월 단위 자동이체로 내요.</small></span></button></li>
-      </ul>
-      <div class="paper">
-        <p class="en">Plan · Standard</p>
-        <div class="fee">
-          <div><span>월 이용료<small>비기너 추천</small></span><strong>100,000<i>원</i></strong></div>
-          <div><span>첫 결제<small>3개월 + 1개월 무료</small></span><strong>300,000<i>원</i></strong></div>
-        </div>
-        <p class="vat">모든 요금은 VAT 별도예요. 이용료는 최대 3개월 단위로 낼 수 있어요.</p>
-        <div class="acct">
-          <p class="k">입금 계좌</p>
-          <p class="v" id="acc">105-910024-19104</p>
-          <p class="o">하나은행 · 예금주 (주)메이크스베러</p>
-          <button class="cp" data-copy="acc" data-done="계좌번호를 복사했어요">계좌번호 복사</button>
-        </div>
-        <p class="prem">Premium 요금제는 1&amp;6 디렉터 전용이에요.</p>
-      </div>
-    </section>
-
-    <section class="sec pad" id="s3">
-      <div class="hd"><span class="big">03</span><p class="lb"><span class="en">Before day 1</span><span class="k">첫 코칭 전 준비</span></p></div>
+      <div class="hd"><span class="big">02</span><p class="lb"><span class="en">Before day 1</span><span class="k">첫 코칭 전 준비</span></p></div>
       <h2>첫 코칭 날,<br><b>이것만 챙겨 오세요<span class="dot">.</span></b></h2>
-      <div class="days">
-        <div><p class="en">Day 1</p><b>보기</b><span>3~4시간</span></div>
-        <div><p class="en">Day 2</p><b>하기</b><span>2~3시간</span></div>
-        <div><p class="en">Day 3</p><b>보충</b><span>필요할 때</span></div>
-      </div>
       <ul class="cl">
         <li><button class="ck" data-id="c1" aria-pressed="false"><i class="bx"></i><span><b>아이패드 &amp; 맥북네오 256<span class="tg">권장</span></b><small>Windows PC는 일부 기능이 제한될 수 있어요.</small></span></button></li>
         <li><button class="ck" data-id="c2" aria-pressed="false"><i class="bx"></i><span><b>휴대폰 카카오톡 최신 버전</b><small>코칭 쿠폰 화면은 휴대폰 최신 카카오톡에서만 열려요.</small></span></button></li>
@@ -272,8 +215,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
       </div>
     </section>
 
-    <section class="sec pad" id="s4">
-      <div class="hd"><span class="big">04</span><p class="lb"><span class="en">My link</span><span class="k">개인 링크 · 명함 자료</span></p></div>
+    <section class="sec pad" id="s3">
+      <div class="hd"><span class="big">03</span><p class="lb"><span class="en">My link</span><span class="k">개인 링크 · 명함 자료</span></p></div>
       <h2>내 이름으로 된 링크,<br><b>이 자료로 만들어요<span class="dot">.</span></b></h2>
       <p class="sub">Day 1에 신청해요. 고객이 받는 초대장과 신청서에 그대로 들어가요.</p>
       <ul class="cl">
@@ -289,8 +232,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
       </div>
     </section>
 
-    <section class="sec pad" id="s5">
-      <div class="hd"><span class="big">05</span><p class="lb"><span class="en">First 30 days</span><span class="k">코칭 뒤 첫 30일</span></p></div>
+    <section class="sec pad" id="s4">
+      <div class="hd"><span class="big">04</span><p class="lb"><span class="en">First 30 days</span><span class="k">코칭 뒤 첫 30일</span></p></div>
       <h2>코칭이 끝나면,<br><b>첫 한 달은 이렇게<span class="dot">.</span></b></h2>
       <div class="goal">
         <div><strong>10<i>명</i></strong><span>초대장 받은<br>고객</span></div>
@@ -306,7 +249,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
     </section>
 
     <section class="end pad">
-      <svg class="mk" viewBox="0 0 132 104" aria-hidden="true"><defs><clipPath id="c2"><circle cx="44" cy="62" r="42"/></clipPath></defs><circle cx="44" cy="62" r="42" fill="#fff"/><circle cx="88" cy="44" r="42" fill="#fff"/><circle cx="88" cy="44" r="42" fill="#0A0A0B" clip-path="url(#c2)"/></svg>
+      <svg class="mk" viewBox="0 0 132 104" aria-hidden="true"><defs><clipPath id="c2"><circle cx="44" cy="62" r="42"/></clipPath><mask id="m2" maskUnits="userSpaceOnUse" x="0" y="0" width="132" height="104"><rect width="132" height="104" fill="#fff"/><circle cx="88" cy="44" r="42" fill="#000" clip-path="url(#c2)"/></mask></defs><g mask="url(#m2)"><circle cx="44" cy="62" r="42" fill="#fff"/><circle cx="88" cy="44" r="42" fill="#fff"/></g></svg>
       <h2>준비가 끝나면,<br><b>담당자에게 알려 주세요.</b></h2>
       <p class="s">다음 단계를 바로 안내해 드려요.</p>
       <div class="mail">
