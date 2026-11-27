@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26 12:54",
+ "updated": "2026-11-27 12:54",
  "hol": [
   "2026-10-05",
   "2026-10-09",
@@ -413,10 +413,10 @@
    "buy": "2026-11-26",
    "rec": "2026-11-30",
    "pay": "2026-12-01",
-   "amt": null,
-   "rate": null,
-   "est": true,
-   "src": ""
+   "amt": 35,
+   "rate": 0.34,
+   "est": false,
+   "src": "https://blog.naver.com/soletf/224491622797"
   },
   {
    "code": "332610",
@@ -437,10 +437,10 @@
    "buy": "2026-11-26",
    "rec": "2026-11-30",
    "pay": "2026-12-01",
-   "amt": null,
-   "rate": null,
-   "est": true,
-   "src": ""
+   "amt": 172,
+   "rate": 2.23,
+   "est": false,
+   "src": "https://blog.naver.com/soletf/224491622797"
   },
   {
    "code": "475080",
