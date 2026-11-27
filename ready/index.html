@@ -118,9 +118,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .days .en{font-size:10.5px;color:var(--g2);letter-spacing:.2em}
 .days b{display:block;margin-top:6px;font-size:18px;font-weight:800;letter-spacing:-.03em}
 .days span{display:block;font-size:13.5px;color:var(--g1);white-space:nowrap}
-.dayx{margin-top:16px;display:grid;gap:10px}
-.dayx p{font-size:14px;line-height:1.65;color:var(--g2)}
-.dayx p b{color:var(--wh);font-weight:700;margin-right:6px}
 
 /* 바로가기 */
 .go{margin-top:26px;display:grid;gap:10px}
@@ -130,6 +127,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .btn.wh{background:var(--wh);color:#0A0A0B;border-color:var(--wh)}
 .btn.wh small{color:#6A6A6D}
 
+/* 내 링크 샘플 */
+.smp{margin-top:22px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;border:1px solid var(--ln);background:var(--bk2)}
+.smp .en{font-size:10.5px;color:var(--red);letter-spacing:.2em}
+.smp .lbx{display:flex;flex-direction:column;gap:2px}
+.smp .k{font-size:13.5px;color:var(--g1)}
+.smp b{font-family:var(--en);font-size:18px;font-weight:700;letter-spacing:.01em;white-space:nowrap;display:flex;align-items:center;gap:12px}
+.smp b:after{content:"";width:18px;height:7px;border-bottom:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:skewX(45deg)}
 /* 선택 옵션 */
 .opt{margin-top:26px}
 .opt .en{font-size:11px;color:var(--g2)}
@@ -221,10 +225,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 
     <section class="sec pad" id="s2">
       <div class="hd"><span class="big">02</span><p class="lb"><span class="en">Contract</span><span class="k">계약 · 결제</span></p></div>
-      <h2>계약서 서명과 입금이 확인되면<br><b>정식 이용이 시작돼요<span class="dot">.</span></b></h2>
+      <h2>입금이 확인되면<br><b>정식 이용이 시작돼요<span class="dot">.</span></b></h2>
       <ul class="cl">
         <li><button class="ck" data-id="b1" aria-pressed="false"><i class="bx"></i><span><b>요금제 정하기</b><small>처음이라면 Standard를 추천해요.</small></span></button></li>
-        <li><button class="ck" data-id="b2" aria-pressed="false"><i class="bx"></i><span><b>플랫폼 이용 계약서 읽고 서명</b><small>8쪽 분량이에요. 미리 읽고 궁금한 점을 적어 오세요.</small></span></button></li>
         <li><button class="ck" data-id="b3" aria-pressed="false"><i class="bx"></i><span><b>최초 3개월 이용료 입금</b><small>3개월 + 1개월 무료, <span class="nw">300,000원</span> (VAT 별도)</small></span></button></li>
         <li><button class="ck" data-id="b4" aria-pressed="false"><i class="bx"></i><span><b>자동이체 계좌 준비</b><small>첫 3개월 뒤로는 월 단위 자동이체로 내요.</small></span></button></li>
       </ul>
@@ -253,12 +256,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
         <div><p class="en">Day 2</p><b>하기</b><span>2~3시간</span></div>
         <div><p class="en">Day 3</p><b>보충</b><span>필요할 때</span></div>
       </div>
-      <div class="dayx">
-        <p><b>Day 1</b>플랫폼 등록 · 디렉터가 1차~3차 컨설팅을 직접 시연 · 개인 상담 링크와 명함 신청 · Q&amp;A</p>
-        <p><b>Day 2</b>전 과정을 직접 시연 · 대표 코칭 · 컨설팅 자료와 개인 링크 전달 · 전체 리뷰</p>
-      </div>
       <ul class="cl">
-        <li><button class="ck" data-id="c1" aria-pressed="false"><i class="bx"></i><span><b>아이패드 또는 맥<span class="tg">iOS 권장</span></b><small>Windows PC는 일부 기능이 제한될 수 있어요.</small></span></button></li>
+        <li><button class="ck" data-id="c1" aria-pressed="false"><i class="bx"></i><span><b>아이패드 &amp; 맥북네오 256<span class="tg">권장</span></b><small>Windows PC는 일부 기능이 제한될 수 있어요.</small></span></button></li>
         <li><button class="ck" data-id="c2" aria-pressed="false"><i class="bx"></i><span><b>휴대폰 카카오톡 최신 버전</b><small>코칭 쿠폰 화면은 휴대폰 최신 카카오톡에서만 열려요.</small></span></button></li>
         <li><button class="ck" data-id="c3" aria-pressed="false"><i class="bx"></i><span><b>메이크스베러 카카오톡 채널 추가</b><small>고객이 받는 소식을 플래너도 같이 받아 봐요.</small></span></button></li>
         <li><button class="ck" data-id="c4" aria-pressed="false"><i class="bx"></i><span><b>인스타그램 makesbetter.one 팔로우</b></span></button></li>
@@ -278,11 +277,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
       <h2>내 이름으로 된 링크,<br><b>이 자료로 만들어요<span class="dot">.</span></b></h2>
       <p class="sub">Day 1에 신청해요. 고객이 받는 초대장과 신청서에 그대로 들어가요.</p>
       <ul class="cl">
-        <li><button class="ck" data-id="d1" aria-pressed="false"><i class="bx"></i><span><b>이름과 링크에 쓸 영문 코드</b><small>예: lee, kimsy</small></span></button></li>
         <li><button class="ck" data-id="d2" aria-pressed="false"><i class="bx"></i><span><b>신청 메일을 받을 이메일 주소</b><small>고객의 코칭 신청 · 진단 결과가 이 메일로 와요.</small></span></button></li>
         <li><button class="ck" data-id="d3" aria-pressed="false"><i class="bx"></i><span><b>정사각 프로필 사진</b><small>초대장에 들어가는 사진이에요.</small></span></button></li>
-        <li><button class="ck" data-id="d4" aria-pressed="false"><i class="bx"></i><span><b>경력 2~3줄 · 한마디 · 고객 후기 1개</b><small>한마디는 좌우명이나 상담 철학, 후기는 함께한 고객의 글이에요.</small></span></button></li>
+        <li><button class="ck" data-id="d4" aria-pressed="false"><i class="bx"></i><span><b>세일즈 철학 · 신념 한 문장</b><small>예: 현상은 복잡하지만 철학은 단순하다</small></span></button></li>
       </ul>
+      <a class="smp" href="https://mbkr.my/lee" target="_blank" rel="noopener noreferrer"><span class="lbx"><span class="en">Sample</span><span class="k">내 링크</span></span><b>mbkr.my/lee</b></a>
       <div class="opt">
         <p class="en">Option</p>
         <div><span>개인 상담 링크</span><strong>30,000<i>원 / 년</i></strong></div>
