@@ -64,6 +64,23 @@ jobs:
           set -o pipefail
           python3 scripts/update_signal.py | tee -a "$GITHUB_OUTPUT"
 
+      - name: Record monthly signal snapshot on signal day (studio/track/signals.json)
+        id: msig
+        # 매달 15일 이후 첫 '종가 + 자동 신호' 확정일에 한 번만 기록. 조건이 안 맞으면 아무것도 쓰지 않음
+        if: steps.upd.outputs.mode != 'intraday'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python3 scripts/record_month_signal.py | tee -a "$GITHUB_OUTPUT"
+
+      - name: Recalculate track record after new monthly signal
+        id: trk2
+        if: steps.msig.outputs.month_recorded == 'true'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python3 scripts/update_track.py | tee -a "$GITHUB_OUTPUT"
+
       - name: Update judgment board prices (studio/board/prices.json)
         id: brd
         if: steps.upd.outputs.mode != 'intraday'
@@ -89,17 +106,19 @@ jobs:
           python3 scripts/update_monthly_og.py | tee -a "$GITHUB_OUTPUT"
 
       - name: Commit and push if changed
-        if: steps.upd.outputs.changed == 'true' || steps.trk.outputs.changed == 'true' || steps.ind.outputs.changed == 'true' || steps.brd.outputs.changed == 'true' || steps.sig.outputs.signal_changed == 'true' || steps.dvd.outputs.div_changed == 'true' || steps.mog.outputs.og_changed == 'true'
+        if: steps.upd.outputs.changed == 'true' || steps.trk.outputs.changed == 'true' || steps.ind.outputs.changed == 'true' || steps.brd.outputs.changed == 'true' || steps.sig.outputs.signal_changed == 'true' || steps.dvd.outputs.div_changed == 'true' || steps.mog.outputs.og_changed == 'true' || steps.msig.outputs.month_recorded == 'true' || steps.trk2.outputs.changed == 'true'
         run: |
           git config user.name "better7-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add better7_prices.json studio/track.json studio/indicators.js studio/signal.json studio/signal.js studio/board/prices.json studio/dividends.json studio/dividends.js monthly/index.html monthly/end.html
+          git add better7_prices.json studio/track.json studio/indicators.js studio/signal.json studio/signal.js studio/board/prices.json studio/dividends.json studio/dividends.js monthly/index.html monthly/end.html studio/track/signals.json studio/track/context
           if [ "${{ steps.upd.outputs.changed }}" = "true" ]; then
             MODE="${{ steps.upd.outputs.mode }}"
             if [ "$MODE" = "intraday" ]; then LABEL="intraday"; else LABEL="closing price"; fi
             PENDING="${{ steps.upd.outputs.pending }}"
             MSG="Update Better.7 ETF prices — ${{ steps.upd.outputs.date }} ${LABEL}"
             if [ "$PENDING" != "none" ]; then MSG="$MSG (pending: $PENDING)"; fi
+          elif [ "${{ steps.msig.outputs.month_recorded }}" = "true" ]; then
+            MSG="Studio: ${{ steps.msig.outputs.month }} 월간 신호 기록 (신호일 종가)"
           elif [ "${{ steps.dvd.outputs.div_changed }}" = "true" ]; then
             MSG="Update dividend schedule (issuer notices)"
           elif [ "${{ steps.trk.outputs.changed }}" = "true" ]; then
