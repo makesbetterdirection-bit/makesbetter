@@ -98,6 +98,29 @@ def evaluate(month, items, bench):
             "axes": axes, "axisScores": ctx.get("axes", {})}
 
 
+# 시장 비교(성과표용) — 같은 기간·같은 방식(원화, 분배금 포함 총수익)으로 비교하려고 지수 대신 국내 상장 ETF 사용
+MARKET = [("kospi", "069500", "코스피200", "KODEX 200"),
+          ("sp500", "360750", "S&P500", "TIGER 미국S&P500 · 원화 환산")]
+
+
+def market_ref(mdata, start, end):
+    """시장 ETF 의 신호 기간 총수익. 시작일 종가 바가 없으면 그 항목은 넣지 않는다(추정 금지)."""
+    out = {}
+    for key, code, name, src in MARKET:
+        m = mdata.get(code)
+        if not m:
+            continue
+        b0 = [b for b in m["bars"] if b[0] == start]
+        cands = [b for b in m["bars"] if b[0] <= end]
+        if not b0 or not cands:
+            continue
+        p0, (ed, p1) = b0[0][1], cands[-1]
+        div = sum(a for (x, a) in (m["divs"] or []) if start < x <= ed)
+        out[key] = {"name": name, "src": src, "code": code, "p0": round(p0, 2), "p1": round(p1, 2), "div": div,
+                    "end": ed.isoformat(), "r": round((p1 + div) / p0 - 1, 6)}
+    return out
+
+
 def d(s):
     return datetime.strptime(s, "%Y-%m-%d").date()
 
@@ -115,6 +138,13 @@ def main():
             log(f"[error] {c}: {e}")
             print("changed=false")
             return 0  # 한 종목이라도 없으면 기록을 건드리지 않는다(부분 계산 금지)
+
+    mdata = {}
+    for key, code, name, src in MARKET:
+        try:
+            mdata[code] = from_yahoo(code)
+        except Exception as e:  # noqa: BLE001 — 시장 비교는 보조 정보라 실패해도 기록 계산은 계속
+            log(f"[warn] market {code}: {e}")
 
     rows = []
     for s in signals:
@@ -155,6 +185,9 @@ def main():
             "rec": round(rec, 6), "bench": round(bench, 6), "diff": round(rec - bench, 6),
             "items": items,
         })
+        mk = market_ref(mdata, start, ed)
+        if mk:
+            rows[-1]["market"] = mk
         ev = evaluate(s["month"], items, bench)
         if ev:
             rows[-1]["eval"] = ev
