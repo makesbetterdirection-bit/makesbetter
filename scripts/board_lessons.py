@@ -23,8 +23,9 @@ EDGE_RULE = 1.0  # 규칙으로 올리는 평균 우위 크기(%p)
 N_MISS = 10      # 기본 판단 놓친 기회 규칙의 최소 판단 수
 MISS_RATE = 40.0 # 놓친 기회 비율(%) 기준
 
-BENCH = {"480030": 20, "494300": 15, "498400": 10, "497570": 5, "485690": 5, "0036R0": 5,
-         "473330": 10, "0022T0": 10, "332610": 5, "441640": 5, "488770": 10}
+# 기본 비중(%) — 유일한 원본 studio/weights.json (2026-11-06 정정값: 30년국채 5 · 금 5 · 머니마켓 20)
+BENCH = json.load(open(os.environ.get("WEIGHTS", os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "studio", "weights.json")),
+                       encoding="utf-8"))["weights"]
 N_DAYS = 10      # 수치 구간을 비교할 수 있는 최소 판단일 수
 VIX_BANDS = [("20 미만", lambda v: v < 20), ("20~30", lambda v: 20 <= v < 30), ("30 이상", lambda v: v >= 30)]
 FNG_BANDS = [("25 미만(극단 공포)", lambda v: v < 25), ("25~45(공포)", lambda v: 25 <= v < 45), ("45 이상", lambda v: v >= 45)]

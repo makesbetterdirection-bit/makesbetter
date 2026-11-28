@@ -9,7 +9,7 @@
   24개 지표 failed 없음, 이번 달 기록이 아직 없음. 하나라도 어긋나면 아무것도 쓰지 않는다.
 - 기록: 직전 달 기록의 end 를 신호일로 닫고, 새 달 기록(시작가·신호·100만원 예시 주수·ver.2 비교 기준)과
   판단 근거(studio/track/context/YYYY-MM.json)를 쓴다. 기록은 사후 수정하지 않는다.
-- 추천 비중 = ver.2 비중(studio/index.html 의 V2W) × 신호 배수(강 2 · 중립 1 · 보류 0.5) — 화면 allocate() 와 같은 방식.
+- 추천 비중 = ver.2 비중(studio/weights.json, 화면 V2W 와 같아야 함) × 신호 배수(강 2 · 중립 1 · 보류 0.5) — 화면 allocate() 와 같은 방식.
 
 GitHub Actions(better7-prices.yml)에서 자동 신호 계산 뒤 실행. stdlib 만 사용.
 """
@@ -31,6 +31,7 @@ SIGNAL = os.environ.get("SIG_OUT", "studio/signal.json")
 IND = os.environ.get("IND_OUT", "studio/indicators.js")
 PRICES = os.environ.get("BETTER7_OUT", "better7_prices.json")
 STUDIO = os.environ.get("STUDIO_HTML", "studio/index.html")
+WEIGHTS = os.environ.get("WEIGHTS", "studio/weights.json")
 
 
 def log(*a):
@@ -86,10 +87,10 @@ def main():
     if sigs and d <= sigs[-1]["start"]:
         return skip(f"{d} ≤ 직전 기록 시작일 {sigs[-1]['start']}")
 
+    v2w = json.load(open(WEIGHTS, encoding="utf-8"))["weights"]
     m = re.search(r"V2W=(\{[^}]*\})", open(STUDIO, encoding="utf-8").read())
-    if not m:
-        return skip("studio/index.html 에서 ver.2 비중(V2W)을 찾지 못함")
-    v2w = json.loads(m.group(1))
+    if not m or json.loads(m.group(1)) != v2w:
+        return skip("studio/index.html 의 V2W 가 studio/weights.json 과 다름(scripts/check_weights.py 확인)")
     sig = S["sig"]
     codes = list(sigs[-1]["prices"]) if sigs else list(sig)
     px = {c: int(p) for c, p in zip(P.get("codes") or [], P["prices"])}

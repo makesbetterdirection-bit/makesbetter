@@ -90,7 +90,7 @@ svg text{font-family:inherit}
 (function(){
 var H=5,LOG=null,PX=null;
 var NAME={"488770":"머니마켓","473330":"美30년국채CC","332610":"美단기회사채","480030":"美500CC","441640":"美배당CC","494300":"나스닥100CC","498400":"200위클리CC","0022T0":"국제금CC","497570":"필라AI반도체","485690":"AI밸류체인","0036R0":"휴머노이드"};
-var BENCH={"480030":20,"494300":15,"498400":10,"497570":5,"485690":5,"0036R0":5,"473330":10,"0022T0":10,"332610":5,"441640":5,"488770":10};
+var BENCH={"480030":20,"494300":15,"498400":10,"497570":5,"485690":5,"0036R0":5,"473330":5,"0022T0":5,"332610":5,"441640":5,"488770":20}; /* 기본값 — 실제로는 ../weights.json(유일한 원본)을 읽어 덮어씀 */
 var MISS=3;
 function isEval(e){return /^Claude/.test(e.by||'')} // 스튜디오 신호일 기록은 채점에서 제외
 function $(id){return document.getElementById(id)}
@@ -175,7 +175,8 @@ function drawChart(done){
 }
 [].slice.call(document.querySelectorAll('.tabs button')).forEach(function(bt){bt.onclick=function(){H=+bt.dataset.h;[].slice.call(document.querySelectorAll('.tabs button')).forEach(function(x){x.setAttribute('aria-pressed',x===bt)});render()}});
 function gj(n){var q='?t='+Date.now(),f=function(u){return fetch(u+q,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()})};return f('https://raw.githubusercontent.com/makesbetterdirection-bit/makesbetter/main/studio/board/'+n).catch(function(){return f(n)})}
-Promise.all([gj('log.json'),gj('prices.json')]).then(function(a){LOG=a[0];PX=a[1];render();window.addEventListener('resize',render)}).catch(function(e){$('meta').textContent='데이터를 불러오지 못했어요: '+e});
+var gw=fetch('../weights.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(w){if(w&&w.weights)BENCH=w.weights}).catch(function(){});
+Promise.all([gj('log.json'),gj('prices.json'),gw]).then(function(a){LOG=a[0];PX=a[1];render();window.addEventListener('resize',render)}).catch(function(e){$('meta').textContent='데이터를 불러오지 못했어요: '+e});
 })();
 </script>
 </body>

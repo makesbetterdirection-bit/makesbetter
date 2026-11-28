@@ -130,6 +130,9 @@ jobs:
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
+      - name: Check base weights are identical everywhere (fails the run if not)
+        run: python3 scripts/check_weights.py
+
       - name: Summary
         run: |
           echo "changed=${{ steps.upd.outputs.changed }} mode=${{ steps.upd.outputs.mode }} date=${{ steps.upd.outputs.date }} pending=${{ steps.upd.outputs.pending }}" >> "$GITHUB_STEP_SUMMARY"
