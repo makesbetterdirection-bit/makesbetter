@@ -1507,7 +1507,7 @@ render();
   var pc=function(v){var x=(v*100).toFixed(2);return (v>0?'+':v<0?'−':'')+x.replace('-','')+'%'};
   var pp=function(v){return pc(v)+'p'};
   var md=function(s){return s.slice(5).replace('-','.')};
-  function next(){var M=window.__MB||{},td=M.td||16;return {d:'11.14',dd:Math.max(0,(31-td)+14)}}
+  function next(R){/* 다음 추천일 = 마지막 기록 다음 달 15일(주말이면 다음 월요일) — scripts/record_month_signal.py 와 같은 규칙 */var L=R&&R.length?R[R.length-1].month:'2026-10',y=+L.slice(0,4),m=+L.slice(5)+1;if(m>12){m=1;y++}var t=new Date(Date.UTC(y,m-1,15));while(t.getUTCDay()===0||t.getUTCDay()===6)t.setUTCDate(t.getUTCDate()+1);var k=new Date(Date.now()+324e5),td=Date.UTC(k.getUTCFullYear(),k.getUTCMonth(),k.getUTCDate());return {d:m+'.'+('0'+t.getUTCDate()).slice(-2),dd:Math.max(0,Math.round((t-td)/864e5)),m:m}}
   function block(R){
     var c=R[R.length-1],e=c.eval,S=R.filter(function(r){return r.final&&r.scored}),w=S.filter(function(r){return r.diff>0}).length;
     var F=R.filter(function(r){return r.final&&r.eval}),hn=0,hh=0;F.forEach(function(r){hn+=r.eval.hits.n;hh+=r.eval.hits.hit});
@@ -1515,7 +1515,7 @@ render();
     var vs=hn?'확정 '+F.length+'개월':(e?c.label+' · 평가 중':'');
     var ok=e?Object.keys(e.rel).filter(function(x){return e.sig[x]!=='중립'&&(e.sig[x]==='강'?e.rel[x]>0:e.rel[x]<0)}).map(function(x){return SH[x]}):[];
     var cnt=e?{up:Object.keys(e.sig).filter(function(x){return e.sig[x]==='강'}).length,dn:Object.keys(e.sig).filter(function(x){return e.sig[x]==='보류'}).length}:{up:0,dn:0};
-    var nx=next(),cells=[],y=2026,m=10,by={};R.forEach(function(r){by[r.month]=r});
+    var nx=next(R),cells=[],y=2026,m=10,by={};R.forEach(function(r){by[r.month]=r});
     for(var i=0;i<12;i++){var k=y+'-'+(m<10?'0':'')+m,r=by[k],cl=r?(!r.final?'now':(!r.scored?'ref':(r.diff>0?'w':'l'))):'';cells.push('<span class="'+cl+'"></span>');m++;if(m>12){m=1;y++}}
     return '<div class="kf"><div><i>초과 성과 달성</i><b>'+w+'<small>/'+S.length+'</small></b><s>'+(S.length?'개월':'개월 · 11월부터 집계')+'</s></div>'
       +'<div><i>신호 유효</i><b>'+vh+'</b><s>'+vs+'</s></div></div>'
@@ -1523,12 +1523,12 @@ render();
       +'<div><span>기본 비중<small>Better.7 ver.2</small></span><b>'+pc(c.bench)+'</b></div>'
       +'<div><span>초과 성과<small>추천 − 기본 비중'+(c.scored?'':' · 참고')+'</small></span><b>'+pp(c.diff)+'</b></div>'
       +(e?'<div><span>유효 신호<small>확대 '+cnt.up+' · 축소 '+cnt.dn+'</small></span><b class="ok">'+(ok.length?ok.join(' · '):'—')+'</b></div>':'')
-      +'<div><span>다음 평가<small>11월 추천일 종가</small></span><b><span class="mo">D−'+nx.dd+'</span>'+nx.d+'</b></div></div>'
+      +'<div><span>다음 평가<small>'+nx.m+'월 추천일 종가</small></span><b><span class="mo">D−'+nx.dd+'</span>'+nx.d+'</b></div></div>'
       +'<div class="km"><div class="g">'+cells.join('')+'</div><div class="c"><span>2026.10</span><span>2027.09</span></div>'
       +'<div class="k"><span><i style="background:#0A0A0A"></i>초과 성과</span><span><i style="box-shadow:inset 0 0 0 1.5px #BDBDBD;background:#fff"></i>미달</span><span><i style="box-shadow:inset 0 0 0 1.5px #FF5A1F;background:#fff"></i>평가 중</span><span><i style="background:repeating-linear-gradient(135deg,#E4E4E2 0 3px,#F4F4F2 3px 6px)"></i>참고</span></div></div>';
   }
   window.__renderScore=function(t){
-    var R=(t&&t.rows)||[];if(!R.length)return;var h=block(R),el=document.getElementById('trk');if(el)el.innerHTML=h+'<p class="recno"><span>No. '+R[R.length-1].month+'</span><a href="https://github.com/makesbetterdirection-bit/makesbetter/commits/main/studio/track" target="_blank" rel="noopener">저장 2026.10.16 15:26</a></p>';var sm=document.getElementById('sealM');if(sm)sm.textContent=String(+R[R.length-1].month.slice(5));
+    var R=(t&&t.rows)||[];if(!R.length)return;var h=block(R),el=document.getElementById('trk');if(el)el.innerHTML=h+'<p class="recno"><span>No. '+R[R.length-1].month+'</span><a href="https://github.com/makesbetterdirection-bit/makesbetter/commits/main/studio/track" target="_blank" rel="noopener"'+'>저장 '+R[R.length-1].start.replace(/-/g,'.')+' 장마감</a></p>';var sm=document.getElementById('sealM');if(sm)sm.textContent=String(+R[R.length-1].month.slice(5));
     var c=R[R.length-1],e=c.eval,pill=document.querySelector('#record .card-h .pill');if(pill)pill.textContent=md(c.end)+' 기준';
     var V=document.getElementById('verify');if(!V)return;
     document.getElementById('vfAsof').textContent=md(c.end);
